@@ -1,0 +1,18 @@
+.content
+  Documents returned in a search for 
+  = @solr_response["responseHeader"]["params"]["q"]
+
+.docs
+  %ul
+    - for doc in @docs
+      %li== #{doc["title"]}
+
+.pagination
+  = will_paginate @docs
+
+.searchtime
+  Executing search took
+  = Float(@solr_response["responseHeader"]["QTime"]) / 1000.0
+  seconds
+
+

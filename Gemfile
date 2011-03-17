@@ -13,4 +13,3 @@ gem "rsolr-ext"
 
 # Paginate
 gem "will_paginate"
-
