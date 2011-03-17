@@ -7,3 +7,10 @@ gem "compass", ">= 0.10.6"
 gem "haml"
 gem "html5-boilerplate"
 
+# Solr
+gem "rsolr"
+gem "rsolr-ext"
+
+# Paginate
+gem "will_paginate"
+
