@@ -1,0 +1,26 @@
+.content
+  %h2 Document Information
+  
+  %p
+    %strong Title: 
+    = @doc["title"]
+    %br
+    %strong Authors:
+    = @doc["authors"]
+  
+  %p
+    %strong Citation Information:
+    %em== #{@doc["journal"]}
+    - if @doc.has_key?("volume")
+      == #{@doc["volume"]}
+      - if !@doc.has_key?("number")
+        = ":"
+    - if @doc.has_key?("number")
+      == (#{@doc["number"]}):
+    - if @doc.has_key?("pages")
+      == #{@doc["pages"]}
+  
+  %p
+    %strong PDF:
+    %a{:href => "http://dx.doi.org/#{@doc["doi"]}"}== doi:#{@doc["doi"]}
+
