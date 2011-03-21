@@ -5,7 +5,8 @@
 .docs
   %ul
     - for doc in @docs
-      %li== #{doc["title"]}
+      %li
+        %a{:href => "/doc/#{doc["shasum"]}"}== #{doc["title"]}
 
 .pagination
   = will_paginate @docs
