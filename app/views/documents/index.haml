@@ -1,0 +1,16 @@
+.content
+
+.docs
+  %ul
+    - for doc in @documents
+      %li
+        = link_to doc.title, doc
+
+.pagination
+  = will_paginate @documents
+
+.searchtime
+  Executing search took
+  seconds
+
+

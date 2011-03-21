@@ -1,0 +1,29 @@
+.content
+  %h2 Document Information
+  
+  %p
+    %strong Title: 
+    = @document.title
+    %br
+    %strong Authors:
+    = @document.authors
+  
+  %p
+    %strong Citation Information:
+    %em= @document.journal
+    = @document.volume
+    = ":" if @document.number.empty?
+    = @document.number
+    = ":" unless @document.number.empty?
+    = @document.pages
+  
+  %p
+    %strong PDF:
+    %a{:href => "http://dx.doi.org/#{@document.doi}"}== doi:#{@document.doi}
+
+  %p
+    %strong Document Term Frequencies:
+    
+    %ul
+      - 1.step(@document.term_list.length, 2) do |index|
+        %li== #{@document.term_list[index - 1]}: #{@document.term_list[index]}
