@@ -11,9 +11,11 @@
   %p
     %strong Citation Information:
     %em= @document.journal
+    
     = @document.volume
     = ":" if @document.number.empty?
-    = @document.number
+    - unless @document.number.empty?
+      = "(" + @document.number + ")"
     = ":" unless @document.number.empty?
     = @document.pages
   

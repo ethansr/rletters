@@ -56,11 +56,11 @@ label, input[type="button"], input[type="submit"], input[type="image"], button {
 
 button, input, select, textarea { margin: 0; }
 
-::-moz-selection { background: #ff5e99; color: white; text-shadow: none; }
+::-moz-selection { background: #384833; color: #eeeeee; text-shadow: none; }
 
-::selection { background: #ff5e99; color: white; text-shadow: none; }
+::selection { background: #384833; color: #eeeeee; text-shadow: none; }
 
-a:link { -webkit-tap-highlight-color: #ff5e99; }
+a:link { -webkit-tap-highlight-color: #384833; }
 
 button { width: auto; overflow: visible; }
 
@@ -80,13 +80,19 @@ nav ul, nav li { margin: 0; list-style: none; list-style-image: none; }
 .clearfix { *zoom: 1; }
 .clearfix:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
 
-body, select, input, textarea { color: #444444; }
+body, select, input, textarea { color: black; }
 
 h1, h2, h3, h4, h5, h6 { font-weight: bold; }
 
-a, a:active, a:visited { color: #607890; }
+header h1 { font-size: 2em; }
 
-a:hover { color: #003366; }
+h2 { font-size: 1.2em; margin-bottom: 1em; }
+
+a, a:active, a:visited { color: #627e59; }
+
+a:hover { color: #384833; }
+
+header h1 a, header h1 a:active, header h1 a:visited, header h1 a:hover { color: black; text-decoration: none; }
 
 strong, th { font-weight: bold; }
 
@@ -95,6 +101,12 @@ small { font-size: 85%; }
 input:invalid, textarea:invalid { -moz-border-radius: 1px; -webkit-border-radius: 1px; -o-border-radius: 1px; -ms-border-radius: 1px; -khtml-border-radius: 1px; border-radius: 1px; -moz-box-shadow: red 0 0 5px 0; -webkit-box-shadow: red 0 0 5px 0; -o-box-shadow: red 0 0 5px 0; box-shadow: red 0 0 5px 0; }
 
 .no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
+
+#container { width: 80%; position: relative; left: 10%; }
+
+header { margin-top: 6%; margin-bottom: 2em; }
+
+footer { margin-top: 3em; }
 
 @media print { * { background: transparent !important; color: black !important; text-shadow: none !important; filter: none !important; -ms-filter: none !important; }
   a, a:visited { color: #444 !important; text-decoration: underline; }
