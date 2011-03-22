@@ -19,11 +19,9 @@
   
   %p
     %strong PDF:
-    %a{:href => "http://dx.doi.org/#{@document.doi}"}== doi:#{@document.doi}
+    %a{:href => @document.doi_url}== doi:#{@document.doi}
 
   %p
-    %strong Document Term Frequencies:
-    
-    %ul
-      - 1.step(@document.term_list.length, 2) do |index|
-        %li== #{@document.term_list[index - 1]}: #{@document.term_list[index]}
+    %strong More:
+    = link_to 'Term Frequencies', terms_document_path(@document)
+    = link_to 'Full Document Text', text_document_path(@document)

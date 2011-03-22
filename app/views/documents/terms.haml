@@ -1,0 +1,15 @@
+.content
+  %h2 Term Frequencies
+  
+  %p
+    Term frequency information for document
+    = @document.title + ":"
+  
+  %p
+    = link_to 'Back to document details...', @document
+    
+  %table
+    - 1.step(@document.term_list.length, 2) do |i|
+      %tr
+        %td== #{@document.term_list[i - 1]}
+        %td== #{@document.term_list[i]}

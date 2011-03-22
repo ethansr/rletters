@@ -1,0 +1,15 @@
+.content
+  %h2 Full Document Text
+  
+  %p
+    Full text for document
+    = @document.title + ":"
+  
+  %p
+    = link_to 'Back to document details...', @document
+  
+  %hr
+  
+  .text
+    :escaped
+      #{@document.fulltext}

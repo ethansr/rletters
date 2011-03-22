@@ -5,9 +5,12 @@ class Document
   attr_reader :year, :volume, :number, :pages, :fulltext
   attr_reader :term_vectors, :term_list
   
-  # This method, which emulates an ActiveRecord model, should give us
-  # the first page of document results (some reasonable number, sorted
-  # by something useful).
+  def doi_url
+    "http://dx.doi.org/" + doi
+  end
+  
+  
+  
   def self.all
     # For now, this is a hack; we'll want to put more interesting parameters
     # here at some point.
@@ -98,8 +101,7 @@ class Document
   # URLs.
   def to_param
     shasum
-  end
-  
+  end  
   
   
   # Solr connection parameters

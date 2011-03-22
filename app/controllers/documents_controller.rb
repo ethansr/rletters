@@ -7,7 +7,19 @@ class DocumentsController < ApplicationController
     @documents = Document.all.paginate(:page => page, :per_page => num)
   end
   
-  def show
-    @document = Document.find(params[:id], true)
+  %W(show).each do |m|
+    class_eval <<-RUBY
+    def #{m}
+      @document = Document.find(params[:id], false)
+    end
+    RUBY
+  end
+  
+  %W(terms text).each do |m|
+    class_eval <<-RUBY
+    def #{m}
+      @document = Document.find(params[:id], true)
+    end
+    RUBY
   end
 end
