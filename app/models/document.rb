@@ -1,6 +1,6 @@
 require 'active_record'
 
-class Document
+class Document  
   attr_reader :shasum, :doi, :authors, :title, :journal
   attr_reader :year, :volume, :number, :pages, :fulltext
   attr_reader :term_vectors, :term_list
@@ -67,11 +67,11 @@ class Document
     
     # See the note on solr.get in self.find
     solr_response = solr.get('select', :params => query_params)
-    if not solr_response.has_key? :response or not solr_response[:response].has_key? :docs
+    if not solr_response.has_key? "response" or not solr_response["response"].has_key? "docs"
       return []
     end
     
-    solr_response[:response][:docs].collect { |doc| Document.new doc }
+    solr_response["response"]["docs"].collect { |doc| Document.new doc }
   end
   
   # Initialize a new document from the provided Solr document result.
@@ -112,5 +112,25 @@ class Document
     RSolr.connect :url => @@SOLR_URL
   end
   private_class_method :connect_to_solr
+
+
+
+  # Glue for making us act like an ActiveModel object
+  extend ActiveModel::Naming
+  
+  def to_model
+    self
+  end
+  
+  def valid?()      true end
+  def new_record?() true end
+  def destroyed?()  true end
+  
+  def errors
+    obj = Object.new
+    def obj.[](key) [] end
+    def obj.full_messages() [] end
+    obj
+  end
 end
 
