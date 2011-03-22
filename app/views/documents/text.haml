@@ -13,3 +13,6 @@
   .text
     :escaped
       #{@document.fulltext}
+
+  .test
+    = @document.fulltext[@document.term_vectors["intensity"][:offsets][0]]

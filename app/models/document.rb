@@ -64,7 +64,7 @@ class Document
             3.step(val.length, 4) do |k|
               s = Integer(val[k-2])
               e = Integer(val[k])
-              hash[:offsets] << Range.new(s,e)
+              hash[:offsets] << (s...e)
             end
           when 'positions'
             hash[:positions] = []
