@@ -12,8 +12,6 @@ class Document
   
   
   def self.all
-    # For now, this is a hack; we'll want to put more interesting parameters
-    # here at some point.
     search("*:*", true)
   end
   

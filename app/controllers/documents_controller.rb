@@ -3,8 +3,15 @@ class DocumentsController < ApplicationController
     # FIXME: configurable per_page, sitewide
     page = params.has_key?(:page) ? Integer(params[:page]) : 1;
     num = params.has_key?(:num) ? Integer(params[:num]) : 10;
+    if not params.has_key?(:q)
+      query = "*:*"
+      precise = true
+    else
+      query = params[:q]
+      precise = params.has_key?(:precise) ? true : false
+    end
     
-    @documents = Document.all.paginate(:page => page, :per_page => num)
+    @documents = Document.search(query, precise).paginate(:page => page, :per_page => num)
   end
   
   %W(show).each do |m|

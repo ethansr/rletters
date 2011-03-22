@@ -1,29 +1,27 @@
-.content
-  %h2 Document Information
+%h2 Document Information
   
-  %p
-    %strong Title: 
-    = @document.title
-    %br
-    %strong Authors:
-    = @document.authors
+%p
+  %strong Title: 
+  = @document.title
+  %br
+  %strong Authors:
+  = @document.authors
   
-  %p
-    %strong Citation Information:
-    %em= @document.journal
-    
-    = @document.volume
-    = ":" if @document.number.empty?
-    - unless @document.number.empty?
-      = "(" + @document.number + ")"
-    = ":" unless @document.number.empty?
-    = @document.pages
+%p
+  %strong Citation Information:
+  %em= @document.journal
   
-  %p
-    %strong PDF:
-    %a{:href => @document.doi_url}== doi:#{@document.doi}
+  = @document.volume
+  = ":" if @document.number.empty?
+  - unless @document.number.empty?
+    = "(" + @document.number + "):"
+  = @document.pages
 
-  %p
-    %strong More:
-    = link_to 'Term Frequencies', terms_document_path(@document)
-    = link_to 'Full Document Text', text_document_path(@document)
+%p
+  %strong PDF:
+  %a{:href => @document.doi_url}== doi:#{@document.doi}
+
+%p
+  %strong More:
+  = link_to 'Term Frequencies', terms_document_path(@document)
+  = link_to 'Full Document Text', text_document_path(@document)
