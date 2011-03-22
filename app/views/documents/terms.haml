@@ -9,7 +9,7 @@
     = link_to 'Back to document details...', @document
     
   %table
-    - 1.step(@document.term_list.length, 2) do |i|
+    - @document.term_vectors.sort_by {|k,v| -v[:tf] }.each do |k,v|
       %tr
-        %td== #{@document.term_list[i - 1]}
-        %td== #{@document.term_list[i]}
+        %td== #{k}
+        %td== #{v[:tf]}

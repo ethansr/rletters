@@ -39,16 +39,51 @@ class Document
     raise ActiveRecord::RecordNotFound if solr_response["response"]["numFound"] == 0
     raise ActiveRecord::RecordNotFound unless solr_response["response"].has_key? "docs"
     
-    # Get term vectors and terms, if we're full-text
+    # Get term vectors, if we're full-text
     term_vectors = term_list = nil
     if fulltext and solr_response.has_key? "termVectors"
-      term_vectors = solr_response["termVectors"]
-    end
-    if fulltext and solr_response.has_key? "terms"
-      term_list = solr_response["terms"][1]
+      # The response format here is incredibly arcane and nearly useless,
+      # turn it into something worthwhile
+      tvec_array = solr_response["termVectors"][1][3]
+      term_vectors = {}
+      
+      1.step(tvec_array.length, 2) do |i|
+        term = tvec_array[i-1]
+        attr_array = tvec_array[i]
+        hash = {}
+        
+        1.step(attr_array.length, 2) do |j|
+          key = attr_array[j-1]
+          val = attr_array[j]
+          
+          case key
+          when 'tf'
+            hash[:tf] = Integer(val)
+          when 'offsets'
+            hash[:offsets] = []
+            3.step(val.length, 4) do |k|
+              s = Integer(val[k-2])
+              e = Integer(val[k])
+              hash[:offsets] << Range.new(s,e)
+            end
+          when 'positions'
+            hash[:positions] = []
+            1.step(val.length, 2) do |k|
+              p = Integer(val[k])
+              hash[:positions] << p
+            end
+          when 'df'
+            hash[:df] = Float(val)
+          when 'tf-idf'
+            hash[:tfidf] = Float(val)
+          end
+        end
+        
+        term_vectors[term] = hash
+      end
     end
     
-    Document.new(solr_response["response"]["docs"][0], term_vectors, term_list)
+    Document.new(solr_response["response"]["docs"][0], term_vectors)
   end
   
   # Look up an array of documents with the passed Solr query string (in the
@@ -79,9 +114,9 @@ class Document
   #
   #   doc = Document.new(solr_response["response"]["docs"][0])
   #
-  # If you want the document to contain term vectors or term counts, you
+  # If you want the document to contain term vectors, you
   # can pass those in, otherwise they will be nil by default.
-  def initialize(solr_doc, term_vectors = nil, term_list = nil)
+  def initialize(solr_doc, term_vectors = nil)
     %W(shasum doi authors title journal year volume number pages fulltext).each do |k|
       if solr_doc.has_key? k
         self.instance_variable_set("@#{k}", solr_doc[k])
@@ -91,7 +126,6 @@ class Document
     end
     
     @term_vectors = term_vectors
-    @term_list = term_list
   end
   
   # Return the document's SHA-1 sum, which will function as a URL parameter.
