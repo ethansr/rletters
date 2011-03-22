@@ -62,6 +62,11 @@ header {
   margin-bottom: 2em;
 }
 
+// Don't show the label for the search bar in conformant browsers
+// FIXME: We should probably show this in IE, which doesn't support
+// placeholder text...
+header form label { display: none; }
+
 #main {}
 
 footer {
