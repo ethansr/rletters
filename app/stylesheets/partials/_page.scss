@@ -2,8 +2,7 @@
 
 body, select, input, textarea {
   color: $font-color;
-  // Set your base font here, to apply evenly
-  // font-family: Georgia, serif;
+  font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 }
 
 
@@ -36,6 +35,16 @@ small {
   @include font-size(11px);
 }
 
+form input {
+  height: 13px;
+  font-size: 13px;
+  line-height: 13px;
+  padding: 6px;
+  margin: 0;
+  border: 1px solid #cacaca;
+  vertical-align: top;
+}
+
 // Add the 'required' attribute on your
 // inputs if you want to use these
 input:valid, textarea:valid {}
@@ -62,10 +71,23 @@ header {
   margin-bottom: 2em;
 }
 
-// Don't show the label for the search bar in conformant browsers
-// FIXME: We should probably show this in IE, which doesn't support
-// placeholder text...
-header form label { display: none; }
+header h1 {
+  float: left;
+  width: 30%;
+}
+
+header .searchbar {
+  text-align: right;
+  vertical-align: baseline;
+}
+
+header .searchbar form input#q {
+  width: 40%;
+}
+
+.clearboth { clear: both; }
+
+.searchbar form label { display: none; }
 
 #main {}
 

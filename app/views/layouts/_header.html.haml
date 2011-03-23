@@ -1,3 +1,4 @@
 %h1= link_to 'evoText', root_url
 
-= render "layouts/searchbar"
+- unless @no_searchbar
+  = render "layouts/searchbar"
