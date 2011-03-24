@@ -63,7 +63,15 @@ form textarea {
 
 form label {
   display: inline-block;
+  padding-top: 6px;
   padding-bottom: 0.3em;
+  line-height: 16px;
+}
+
+.formpadding {
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
   line-height: 16px;
 }
 
@@ -98,23 +106,15 @@ header h1 {
   width: 30%;
 }
 
-header .searchbar {
-  text-align: right;
-  vertical-align: baseline;
-}
-
-header .searchbar form input#q {
-  width: 40%;
-}
-
 .clearboth { clear: both; }
-
-.searchbar form label { display: none; }
-
-.helptip { vertical-align: text-bottom; }
 
 #main {}
 
 footer {
   margin-top: 3em;
 }
+
+//-----------------------------------
+
+@import "partials/searchbar";
+@import "partials/advsearch";

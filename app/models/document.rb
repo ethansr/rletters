@@ -86,18 +86,41 @@ class Document
     Document.new(solr_response["response"]["docs"][0], term_vectors)
   end
   
-  # Look up an array of documents with the passed Solr query string (in the
-  # appropriate format for the Solr 'q' parameter).  If 'precise' is 
-  # specified, then the query parameter should be in Solr's Lucene syntax.
-  # Otherwise, it's a dismax search, our version of Google.
+  # Look up an array of documents from the given parameters structure.
+  # Recognized here are the following:
+  #
+  #   params[:q] => Solr query string
+  #   params[:precise] => If true, send query through Solr syntax, else
+  #     the Dismax parser
+  #   params[:authors] => Search query for authors
+  #   params[:title] => Search query for title{,_search}
+  #   params[:title_type] => (exact|fuzzy) Search on title, or title_search?
+  #   params[:journal] => Search query for journal{,_search}
+  #   params[:journal_type] => (exact|fuzzy) Search on journal, or 
+  #     journal_search?
+  #   params[:year_start] => Start year for year range
+  #   params[:year_end] => End year for year range
+  #   params[:volume] => Search query for volume
+  #   params[:number] => Search query for number
+  #   params[:pages] => Search query for pages
+  #   params[:fulltext] => Search query for fulltext{,search}
+  #   params[:fulltext_type] => (exact|fuzzy) Search on fulltext, or
+  #     fulltext_search?
   #
   # This returns an empty array on failure, and will not throw except in 
   # dire circumstances.
-  def self.search(query, precise = false)
+  def self.search(params)
     solr = connect_to_solr
     
-    query_params = { :q => query }
-    if precise
+    query_params = {}
+    if params.has_key? :q
+      query_params[:q] = params[:q]
+    else
+      query_params[:q] = "*:*"
+      query_params[:qt] = "precise"
+    end
+    
+    if params.has_key? :precise
       query_params[:qt] = "precise"
     end
     

@@ -6,13 +6,95 @@
 
 %h3 Guided Advanced Search
 
-.advform
-  = form_tag(documents_path, :method => "get") do
-    = hidden_field_tag(:precise, true)
-    %span><
-      = content_tag(:button, :type => :submit, :class => "button") do
-        %span.magnifier.icon><
-        Advanced Search
+= form_tag(documents_path, { :method => "get", :class => "advsearch" }) do
+  .advsearch
+    = hidden_field_tag(:advanced, true)
+    %p
+      = label_tag(:authors) do
+        Authors:
+        = help_image do
+          Authors of articles, in "First Last, First Last, ..." format.
+      = text_field_tag(:authors)
+    %p
+      = label_tag(:title) do
+        Title:
+        = help_image do
+          Title of journal article.
+      = text_field_tag(:title)
+    %p
+      = label_tag(:title_type) do
+        Title search type:
+        = help_image do
+          If "Exact", search against the exact title.  If "fuzzy", search against the stemmed title.  (The standard evoText search uses the stemmed search fields.)
+      %span.formpadding
+        = radio_button_tag(:title_type, "exact", true, :class => "radio")
+        Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        = radio_button_tag(:title_type, "fuzzy", false, :class => "radio")
+        Fuzzy
+    %p
+      = label_tag(:journal) do
+        Journal:
+        = help_image do
+          Journal in which article was published.
+      = text_field_tag(:journal)
+    %p
+      = label_tag(:journal_type) do
+        Journal search type:
+        = help_image do
+          If "Exact", search against the exact journal title.  If "fuzzy", search against the stemmed journal title.  (The standard evoText search uses the stemmed search fields.)
+      %span.formpadding
+        = radio_button_tag(:journal_type, "exact", true, :class => "radio")
+        Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        = radio_button_tag(:journal_type, "fuzzy", false, :class => "radio")
+        Fuzzy
+    %p
+      = label_tag(:year_start) do
+        Year:
+        = help_image do
+          Year of publication, may specify a range.
+      = text_field_tag(:year_start, nil, { :class => "sminput", :placeholder => "Start" })
+      %span.formpadding to
+      = text_field_tag(:year_end, nil, { :class => "sminput", :placeholder => "End" })
+    %p
+      = label_tag(:volume) do
+        Volume:
+        = help_image do
+          Volume of journal.
+      = text_field_tag(:volume)
+    %p
+      = label_tag(:number) do
+        Issue number:
+        = help_image do
+          Issue number of journal.
+      = text_field_tag(:number)
+    %p
+      = label_tag(:pages) do
+        Pages:
+        = help_image do
+          Page number of journal.  This is a text search, not a range search: you will have to specify a page number precisely as it appears in an article's citation information.
+      = text_field_tag(:pages)
+    %p
+      = label_tag(:fulltext) do
+        Full article text:
+        = help_image do
+          Terms appearing in the full text of the article.
+      = text_field_tag(:fulltext)
+    %p
+      = label_tag(:fulltext_type) do
+        Full text search type:
+        = help_image do
+          If "Exact", search against the exact full text.  If "fuzzy", search against the stemmed full text.  (The standard evoText search uses the stemmed search fields.)
+      %span.formpadding
+        = radio_button_tag(:fulltext_type, "exact", true, :class => "radio")
+        Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        = radio_button_tag(:fulltext_type, "fuzzy", false, :class => "radio")
+        Fuzzy
+    %p
+    %p.submit
+      %span><
+        = content_tag(:button, :type => :submit, :class => "button") do
+          %span.magnifier.icon><
+          Advanced Search
 
 %h3 Solr Query Search
 
