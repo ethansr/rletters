@@ -9,13 +9,16 @@
   
 %p
   %strong Citation Information:
-  %em= @document.journal
+  %em== #{@document.journal},
   
-  = @document.volume
-  = ":" if @document.number.empty?
+  - unless @document.volume.empty?
+    == Vol. #{@document.volume},
   - unless @document.number.empty?
-    = "(" + @document.number + "):"
-  = @document.pages
+    == No. #{@document.number}
+  - unless @document.year.empty?
+    == (#{@document.year}),
+  - unless @document.pages.empty?
+    == pp. #{@document.pages}
 
 %p
   %strong PDF:
