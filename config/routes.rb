@@ -6,5 +6,8 @@ Evotext::Application.routes.draw do
       get 'terms'
       get 'text'
     end
+    collection do
+      get 'search'
+    end
   end
 end

@@ -1,0 +1,49 @@
+%h2 Advanced Document Search
+
+%p
+  :markdown
+    This page lets you perform an advanced search of the evoText database.  You may choose either to utilize our guided search form, or to construct a query directly in [Solr's query syntax](http://wiki.apache.org/solr/SolrQuerySyntax), which is itself a superset of [Lucene query syntax](http://lucene.apache.org/java/2_9_1/queryparsersyntax.html).  These custom searches are extremely powerful.
+
+%h3 Guided Advanced Search
+
+.advform
+  = form_tag(documents_path, :method => "get") do
+    = hidden_field_tag(:precise, true)
+    %span><
+      = content_tag(:button, :type => :submit, :class => "button") do
+        %span.magnifier.icon><
+        Advanced Search
+
+%h3 Solr Query Search
+
+.solrform
+  = form_tag(documents_path, :method => "get") do
+    = hidden_field_tag(:precise, true)
+    = label_tag(:q, "Solr query string:")
+    = help_image 400 do
+      :markdown
+        The following fields are available in Solr for searching:
+        
+        *   `authors`: Authors, generally in the format "First Last, First Last..."  
+        *   `title`: Verbatim title of article  
+        *   `journal`: Verbatim journal of article  
+        *   `year`: Year of article publication (format not standardized, may occasionally be something like "1945-1946")  
+        *   `volume`: Journal volume  
+        *   `number`: Journal issue number  
+        *   `pages`: Journal pages (usually "1234-1235")  
+        *   `fulltext`: Verbatim full text of the article  
+        *   `title_search`: Article title, lowercased and stemmed  
+        *   `journal_search`: Journal, lowercased and stemmed  
+        *   `fulltext_search`: Full text of article, lowercased and stemmed  
+    -# image_tag "/images/questionmark.jpg", { :alt => "Help?", :size => "16x16", :id => "solrquery", :class => "helptip" }
+    -# tooltip('#solrquery', 'this is a <strong>test</strong>')
+    %br
+    = text_area_tag(:q, nil, { :escape => false })
+    %br
+    %br
+    %span><
+      = content_tag(:button, :type => :submit, :class => "button") do
+        %span.magnifier.icon><
+        Submit Solr Query
+
+

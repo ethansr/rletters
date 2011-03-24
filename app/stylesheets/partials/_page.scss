@@ -11,14 +11,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header h1 {
-  font-size: 2em;
+  font-size: 2.25em;
 }
 
 h2 {
-  font-size: 1.2em;
+  font-size: 1.5em;
   margin-bottom: 1em;
 }
 
+h3 {
+  font-size: 1.2em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
 
 a, a:active, a:visited { color: $link-color; }
 a:hover { color: $link-hover-color; }
@@ -29,6 +34,10 @@ header h1 a, header h1 a:active, header h1 a:visited, header h1 a:hover
 
 strong, th {
   font-weight: bold;
+}
+
+em {
+  font-style: italic;
 }
 
 small {
@@ -43,6 +52,19 @@ form input {
   margin: 0;
   border: 1px solid #cacaca;
   vertical-align: top;
+}
+
+form textarea {
+  width: 75%;
+  height: 116px;
+  border: 1px solid #cacaca;
+  padding: 6px;
+}
+
+form label {
+  display: inline-block;
+  padding-bottom: 0.3em;
+  line-height: 16px;
 }
 
 // Add the 'required' attribute on your
@@ -88,6 +110,8 @@ header .searchbar form input#q {
 .clearboth { clear: both; }
 
 .searchbar form label { display: none; }
+
+.helptip { vertical-align: text-bottom; }
 
 #main {}
 

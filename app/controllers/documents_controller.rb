@@ -19,6 +19,10 @@ class DocumentsController < ApplicationController
     @documents = Document.search(query, precise).paginate(:page => page, :per_page => num)
   end
   
+  def search
+    @no_searchbar = true
+  end
+  
   %W(show).each do |m|
     class_eval <<-RUBY
     def #{m}

@@ -1,4 +1,7 @@
 %h1= link_to 'evoText', root_url
 
-- unless @no_searchbar
+- if @no_searchbar
+  .clearboth
+- else
   = render "layouts/searchbar"
+  .clearboth
