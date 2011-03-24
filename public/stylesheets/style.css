@@ -124,6 +124,10 @@ header h1 { float: left; width: 30%; }
 
 footer { margin-top: 3em; }
 
+ul.docs { width: 65%; list-style-type: none; margin: 0; padding: 0; }
+
+ul.docs li { margin: 0; padding: 1em; border-bottom: 1px dashed #cacaca; }
+
 header .searchbar { text-align: right; vertical-align: baseline; }
 
 header .searchbar form input#q { width: 40%; }

@@ -1,0 +1,14 @@
+// Main document list
+
+ul.docs {
+  width: 65%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.docs li {
+  margin: 0;
+  padding: 1em;
+  border-bottom: 1px dashed #cacaca;
+}

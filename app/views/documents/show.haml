@@ -9,16 +9,7 @@
   
 %p
   %strong Citation Information:
-  %em== #{@document.journal},
-  
-  - unless @document.volume.empty?
-    == Vol. #{@document.volume},
-  - unless @document.number.empty?
-    == No. #{@document.number}
-  - unless @document.year.empty?
-    == (#{@document.year}),
-  - unless @document.pages.empty?
-    == pp. #{@document.pages}
+  = render :partial => "citation", :locals => { :document => @document }
 
 %p
   %strong PDF:
