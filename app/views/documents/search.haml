@@ -8,7 +8,7 @@
 
 = form_tag(documents_path, { :method => "get", :class => "advsearch" }) do
   .advsearch
-    = hidden_field_tag(:advanced, true)
+    = hidden_field_tag(:precise, true)
     %p
       = label_tag(:authors) do
         Authors:

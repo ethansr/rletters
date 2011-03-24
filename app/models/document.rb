@@ -113,15 +113,65 @@ class Document
     solr = connect_to_solr
     
     query_params = {}
-    if params.has_key? :q
-      query_params[:q] = params[:q]
-    else
-      query_params[:q] = "*:*"
-      query_params[:qt] = "precise"
-    end
     
+    # Params will often be submitted blank, don't send them to Solr
+    params.delete_if { |k, v| v.blank? }
+        
     if params.has_key? :precise
       query_params[:qt] = "precise"
+      
+      query_params[:q] = ""
+      if params.has_key? :q
+        query_params[:q] = params[:q] + " "
+      end
+      
+      %W(authors volume number pages).each do |f|
+        if params.has_key? f.to_sym
+          query_params[:q] += " " unless query_params[:q].empty?
+          query_params[:q] += "#{f}:(#{params[f.to_sym]})"
+        end
+      end
+      
+      %W(title journal fulltext).each do |f|
+        if params.has_key? f.to_sym
+          query_params[:q] += " " unless query_params[:q].empty?
+          if params.has_key? (f + "_type").to_sym and params[(f + "_type").to_sym] == "fuzzy"
+            field = f + "_search"
+          else
+            field = f
+          end
+          query_params[:q] += "#{field}:(#{params[f.to_sym]})"
+        end
+      end
+      
+      # Year has to be handled separately
+      if params.has_key? :year_start or params.has_key? :year_end
+        query_params[:q] += " " unless query_params[:q].empty?
+        
+        if params.has_key? :year_start and not params.has_key? :year_end
+          year = params[:year_start]
+        elsif not params.has_key? :year_start and params.has_key? :year_end
+          year = params[:year_end]
+        else
+          year = "[#{params[:year_start]} TO #{params[:year_end]}]"
+        end
+        
+        query_params[:q] += "year:(#{year})"
+      end
+      
+      # If there's still no query, return all documents
+      if query_params[:q].empty?
+        query_params[:q] = "*:*"
+      end
+    else
+      # If we're not doing a precise search, then no field searching, so
+      # ignore everything but :q
+      if not params.has_key? :q
+        query_params[:q] = "*:*"
+        query_params[:qt] = "precise"
+      else
+        query_params[:q] = params[:q]
+      end
     end
     
     # See the note on solr.get in self.find
