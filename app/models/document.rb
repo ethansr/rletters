@@ -22,7 +22,7 @@ class Document
   # RecordNotFound exception.  Other, worse exceptions may be thrown out of
   # RSolr.
   def self.find(shasum, fulltext = false)
-    solr = connect_to_solr
+    solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
     
     # This is the only method here that can fail -- if we get no response,
     # a bad response, or something that cannot be evaluated, then we have
@@ -112,61 +112,43 @@ class Document
   # This returns an empty array on failure, and will not throw except in 
   # dire circumstances.
   def self.search(params)
-    solr = connect_to_solr
+    solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
     
-    query_params = {}
-    
-    
-    # Params will often be submitted blank, don't send them to Solr
     params.delete_if { |k, v| v.blank? }
-        
+    query_params = { :fq => params[:fq] }
+    
     if params.has_key? :precise
-      query_params[:qt] = "precise"      
-      query_params[:q] = ""
-      query_params[:q] = params[:q] + " " if params.has_key? :q
-      query_params[:fq] = params[:fq] if params.has_key? :fq
+      query_params[:qt] = "precise"
+      query_params[:q] = "#{params[:q]} "
       
       %W(authors volume number pages).each do |f|
-        if params.has_key? f.to_sym
-          query_params[:q] += " " unless query_params[:q].empty?
-          query_params[:q] += "#{f}:(#{params[f.to_sym]})"
-        end
+        query_params[:q] += " #{f}:(#{params[f.to_sym]})" if params[f.to_sym]
       end
       
       %W(title journal fulltext).each do |f|
-        if params.has_key? f.to_sym
-          query_params[:q] += " " unless query_params[:q].empty?
-          if params.has_key? (f + "_type").to_sym and params[(f + "_type").to_sym] == "fuzzy"
-            field = f + "_search"
-          else
-            field = f
-          end
-          query_params[:q] += "#{field}:(#{params[f.to_sym]})"
-        end
+        field = f
+        field += "_search" if params[(f + "_type").to_sym] and params[(f + "_type").to_sym] == "fuzzy"
+        query_params[:q] += " #{field}:(#{params[f.to_sym]})" if params[f.to_sym]
       end
       
-      # Year has to be handled separately
-      if params.has_key? :year_start or params.has_key? :year_end
-        query_params[:q] += " " unless query_params[:q].empty?
-        
-        if params.has_key? :year_start and not params.has_key? :year_end
-          year = params[:year_start]
-        elsif not params.has_key? :year_start and params.has_key? :year_end
-          year = params[:year_end]
-        else
+      # Year has to be handled separately for range support
+      if params[:year_start] or params[:year_end]
+        year = nil
+        year ||= params[:year_start]
+        year ||= params[:year_end]
+        if params[:year_start] and params[:year_end]
           year = "[#{params[:year_start]} TO #{params[:year_end]}]"
         end
         
-        query_params[:q] += "year:(#{year})"
+        query_params[:q] += " year:(#{year})"
       end
       
       # If there's still no query, return all documents
+      query_params[:q].strip!
       if query_params[:q].empty?
         query_params[:q] = "*:*"
       end
     else
-      # If we're not doing a precise search, then no field searching, so
-      # ignore everything but :q and :fq
       if not params.has_key? :q
         query_params[:q] = "*:*"
         query_params[:qt] = "precise"
@@ -177,18 +159,18 @@ class Document
     
     # See the note on solr.get in self.find
     solr_response = solr.get('select', :params => query_params)
-    if not solr_response.has_key? "response" or not solr_response["response"].has_key? "docs"
+    if solr_response["response"] or solr_response["response"]["docs"]
       return []
     end
     
     # Process the facet information
     facets = nil
-    if solr_response.has_key? "facet_counts"
+    if solr_response["facet_counts"]
       facets = {}
       solr_facets = solr_response["facet_counts"]
       
       # The "year" facets are handled as separate queries
-      if solr_facets.has_key? "facet_queries"
+      if solr_facets["facet_queries"]
         facets[:year] = {}
         solr_facets["facet_queries"].each do |k, v|
           decade = k.slice(6..-1).split[0]
@@ -198,9 +180,9 @@ class Document
       end
       
       # The other fields are easier
-      if solr_facets.has_key? "facet_fields"
+      if solr_facets["facet_fields"]
         { "authors_facet" => :author, "journal_facet" => :journal }.each do |s, f|
-          if solr_facets["facet_fields"].has_key? s
+          if solr_facets["facet_fields"][s]
             facets[f] = {}
             1.step(solr_facets["facet_fields"][s].length, 2) do |i|
               facets[f][solr_facets["facet_fields"][s][i-1]] = solr_facets["facet_fields"][s][i]
@@ -223,7 +205,7 @@ class Document
   # can pass those in, otherwise they will be nil by default.
   def initialize(solr_doc, term_vectors = nil)
     %W(shasum doi authors title journal year volume number pages fulltext).each do |k|
-      if solr_doc.has_key? k
+      if solr_doc[k]
         instance_variable_set("@#{k}", solr_doc[k])
       else
         instance_variable_set("@#{k}", "")
@@ -241,18 +223,6 @@ class Document
   end  
   
   
-  # Solr connection parameters
-  @@SOLR_URL = "http://localhost:8080/solr"
-  
-  # Get a connection to Solr using RSolr.  At least on current versions of
-  # RSolr (1.0.0), this method actually can't fail, as RSolr only connects
-  # when a query method is called.
-  def self.connect_to_solr()
-    RSolr.connect :url => @@SOLR_URL
-  end
-  private_class_method :connect_to_solr
-
-
 
   # Glue for making us act like an ActiveModel object
   extend ActiveModel::Naming

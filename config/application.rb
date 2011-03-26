@@ -41,12 +41,6 @@ module Evotext
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
     
-    # Set a cookie secret
-    config.action_dispatch.session = {
-      :key => '_evotext_session',
-      :secret => 'jyslpr5zuk1gyzryk3sxpp415n49kwck8jwloh5v8hwza57uis75gfy3eqi7w5jc'
-    }
-
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
   end
