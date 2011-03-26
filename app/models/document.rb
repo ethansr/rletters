@@ -91,6 +91,7 @@ class Document
   # Recognized here are the following:
   #
   #   params[:q] => Solr query string
+  #   params[:fq] => Solr faceted query
   #   params[:precise] => If true, send query through Solr syntax, else
   #     the Dismax parser
   #   params[:authors] => Search query for authors
@@ -124,6 +125,10 @@ class Document
       query_params[:q] = ""
       if params.has_key? :q
         query_params[:q] = params[:q] + " "
+      end
+      
+      if params.has_key? :fq
+        query_params[:fq] = params[:fq]
       end
       
       %W(authors volume number pages).each do |f|
@@ -166,12 +171,16 @@ class Document
       end
     else
       # If we're not doing a precise search, then no field searching, so
-      # ignore everything but :q
+      # ignore everything but :q and :fq
       if not params.has_key? :q
         query_params[:q] = "*:*"
         query_params[:qt] = "precise"
       else
         query_params[:q] = params[:q]
+      end
+      
+      if params.has_key? :fq
+        query_params[:fq] = params[:fq]
       end
     end
     
@@ -181,8 +190,38 @@ class Document
       return []
     end
     
+    # Process the facet information
+    facets = nil
+    if solr_response.has_key? "facet_counts"
+      facets = {}
+      solr_facets = solr_response["facet_counts"]
+      
+      # The "year" facets are handled as separate queries
+      if solr_facets.has_key? "facet_queries"
+        facets[:year] = {}
+        solr_facets["facet_queries"].each do |k, v|
+          decade = k.slice(6..-1).split[0]
+          decade = "1790" if decade == "*"
+          facets[:year][decade] = v
+        end
+      end
+      
+      # The other fields are easier
+      if solr_facets.has_key? "facet_fields"
+        { "authors_facet" => :author, "journal_facet" => :journal }.each do |s, f|
+          if solr_facets["facet_fields"].has_key? s
+            facets[f] = {}
+            1.step(solr_facets["facet_fields"][s].length, 2) do |i|
+              facets[f][solr_facets["facet_fields"][s][i-1]] = solr_facets["facet_fields"][s][i]
+            end
+          end
+        end
+      end
+    end
+    
     { :documents => solr_response["response"]["docs"].collect { |doc| Document.new doc },
-      :query_time => Float(solr_response["responseHeader"]["QTime"]) / 1000.0 }
+      :query_time => Float(solr_response["responseHeader"]["QTime"]) / 1000.0,
+      :facets => facets }
   end
   
   # Initialize a new document from the provided Solr document result.

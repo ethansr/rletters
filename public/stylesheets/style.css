@@ -122,11 +122,19 @@ header h1 { float: left; width: 30%; }
 
 .clearboth { clear: both; }
 
+.nowrap { white-space: nowrap; }
+
 footer { margin-top: 3em; }
 
 ul.docs { width: 65%; list-style-type: none; margin: 0; padding: 0; }
 
 ul.docs li { margin: 0; padding: 1em; border-bottom: 1px dashed #cacaca; }
+
+.pagination { width: 65%; }
+
+.facets { width: 30%; float: right; }
+
+.facets h2 { font-size: 1em; margin-top: 1.2em; margin-bottom: 0.2em; }
 
 header .searchbar { text-align: right; vertical-align: baseline; }
 

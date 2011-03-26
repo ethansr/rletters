@@ -1,3 +1,29 @@
+- if @facets
+  .facets
+    %h2 Authors
+    %small
+      - @facets[:author].each do |a, c|
+        %span.nowrap
+          = author_link a
+          = " (#{c})"
+    
+    %h2 Journals
+    %small
+      - @facets[:journal].each do |j, c|
+        %span.nowrap
+          = journal_link j
+          = " (#{c})"
+    
+    %h2 Decade of Publication
+    %small
+      - @facets[:year].each do |y, c|
+        %span.nowrap
+          - if y == "1790"
+            = decade_link "#{y}", "#{y}s and earlier"
+          - else
+            = decade_link "#{y}", "#{y}s"
+          = " (#{c})"
+
 %ul.docs
   - for doc in @documents
     = render :partial => "document", :locals => { :document => doc }
@@ -5,5 +31,4 @@
 .pagination
   = will_paginate @documents
 
-
-
+.clearboth

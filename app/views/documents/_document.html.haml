@@ -1,8 +1,6 @@
 %li
   %strong= document.title
   %br
-  = document.authors
-  %br
   = render :partial => "citation", :locals => { :document => document }
   %br
   %a{:href => document.doi_url}== PDF

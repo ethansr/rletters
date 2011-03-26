@@ -4,11 +4,6 @@
   %strong Title: 
   = @document.title
   %br
-  %strong Authors:
-  = @document.authors
-  
-%p
-  %strong Citation Information:
   = render :partial => "citation", :locals => { :document => @document }
 
 %p
@@ -18,4 +13,5 @@
 %p
   %strong More:
   = link_to 'Term Frequencies', terms_document_path(@document)
+  = " | "
   = link_to 'Full Document Text', text_document_path(@document)
