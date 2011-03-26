@@ -38,7 +38,7 @@ module DocumentsHelper
   end
   
   def selected_facets_list(facets)
-    remove_all_link = link_to documents_path(:remove_facet => "all"), :class => "button" do
+    remove_all_link = link_to documents_path(:remove_facet => "all"), :class => "button negative" do
       content_tag(:span, "", :class => "icon cross") +
       raw("Remove all")
     end
@@ -57,7 +57,7 @@ module DocumentsHelper
         value = "#{parts[0]}–#{parts[2]}"
       end
       
-      link_to documents_path(:remove_facet => facet), :class => "button" do
+      link_to documents_path(:remove_facet => facet), :class => "button negative" do
         content_tag(:span, "", :class => "icon cross") +
         raw("#{field}: #{value} ")
       end
