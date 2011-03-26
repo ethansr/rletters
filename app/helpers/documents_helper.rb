@@ -7,7 +7,7 @@ module DocumentsHelper
   end
   
   def authors_link(authors)
-    raw(authors.split(',').map(&method(:author_link)).join(", "))
+    raw(authors.split(',').map{ |a| author_link a }.join(", "))
   end
   
   def journal_link(journal)

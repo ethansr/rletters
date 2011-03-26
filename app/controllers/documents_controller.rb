@@ -28,6 +28,7 @@ class DocumentsController < ApplicationController
     session[:facets].each { |q| params[:fq] << q }
     
     # Set all the variables, but then paginate the documents
+    @search_params = params
     hash_to_instance_variables Document.search(params)
     @documents = @documents.paginate(:page => page, :per_page => num)
   end
@@ -39,14 +40,16 @@ class DocumentsController < ApplicationController
   %W(show).each do |m|
     class_eval <<-RUBY
     def #{m}
+      @search_params = params
       hash_to_instance_variables Document.find(params[:id], false)
     end
     RUBY
   end
   
-  %W(terms text).each do |m|
+  %W(terms concordance text).each do |m|
     class_eval <<-RUBY
     def #{m}
+      @search_params = params
       hash_to_instance_variables Document.find(params[:id], true)
     end
     RUBY

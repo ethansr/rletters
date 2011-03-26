@@ -1,0 +1,32 @@
+%h2 Term Concordance
+%p
+  = link_to 'Back to document details...', @document
+
+= form_tag(concordance_document_path(@document), { :method => "get" }) do
+  = label_tag(:word, "Display concordance for word:")
+  %br
+  = text_field_tag(:word, @search_params[:word])
+  %span><
+    = content_tag(:button, :type => :submit, :class => "button right") do
+      %span.magnifier.icon><
+      Get Concordance
+
+- if @search_params.has_key? :word
+  %h3== Concordance for term “#{@search_params[:word]}”
+  
+  - if not @document.term_vectors.has_key? @search_params[:word]
+    %p
+      == This document contains no instances of the term “#{@search_params[:word]}”.
+  - else
+    %p
+      == This document contains #{pluralize(@document.term_vectors[@search_params[:word]][:offsets].length, 'instance')} of the term “#{@search_params[:word]}”.
+    
+    %table.conc_matches
+      - @document.term_vectors[@search_params[:word]][:offsets].each do |rng|
+        %tr
+          %td
+            == #{[rng.begin - 30, 0].max}..#{[rng.end + 30, @document.fulltext.length].min}
+          %td
+            = escape_once(@document.fulltext[[rng.begin - 30, 0].max...[rng.end + 30, @document.fulltext.length].min]).insert(30, "<strong>").insert(-31, "</strong>").gsub(" ", "&nbsp;")
+
+

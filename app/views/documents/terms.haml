@@ -1,12 +1,11 @@
 .content
   %h2 Term Frequencies
+  %p
+    = link_to 'Back to document details...', @document
   
   %p
     Term frequency information for document
     = @document.title + ":"
-  
-  %p
-    = link_to 'Back to document details...', @document
     
   %table
     - @document.term_vectors.sort_by {|k,v| -v[:tf] }.each do |k,v|

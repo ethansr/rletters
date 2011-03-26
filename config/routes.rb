@@ -5,6 +5,7 @@ Evotext::Application.routes.draw do
     member do
       get 'terms'
       get 'text'
+      get 'concordance'
     end
     collection do
       get 'search'
