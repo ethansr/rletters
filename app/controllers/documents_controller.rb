@@ -8,7 +8,10 @@ class DocumentsController < ApplicationController
     # FIXME: configurable per_page, sitewide
     page = params.has_key?(:page) ? Integer(params[:page]) : 1;
     num = params.has_key?(:num) ? Integer(params[:num]) : 10;
-    @documents = Document.search(params).paginate(:page => page, :per_page => num)
+    
+    # Set all the variables, but then paginate the documents
+    hash_to_instance_variables Document.search(params)
+    @documents = @documents.paginate(:page => page, :per_page => num)
   end
   
   def search
@@ -18,7 +21,7 @@ class DocumentsController < ApplicationController
   %W(show).each do |m|
     class_eval <<-RUBY
     def #{m}
-      @document = Document.find(params[:id], false)
+      hash_to_instance_variables Document.find(params[:id], false)
     end
     RUBY
   end
@@ -26,8 +29,14 @@ class DocumentsController < ApplicationController
   %W(terms text).each do |m|
     class_eval <<-RUBY
     def #{m}
-      @document = Document.find(params[:id], true)
+      hash_to_instance_variables Document.find(params[:id], true)
     end
     RUBY
   end
+  
+  
+  def hash_to_instance_variables(h)
+    h.each { |k, v| instance_variable_set "@#{k.to_s}", v }
+  end
+  private :hash_to_instance_variables
 end

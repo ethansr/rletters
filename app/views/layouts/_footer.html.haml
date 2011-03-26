@@ -1,2 +1,7 @@
 %small.copyright
   Copyright &copy; 2011 evoText Project
+  - if instance_variable_defined? :@query_time
+    %br
+    Executed Solr query in 
+    = @query_time
+    seconds

@@ -83,7 +83,8 @@ class Document
       end
     end
     
-    Document.new(solr_response["response"]["docs"][0], term_vectors)
+    { :document => Document.new(solr_response["response"]["docs"][0], term_vectors),
+      :query_time => Float(solr_response["responseHeader"]["QTime"]) / 1000.0 }
   end
   
   # Look up an array of documents from the given parameters structure.
@@ -180,7 +181,8 @@ class Document
       return []
     end
     
-    solr_response["response"]["docs"].collect { |doc| Document.new doc }
+    { :documents => solr_response["response"]["docs"].collect { |doc| Document.new doc },
+      :query_time => Float(solr_response["responseHeader"]["QTime"]) / 1000.0 }
   end
   
   # Initialize a new document from the provided Solr document result.
@@ -192,9 +194,9 @@ class Document
   def initialize(solr_doc, term_vectors = nil)
     %W(shasum doi authors title journal year volume number pages fulltext).each do |k|
       if solr_doc.has_key? k
-        self.instance_variable_set("@#{k}", solr_doc[k])
+        instance_variable_set("@#{k}", solr_doc[k])
       else
-        self.instance_variable_set("@#{k}", "")
+        instance_variable_set("@#{k}", "")
       end
     end
     
