@@ -1,28 +1,35 @@
 - if @facets
   .facets
-    %h2 Authors
+    %h2 Filter Results:
+    
+    %h3 Authors
     %small
-      - @facets[:author].each do |a, c|
+      - field_facets_list(@facets[:author], 'authors_facet').each do |a, c|
         %span.nowrap
           = author_link a
           = " (#{c})"
     
-    %h2 Journals
+    %h3 Journals
     %small
-      - @facets[:journal].each do |j, c|
+      - field_facets_list(@facets[:journal], 'journal_facet').each do |j, c|
         %span.nowrap
           = journal_link j
           = " (#{c})"
     
-    %h2 Decade of Publication
+    %h3 Decade of Publication
     %small
-      - @facets[:year].each do |y, c|
+      - field_facets_list(@facets[:year], 'year').each do |y, c|
         %span.nowrap
           - if y == "1790"
             = decade_link "#{y}", "#{y}s and earlier"
           - else
             = decade_link "#{y}", "#{y}s"
           = " (#{c})"
+
+.selected_facets
+  - if session[:facets] and not session[:facets].empty?
+    - selected_facets_list(session[:facets]).each do |f|
+      = f
 
 %ul.docs
   - for doc in @documents

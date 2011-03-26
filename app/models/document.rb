@@ -91,7 +91,7 @@ class Document
   # Recognized here are the following:
   #
   #   params[:q] => Solr query string
-  #   params[:fq] => Solr faceted query
+  #   params[:fq][] => Solr faceted query (an array)
   #   params[:precise] => If true, send query through Solr syntax, else
   #     the Dismax parser
   #   params[:authors] => Search query for authors
@@ -116,20 +116,15 @@ class Document
     
     query_params = {}
     
+    
     # Params will often be submitted blank, don't send them to Solr
     params.delete_if { |k, v| v.blank? }
         
     if params.has_key? :precise
-      query_params[:qt] = "precise"
-      
+      query_params[:qt] = "precise"      
       query_params[:q] = ""
-      if params.has_key? :q
-        query_params[:q] = params[:q] + " "
-      end
-      
-      if params.has_key? :fq
-        query_params[:fq] = params[:fq]
-      end
+      query_params[:q] = params[:q] + " " if params.has_key? :q
+      query_params[:fq] = params[:fq] if params.has_key? :fq
       
       %W(authors volume number pages).each do |f|
         if params.has_key? f.to_sym
@@ -177,10 +172,6 @@ class Document
         query_params[:qt] = "precise"
       else
         query_params[:q] = params[:q]
-      end
-      
-      if params.has_key? :fq
-        query_params[:fq] = params[:fq]
       end
     end
     
