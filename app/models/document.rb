@@ -1,26 +1,84 @@
 require 'active_record'
 
-class Document  
-  attr_reader :shasum, :doi, :authors, :title, :journal
-  attr_reader :year, :volume, :number, :pages, :fulltext
-  attr_reader :term_vectors, :term_list
+class Document
+  # The SHA-1 hash of the document's PDF file
+  attr_reader :shasum
   
-  def doi_url
-    "http://dx.doi.org/" + doi
-  end
+  # The DOI (Digital Object Identifier) of this document
+  attr_reader :doi
+  
+  # A URL to the DOI-resolving page for the document
+  def doi_url; "http://dx.doi.org/" + doi; end
+    
+  # The document's authors, in "First Last" format, separated
+  # by commas
+  attr_reader :authors
+  
+  # The title of the document
+  attr_reader :title
+  
+  # The journal in which the document was published
+  attr_reader :journal
+  
+  # The year in which the document was published
+  attr_reader :year
+  
+  # The volume of the journal in which the article appears
+  attr_reader :volume
+  
+  # The issue number of the journal in which the article appears
+  attr_reader :number
+  
+  # Page numbers of the article
+  attr_reader :pages
+  
+  # OCR'ed full text of the document.  Available only if the document
+  # is retrieved by +Document.find+ with the +fulltext+ parameter set
+  # to +true+.
+  attr_reader :fulltext
+  
+  # Term vectors for this document.  This is provided in the following
+  # format:
+  #
+  #   doc.term_vectors["word"]
+  #     # Term frequency (number of times this term appears in doc)
+  #     doc.term_vectors["word"][:tf] = Integer
+  #     # Term offsets
+  #     doc.term_vectors["word"][:offsets] = Array
+  #       # The start and end character offsets for "word" within 
+  #       # doc.fulltext
+  #       doc.term_vectors["word"][:offsets][0] = Range
+  #       ...
+  #     # Term positions
+  #     doc.term_vectors["word"][:positions] = Array
+  #       # The word-index of this word in doc.fulltext
+  #       doc.term_vectors["word"][:positions][0] = Integer
+  #       ...
+  #     # Number of documents in collection that contain "word"
+  #     doc.term_vectors["word"][:df] = Float
+  #     # Term frequency-inverse document frequency for "word"
+  #     doc.term_vectors["word"][:tfidf] = Float
+  #   doc.term_vectors["otherword"]
+  #   ...
+  #
+  attr_reader :term_vectors  
   
   
-  
-  def self.all
-    search("*:*", true)
-  end
   
   # Look up an individual document with the given shasum.  If the fulltext
-  # parameter is set to true, we will retrieve it, otherwise we will not.
+  # parameter is set to true, +document.fulltext+ and +document.term_vectors+
+  # will be set.
   #
   # If a matching document cannot be found, then this function will raise a 
   # RecordNotFound exception.  Other, worse exceptions may be thrown out of
   # RSolr.
+  #
+  # This function returns a hash:
+  #
+  #   h = Document.find("1234567890abcdef", true)
+  #   h[:document] = Document
+  #   h[:query_time] = Float
+  #
   def self.find(shasum, fulltext = false)
     solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
     
@@ -31,16 +89,13 @@ class Document
     query_type = fulltext ? "fulltext" : "precise"
     solr_response = solr.get('select', :params => { :qt => query_type, :q => "shasum:#{shasum}" })
     
-    # See if we have a document.  We only need to check == 0, because Solr
-    # has the 'shasum' field set as a unique key.  (Non-symbolized string hash
-    # keys?)
     raise ActiveRecord::RecordNotFound unless solr_response["response"]
     raise ActiveRecord::RecordNotFound unless solr_response["response"]["numFound"]
     raise ActiveRecord::RecordNotFound if solr_response["response"]["numFound"] == 0
     raise ActiveRecord::RecordNotFound unless solr_response["response"]["docs"]
     
     # Get term vectors, if we're full-text
-    term_vectors = term_list = nil
+    term_vectors = nil
     if fulltext and solr_response["termVectors"]
       # The response format here is incredibly arcane and nearly useless,
       # turn it into something worthwhile
@@ -48,8 +103,8 @@ class Document
       term_vectors = {}
       
       (0...tvec_array.length).step(2) do |i|
-        term = tvec_array[i-1]
-        attr_array = tvec_array[i]
+        term = tvec_array[i]
+        attr_array = tvec_array[i+1]
         hash = {}
         
         (0...attr_array.length).step(2) do |j|
@@ -90,27 +145,50 @@ class Document
   # Look up an array of documents from the given parameters structure.
   # Recognized here are the following:
   #
-  #   params[:q] => Solr query string
-  #   params[:fq][] => Solr faceted query (an array)
-  #   params[:precise] => If true, send query through Solr syntax, else
-  #     the Dismax parser
-  #   params[:authors] => Search query for authors
-  #   params[:title] => Search query for title{,_search}
-  #   params[:title_type] => (exact|fuzzy) Search on title, or title_search?
-  #   params[:journal] => Search query for journal{,_search}
-  #   params[:journal_type] => (exact|fuzzy) Search on journal, or 
-  #     journal_search?
-  #   params[:year_start] => Start year for year range
-  #   params[:year_end] => End year for year range
-  #   params[:volume] => Search query for volume
-  #   params[:number] => Search query for number
-  #   params[:pages] => Search query for pages
-  #   params[:fulltext] => Search query for fulltext{,search}
-  #   params[:fulltext_type] => (exact|fuzzy) Search on fulltext, or
-  #     fulltext_search?
+  #   # Solr query string
+  #   :q => String
+  #   # Solr faceted query (an array)
+  #   :fq[] => Array[String]
+  #   # If present, send query through Solr syntax, else the Dismax parser
+  #   :precise => Nil?
+  #   # Search query for authors
+  #   :authors => String
+  #   # Search query for title
+  #   :title => String
+  #   # Perform an exact or a stemmed title search?
+  #   :title_type => String (exact|fuzzy)
+  #   # Search query for journal
+  #   :journal => String
+  #   # Perform an exact or a stemmed journal search?
+  #   :journal_type => String (exact|fuzzy)
+  #   # Start year for year range
+  #   :year_start => String
+  #   # End year for year range
+  #   :year_end => String
+  #   # Search query for volume
+  #   :volume => String
+  #   # Search query for number
+  #   :number => String
+  #   # Search query for pages
+  #   :pages => String
+  #   # Search query for fulltext
+  #   :fulltext => String
+  #   # Perform an exact or a stemmed fulltext search?
+  #   :fulltext_type => String (exact|fuzzy)
   #
-  # This returns an empty array on failure, and will not throw except in 
-  # dire circumstances.
+  # This function returns a hash:
+  #
+  #   h = Document.find("1234567890abcdef", true)
+  #   h[:documents] = Array[Document]
+  #   h[:query_time] = Float
+  #   h[:facets] = Hash
+  #     h[:facets][:author]
+  #     h[:facets][:journal]
+  #     h[:facets][:year]
+  #       h[:facets][...]["Facet Element"] = Integer
+  #
+  # On failure, this will simply return an empty +:documents+ array, and
+  # will not throw an exception unless an RSolr error occurs.
   def self.search(params)
     solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
     
@@ -159,7 +237,7 @@ class Document
     # See the note on solr.get in self.find
     solr_response = solr.get('select', :params => query_params)
     unless solr_response["response"] and solr_response["response"]["docs"]
-      return []
+      return { :documents => [], :query_time => 0, :facets => nil }
     end
     
     # Process the facet information
@@ -208,9 +286,8 @@ class Document
     @term_vectors = term_vectors
   end
   
-  # Return the document's SHA-1 sum, which will function as a URL parameter.
-  # It's pre-sanitized for our convenience, all characters can appear in
-  # URLs.
+  # Return the document's SHA-1 sum, which will function as the permanent
+  # URL parameter for a document.
   def to_param
     shasum
   end  

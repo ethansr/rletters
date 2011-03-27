@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: DocumentsHelper</title>
+
+	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="./app/helpers/documents_helper_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="app/helpers/documents_helper.rb">app/helpers/documents_helper.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-author_link">#author_link</a></li>
+					
+					<li><a href="#method-i-authors_link">#authors_link</a></li>
+					
+					<li><a href="#method-i-decade_link">#decade_link</a></li>
+					
+					<li><a href="#method-i-field_facets_list">#field_facets_list</a></li>
+					
+					<li><a href="#method-i-journal_link">#journal_link</a></li>
+					
+					<li><a href="#method-i-selected_facets_list">#selected_facets_list</a></li>
+					
+					<li><a href="#method-i-year_link">#year_link</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./ApplicationController.html">ApplicationController</a></li>
+				
+					<li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+				
+					<li><a href="./Document.html">Document</a></li>
+				
+					<li><a href="./DocumentsController.html">DocumentsController</a></li>
+				
+					<li><a href="./DocumentsHelper.html">DocumentsHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">DocumentsHelper</h1>
+
+		<div id="description">
+			<p>
+encoding: utf-8
+</p>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="author-link-method" class="method-detail ">
+				<a name="method-i-author_link"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">author_link</span><span
+						class="method-args">(author, link = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="author-link-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 4</span>
+4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author_link</span>(<span class="ruby-identifier">author</span>, <span class="ruby-identifier">link</span> = <span class="ruby-keyword kw">nil</span>)
+5:     <span class="ruby-identifier">link</span> = <span class="ruby-identifier">author</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">nil?</span> 
+6:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">link</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-value">:add_facet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;authors_facet:\&quot;#{author}\&quot;&quot;</span>)
+7:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="authors-link-method" class="method-detail ">
+				<a name="method-i-authors_link"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">authors_link</span><span
+						class="method-args">(authors)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="authors-link-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 9</span>
+ 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authors_link</span>(<span class="ruby-identifier">authors</span>)
+10:     <span class="ruby-identifier">raw</span>(<span class="ruby-identifier">authors</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">','</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">author_link</span> <span class="ruby-identifier">a</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;, &quot;</span>))
+11:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="decade-link-method" class="method-detail ">
+				<a name="method-i-decade_link"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">decade_link</span><span
+						class="method-args">(decade, link = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="decade-link-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 17</span>
+17:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decade_link</span>(<span class="ruby-identifier">decade</span>, <span class="ruby-identifier">link</span> = <span class="ruby-keyword kw">nil</span>)
+18:     <span class="ruby-identifier">link</span> = <span class="ruby-identifier">decade</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">nil?</span>
+19:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">decade</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;1790&quot;</span>
+20:       <span class="ruby-identifier">query</span> = <span class="ruby-value str">&quot;[* TO 1799]&quot;</span>
+21:     <span class="ruby-keyword kw">else</span>
+22:       <span class="ruby-identifier">last</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">decade</span>) <span class="ruby-operator">+</span> <span class="ruby-value">9</span>
+23:       <span class="ruby-identifier">query</span> = <span class="ruby-node">&quot;[#{decade} TO #{last}]&quot;</span>
+24:     <span class="ruby-keyword kw">end</span>
+25:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">link</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-value">:add_facet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;year:#{query}&quot;</span>)
+26:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="field-facets-list-method" class="method-detail ">
+				<a name="method-i-field_facets_list"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">field_facets_list</span><span
+						class="method-args">(facets, field)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="field-facets-list-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 67</span>
+67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_facets_list</span>(<span class="ruby-identifier">facets</span>, <span class="ruby-identifier">field</span>)
+68:     <span class="ruby-identifier">ret</span> = {}
+69:     <span class="ruby-identifier">facets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+70:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+71:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">field</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;year&quot;</span>
+72:         <span class="ruby-identifier">ys</span> = <span class="ruby-identifier">k</span>
+73:         <span class="ruby-identifier">ys</span> = <span class="ruby-value str">&quot;*&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ys</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;1790&quot;</span>
+74:         <span class="ruby-identifier">ye</span> = (<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">ys</span>) <span class="ruby-operator">+</span> <span class="ruby-value">9</span>).<span class="ruby-identifier">to_s</span>
+75:         <span class="ruby-identifier">ye</span> = <span class="ruby-value str">&quot;*&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ye</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;2019&quot;</span>
+76:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:facets</span>].<span class="ruby-identifier">count</span>(<span class="ruby-node">&quot;year:[#{ys} TO #{ye}]&quot;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+77:       <span class="ruby-keyword kw">else</span>
+78:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:facets</span>].<span class="ruby-identifier">count</span>(<span class="ruby-node">&quot;#{field}:\&quot;#{k}\&quot;&quot;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+79:       <span class="ruby-keyword kw">end</span>
+80:       
+81:       <span class="ruby-identifier">ret</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">c</span>
+82:     <span class="ruby-keyword kw">end</span>
+83:     <span class="ruby-identifier">ret</span>
+84:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="journal-link-method" class="method-detail ">
+				<a name="method-i-journal_link"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">journal_link</span><span
+						class="method-args">(journal)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="journal-link-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 13</span>
+13:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">journal_link</span>(<span class="ruby-identifier">journal</span>)
+14:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">journal</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-value">:add_facet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;journal_facet:\&quot;#{journal}\&quot;&quot;</span>)
+15:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="selected-facets-list-method" class="method-detail ">
+				<a name="method-i-selected_facets_list"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">selected_facets_list</span><span
+						class="method-args">(facets)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="selected-facets-list-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 40</span>
+40:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">selected_facets_list</span>(<span class="ruby-identifier">facets</span>)
+41:     <span class="ruby-identifier">remove_all_link</span> = <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">documents_path</span>(<span class="ruby-value">:remove_facet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;all&quot;</span>), <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;button negative&quot;</span> <span class="ruby-keyword kw">do</span>
+42:       <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:span</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;icon cross&quot;</span>) <span class="ruby-operator">+</span>
+43:       <span class="ruby-identifier">raw</span>(<span class="ruby-value str">&quot;Remove all&quot;</span>)
+44:     <span class="ruby-keyword kw">end</span>
+45:     
+46:     <span class="ruby-identifier">facets</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">facet</span><span class="ruby-operator">|</span>
+47:       <span class="ruby-identifier">arr</span> = <span class="ruby-identifier">facet</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;:&quot;</span>)
+48:       <span class="ruby-identifier">field_map</span> = { <span class="ruby-value str">&quot;year&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Year&quot;</span>, <span class="ruby-value str">&quot;authors_facet&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Author&quot;</span>, 
+49:         <span class="ruby-value str">&quot;journal_facet&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Journal&quot;</span> }
+50:       <span class="ruby-identifier">field</span> = <span class="ruby-identifier">field_map</span>[<span class="ruby-identifier">arr</span>[<span class="ruby-value">0</span>]]
+51:       <span class="ruby-identifier">value</span> = <span class="ruby-identifier">arr</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;\&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>)
+52:       
+53:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">field</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Year&quot;</span>
+54:         <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">value</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">2</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot; &quot;</span>)
+55:         <span class="ruby-identifier">parts</span>[<span class="ruby-value">0</span>] = <span class="ruby-value str">&quot;∞&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;*&quot;</span>
+56:         <span class="ruby-identifier">parts</span>[<span class="ruby-value">2</span>] = <span class="ruby-value str">&quot;∞&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;*&quot;</span>
+57:         <span class="ruby-identifier">value</span> = <span class="ruby-node">&quot;#{parts[0]}–#{parts[2]}&quot;</span>
+58:       <span class="ruby-keyword kw">end</span>
+59:       
+60:       <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">documents_path</span>(<span class="ruby-value">:remove_facet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">facet</span>), <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;button negative&quot;</span> <span class="ruby-keyword kw">do</span>
+61:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:span</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;icon cross&quot;</span>) <span class="ruby-operator">+</span>
+62:         <span class="ruby-identifier">raw</span>(<span class="ruby-node">&quot;#{field}: #{value} &quot;</span>)
+63:       <span class="ruby-keyword kw">end</span>
+64:     }.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">remove_all_link</span>)
+65:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="year-link-method" class="method-detail ">
+				<a name="method-i-year_link"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">year_link</span><span
+						class="method-args">(year, link = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="year-link-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 28</span>
+28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">year_link</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">link</span> = <span class="ruby-keyword kw">nil</span>)
+29:     <span class="ruby-identifier">link</span> = <span class="ruby-identifier">year</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">nil?</span>
+30:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">year</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-value">1799</span>
+31:       <span class="ruby-identifier">decade</span> = <span class="ruby-value str">&quot;1790&quot;</span>
+32:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">year</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">2010</span>
+33:       <span class="ruby-identifier">decade</span> = <span class="ruby-value str">&quot;2010&quot;</span>
+34:     <span class="ruby-keyword kw">else</span>
+35:       <span class="ruby-identifier">decade</span> = ((<span class="ruby-constant">Float</span>(<span class="ruby-identifier">year</span>) <span class="ruby-operator">/</span> <span class="ruby-value">10.0</span>).<span class="ruby-identifier">floor</span> * <span class="ruby-value">10</span>).<span class="ruby-identifier">to_s</span>
+36:     <span class="ruby-keyword kw">end</span>
+37:     <span class="ruby-identifier">decade_link</span> <span class="ruby-identifier">decade</span>, <span class="ruby-identifier">link</span>
+38:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
