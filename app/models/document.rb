@@ -34,42 +34,42 @@ class Document
     # See if we have a document.  We only need to check == 0, because Solr
     # has the 'shasum' field set as a unique key.  (Non-symbolized string hash
     # keys?)
-    raise ActiveRecord::RecordNotFound unless solr_response.has_key? "response"
-    raise ActiveRecord::RecordNotFound unless solr_response["response"].has_key? "numFound"
+    raise ActiveRecord::RecordNotFound unless solr_response["response"]
+    raise ActiveRecord::RecordNotFound unless solr_response["response"]["numFound"]
     raise ActiveRecord::RecordNotFound if solr_response["response"]["numFound"] == 0
-    raise ActiveRecord::RecordNotFound unless solr_response["response"].has_key? "docs"
+    raise ActiveRecord::RecordNotFound unless solr_response["response"]["docs"]
     
     # Get term vectors, if we're full-text
     term_vectors = term_list = nil
-    if fulltext and solr_response.has_key? "termVectors"
+    if fulltext and solr_response["termVectors"]
       # The response format here is incredibly arcane and nearly useless,
       # turn it into something worthwhile
       tvec_array = solr_response["termVectors"][1][3]
       term_vectors = {}
       
-      1.step(tvec_array.length, 2) do |i|
+      (0...tvec_array.length).step(2) do |i|
         term = tvec_array[i-1]
         attr_array = tvec_array[i]
         hash = {}
         
-        1.step(attr_array.length, 2) do |j|
-          key = attr_array[j-1]
-          val = attr_array[j]
+        (0...attr_array.length).step(2) do |j|
+          key = attr_array[j]
+          val = attr_array[j+1]
           
           case key
           when 'tf'
             hash[:tf] = Integer(val)
           when 'offsets'
             hash[:offsets] = []
-            3.step(val.length, 4) do |k|
-              s = Integer(val[k-2])
-              e = Integer(val[k])
+            (0...val.length).step(4) do |k|
+              s = Integer(val[k+1])
+              e = Integer(val[k+3])
               hash[:offsets] << (s...e)
             end
           when 'positions'
             hash[:positions] = []
-            1.step(val.length, 2) do |k|
-              p = Integer(val[k])
+            (0...val.length).step(2) do |k|
+              p = Integer(val[k+1])
               hash[:positions] << p
             end
           when 'df'
@@ -158,7 +158,7 @@ class Document
     
     # See the note on solr.get in self.find
     solr_response = solr.get('select', :params => query_params)
-    if solr_response["response"] or solr_response["response"]["docs"]
+    unless solr_response["response"] and solr_response["response"]["docs"]
       return []
     end
     
@@ -178,15 +178,9 @@ class Document
         end
       end
       
-      # The other fields are easier
       if solr_facets["facet_fields"]
         { "authors_facet" => :author, "journal_facet" => :journal }.each do |s, f|
-          if solr_facets["facet_fields"][s]
-            facets[f] = {}
-            1.step(solr_facets["facet_fields"][s].length, 2) do |i|
-              facets[f][solr_facets["facet_fields"][s][i-1]] = solr_facets["facet_fields"][s][i]
-            end
-          end
+          facets[f] = Hash[*solr_facets["facet_fields"][s].flatten]
         end
       end
     end
