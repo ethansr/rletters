@@ -133,8 +133,7 @@ class Document
       
       # Year has to be handled separately for range support
       if params[:year_start] or params[:year_end]
-        year = nil
-        year ||= params[:year_start]
+        year = params[:year_start]
         year ||= params[:year_end]
         if params[:year_start] and params[:year_end]
           year = "[#{params[:year_start]} TO #{params[:year_end]}]"
