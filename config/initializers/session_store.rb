@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 Evotext::Application.config.session_store :cookie_store, :key => '_evotext_session'
 Evotext::Application.config.action_dispatch.session = {
   :key => '_evotext_session',

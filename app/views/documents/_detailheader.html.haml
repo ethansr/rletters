@@ -1,0 +1,14 @@
+.detailcite
+  %p
+    %strong Detailed information for:
+  %p.cite
+    = document.title
+    %br
+    = render :partial => "citation", :locals => { :document => document }
+
+%h2.detailheader
+  = title
+%p.backlink
+  = link_to '«« back to document page', document_path(document)
+
+.clearboth

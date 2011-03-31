@@ -47,13 +47,16 @@ small {
   @include font-size(11px);
 }
 
-form input {
-  height: 13px;
+input {
+  height: 25px;
   font-size: 13px;
-  line-height: 13px;
-  padding: 6px;
+  line-height: 25px;
+  
+  padding: 0;
   margin: 0;
+  
   border: 1px solid #cacaca;
+  
   vertical-align: top;
 }
 
@@ -123,4 +126,6 @@ footer {
 @import "partials/index";
 @import "partials/searchbar";
 @import "partials/advsearch";
+@import "partials/details";
 @import "partials/concordance";
+

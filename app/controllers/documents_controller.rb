@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 class DocumentsController < ApplicationController
   before_filter :default_attrs
   def default_attrs

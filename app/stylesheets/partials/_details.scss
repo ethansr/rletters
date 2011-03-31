@@ -1,0 +1,37 @@
+// All document-details pages (/document/XXXX/something)
+
+.detailcite {
+  width: 50%;
+  float: right;
+  position: relative;
+  right: 0;
+  
+  @include font-size(11px);
+  margin: 0 0 2em 2em;
+  padding: 1em;
+  border: 1px solid #cacaca;
+  background-color: #f3f3f3;
+}
+
+.detailcite p { margin: 0; }
+
+.detailcite .cite {
+  margin-left: 2em;
+}
+
+.detailheader { margin-bottom: 0; }
+.backlink { @include font-size(11px); margin: 0 0 2em 2em; }
+
+table.terms {
+  margin: 1em;
+
+  border: {
+    top: 2px solid black;
+    bottom: 2px solid black;
+
+    collapse: separate;
+    spacing: 8px 4px; 
+  }
+  th { border-bottom: 1px solid black; }
+  td.num { text-align: center; }
+}

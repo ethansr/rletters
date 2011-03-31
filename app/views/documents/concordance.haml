@@ -1,15 +1,12 @@
-%h2 Term Concordance
-%p
-  = link_to 'Back to document details...', @document
+= render :partial => 'documents/detailheader', :locals => { :document => @document, :title => 'Term Concordance' }
 
 = form_tag(concordance_document_path(@document), { :method => "get" }) do
   = label_tag(:word, "Display concordance for word:")
   %br
   = text_field_tag(:word, @search_params[:word])
-  %span><
-    = content_tag(:button, :type => :submit, :class => "button right") do
-      %span.magnifier.icon><
-      Get Concordance
+  = content_tag(:button, :type => :submit, :class => "button right") do
+    %span.magnifier.icon><
+    Get Concordance
 
 - if @search_params.has_key? :word
   %h3== Concordance for term “#{@search_params[:word]}”

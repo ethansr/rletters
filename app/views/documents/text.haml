@@ -1,14 +1,7 @@
-.content
-  %h2 Full Document Text
-  %p
-    = link_to 'Back to document details...', @document
-  
-  %p
-    Full text for document
-    = @document.title + ":"
-  
-  %hr
-  
-  .text
-    :escaped
-      #{@document.fulltext}
+= render :partial => 'documents/detailheader', :locals => { :document => @document, :title => 'Full Document Text' }
+
+%hr
+
+.text
+  :escaped
+    #{@document.fulltext}

@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 module ApplicationHelper
   def tooltip(id, string, width = 200)
     content_for :javascripts do
