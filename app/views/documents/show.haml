@@ -11,6 +11,14 @@
   %a{:href => @document.doi_url}== doi:#{@document.doi}
 
 %p
+  %strong Excerpt:
+  = help_image 400 do
+    :markdown
+      For reasons of copyright, we show only the first 200 characters of the document's full-text here.  For more of the document, please visit the publisher's website using the DOI link above.
+  %br
+  == #{@document.fulltext[0..200].sub(/ ?\S*$/,'')}&hellip;
+
+%p
   %strong More:
   = link_to 'Term Frequencies', terms_document_path(@document)
   = " | "

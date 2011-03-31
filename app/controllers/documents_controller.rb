@@ -1,5 +1,3 @@
-# coding: UTF-8
-
 class DocumentsController < ApplicationController
   before_filter :default_attrs
   def default_attrs
@@ -39,16 +37,7 @@ class DocumentsController < ApplicationController
     @no_searchbar = true
   end
   
-  %W(show).each do |m|
-    class_eval <<-RUBY
-    def #{m}
-      @search_params = params
-      hash_to_instance_variables Document.find(params[:id], false)
-    end
-    RUBY
-  end
-  
-  %W(terms concordance text).each do |m|
+  %W(show terms concordance text).each do |m|
     class_eval <<-RUBY
     def #{m}
       @search_params = params
