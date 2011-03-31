@@ -1,10 +1,7 @@
 %h2 Document Information
 
 %p
-  %strong Title: 
-  = @document.title
-  %br
-  = render :partial => "citation", :locals => { :document => @document }
+  = render :partial => "cite_nolinks", :locals => { :document => @document }
 
 %p
   %strong PDF:
@@ -19,7 +16,8 @@
   == #{@document.fulltext[0..200].sub(/ ?\S*$/,'')}&hellip;
 
 %p
-  %strong More:
+  %strong More Document Details:
+  %br
   = link_to 'Term Frequencies', terms_document_path(@document)
   = " | "
   = link_to 'Term Concordance', concordance_document_path(@document)

@@ -2,9 +2,7 @@
   %p
     %strong Detailed information for:
   %p.cite
-    = document.title
-    %br
-    = render :partial => "citation", :locals => { :document => document }
+    = render :partial => "cite_nolinks", :locals => { :document => document }
 
 %h2.detailheader
   = title

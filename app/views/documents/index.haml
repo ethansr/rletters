@@ -33,7 +33,8 @@
 
 %ul.docs
   - for doc in @documents
-    = render :partial => "document", :locals => { :document => doc }
+    %li
+      = render :partial => "cite_links", :locals => { :document => doc }
 
 .pagination
   = will_paginate @documents
