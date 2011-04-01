@@ -17,13 +17,15 @@
       
       %ul.facetcategories
         - get_facets.each do |facet|
+          - content = render_solr_facet(params, facet, @facets[facet[:key]])
+          - next if content.blank?
           %li
             %p.header
               %a{:href => '#'}
                 %span.icon
                 = facet[:name]
             %div.collapse
-              %p= render_solr_facet(params, facet, @facets[facet[:key]])
+              %p= content
       
       = content_for :javascripts do
         = javascript_tag "$(document).ready(function() { $('ul.facetcategories').accordion({ icons: false, collapsible: true, active: false }); });"
