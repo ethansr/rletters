@@ -138,15 +138,14 @@ ul.docs li { margin: 0; padding: 1em; border-bottom: 1px dashed #cacaca; }
 .rightcol .rightbox { -moz-border-radius: 6px; -webkit-border-radius: 6px; -o-border-radius: 6px; -ms-border-radius: 6px; -khtml-border-radius: 6px; border-radius: 6px; border: 1px solid #cacaca; background-color: #f2f2f2; margin: 0 0 3em 0; padding-bottom: 1em; }
 .rightcol .rightbox .boxheader { height: 30px; font-size: 100%; padding: 10px 10px 0 10px; color: #535353; -moz-border-radius-topleft: 6px; -webkit-border-top-left-radius: 6px; -o-border-top-left-radius: 6px; -ms-border-top-left-radius: 6px; -khtml-border-top-left-radius: 6px; border-top-left-radius: 6px; -moz-border-radius-topright: 6px; -webkit-border-top-right-radius: 6px; -o-border-top-right-radius: 6px; -ms-border-top-right-radius: 6px; -khtml-border-top-right-radius: 6px; border-top-right-radius: 6px; border-bottom: 1px solid #cacaca; }
 .rightcol .rightbox h2 { font-size: 1.1em; margin: 0; }
-.rightcol .rightbox p.selectedfacets { background: white; border-bottom: 1px solid #cacaca; margin: 0; padding: 10px; font-size: 93%; }
+.rightcol .rightbox p { margin: 0; }
+.rightcol .rightbox .selectedfacets { background: white; border-bottom: 1px solid #cacaca; padding: 10px; font-size: 93%; line-height: 1.5; }
 .rightcol .rightbox ul.facetcategories { list-style-type: none; margin: 0; }
 .rightcol .rightbox ul.facetcategories li { background: white; border-bottom: 1px solid #cacaca; }
-.rightcol .rightbox ul.facetcategories li .header { margin: 0; }
 .rightcol .rightbox ul.facetcategories li .header.ui-state-focus { outline: none; }
 .rightcol .rightbox ul.facetcategories li .header a { text-decoration: none; color: black; display: block; width: 250px; height: 100%; padding: 10px; }
 .rightcol .rightbox ul.facetcategories li .header a span.icon { display: block; float: right; position: relative; right: 0; }
-.rightcol .rightbox ul.facetcategories li .collapse { padding: 10px; font-size: 93%; border-top: 1px dashed #cacaca; }
-.rightcol .rightbox ul.facetcategories li .collapse p { margin: 0; }
+.rightcol .rightbox ul.facetcategories li .collapse { padding: 10px; font-size: 93%; line-height: 1.5; border-top: 1px dashed #cacaca; }
 .rightcol .rightbox h3 { font-size: 1em; margin-top: 1.2em; margin-bottom: 0.2em; }
 
 header .searchbar { text-align: right; vertical-align: baseline; }

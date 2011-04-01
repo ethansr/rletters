@@ -45,14 +45,16 @@ ul.docs li {
       margin: 0;
     }
     
-    p.selectedfacets {
+    p { margin: 0; }
+    
+    .selectedfacets {
       background: white;
       border-bottom: 1px solid $border-color;
 
-      margin: 0;
       padding: 10px;
       
       @include font-size(12px);
+      line-height: 1.5;
     }
     
     ul.facetcategories {
@@ -65,8 +67,6 @@ ul.docs li {
         
         .header {
           &.ui-state-focus { outline: none; }
-          
-          margin: 0;
           
           a {            
             text-decoration: none;
@@ -93,9 +93,9 @@ ul.docs li {
         
         .collapse {
           padding: 10px;
-          p { margin: 0; }
           
           @include font-size(12px);
+          line-height: 1.5;
           
           border-top: 1px dashed $border-color;
         }
