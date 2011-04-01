@@ -9,24 +9,6 @@ class DocumentsController < ApplicationController
     page = params.has_key?(:page) ? Integer(params[:page]) : 1;
     num = params.has_key?(:num) ? Integer(params[:num]) : 10;
     
-    # Fetch the add and remove facets from the session and the params
-    session[:facets] ||= []
-    if params.has_key? :add_facet and session[:facets].count(params[:add_facet]) == 0
-      session[:facets] << params[:add_facet]
-    end
-    
-    if params.has_key? :remove_facet
-      if params[:remove_facet] == "all"
-        session[:facets] = []
-      else
-        session[:facets].delete params[:remove_facet]
-      end
-    end
-    
-    # Turn the "facets" parameter into an "fq" parameter for Solr
-    params[:fq] = []
-    session[:facets].each { |q| params[:fq] << q }
-    
     # Set all the variables, but then paginate the documents
     hash_to_instance_variables Document.search(params)
     @documents = @documents.paginate(:page => page, :per_page => num)

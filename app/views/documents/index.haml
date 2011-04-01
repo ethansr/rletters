@@ -1,15 +1,14 @@
-- if params[:q] or params[:precise]
+- if params[:q] or params[:fq] or params[:precise]
   - title "Search Results"
 
 .rightcol
-  - if session[:facets] and not session[:facets].empty?
+  - unless params[:fq].blank?
     .rightbox
       .boxheader
         %h2 Active Filters
       
       %p.selectedfacets
-        - selected_facets_list(session[:facets]).each do |f|
-          = f
+        = render_selected_facets(params)
     
   - if @facets
     .rightbox
@@ -24,11 +23,7 @@
                 %span.icon
                 = facet[:name]
             %div.collapse
-              %p
-                - facet_value_list(@facets[facet[:key]], facet[:field]).each do |val|
-                  %span.nowrap
-                    = facet[:func].call(val[:value], val[:link])
-                    = " (#{val[:count]})"
+              %p= render_solr_facet(params, facet, @facets[facet[:key]])
       
       = content_for :javascripts do
         = javascript_tag "$(document).ready(function() { $('ul.facetcategories').accordion({ icons: false, collapsible: true, active: false }); });"

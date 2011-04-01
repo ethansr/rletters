@@ -1,6 +1,7 @@
 %strong= document.title
 %br
-= authors_link document.authors
+- document.authors.split(',').each do |a|
+  = author_link a
 %br
 %em><
   = journal_link document.journal

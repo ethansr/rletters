@@ -1,18 +1,32 @@
 # coding: UTF-8
 
 module DocumentsHelper
-  def author_link(author, link = nil)
-    link = author unless link
-    link_to link, documents_path(:add_facet => "authors_facet:\"#{author}\"")
-  end
+  FACETS = [
+      { :name => "Authors", :key => :author, 
+        :field => 'authors_facet', :func => :author_link },
+      { :name => "Journals", :key => :journal,
+        :field => 'journal_facet', :func => :journal_link },
+      { :name => "Decade of Publication", :key => :year,
+        :field => 'year', :func => :decade_link }
+    ]
   
-  def authors_link(authors)
-    raw(authors.split(',').map{ |a| author_link a }.join(", "))
-  end
+  def get_facets; FACETS; end
   
-  def journal_link(journal, link = nil)
-    link = journal unless link
-    link_to link, documents_path(:add_facet => "journal_facet:\"#{journal}\"")
+  # Automatically generate methods for everything but 
+  # the 'year' facet
+  FACETS.each do |facet|
+    next if facet[:field] == 'year'
+    class_eval <<-RUBY
+    def #{facet[:func].to_s} (val, link = nil)
+      link = val unless link
+      
+      new_params = params.dup
+      new_params[:fq] ||= []
+      new_params[:fq] << %(#{facet[:field]}:") + val + '"'
+      
+      link_to link, documents_path(new_params)
+    end
+    RUBY
   end
   
   def decade_link(decade, link = nil)
@@ -23,7 +37,12 @@ module DocumentsHelper
       last = Integer(decade) + 9
       query = "[#{decade} TO #{last}]"
     end
-    link_to link, documents_path(:add_facet => "year:#{query}")
+
+    new_params = params.dup
+    new_params[:fq] ||= []
+    new_params[:fq] << "year:#{query}"
+    
+    link_to link, documents_path(new_params)
   end
   
   def year_link(year, link = nil)
@@ -38,64 +57,72 @@ module DocumentsHelper
     decade_link decade, link
   end
   
-  def selected_facets_list(facets)
-    remove_all_link = link_to documents_path(:remove_facet => "all"), :class => "nowrap" do
-      raw("Remove All ") +
-      content_tag(:span, "", :class => "icon cross")
-    end
+  
+  def render_selected_facets(params)
+    return "" if params[:fq].blank?
+    ret = ""
     
-    facets.map { |facet|
-      arr = facet.split(":")
-      field_map = { "year" => "Year", "authors_facet" => "Author", 
-        "journal_facet" => "Journal" }
-      field = field_map[arr[0]]
+    params[:fq].each do |query|
+      arr = query.split(":")
+      
+      field = get_facets.find { |f| f[:field] == arr[0] }[:name]
       value = arr[1].gsub("\"", "")
       
-      if field == "Year"
+      if field == "Decade of Publication"
         parts = value[1..-2].split(" ")
-        parts[0] = "∞" if parts[0] == "*"
-        parts[2] = "∞" if parts[1] == "*"
-        value = "#{parts[0]}–#{parts[2]}"
+        value = parts[0] == '*' ? "1790s and earlier" : "#{parts[0]}s"
       end
       
-      link_to documents_path(:remove_facet => facet), :class => "nowrap" do
+      new_params = params.dup
+      new_params[:fq].delete(query)
+      
+      ret += link_to documents_path(new_params), :class => "nowrap" do
         raw("#{field}: #{value} ") +
         content_tag(:span, "", :class => "icon cross")
       end
-    }.push(remove_all_link)
+      ret += " "
+    end
+    
+    no_facets_params = params.dup
+    no_facets_params.delete(:fq)
+    
+    ret += link_to(documents_path(no_facets_params), :class => "nowrap") { 
+      raw("Remove All ") +
+      content_tag(:span, "", :class => "icon cross")
+    }
+    
+    raw(ret)
   end
   
-  def facet_value_list(facet, field)
-    ret = []
-    facet.each do |k, c|
-      next if c == 0
-      if field == "year"
-        ys = k
-        ys = "*" if ys == "1790"
-        ye = (Integer(ys) + 9).to_s
-        ye = "*" if ye == "2019"
-        next if session[:facets].count("year:[#{ys} TO #{ye}]") > 0
+  def render_solr_facet(params, facet, solr_values)
+    return "" if solr_values.blank?
+    
+    ret = ""
+    solr_values.each do |key, count|
+      next if count == 0
+      
+      if facet[:field] == 'year'
+        year_start = key
+        year_start = "*" if year_start == "1790"
+        year_end = (Integer(year_start) + 9).to_s
+        year_end = "*" if year_end == "2019"
         
-        link = "#{k}s"
-        link = "#{k}s and earlier" if k == "1790"
+        next if params[:fq] and params[:fq].count("year:[#{year_start} TO #{year_end}]") > 0
+        
+        link_text = "#{key}s"
+        link_text += " and earlier" if key == "1790"
       else
-        next if session[:facets].count("#{field}:\"#{k}\"") > 0
-        link = k
+        next if params[:fq] and params[:fq].count("#{facet[:field]}:\"#{key}\"") > 0
+        link_text = key
       end
       
-      ret << { :value => k, :count => c, :link => link }
+      ret += content_tag(:span, :class => "nowrap") do
+        method(facet[:func]).call(key, link_text) +
+        raw(" (#{count})")
+      end
+      ret += " "
     end
-    ret
-  end
-  
-  def get_facets
-    [
-      { :name => "Authors", :key => :author, 
-        :field => 'authors_facet', :func => method(:author_link) },
-      { :name => "Journals", :key => :journal,
-        :field => 'journal_facet', :func => method(:journal_link) },
-      { :name => "Decade of Publication", :key => :year,
-        :field => 'year', :func => method(:decade_link) }
-    ]
+    
+    raw(ret)
   end
 end
