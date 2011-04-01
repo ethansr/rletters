@@ -140,6 +140,8 @@ ul.docs li { margin: 0; padding: 1em; border-bottom: 1px dashed #cacaca; }
 .rightcol .rightbox h2 { font-size: 1.1em; margin: 0; }
 .rightcol .rightbox p { margin: 0; }
 .rightcol .rightbox .selectedfacets { background: white; border-bottom: 1px solid #cacaca; padding: 7px 10px; font-size: 93%; line-height: 1.5; }
+.rightcol .rightbox .selectedfacets a { text-decoration: none; }
+.rightcol .rightbox .selectedfacets a span.facet { text-decoration: underline; }
 .rightcol .rightbox ul.facetcategories { list-style-type: none; margin: 0; }
 .rightcol .rightbox ul.facetcategories li { background: white; border-bottom: 1px solid #cacaca; }
 .rightcol .rightbox ul.facetcategories li .header.ui-state-focus { outline: none; }

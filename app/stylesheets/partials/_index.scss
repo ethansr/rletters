@@ -55,6 +55,9 @@ ul.docs li {
       
       @include font-size(12px);
       line-height: 1.5;
+      
+      a { text-decoration: none; }
+      a span.facet { text-decoration: underline; }
     }
     
     ul.facetcategories {

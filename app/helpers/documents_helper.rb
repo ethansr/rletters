@@ -76,8 +76,9 @@ module DocumentsHelper
       new_params = params.dup
       new_params[:fq].delete(query)
       
-      ret += link_to documents_path(new_params), :class => "nowrap" do
-        raw("#{field}: #{value} ") +
+      ret += link_to documents_path(new_params), :class => "nowrap", :title => "Remove this search filter" do
+        content_tag(:span, "#{field}: #{value}", :class => "facet") +
+        content_tag(:span, raw("&nbsp;")) +
         content_tag(:span, "", :class => "icon cross")
       end
       ret += " "
@@ -86,10 +87,11 @@ module DocumentsHelper
     no_facets_params = params.dup
     no_facets_params.delete(:fq)
     
-    ret += link_to(documents_path(no_facets_params), :class => "nowrap") { 
-      raw("Remove All ") +
+    ret += link_to documents_path(no_facets_params), :class => "nowrap", :title => "Remove this search filter" do 
+      content_tag(:span, "Remove All", :class => "facet") +
+      content_tag(:span, raw("&nbsp;")) +
       content_tag(:span, "", :class => "icon cross")
-    }
+    end
     
     raw(ret)
   end
