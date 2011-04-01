@@ -51,7 +51,7 @@ ul.docs li {
       background: white;
       border-bottom: 1px solid $border-color;
 
-      padding: 10px;
+      padding: 7px 10px;
       
       @include font-size(12px);
       line-height: 1.5;
@@ -76,7 +76,7 @@ ul.docs li {
             
             width: 250px;
             height: 100%;
-            padding: 10px;
+            padding: 7px 10px;
             
             span.icon {
               @extend span.icon.downarrow;
@@ -92,7 +92,7 @@ ul.docs li {
         .header.ui-state-active a span.icon { @extend span.icon.uparrow; }
         
         .collapse {
-          padding: 10px;
+          padding: 7px 10px;
           
           @include font-size(12px);
           line-height: 1.5;
