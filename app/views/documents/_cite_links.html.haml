@@ -1,7 +1,6 @@
 %strong= document.title
 %br
-- document.authors.split(',').each do |a|
-  = author_link a
+!= document.authors.split(',').map { |a| author_link a.strip }.join(", ")
 %br
 %em><
   = journal_link document.journal
