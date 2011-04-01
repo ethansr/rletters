@@ -8,6 +8,8 @@
   
   %title
     == evoText
+    - t = yield(:title)
+    = " - #{t}" unless t.blank?
     
   %meta{ :content => "", :name => "description" }/
   %meta{ :content => "", :name => "author" }/

@@ -1,12 +1,7 @@
 // Main document list
 
-.selected_facets {
-  width: 65%;
-  line-height: 31px;
-}
-
 ul.docs {
-  width: 65%;
+  width: 575px;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -15,26 +10,103 @@ ul.docs {
 ul.docs li {
   margin: 0;
   padding: 1em;
-  border-bottom: 1px dashed #cacaca;
+  border-bottom: 1px dashed $border-color;
 }
 
 .pagination {
-  width: 65%;
+  width: 575px;
 }
 
-.facets {
-  width: 30%;
+.rightcol {
+  width: 270px;
   float: right;
+  
+  .rightbox {
+    @include border-radius(6px);
+    border: 1px solid $border-color;
+    
+    background-color: $box-color;
+    margin: 0 0 3em 0;
+    padding-bottom: 1em;
+    
+    .boxheader {
+      height: 30px;
+
+      @include font-size(13px);
+      padding: 10px 10px 0 10px;
+
+      color: #535353;
+      @include border-top-radius(6px);
+      border-bottom: 1px solid $border-color;      
+    }
+
+    h2 {      
+      font-size: 1.1em;
+      margin: 0;
+    }
+    
+    p.selectedfacets {
+      background: white;
+      border-bottom: 1px solid $border-color;
+
+      margin: 0;
+      padding: 10px;
+      
+      @include font-size(12px);
+    }
+    
+    ul.facetcategories {
+      list-style-type: none;
+      margin: 0;
+      
+      li {
+        background: white;
+        border-bottom: 1px solid $border-color;
+        
+        .header {
+          &.ui-state-focus { outline: none; }
+          
+          margin: 0;
+          
+          a {            
+            text-decoration: none;
+            color: black;
+            
+            display: block;
+            
+            width: 250px;
+            height: 100%;
+            padding: 10px;
+            
+            span.icon {
+              @extend span.icon.downarrow;
+              
+              display: block;
+              float: right;
+              position: relative;
+              right: 0;
+            }
+          }          
+        }
+        
+        .header.ui-state-active a span.icon { @extend span.icon.uparrow; }
+        
+        .collapse {
+          padding: 10px;
+          p { margin: 0; }
+          
+          @include font-size(12px);
+          
+          border-top: 1px dashed $border-color;
+        }
+      }
+    }
+    
+    h3 {
+      font-size: 1em;
+      margin-top: 1.2em;
+      margin-bottom: 0.2em;
+    }
+  }
 }
 
-.facets h2 {
-  font-size: 1.25em;
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-
-.facets h3 {
-  font-size: 1em;
-  margin-top: 1.2em;
-  margin-bottom: 0.2em;
-}

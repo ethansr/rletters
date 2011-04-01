@@ -20,3 +20,6 @@ gem "will_paginate"
 # Markdown
 gem "maruku"
 
+# JQuery
+gem "jquery-rails"
+

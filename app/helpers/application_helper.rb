@@ -1,9 +1,13 @@
 # coding: UTF-8
 
 module ApplicationHelper
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
+  
   def tooltip(id, string, width = 200)
     content_for :javascripts do
-      javascript_tag "$(function() {$(\"#{id}\").qtip({
+      javascript_tag "$(document).ready(function() {$(\"#{id}\").qtip({
         content: '#{string}',
         style: {
           name: 'light',

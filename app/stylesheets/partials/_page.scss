@@ -1,5 +1,8 @@
 @import "compass/css3";
 
+$border-color: #cacaca;
+$box-color: #f2f2f2;
+
 body, select, input, textarea {
   color: $font-color;
   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
@@ -55,7 +58,7 @@ input {
   padding: 0;
   margin: 0;
   
-  border: 1px solid #cacaca;
+  border: 1px solid $border-color;
   
   vertical-align: top;
 }
@@ -63,7 +66,7 @@ input {
 form textarea {
   width: 75%;
   height: 116px;
-  border: 1px solid #cacaca;
+  border: 1px solid $border-color;
   padding: 6px;
 }
 
@@ -97,13 +100,12 @@ input:invalid, textarea:invalid {
 body {}
 
 #container {
-  width: 80%;
-  position: relative;
-  left: 10%;
+  margin: 0 auto;
+  width: 900px;
 }
 
 header {
-  margin-top: 6%;
+  margin-top: 1em;
   margin-bottom: 2em;
 }
 

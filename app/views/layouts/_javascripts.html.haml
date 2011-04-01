@@ -5,12 +5,15 @@
   = javascript_include_tag "//www.google.com/jsapi?key=#{google_api_key}"
   :javascript
     google.load(#{ remote_jquery("1.5.1") });
+    google.load('jqueryui', '1.8');
 - else
   = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/#{ local_jquery("1.5.1") }"
+  = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
 
 -# fall back to local jQuery if necessary
 :javascript
   !window.jQuery && document.write(unescape('%3Cscript src="/javascripts/jquery.min.js"%3E%3C/script%3E'))
+  !window.jQuery.ui && document.write(unescape('%3Cscript src="/javascripts/jquery-ui.min.js"%3E%3C/script%3E'))
 
 -# Add jQuery plugins right here after jQuery loads
 = javascript_include_tag "/javascripts/jquery.qtip-1.0.0-rc3.min.js"

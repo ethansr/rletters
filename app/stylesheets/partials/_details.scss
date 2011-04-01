@@ -9,8 +9,10 @@
   @include font-size(11px);
   margin: 0 0 2em 2em;
   padding: 1em;
-  border: 1px solid #cacaca;
-  background-color: #f3f3f3;
+  
+  @include border-radius(6px);
+  border: 1px solid $border-color;
+  background-color: $box-color;
 }
 
 .detailcite p { margin: 0; }

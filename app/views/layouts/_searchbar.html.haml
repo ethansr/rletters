@@ -1,7 +1,8 @@
 .searchbar
   = form_tag(documents_path, :method => "get") do
     = label_tag(:q, "Search evoText")
-    = text_field_tag :q
+    = text_field_tag :q do
+      = params[:precise] ? "(advanced search)" : ""
     = content_tag(:button, :type => :submit, :class => "button") do
       %span.magnifier.icon><
       Search

@@ -2,7 +2,7 @@
 
 module DocumentsHelper
   def author_link(author, link = nil)
-    link = author if link.nil? 
+    link = author unless link
     link_to link, documents_path(:add_facet => "authors_facet:\"#{author}\"")
   end
   
@@ -10,12 +10,13 @@ module DocumentsHelper
     raw(authors.split(',').map{ |a| author_link a }.join(", "))
   end
   
-  def journal_link(journal)
-    link_to journal, documents_path(:add_facet => "journal_facet:\"#{journal}\"")
+  def journal_link(journal, link = nil)
+    link = journal unless link
+    link_to link, documents_path(:add_facet => "journal_facet:\"#{journal}\"")
   end
   
   def decade_link(decade, link = nil)
-    link = decade if link.nil?
+    link = decade unless link
     if decade == "1790"
       query = "[* TO 1799]"
     else
@@ -26,7 +27,7 @@ module DocumentsHelper
   end
   
   def year_link(year, link = nil)
-    link = year if link.nil?
+    link = year unless link
     if Integer(year) <= 1799
       decade = "1790"
     elsif Integer(year) > 2010
@@ -38,9 +39,9 @@ module DocumentsHelper
   end
   
   def selected_facets_list(facets)
-    remove_all_link = link_to documents_path(:remove_facet => "all"), :class => "button negative" do
-      content_tag(:span, "", :class => "icon cross") +
-      raw("Remove all")
+    remove_all_link = link_to documents_path(:remove_facet => "all"), :class => "nowrap" do
+      raw("Remove All ") +
+      content_tag(:span, "", :class => "icon cross")
     end
     
     facets.map { |facet|
@@ -57,16 +58,16 @@ module DocumentsHelper
         value = "#{parts[0]}–#{parts[2]}"
       end
       
-      link_to documents_path(:remove_facet => facet), :class => "button negative" do
-        content_tag(:span, "", :class => "icon cross") +
-        raw("#{field}: #{value} ")
+      link_to documents_path(:remove_facet => facet), :class => "nowrap" do
+        raw("#{field}: #{value} ") +
+        content_tag(:span, "", :class => "icon cross")
       end
     }.push(remove_all_link)
   end
   
-  def field_facets_list(facets, field)
-    ret = {}
-    facets.each do |k, c|
+  def facet_value_list(facet, field)
+    ret = []
+    facet.each do |k, c|
       next if c == 0
       if field == "year"
         ys = k
@@ -74,12 +75,27 @@ module DocumentsHelper
         ye = (Integer(ys) + 9).to_s
         ye = "*" if ye == "2019"
         next if session[:facets].count("year:[#{ys} TO #{ye}]") > 0
+        
+        link = "#{k}s"
+        link = "#{k}s and earlier" if k == "1790"
       else
         next if session[:facets].count("#{field}:\"#{k}\"") > 0
+        link = k
       end
       
-      ret[k] = c
+      ret << { :value => k, :count => c, :link => link }
     end
     ret
+  end
+  
+  def get_facets
+    [
+      { :name => "Authors", :key => :author, 
+        :field => 'authors_facet', :func => method(:author_link) },
+      { :name => "Journals", :key => :journal,
+        :field => 'journal_facet', :func => method(:journal_link) },
+      { :name => "Decade of Publication", :key => :year,
+        :field => 'year', :func => method(:decade_link) }
+    ]
   end
 end

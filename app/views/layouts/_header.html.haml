@@ -3,5 +3,5 @@
 - if @no_searchbar
   .clearboth
 - else
-  = render "layouts/searchbar"
+  = render :partial => "layouts/searchbar", :locals => { :params => params }
   .clearboth

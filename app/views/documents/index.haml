@@ -1,35 +1,38 @@
-- if @facets
-  .facets
-    %h2 Filter Results:
-    
-    %h3 Authors
-    %small
-      - field_facets_list(@facets[:author], 'authors_facet').each do |a, c|
-        %span.nowrap
-          = author_link a
-          = " (#{c})"
-    
-    %h3 Journals
-    %small
-      - field_facets_list(@facets[:journal], 'journal_facet').each do |j, c|
-        %span.nowrap
-          = journal_link j
-          = " (#{c})"
-    
-    %h3 Decade of Publication
-    %small
-      - field_facets_list(@facets[:year], 'year').each do |y, c|
-        %span.nowrap
-          - if y == "1790"
-            = decade_link "#{y}", "#{y}s and earlier"
-          - else
-            = decade_link "#{y}", "#{y}s"
-          = " (#{c})"
+- if params[:q] or params[:precise]
+  - title "Search Results"
 
-.selected_facets
+.rightcol
   - if session[:facets] and not session[:facets].empty?
-    - selected_facets_list(session[:facets]).each do |f|
-      = f
+    .rightbox
+      .boxheader
+        %h2 Active Filters
+      
+      %p.selectedfacets
+        - selected_facets_list(session[:facets]).each do |f|
+          = f
+    
+  - if @facets
+    .rightbox
+      .boxheader
+        %h2 Filter Results
+      
+      %ul.facetcategories
+        - get_facets.each do |facet|
+          %li
+            %p.header
+              %a{:href => '#'}
+                %span.icon
+                = facet[:name]
+            %div.collapse
+              %p
+                - facet_value_list(@facets[facet[:key]], facet[:field]).each do |val|
+                  %span.nowrap
+                    = facet[:func].call(val[:value], val[:link])
+                    = " (#{val[:count]})"
+      
+      = content_for :javascripts do
+        = javascript_tag "$(document).ready(function() { $('ul.facetcategories').accordion({ icons: false, collapsible: true, active: false }); });"
+      
 
 %ul.docs
   - for doc in @documents
