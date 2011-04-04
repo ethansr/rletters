@@ -79,7 +79,7 @@ module DocumentsHelper
       ret += link_to documents_path(new_params), :class => "nowrap", :title => "Remove this search filter" do
         content_tag(:span, "#{field}: #{value}", :class => "facet") +
         content_tag(:span, raw("&nbsp;")) +
-        content_tag(:span, "", :class => "icon cross")
+        image_tag("x.png", :size => "11x11", :alt => "")
       end
       ret += " "
     end
@@ -90,7 +90,7 @@ module DocumentsHelper
     ret += link_to documents_path(no_facets_params), :class => "nowrap", :title => "Remove this search filter" do 
       content_tag(:span, "Remove All", :class => "facet") +
       content_tag(:span, raw("&nbsp;")) +
-      content_tag(:span, "", :class => "icon cross")
+      image_tag("x.png", :size => "11x11", :alt => "")
     end
     
     raw(ret)

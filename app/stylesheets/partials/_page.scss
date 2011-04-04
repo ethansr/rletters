@@ -50,12 +50,10 @@ small {
   @include font-size(11px);
 }
 
-input {
-  height: 25px;
-  font-size: 13px;
-  line-height: 25px;
+input[type=text] {
+  font-size: 11px;
   
-  padding: 0;
+  padding: 0.5em;
   margin: 0;
   
   border: 1px solid $border-color;
@@ -67,21 +65,12 @@ form textarea {
   width: 75%;
   height: 116px;
   border: 1px solid $border-color;
-  padding: 6px;
+  padding: 6px 0;
 }
 
-form label {
+form label, .formpadding {
   display: inline-block;
-  padding-top: 6px;
-  padding-bottom: 0.3em;
-  line-height: 16px;
-}
-
-.formpadding {
-  display: inline-block;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  line-height: 16px;
+  padding: 6px 0;
 }
 
 // Add the 'required' attribute on your

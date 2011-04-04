@@ -29,9 +29,9 @@
         = help_image do
           If "Exact", search against the exact title.  If "fuzzy", search against the stemmed title.  (The standard evoText search uses the stemmed search fields.)
       %span.formpadding
-        = radio_button_tag(:title_type, "exact", true, :class => "radio")
+        = radio_button_tag(:title_type, "exact", true)
         Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        = radio_button_tag(:title_type, "fuzzy", false, :class => "radio")
+        = radio_button_tag(:title_type, "fuzzy", false)
         Fuzzy
     %p
       = label_tag(:journal) do
@@ -45,9 +45,9 @@
         = help_image do
           If "Exact", search against the exact journal title.  If "fuzzy", search against the stemmed journal title.  (The standard evoText search uses the stemmed search fields.)
       %span.formpadding
-        = radio_button_tag(:journal_type, "exact", true, :class => "radio")
+        = radio_button_tag(:journal_type, "exact", true)
         Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        = radio_button_tag(:journal_type, "fuzzy", false, :class => "radio")
+        = radio_button_tag(:journal_type, "fuzzy", false)
         Fuzzy
     %p
       = label_tag(:year_start) do
@@ -87,16 +87,12 @@
         = help_image do
           If "Exact", search against the exact full text.  If "fuzzy", search against the stemmed full text.  (The standard evoText search uses the stemmed search fields.)
       %span.formpadding
-        = radio_button_tag(:fulltext_type, "exact", true, :class => "radio")
+        = radio_button_tag(:fulltext_type, "exact", true)
         Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        = radio_button_tag(:fulltext_type, "fuzzy", false, :class => "radio")
+        = radio_button_tag(:fulltext_type, "fuzzy", false)
         Fuzzy
-    %p
     %p.submit
-      %span><
-        = content_tag(:button, :type => :submit, :class => "button") do
-          %span.magnifier.icon><
-          Advanced Search
+      = search_button_submit_tag "Advanced Search"
 
 %h3 Solr Query Search
 
@@ -125,9 +121,5 @@
     = text_area_tag(:q, nil, { :escape => false })
     %br
     %br
-    %span><
-      = content_tag(:button, :type => :submit, :class => "button") do
-        %span.magnifier.icon><
-        Submit Solr Query
-
+    = search_button_submit_tag "Submit Solr Query"
 

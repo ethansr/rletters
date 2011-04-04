@@ -10,14 +10,17 @@ module ApplicationHelper
       javascript_tag "$(document).ready(function() {$(\"#{id}\").qtip({
         content: '#{string}',
         style: {
-          name: 'light',
           tip: 'bottomLeft',
+          background: '#222222',
+          color: '#cacaca',
+          textAlign: 'left',
           border: {
             width: 1,
             radius: 8,
-            color: '#f5f5f5'
+            color: '#222222'
           },
-          width: #{width}
+          width: #{width},
+          name: 'dark'
         },
         position: {
           corner: {

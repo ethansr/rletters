@@ -23,3 +23,6 @@ gem "maruku"
 # JQuery
 gem "jquery-rails"
 
+# CSS3 Buttons
+gem "css3buttons", ">= 0.9.2"
+

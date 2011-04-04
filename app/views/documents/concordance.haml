@@ -9,9 +9,7 @@
   = label_tag(:word, "Display concordance for word:")
   %br
   = text_field_tag(:word, params[:word])
-  = content_tag(:button, :type => :submit, :class => "button right") do
-    %span.magnifier.icon><
-    Get Concordance
+  = search_button_submit_tag "Get Concordance"
 
 - if params.has_key? :word
   %h3== Concordance for term “#{params[:word]}”

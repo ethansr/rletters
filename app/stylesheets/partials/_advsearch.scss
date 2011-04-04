@@ -14,11 +14,11 @@
   text-align: right;
 }
 
-.advsearch input {
+.advsearch input[type=text] {
   width: 60%;
 }
 
-.advsearch input.radio {
+.advsearch input[type=radio] {
   width: 1em;
 }
 

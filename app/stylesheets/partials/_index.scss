@@ -81,8 +81,13 @@ ul.docs li {
             height: 100%;
             padding: 7px 10px;
             
-            span.icon {
-              @extend span.icon.downarrow;
+            span {
+              background-image: url("/images/arrows.png");
+              background-position: top;
+              
+              width: 12px;
+              height: 12px;
+              margin-top: 1px;
               
               display: block;
               float: right;
@@ -92,7 +97,7 @@ ul.docs li {
           }          
         }
         
-        .header.ui-state-active a span.icon { @extend span.icon.uparrow; }
+        .header.ui-state-active a span.icon { background-position: bottom; }
         
         .collapse {
           padding: 7px 10px;
