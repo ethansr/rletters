@@ -1,24 +1,19 @@
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+/* http://meyerweb.com/eric/tools/css/reset/  v2.0 | 20110126 License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
 
+/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+body { line-height: 1; }
+
+ol, ul { list-style: none; }
 
 blockquote, q { quotes: none; }
 
 blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
 
-ins { background-color: #ff9; color: #000; text-decoration: none; }
-
-mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
-
-del { text-decoration: line-through; }
-
-abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
-
 table { border-collapse: collapse; border-spacing: 0; }
-
-hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
-
-input, select { vertical-align: middle; }
 
 body { font-size: 13px; font-family: "lucida grande", tahoma, verdana, arial, sans-serif; line-height: 1.231; *font-size: small; }
 
@@ -104,11 +99,17 @@ em { font-style: italic; }
 
 small { font-size: 85%; }
 
-input[type=text] { font-size: 11px; padding: 0.5em; margin: 0; border: 1px solid #cacaca; vertical-align: top; }
+input[type="submit"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner { border: 0; }
 
-form textarea { width: 75%; height: 116px; border: 1px solid #cacaca; padding: 6px 0; }
+input, button, textarea { box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
 
-form label, .formpadding { display: inline-block; padding: 6px 0; }
+input[type=text], input[type=submit], button { font-size: 11px; height: 27px; }
+
+input[type=text] { padding: 0.5em; margin: 0; border: 1px solid #cacaca; vertical-align: top; }
+
+textarea { width: 75%; height: 9em; border: 1px solid #cacaca; padding: 0.5em; }
+
+label, .formpadding { display: inline-block; padding: 0.5em; }
 
 input:invalid, textarea:invalid { -moz-border-radius: 1px; -webkit-border-radius: 1px; -o-border-radius: 1px; -ms-border-radius: 1px; -khtml-border-radius: 1px; border-radius: 1px; -moz-box-shadow: red 0 0 5px 0; -webkit-box-shadow: red 0 0 5px 0; -o-box-shadow: red 0 0 5px 0; box-shadow: red 0 0 5px 0; }
 
@@ -161,13 +162,15 @@ header .searchbar form input#q { width: 40%; }
 
 .advsearch label { float: left; width: 15em; margin-right: 1em; text-align: right; }
 
+.advsearch label.small { width: auto; padding: 0; }
+
 .advsearch input[type=text] { width: 60%; }
 
 .advsearch input[type=radio] { width: 1em; }
 
 .advsearch input.sminput { width: 6em; }
 
-.advsearch p.submit { position: relative; left: 15em; margin-left: 1em; margin-top: 1em; margin-bottom: 2em; }
+.advsearch p.submit { position: relative; left: 15em; margin-left: 2em; margin-top: 1em; margin-bottom: 2em; }
 
 .detailcite { width: 50%; float: right; position: relative; right: 0; font-size: 85%; margin: 0 0 2em 2em; padding: 1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; -o-border-radius: 6px; -ms-border-radius: 6px; -khtml-border-radius: 6px; border-radius: 6px; border: 1px solid #cacaca; background-color: #f2f2f2; }
 

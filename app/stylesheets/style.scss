@@ -1,10 +1,11 @@
+// Meyer's CSS reset (for HTML5)
+@import "partials/reset";
+
 // Here's where we define some default constants
 @import "partials/base";
 
 // Then we'll import the compass extension
 @import "html5-boilerplate";
-
-@include html5-boilerplate-reset;
 @include html5-boilerplate-fonts;
 @include html5-boilerplate-styles;
 @include html5-boilerplate-helpers;

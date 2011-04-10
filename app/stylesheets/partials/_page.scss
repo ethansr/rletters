@@ -50,9 +50,23 @@ small {
   @include font-size(11px);
 }
 
-input[type=text] {
+input[type="submit"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner {
+  border: 0;
+}
+
+input, button, textarea { 
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+input[type=text], input[type=submit], button { 
   font-size: 11px;
-  
+  height: 27px;
+}
+
+input[type=text] {
   padding: 0.5em;
   margin: 0;
   
@@ -61,16 +75,16 @@ input[type=text] {
   vertical-align: top;
 }
 
-form textarea {
+textarea {
   width: 75%;
-  height: 116px;
+  height: 9em;
   border: 1px solid $border-color;
-  padding: 6px 0;
+  padding: 0.5em;
 }
 
-form label, .formpadding {
+label, .formpadding {
   display: inline-block;
-  padding: 6px 0;
+  padding: 0.5em;
 }
 
 // Add the 'required' attribute on your

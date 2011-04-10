@@ -24,15 +24,17 @@
           Title of journal article.
       = text_field_tag(:title)
     %p
-      = label_tag(:title_type) do
+      = label_tag(:title_type_both) do
         Title search type:
         = help_image do
           If "Exact", search against the exact title.  If "fuzzy", search against the stemmed title.  (The standard evoText search uses the stemmed search fields.)
       %span.formpadding
-        = radio_button_tag(:title_type, "exact", true)
-        Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        = radio_button_tag(:title_type, "fuzzy", false)
-        Fuzzy
+        = label_tag(:title_type_exact, :class => "small") do
+          = radio_button_tag(:title_type, "exact", true)
+          Exact
+        = label_tag(:title_type_fuzzy, :class => "small") do
+          = radio_button_tag(:title_type, "fuzzy", false)
+          Fuzzy
     %p
       = label_tag(:journal) do
         Journal:
@@ -40,15 +42,17 @@
           Journal in which article was published.
       = text_field_tag(:journal)
     %p
-      = label_tag(:journal_type) do
+      = label_tag(:journal_type_both) do
         Journal search type:
         = help_image do
           If "Exact", search against the exact journal title.  If "fuzzy", search against the stemmed journal title.  (The standard evoText search uses the stemmed search fields.)
       %span.formpadding
-        = radio_button_tag(:journal_type, "exact", true)
-        Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        = radio_button_tag(:journal_type, "fuzzy", false)
-        Fuzzy
+        = label_tag(:journal_type_exact, :class => "small") do
+          = radio_button_tag(:journal_type, "exact", true)
+          Exact
+        = label_tag(:journal_type_fuzzy, :class => "small") do
+          = radio_button_tag(:journal_type, "fuzzy", false)
+          Fuzzy
     %p
       = label_tag(:year_start) do
         Year:
@@ -82,15 +86,17 @@
           Terms appearing in the full text of the article.
       = text_field_tag(:fulltext)
     %p
-      = label_tag(:fulltext_type) do
+      = label_tag(:fulltext_type_both) do
         Full text search type:
         = help_image do
           If "Exact", search against the exact full text.  If "fuzzy", search against the stemmed full text.  (The standard evoText search uses the stemmed search fields.)
       %span.formpadding
-        = radio_button_tag(:fulltext_type, "exact", true)
-        Exact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        = radio_button_tag(:fulltext_type, "fuzzy", false)
-        Fuzzy
+        = label_tag(:fulltext_type_exact, :class => "small") do
+          = radio_button_tag(:fulltext_type, "exact", true)
+          Exact
+        = label_tag(:fulltext_type_fuzzy, :class => "small") do
+          = radio_button_tag(:fulltext_type, "fuzzy", false)
+          Fuzzy
     %p.submit
       = search_button_submit_tag "Advanced Search"
 
