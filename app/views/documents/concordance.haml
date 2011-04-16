@@ -1,32 +1,27 @@
-- if params[:word]
-  - title "Term Concordance: #{params[:word]}"
+- if params[:hl_word]
+  - title "Term Concordance: #{params[:hl_word]}"
 - else
   - title "Term Concordance"
 
 = render :partial => 'documents/detailheader', :locals => { :document => @document, :title => 'Term Concordance' }
 
 = form_tag(concordance_document_path(@document), { :method => "get" }) do
-  = label_tag(:word, "Display concordance for word:")
+  = label_tag(:hl_word, "Display concordance for word:")
   %br
-  = text_field_tag(:word, params[:word])
+  = text_field_tag(:hl_word, params[:hl_word])
   = search_button_submit_tag "Get Concordance"
 
-- if params.has_key? :word
-  %h3== Concordance for term “#{params[:word]}”
+- if params.has_key? :hl_word
+  %h3== Concordance for term “#{params[:hl_word]}”
   
-  - if not @document.term_vectors.has_key? params[:word]
+  - if not @document.snippets
     %p
-      == This document contains no instances of the term “#{params[:word]}”.
+      == This document contains no instances of the term “#{params[:hl_word]}”.
   - else
     %p
-      == This document contains #{pluralize(@document.term_vectors[params[:word]][:offsets].length, 'instance')} of the term “#{params[:word]}”.
+      == This document contains #{pluralize(@document.snippets.length, 'instance')} of the term “#{params[:hl_word]}”.
     
-    %table.conc_matches
-      - @document.term_vectors[params[:word]][:offsets].each do |rng|
-        %tr
-          %td
-            == #{[rng.begin - 30, 0].max}..#{[rng.end + 30, @document.fulltext.length].min}
-          %td
-            = escape_once(@document.fulltext[[rng.begin - 30, 0].max...[rng.end + 30, @document.fulltext.length].min]).insert(30, "<strong>").insert(-31, "</strong>").gsub(" ", "&nbsp;")
-
-
+    %ul.conc_matches
+      - @document.snippets.each do |s|
+        %li
+          = escape_once(s)

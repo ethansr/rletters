@@ -21,7 +21,7 @@ class DocumentsController < ApplicationController
   %W(show terms concordance text).each do |m|
     class_eval <<-RUBY
     def #{m}
-      hash_to_instance_variables Document.find(params[:id], true)
+      hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
     end
     RUBY
   end

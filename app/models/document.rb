@@ -65,11 +65,18 @@ class Document
   #
   attr_reader :term_vectors  
   
+  # Highlighting snippets for this document.  An array of strings.
+  attr_reader :snippets
+  
   
   
   # Look up an individual document with the given shasum.  If the fulltext
   # parameter is set to true, +document.fulltext+ and +document.term_vectors+
   # will be set.
+  #
+  # If hl_word is set to true (must be set in combination with fulltext), then
+  # enable highlighting and return a document with +document.snippets+ set
+  # for the appropriate word.
   #
   # If a matching document cannot be found, then this function will raise a 
   # RecordNotFound exception.  Other, worse exceptions may be thrown out of
@@ -81,15 +88,21 @@ class Document
   #   h[:document] = Document
   #   h[:query_time] = Float
   #
-  def self.find(shasum, fulltext = false)
+  def self.find(shasum, fulltext = false, hl_word = nil)
     solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
     
     # This is the only method here that can fail -- if we get no response,
     # a bad response, or something that cannot be evaluated, then we have
     # trouble.  But we'll just let that exception percolate up and cause a
     # 500 error.
-    query_type = fulltext ? "fulltext" : "precise"
-    solr_response = solr.get('select', :params => { :qt => query_type, :q => "shasum:#{shasum}" })
+    query_params = {}
+    query_params[:q] = "shasum:#{shasum}"
+    query_params[:qt] = fulltext ? "fulltext" : "precise"
+    if fulltext and hl_word
+      query_params[:q] += " fulltext:#{hl_word}"
+      query_params[:hl] = "on"
+    end
+    solr_response = solr.get('select', :params => query_params)
     
     raise ActiveRecord::RecordNotFound unless solr_response["response"]
     raise ActiveRecord::RecordNotFound unless solr_response["response"]["numFound"]
@@ -140,7 +153,12 @@ class Document
       end
     end
     
-    { :document => Document.new(solr_response["response"]["docs"][0], term_vectors),
+    snippets = nil
+    if fulltext and solr_response["highlighting"]
+      snippets = solr_response["highlighting"][shasum]["fulltext"]
+    end
+    
+    { :document => Document.new(solr_response["response"]["docs"][0], term_vectors, snippets),
       :query_time => Float(solr_response["responseHeader"]["QTime"]) / 1000.0 }
   end
   
@@ -274,18 +292,19 @@ class Document
   #
   #   doc = Document.new(solr_response["response"]["docs"][0])
   #
-  # If you want the document to contain term vectors, you
+  # If you want the document to contain term vectors or snippets, you
   # can pass those in, otherwise they will be nil by default.
-  def initialize(solr_doc, term_vectors = nil)
+  def initialize(solr_doc, term_vectors = nil, snippets = nil)
     %W(shasum doi authors title journal year volume number pages fulltext).each do |k|
       if solr_doc[k]
-        instance_variable_set("@#{k}", solr_doc[k])
+        instance_variable_set("@#{k}", solr_doc[k].force_encoding("UTF-8"))
       else
-        instance_variable_set("@#{k}", "")
+        instance_variable_set("@#{k}", "".force_encoding("UTF-8"))
       end
     end
     
     @term_vectors = term_vectors
+    @snippets = snippets
   end
   
   # Return the document's SHA-1 sum, which will function as the permanent

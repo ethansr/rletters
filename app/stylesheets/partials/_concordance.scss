@@ -1,6 +1,15 @@
 // Styles for concordance display
 
-table.conc_matches tr td {
+ul.conc_matches {
+  list-style-type: none;
+}
+
+ul.conc_matches li {
   padding: 0.2em 1em;
   font-family: Consolas, Droid Sans, "Bitstream Vera Sans Mono", "Lucida Console", Monaco, monospace;
+}
+
+ul.conc_matches li em {
+  font-weight: bold;
+  font-shape: normal;
 }

@@ -104,10 +104,16 @@ module DocumentsHelper
       next if count == 0
       
       if facet[:field] == 'year'
-        year_start = key
-        year_start = "*" if year_start == "1790"
-        year_end = (Integer(year_start) + 9).to_s
-        year_end = "*" if year_end == "2019"
+        if key == "*"
+          year_start = "*"
+          year_end = "1799"
+        elsif key == "2010"
+          year_start = key
+          year_end = "*"
+        else
+          year_start = key
+          year_end = (Integer(year_start) + 9).to_s
+        end
         
         next if params[:fq] and params[:fq].count("year:[#{year_start} TO #{year_end}]") > 0
         
