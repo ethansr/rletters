@@ -22,13 +22,9 @@ div.verticalpad { margin-top: 30px; }
 
 .leftcolumn, .rightcolumn { margin: 0; padding: 0; border: 0; float: left; min-height: 1px; }
 
-.leftcolumn { clear: left; width: 28%; }
+.leftcolumn { clear: left; width: 72%; }
 
-.rightcolumn { width: 72%; }
-
-#small-facetset { display: none; }
-
-.max-width-768px #small-facetset { display: block !important; }
+.rightcolumn { width: 28%; }
 
 .leftcolumn { display: block; }
 
@@ -36,11 +32,13 @@ div.verticalpad { margin-top: 30px; }
 
 .rightcolumn .columnul { margin-left: 0 !important; }
 
-.max-width-768px .leftcolumn { display: none !important; }
+.max-width-768px .leftcolumn { width: 100% !important; }
 
-.max-width-768px .rightcolumn { width: 100% !important; }
+.max-width-768px .rightcolumn { margin-top: 30px; width: 100% !important; }
 
-.max-width-768px .columnul { margin-left: -15px !important; }
+.max-width-768px .leftcolumn .columnul { margin-right: -15px !important; }
+
+.max-width-768px .rightcolumn .columnul { margin-left: -15px !important; }
 
 .helptip { vertical-align: text-bottom; }
 
