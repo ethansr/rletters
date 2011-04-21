@@ -1,12 +1,10 @@
 // Meyer's CSS reset (for HTML5)
-@import "partials/reset";
+//@import "partials/reset";
 
 // Actual styling
 @import "partials/fonts";
 @import "partials/page";
 
-@import "partials/index";
-@import "partials/searchbar";
 @import "partials/advsearch";
 @import "partials/details";
 @import "partials/concordance";

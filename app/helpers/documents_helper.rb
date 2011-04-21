@@ -76,21 +76,16 @@ module DocumentsHelper
       new_params = params.dup
       new_params[:fq].delete(query)
       
-      ret += link_to documents_path(new_params), :class => "nowrap", :title => "Remove this search filter" do
-        content_tag(:span, "#{field}: #{value}", :class => "facet") +
-        content_tag(:span, raw("&nbsp;")) +
-        image_tag("x.png", :size => "11x11", :alt => "")
+      ret += content_tag :li, 'data-icon' => 'delete' do
+        link_to "#{field}: #{value}", documents_path(new_params)
       end
-      ret += " "
     end
     
     no_facets_params = params.dup
     no_facets_params.delete(:fq)
     
-    ret += link_to documents_path(no_facets_params), :class => "nowrap", :title => "Remove this search filter" do 
-      content_tag(:span, "Remove All", :class => "facet") +
-      content_tag(:span, raw("&nbsp;")) +
-      image_tag("x.png", :size => "11x11", :alt => "")
+    ret += content_tag :li, 'data-icon' => 'delete' do
+      link_to "Remove all filters", documents_path(no_facets_params)
     end
     
     raw(ret)
@@ -124,11 +119,10 @@ module DocumentsHelper
         link_text = key
       end
       
-      ret += content_tag(:span, :class => "nowrap") do
-        method(facet[:func]).call(key, link_text) +
-        raw(" (#{count})")
+      ret += content_tag(:li) do
+        method(facet[:func]).call(key, link_text) + " " +
+        content_tag(:span, "#{count}", :class => 'ui-li-count')
       end
-      ret += " "
     end
     
     raw(ret)

@@ -1,42 +1,27 @@
 - if params[:q] or params[:fq] or params[:precise]
   - title "Search Results"
 
-.rightcol
-  - unless params[:fq].blank?
-    .rightbox
-      .boxheader
-        %h2 Active Filters
-      
-      %p.selectedfacets
-        = render_selected_facets(params)
-    
-  - if @facets
-    .rightbox
-      .boxheader
-        %h2 Filter Results
-      
-      %ul.facetcategories
-        - get_facets.each do |facet|
-          - content = render_solr_facet(params, facet, @facets[facet[:key]])
-          - next if content.blank?
-          %li
-            %p.header
-              %a{:href => '#'}
-                %span.icon
-                = facet[:name]
-            %div.collapse
-              %p= content
-      
-      = content_for :javascripts do
-        = javascript_tag "$(document).ready(function() { $('ul.facetcategories').accordion({ icons: false, collapsible: true, active: false }); });"
-      
-
-%ul.docs
+%ul{ 'data-role' => 'listview' }
   - for doc in @documents
     %li
       = render :partial => "cite_links", :locals => { :document => doc }
 
-.pagination
-  = will_paginate @documents
+= will_paginate @documents
 
-.clearboth
+- if @facets or not params[:fq].blank?
+  %div{ :id => 'facetset', 'data-role' => 'collapsible-set' }
+    - unless params[:fq].blank?
+      %div{ 'data-role' => 'collapsible' }
+        %h3 Selected Filters
+        %ul{ 'data-role' => 'listview', 'data-inset' => 'true' }
+          = render_selected_facets(params)
+    
+    - if @facets
+      - get_facets.each do |facet|
+        %div{ 'data-role' => 'collapsible', 'data-collapsed' => 'true' }
+          - content = render_solr_facet(params, facet, @facets[facet[:key]])
+          - next unless content.size
+          
+          %h3== Filter: #{facet[:name]}
+          %ul{ 'data-role' => 'listview', 'data-inset' => 'true' }
+            = content

@@ -1,19 +1,23 @@
-%strong= document.title
-%br
-!= document.authors.split(',').map { |a| author_link a.strip }.join(", ")
-%br
-%em><
-  = journal_link document.journal
-  = ", "
-- unless document.volume.empty?
-  == Vol. #{document.volume},
-- unless document.number.empty?
-  == No. #{document.number}
-- unless document.year.empty?
-  == (#{year_link document.year}),
-- unless document.pages.empty?
-  == pp. #{document.pages}
-%br
-%a{:href => document.doi_url}== PDF
-= " | "
-= link_to 'More Information', document_path(document)
+= link_to document_path(document) do
+  %h3
+    = document.title
+  %p
+    = document.authors
+    -#!= document.authors.split(',').map { |a| author_link a.strip }.join(", ")
+  %p
+    %em><
+      = document.journal
+      -#= journal_link document.journal
+      = ", "
+    - unless document.volume.empty?
+      == Vol. #{document.volume},
+    - unless document.number.empty?
+      == No. #{document.number}
+    - unless document.year.empty?
+      -# == (#{year_link document.year}),
+      == (#{document.year}),
+    - unless document.pages.empty?
+      == pp. #{document.pages}
+  %p
+    == Get PDF
+    -# %a{:href => document.doi_url}== Get PDF

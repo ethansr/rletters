@@ -25,11 +25,10 @@ header div {
     .max-width-768px & { width: 30% !important; }
     .max-width-480px & { display: none; }
   }
-  h1 {
+  h1.ui-title {
     width: 100%;
-    
-    padding: .6em 0 .8em;
-    text-align: center;
+    margin: 0 !important;
+    padding: .6em 0 .8em !important;
   }
 }
 
@@ -41,10 +40,15 @@ header div {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;  
   width: 100% !important;
-  
-  input { color: white; }
 }
+
+.searchbar form .ui-input-search input { width: 100% !important; }
 
 // Responsive layout: move search bar to the footer on iPhone
 footer { visibility: hidden; }
 .max-width-480px footer { visibility: visible; }
+
+
+// Fix pagination (and all things after it) overlap
+div.pagination { margin-top: 30px; }
+#facetset { margin-top: 30px; }
