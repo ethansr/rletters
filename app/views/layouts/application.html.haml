@@ -8,6 +8,14 @@
       #main{ :role => 'main', 'data-role' => 'content' }
         = render :partial => 'layouts/flashes'
         = yield
-      %footer#footer{ 'data-role' => 'footer' }
-        = render :partial => 'layouts/footer'
+        
+        %small
+          Copyright &copy; 2011 evoText Project
+          - if instance_variable_defined? :@query_time
+            %br
+            Executed Solr query in 
+            = @query_time
+            seconds
+        
+      = render :partial => 'layouts/footer'
     = render :partial => 'layouts/javascripts'

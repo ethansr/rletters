@@ -20,12 +20,20 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 header div { position: relative; }
 header div div.buttons { position: absolute; left: 3px; top: 3px; }
-header div form { position: absolute; width: 20%; right: 3px; top: 1px; }
-header div form .ui-input-search { position: absolute; right: 0; width: 100% !important; }
-header div form .ui-input-search input { color: white; }
-.max-width-768px header div form { width: 15% !important; }
-.max-width-480px header div form { display: none; }
+header div .searchbar { position: absolute; width: 35%; right: 3px; top: 1px; }
+header div .searchbar form { padding: 0; }
+.max-width-768px header div .searchbar { width: 30% !important; }
+.max-width-480px header div .searchbar { display: none; }
 header div h1 { width: 100%; padding: .6em 0 .8em; text-align: center; }
+
+.searchbar form { position: relative; padding: 3px; }
+
+.searchbar form .ui-input-search { box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; width: 100% !important; }
+.searchbar form .ui-input-search input { color: white; }
+
+footer { visibility: hidden; }
+
+.max-width-480px footer { visibility: visible; }
 
 ul.docs { width: 575px; list-style-type: none; margin: 0; padding: 0; }
 
