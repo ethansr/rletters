@@ -6,22 +6,25 @@
     %li
       = render :partial => "cite_links", :locals => { :document => doc }
 
+%div.verticalpad
+
 = will_paginate @documents
 
-- if @facets or not params[:fq].blank?
-  %div{ :id => 'facetset', 'data-role' => 'collapsible-set' }
-    - unless params[:fq].blank?
-      %div{ 'data-role' => 'collapsible' }
-        %h3 Selected Filters
-        %ul{ 'data-role' => 'listview', 'data-inset' => 'true' }
-          = render_selected_facets(params)
-    
-    - if @facets
-      - get_facets.each do |facet|
-        %div{ 'data-role' => 'collapsible', 'data-collapsed' => 'true' }
-          - content = render_solr_facet(params, facet, @facets[facet[:key]])
-          - next unless content.size
-          
-          %h3== Filter: #{facet[:name]}
+%div{ :id => 'small-facetset' }
+  - if @facets or not params[:fq].blank?
+    %div{ :id => 'facetset', 'data-role' => 'collapsible-set' }
+      - unless params[:fq].blank?
+        %div{ 'data-role' => 'collapsible' }
+          %h3 Selected Filters
           %ul{ 'data-role' => 'listview', 'data-inset' => 'true' }
-            = content
+            = render_selected_facets(params)
+    
+      - if @facets
+        - get_facets.each do |facet|
+          %div{ 'data-role' => 'collapsible', 'data-collapsed' => 'true' }
+            - content = render_solr_facet(params, facet, @facets[facet[:key]])
+            - next unless content.size
+          
+            %h3== Filter: #{facet[:name]}
+            %ul{ 'data-role' => 'listview', 'data-inset' => 'true' }
+              = content

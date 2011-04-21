@@ -19,9 +19,11 @@ footer { visibility: hidden; }
 
 .max-width-480px footer { visibility: visible; }
 
-div.pagination { margin-top: 30px; }
+#small-facetset { display: none; }
 
-#facetset { margin-top: 30px; }
+.max-width-768px #small-facetset { display: block !important; }
+
+div.verticalpad { margin-top: 30px; }
 
 .helptip { vertical-align: text-bottom; }
 
