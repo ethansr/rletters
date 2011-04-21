@@ -9,7 +9,7 @@
     - if @facets
       - get_facets.each do |facet|
         - content = render_solr_facet(params, facet, @facets[facet[:key]])
-        - next unless content.size
+        - next if content.blank?
   
         %li{ 'data-role' => 'list-divider' }== Filter: #{facet[:name]}
         = content
