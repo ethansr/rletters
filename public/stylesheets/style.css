@@ -188,9 +188,9 @@ table.terms td.num { text-align: center; }
 
 ul.conc_matches { list-style-type: none; }
 
-ul.conc_matches li { padding: 0.2em 1em; font-family: Consolas, Droid Sans, "Bitstream Vera Sans Mono", "Lucida Console", Monaco, monospace; }
+ul.conc_matches li { padding: 0.2em 1em; }
 
-ul.conc_matches li em { font-weight: bold; font-shape: normal; }
+ul.conc_matches li em { font-weight: bold; font-style: normal; }
 
 @media print { * { background: transparent !important; color: black !important; text-shadow: none !important; filter: none !important; -ms-filter: none !important; }
   a, a:visited { color: #444 !important; text-decoration: underline; }

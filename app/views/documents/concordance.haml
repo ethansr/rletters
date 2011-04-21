@@ -19,9 +19,9 @@
       == This document contains no instances of the term “#{params[:hl_word]}”.
   - else
     %p
-      == This document contains #{pluralize(@document.snippets.length, 'instance')} of the term “#{params[:hl_word]}”.
+      == This document contains #{pluralize(@document.term_vectors[params[:hl_word]][:tf], 'instance')} of the term “#{params[:hl_word]}”.
     
     %ul.conc_matches
       - @document.snippets.each do |s|
         %li
-          = escape_once(s)
+          = escape_once(s).gsub("&lt;em&gt;","<em>").gsub("&lt;/em&gt;","</em>")
