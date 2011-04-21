@@ -3,134 +3,38 @@
 $border-color: #cacaca;
 $box-color: #f2f2f2;
 
-body, select, input, textarea {
-  color: $font-color;
-  font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
-}
-
-p {
-  margin: 1.12em 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: bold;
-}
-
-header h1 {
-  font-size: 2.25em;
-}
-
-h2 {
-  font-size: 1.5em;
-  margin-bottom: 1em;
-}
-
-h3 {
-  font-size: 1.2em;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-a, a:active, a:visited { color: $link-color; }
-a:hover { color: $link-hover-color; }
-
-header h1 a, header h1 a:active, header h1 a:visited, header h1 a:hover 
-{ color: $font-color; text-decoration: none; }
-
-
-strong, th {
-  font-weight: bold;
-}
-
-em {
-  font-style: italic;
-}
-
-small {
-  @include font-size(11px);
-}
-
-input[type="submit"]::-moz-focus-inner,
-input[type="button"]::-moz-focus-inner {
-  border: 0;
-}
-
-input, button, textarea { 
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-input[type=text], input[type=submit], button { 
-  font-size: 11px;
-  height: 27px;
-}
-
-input[type=text] {
-  padding: 0.5em;
-  margin: 0;
-  
-  border: 1px solid $border-color;
-  
-  vertical-align: top;
-}
-
-textarea {
-  width: 75%;
-  height: 9em;
-  border: 1px solid $border-color;
-  padding: 0.5em;
-}
-
-label, .formpadding {
-  display: inline-block;
-  padding: 0.5em;
-}
-
-// Add the 'required' attribute on your
-// inputs if you want to use these
-input:valid, textarea:valid {}
-input:invalid, textarea:invalid {
-  @include border-radius(1px);
-  @include box-shadow(red, 0, 0, 5px, 0);
-}
-.no-boxshadow input:invalid,
-.no-boxshadow textarea:invalid { background-color: #f0dddd; }
-
-
-//-----------------------------------
-
-body {}
-
-#container {
-  margin: 0 auto;
-  width: 900px;
-}
-
-header {
-  margin-top: 1em;
-  margin-bottom: 2em;
-}
-
-header h1 {
-  float: left;
-  width: 30%;
-}
-
-.clearboth { clear: both; }
 .nowrap { white-space: nowrap; }
 
-#main {}
-
-footer {
-  margin-top: 3em;
+header div {
+  position: relative;
+  
+  div.buttons { 
+    position: absolute;
+    left: 3px;
+    top: 3px;
+  }
+  form {
+    position: absolute;
+    width: 20%;
+    right: 3px;
+    top: 1px;
+    
+    // This is fragile, since it overrides an internal JQM style
+    .ui-input-search {
+      position: absolute;
+      right: 0;
+      width: 100% !important;
+      input { color: white; }
+    }
+    
+    // Responsive layout for this element
+    .max-width-768px & { width: 15% !important; }
+    .max-width-480px & { display: none; }
+  }
+  h1 {
+    width: 100%;
+    
+    padding: .6em 0 .8em;
+    text-align: center;
+  }
 }
-
-//-----------------------------------
-
-@import "partials/index";
-@import "partials/searchbar";
-@import "partials/advsearch";
-@import "partials/details";
-@import "partials/concordance";
-

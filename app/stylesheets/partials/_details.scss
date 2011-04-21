@@ -6,7 +6,7 @@
   position: relative;
   right: 0;
   
-  @include font-size(11px);
+  font-size: .9em;
   margin: 0 0 2em 2em;
   padding: 1em;
   
@@ -22,7 +22,7 @@
 }
 
 .detailheader { margin-bottom: 0; }
-.backlink { @include font-size(11px); margin: 0 0 2em 2em; }
+.backlink { font-size: .9em; margin: 0 0 2em 2em; }
 
 table.terms {
   margin: 1em;

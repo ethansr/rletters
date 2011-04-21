@@ -1,7 +1,12 @@
-%h1= link_to 'evoText', root_url
-
-- if @no_searchbar
-  .clearboth
-- else
-  = render :partial => "layouts/searchbar", :locals => { :params => params }
-  .clearboth
+%div
+  %div.buttons{'data-inline' => 'true'}
+    - unless request.env["HTTP_REFERER"].blank?
+      = link_to 'Back', :back, 'data-role' => 'button', 'data-icon' => 'arrow-l'
+    - if params[:controller] != 'documents' or params[:action] != 'index'
+      = link_to 'Home', root_url, 'data-role' => 'button', 'data-icon' => 'home', 'data-direction' => 'reverse'
+  
+  - unless @no_searchbar
+    = render :partial => "layouts/searchbar", :locals => { :params => params }
+  
+  %h1 evoText
+  

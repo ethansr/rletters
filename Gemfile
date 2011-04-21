@@ -8,7 +8,6 @@ gem "uuid"
 # HTML5 Boilerplate
 gem "compass", ">= 0.10.6"
 gem "haml"
-gem "html5-boilerplate"
 
 # Solr
 gem "rsolr"
@@ -22,7 +21,3 @@ gem "maruku"
 
 # JQuery
 gem "jquery-rails"
-
-# CSS3 Buttons
-gem "css3buttons", ">= 0.9.2"
-

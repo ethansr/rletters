@@ -1,11 +1,8 @@
--# CSS3 buttons
-= css3buttons_stylesheets :include_reset => false
+-# JQuery Mobile
+= stylesheet_link_tag "http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css"
 
--# CSS: implied media="all"
+-# Standard CSS
 = stylesheet_link_tag 'style', :media => 'all'
-
--# Uncomment if you are specifically targeting less enabled mobile browsers
--#= stylesheet_link_tag 'handheld', :media => 'handheld'
 
 -# Append your own using content_for :stylesheets
 = yield :stylesheets

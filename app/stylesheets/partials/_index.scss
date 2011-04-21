@@ -32,7 +32,6 @@ ul.docs li {
     .boxheader {
       height: 30px;
 
-      @include font-size(13px);
       padding: 10px 10px 0 10px;
 
       color: #535353;
@@ -53,7 +52,6 @@ ul.docs li {
 
       padding: 7px 10px;
       
-      @include font-size(12px);
       line-height: 1.5;
       
       a { text-decoration: none; }
@@ -102,7 +100,6 @@ ul.docs li {
         .collapse {
           padding: 7px 10px;
           
-          @include font-size(12px);
           line-height: 1.5;
           
           border-top: 1px dashed $border-color;

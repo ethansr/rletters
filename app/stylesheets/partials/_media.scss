@@ -4,7 +4,7 @@
 //
 
 @media print {
-  @include media-print;
+  // Style adjustments for print
 }
 
 @media all and (orientation:portrait) {
@@ -13,9 +13,4 @@
 
 @media all and (orientation:landscape) {
   // Style adjustments for landscape mode goes here
-}
-
-@media screen and (max-device-width: 480px) {
-  // Pass in false if you don't want iOS and WinMobile to mobile-optimize the text for you
-  @include media-mobile(true);
 }

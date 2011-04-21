@@ -1,21 +1,15 @@
--# Grab Google CDN's jQuery, with a protocol relative URL
--# Looks for google_api_key first in ENV['GOOGLE_API_KEY'] then in config/google.yml
--# remote_jquery and local_jquery helpers use minified jquery unless Rails.env is development
-- if !google_api_key.blank?
-  = javascript_include_tag "//www.google.com/jsapi?key=#{google_api_key}"
-  :javascript
-    google.load(#{ remote_jquery("1.5.1") });
-    google.load('jqueryui', '1.8');
-- else
-  = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/#{ local_jquery("1.5.1") }"
-  = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+= javascript_include_tag "//www.google.com/jsapi?key=#{APP_CONFIG['google_api_key']}"
+:javascript
+  google.load('jquery', '1.5.1');
+  google.load('jqueryui', '1.8');
 
--# fall back to local jQuery if necessary
+-# Fallback for local jQuery and jQuery UI
 :javascript
   !window.jQuery && document.write(unescape('%3Cscript src="/javascripts/jquery.min.js"%3E%3C/script%3E'))
   !window.jQuery.ui && document.write(unescape('%3Cscript src="/javascripts/jquery-ui.min.js"%3E%3C/script%3E'))
 
 -# Add jQuery plugins right here after jQuery loads
+= javascript_include_tag "http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"
 = javascript_include_tag "/javascripts/jquery.qtip-1.0.0-rc3.min.js"
   
 = javascript_include_tag 'rails', 'plugins', 'application'
@@ -29,15 +23,12 @@
 -#  Append your own using content_for :javascripts
 = yield :javascripts
 
--# asynchronous google analytics: mathiasbynens.be/notes/async-analytics-snippet
--# Looks for google_account_id first in ENV['GOOGLE_ACCOUNT_ID'] then in config/google.yml
-- if !google_account_id.blank?
-  :javascript
-    var _gaq = [['_setAccount', '#{google_account_id}'], ['_trackPageview']];
-    (function(d, t) {
-      var g = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      g.async = true;
-      g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g, s);
-    })(document, 'script');
+:javascript
+  var _gaq = [['_setAccount', '#{APP_CONFIG['google_account_id']}'], ['_trackPageview']];
+  (function(d, t) {
+    var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+    g.async = true;
+    g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g, s);
+  })(document, 'script');
