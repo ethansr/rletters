@@ -49,10 +49,30 @@ footer { visibility: hidden; }
 .max-width-480px footer { visibility: visible; }
 
 
+// Fix vertical overlap with full-width <ul>
+div.verticalpad { margin-top: 30px; }
+
+
+// Sidebar styling
+.leftcolumn, .rightcolumn { 
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: left;
+  min-height: 1px;
+}
+.leftcolumn { clear: left; width: 28%; }
+.rightcolumn { width: 72%; }
+
+
 // Responsive layout: toggle sidebar at 768px
 #small-facetset { display: none; }
 .max-width-768px #small-facetset { display: block !important; }
 
+.leftcolumn { display: block; }
+.leftcolumn .columnul { margin-right: 0 !important; }
+.rightcolumn .columnul { margin-left: 0 !important; }
+.max-width-768px .leftcolumn { display: none !important; }
+.max-width-768px .rightcolumn { width: 100% !important; }
+.max-width-768px .columnul { margin-left: -15px !important; }
 
-// Fix vertical overlap with full-width <ul>
-div.verticalpad { margin-top: 30px; }
