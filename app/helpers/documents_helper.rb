@@ -24,7 +24,7 @@ module DocumentsHelper
       new_params[:fq] ||= []
       new_params[:fq] << %(#{facet[:field]}:") + val + '"'
       
-      link_to link, documents_path(new_params)
+      link_to link, documents_path(new_params), 'data-transition' => 'none'
     end
     RUBY
   end
@@ -42,7 +42,7 @@ module DocumentsHelper
     new_params[:fq] ||= []
     new_params[:fq] << "year:#{query}"
     
-    link_to link, documents_path(new_params)
+    link_to link, documents_path(new_params), 'data-transition' => 'none'
   end
   
   def year_link(year, link = nil)
@@ -77,7 +77,7 @@ module DocumentsHelper
       new_params[:fq].delete(query)
       
       ret += content_tag :li, 'data-icon' => 'delete' do
-        link_to "#{field}: #{value}", documents_path(new_params)
+        link_to "#{field}: #{value}", documents_path(new_params), 'data-transition' => 'none'
       end
     end
     
@@ -85,7 +85,7 @@ module DocumentsHelper
     no_facets_params.delete(:fq)
     
     ret += content_tag :li, 'data-icon' => 'delete' do
-      link_to "Remove all filters", documents_path(no_facets_params)
+      link_to "Remove all filters", documents_path(no_facets_params), 'data-transition' => 'none'
     end
     
     raw(ret)
