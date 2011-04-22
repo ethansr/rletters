@@ -1,5 +1,5 @@
 %div{:class => "searchbar"}
-  = form_tag(documents_path, :method => "get") do
+  = form_tag(documents_path, :method => "get", 'data-transition' => 'none') do
     - if params[:fq]
       - params[:fq].each do |p|
         = hidden_field_tag "fq[]", p

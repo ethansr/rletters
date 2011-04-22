@@ -1,14 +1,9 @@
 // Styles for concordance display
-
-ul.conc_matches {
-  list-style-type: none;
-}
-
 ul.conc_matches li {
-  padding: 0.2em 1em;
+  font-weight: normal !important;
+  text-align: center !important;
 }
-
 ul.conc_matches li em {
-  font-weight: bold;
-  font-style: normal;
+  font-weight: bold !important;
+  font-style: italic !important;
 }

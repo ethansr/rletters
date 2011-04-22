@@ -1,12 +1,9 @@
-.detailcite
-  %p
-    %strong Detailed information for:
-  %p.cite
-    = render :partial => "cite", :locals => { :document => document }
-
-%h2.detailheader
+%h2
   = title
-%p.backlink
-  = link_to '«« back to document page', document_path(document)
 
-.clearboth
+%ul.details{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-theme' => 'd' }
+  %li{ 'data-icon' => 'back' }
+    = link_to document_path(document), 'data-transition' => 'flip', 'data-direction' => 'reverse' do
+      = render :partial => "cite", :locals => { :document => document }
+
+%div.verticalpad

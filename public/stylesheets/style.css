@@ -42,25 +42,15 @@ div.verticalpad { margin-top: 30px; }
 
 .helptip { vertical-align: text-bottom; }
 
-.detailcite { width: 50%; float: right; position: relative; right: 0; font-size: .9em; margin: 0 0 2em 2em; padding: 1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; -o-border-radius: 6px; -ms-border-radius: 6px; -khtml-border-radius: 6px; border-radius: 6px; border: 1px solid #cacaca; background-color: #f2f2f2; }
-
-.detailcite p { margin: 0; }
-
-.detailcite .cite { margin-left: 2em; }
-
-.detailheader { margin-bottom: 0; }
-
-.backlink { font-size: .9em; margin: 0 0 2em 2em; }
+ul.details li p, ul.details li h3 { margin: 0; }
 
 table.terms { margin: 1em; border-top: 2px solid black; border-bottom: 2px solid black; border-collapse: separate; border-spacing: 8px 4px; }
 table.terms th { border-bottom: 1px solid black; }
 table.terms td.num { text-align: center; }
 
-ul.conc_matches { list-style-type: none; }
+ul.conc_matches li { font-weight: normal !important; text-align: center !important; }
 
-ul.conc_matches li { padding: 0.2em 1em; }
-
-ul.conc_matches li em { font-weight: bold; font-style: normal; }
+ul.conc_matches li em { font-weight: bold !important; font-style: italic !important; }
 
 @media print {}
 @media all and (orientation:portrait) {}
