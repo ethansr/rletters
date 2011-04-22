@@ -6,10 +6,10 @@
 = render :partial => 'documents/detailheader', :locals => { :document => @document, :title => 'Term Concordance' }
 
 = form_tag(concordance_document_path(@document), { :method => "get" }) do
-  = label_tag(:hl_word, "Display concordance for word:")
-  %br
-  = text_field_tag(:hl_word, params[:hl_word])
-  = search_button_submit_tag "Get Concordance"
+  %div.fieldcontain
+    = label_tag(:hl_word, 'Display concordance for word:', :for => 'field_hl_word')
+    = text_field_tag(:hl_word, params[:hl_word], :id => 'field_hl_word')
+  = submit_tag "Get Concordance"
 
 - if params.has_key? :hl_word
   %h3== Concordance for term “#{params[:hl_word]}”

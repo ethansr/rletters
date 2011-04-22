@@ -98,7 +98,7 @@
           = radio_button_tag(:fulltext_type, "fuzzy", false)
           Fuzzy
     %p.submit
-      = search_button_submit_tag "Advanced Search"
+      = submit_tag "Advanced Search"
 
 %h3 Solr Query Search
 
@@ -127,5 +127,5 @@
     = text_area_tag(:q, nil, { :escape => false })
     %br
     %br
-    = search_button_submit_tag "Submit Solr Query"
+    = submit_tag "Submit Solr Query"
 

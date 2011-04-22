@@ -20,6 +20,6 @@
 %p
   %strong More Document Details:
   %br
-  = link_to 'Term Frequencies', terms_document_path(@document)
+  = link_to 'Term Frequencies', terms_document_path(@document), 'data-transition' => 'flip'
   = " | "
-  = link_to 'Term Concordance', concordance_document_path(@document)
+  = link_to 'Term Concordance', concordance_document_path(@document), 'data-transition' => 'flip'
