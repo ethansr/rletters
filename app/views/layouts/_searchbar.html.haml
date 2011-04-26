@@ -4,6 +4,3 @@
       - params[:fq].each do |p|
         = hidden_field_tag "fq[]", p
     = search_field_tag :q, (params[:precise] ? "(advanced search)" : params[:q])
-
--#  %small
--#    = link_to 'Advanced Search', search_documents_path

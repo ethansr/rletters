@@ -6,7 +6,7 @@ module DocumentsHelper
         :field => 'authors_facet', :func => :author_link },
       { :name => "Journals", :key => :journal,
         :field => 'journal_facet', :func => :journal_link },
-      { :name => "Decade of Publication", :key => :year,
+      { :name => "Publication Date", :key => :year,
         :field => 'year', :func => :decade_link }
     ]
   

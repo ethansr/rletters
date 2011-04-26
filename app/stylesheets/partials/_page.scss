@@ -6,29 +6,35 @@ $box-color: #f2f2f2;
 .nowrap { white-space: nowrap; }
 
 header div {
-  position: relative;
-  
-  div.buttons { 
-    position: absolute;
-    left: 3px;
-    top: 3px;
-  }
-  .searchbar {
-    position: absolute;
-    width: 35%;
-    right: 3px;
-    top: 1px;
+  .controls {
+    .buttons {
+      position: absolute;
+      top: 4px;
+      right: 37%;
+      
+      // Responsive layout for buttons
+      .max-width-768px & { right: 33% !important; }
+      .max-width-480px & { right: 4px !important; }
+    }
     
-    form { padding: 0; }
+    .searchbar {
+      width: 35%;
+      position: absolute;
+      top: 1px;
+      right: 0;
 
-    // Responsive layout for search bar
-    .max-width-768px & { width: 30% !important; }
-    .max-width-480px & { display: none; }
+      form { padding: 0; }
+
+      // Responsive layout for search bar
+      .max-width-768px & { width: 30% !important; }
+      .max-width-480px & { display: none; }
+    }
   }
   h1.ui-title {
     width: 100%;
     margin: 0 !important;
-    padding: .6em 0 .8em !important;
+    padding: .6em .8em .8em !important;
+    text-align: left !important;
   }
 }
 
@@ -62,7 +68,7 @@ div.verticalpad { margin-top: 30px; }
   min-height: 1px;
 }
 .leftcolumn { clear: left; width: 72%; }
-.rightcolumn { width: 28%; }
+.rightcolumn { width: 28%; font-size: 85% !important; }
 
 
 // Responsive layout: toggle sidebar at 768px

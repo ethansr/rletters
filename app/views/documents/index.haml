@@ -2,12 +2,19 @@
   - title "Search Results"
 
 %div.leftcolumn
-  %ul{ :class => 'columnul', 'data-role' => 'listview' }
+  %ul{ :class => 'columnul', 'data-role' => 'listview', 'data-theme' => 'd' }
     - if @documents.length == 0
       %li{ 'data-icon' => 'warning', 'data-theme' => 'e' }
         %h3 No Documents Found
         %p
           Your search produced no results.
+    - else
+      %li{ 'data-theme' => 'c' }
+        == #{pluralize(@documents.length, 'document')}
+        - if params[:q] or params[:fq] or params[:precise]
+          found
+        - else
+          in database
     - for doc in @documents
       %li{ 'data-icon' => 'info' }
         = link_to document_path(doc) do
@@ -18,9 +25,8 @@
   = will_paginate @documents
 
 %div.rightcolumn
-  %ul{ :class => 'columnul', 'data-role' => 'listview', 'data-theme' => 'c', 'data-dividertheme' => 'b' }
-    %li{ 'data-role' => 'list-divider', 'data-icon' => 'search', 'data-theme' => 'b' }
-      = link_to 'Advanced Search...', search_documents_path
+  %ul{ :class => 'columnul', 'data-role' => 'listview', 'data-theme' => 'd', 'data-dividertheme' => 'c' }
+    %li{ 'data-theme' => 'c' } Browse database:
     - rendered_facets = 0
     - unless params[:fq].blank?
       %li{ 'data-role' => 'list-divider' } Selected Filters
@@ -36,3 +42,6 @@
     
     - if rendered_facets == 0
       %li{ 'data-role' => 'list-divider' } No Filters Available
+
+    %li{ 'data-role' => 'list-divider', 'data-icon' => 'search', 'data-theme' => 'c' }
+      = link_to 'Advanced Search...', search_documents_path
