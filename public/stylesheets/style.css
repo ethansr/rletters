@@ -1,13 +1,13 @@
 .nowrap { white-space: nowrap; }
 
-header div .controls .buttons { position: absolute; top: 4px; right: 37%; }
-.max-width-768px header div .controls .buttons { right: 33% !important; }
-.max-width-480px header div .controls .buttons { right: 4px !important; }
-header div .controls .searchbar { width: 35%; position: absolute; top: 1px; right: 0; }
-header div .controls .searchbar form { padding: 0; }
-.max-width-768px header div .controls .searchbar { width: 30% !important; }
-.max-width-480px header div .controls .searchbar { display: none; }
-header div h1.ui-title { width: 100%; margin: 0 !important; padding: .6em .8em .8em !important; text-align: left !important; }
+#main div.header div .controls .buttons { position: absolute; top: 4px; right: 37%; }
+.max-width-768px #main div.header div .controls .buttons { right: 33% !important; }
+.max-width-480px #main div.header div .controls .buttons { right: 4px !important; }
+#main div.header div .controls .searchbar { width: 35%; position: absolute; top: 1px; right: 0; }
+#main div.header div .controls .searchbar form { padding: 0; }
+.max-width-768px #main div.header div .controls .searchbar { width: 30% !important; }
+.max-width-480px #main div.header div .controls .searchbar { display: none; }
+#main div.header div h1.ui-title { width: 100%; margin: 0 !important; padding: .6em .8em .8em !important; text-align: left !important; }
 
 .searchbar form { position: relative; padding: 3px; }
 

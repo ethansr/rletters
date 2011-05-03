@@ -2,13 +2,17 @@
 - ie_html :class => 'no-js' do
   = render :partial => 'layouts/head'
   %body{ :lang => 'en', :class => "#{controller.controller_name}" }
-    %div{ 'data-role' => 'page', 'data-theme' => 'd' }
-      %header#header{ 'data-role' => 'header', 'data-backbtn' => 'false', 'data-theme' => 'a' }
+    %div{ 'id' => 'main', 'data-role' => 'page', 'data-theme' => 'd' }
+      %div{ 'class' => 'header', 'data-role' => 'header', 'data-backbtn' => 'false', 'data-theme' => 'a' }
         = render :partial => 'layouts/header'
-      #main{ :role => 'main', 'data-role' => 'content' }
+      %div{ 'data-role' => 'content' }
         = render :partial => 'layouts/flashes'
         = yield
       = render :partial => 'layouts/footer'
     
+    -# Other internal 'pages', for dialog boxes
+    = yield :pages
+    
     -# Closing-page javascripts come here, via content_for :javascripts
     = yield :javascripts
+    
