@@ -8,6 +8,7 @@ Evotext::Application.routes.draw do
       get 'terms'
       get 'text'
       get 'concordance'
+      get 'mendeley'
     end
     collection do
       get 'search'

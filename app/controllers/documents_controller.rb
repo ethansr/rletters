@@ -1,3 +1,5 @@
+
+
 class DocumentsController < ApplicationController
   before_filter :default_attrs
   def default_attrs
@@ -24,6 +26,21 @@ class DocumentsController < ApplicationController
       hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
     end
     RUBY
+  end
+  
+  # Redirect to the appropriate page on Mendeley for this document
+  def mendeley
+    hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
+    res = Net::HTTP.start("api.mendeley.com") { |http| 
+      http.get("/oapi/documents/search/#{URI.escape(@document.title)}?consumer_key=#{APP_CONFIG['mendeley_consumer_key']}") 
+    }
+    json = res.body
+    result = ActiveSupport::JSON.decode(json)
+    
+    mendeley_docs = result["documents"]
+    raise ActiveRecord::RecordNotFound unless mendeley_docs.size
+    
+    redirect_to mendeley_docs[0]["mendeley_url"]
   end
   
   

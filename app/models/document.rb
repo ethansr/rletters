@@ -92,6 +92,7 @@ class Document
   end
   
   
+  
   # Look up an individual document with the given shasum.  If the fulltext
   # parameter is set to true, +document.fulltext+ and +document.term_vectors+
   # will be set.
