@@ -11,6 +11,9 @@ Evotext::Application.routes.draw do
       
       get 'mendeley'
       get 'citeulike'
+      
+      get 'ris'
+      get 'bib'
     end
     collection do
       get 'search'

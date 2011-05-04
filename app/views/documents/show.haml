@@ -28,4 +28,10 @@
       %li= link_to "UK OpenURL Router", "http://openurl.ac.uk/?#{@document.openurl_query}"
       %li= link_to "Mendeley", mendeley_document_path(@document), :rel => "external"
       %li= link_to "CiteULike", citeulike_document_path(@document), :rel => "external"
+  %li
+    Download Citation
+    %ul
+      %li= link_to "Download RIS Format (EndNote, RefMan, RefWorks)", ris_document_path(@document), :rel => "external"
+      %li= link_to "Download BibTeX Format", bib_document_path(@document), :rel => "external"
+      
 

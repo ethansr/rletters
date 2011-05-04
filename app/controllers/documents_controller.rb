@@ -20,10 +20,28 @@ class DocumentsController < ApplicationController
     @no_searchbar = true
   end
   
+  # All the views that operate on a single document, returning a web page
   %W(show terms concordance text).each do |m|
     class_eval <<-RUBY
     def #{m}
       hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
+    end
+    RUBY
+  end
+  
+  # All the views that render in plain text, offering a user download
+  %W(bib ris).each do |m|
+    class_eval <<-RUBY
+    def #{m}
+      hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
+      
+      headers["Pragma"] = "public"
+      filename = "evotext.#{m}"
+      headers["Content-Disposition"] = 'attachment; filename="' + filename + '"'
+      headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+      headers["Expires"] = "0"
+      
+      render :layout => false, :content_type => 'text/plain'
     end
     RUBY
   end

@@ -1,0 +1,15 @@
+==@article{#{Document.author_name_parts(@document.author_list[0])[:last].gsub(' ','').gsub(/\P{ASCII}/, '')}#{@document.year},
+==author = {#{@document.author_list.join(' and ')}},
+==title = {#{@document.title}},
+==journal = {#{@document.journal}},
+==year = {#{@document.year}},
+- unless @document.volume.blank?
+  ==volume = {#{@document.volume}},
+- unless @document.number.blank?
+  ==number = {#{@document.number}},
+- unless @document.pages.blank?
+  ==pages = {#{@document.pages.gsub('-','--')}},
+- unless @document.doi.blank?
+  ==doi = {#{@document.doi}},
+==URL = {#{document_url(@document)}}
+}

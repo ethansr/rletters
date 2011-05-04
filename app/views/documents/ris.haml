@@ -1,0 +1,21 @@
+TY  - JOUR
+- @document.author_list.each do |a|
+  - parts = Document.author_name_parts(a)
+  - str = "AU  - "
+  - str << "#{parts[:von]} " unless parts[:von].blank?
+  - str << "#{parts[:last]},#{parts[:first]}"
+  - str << ",#{parts[:suffix]}" unless parts[:suffix].blank?
+  = str
+==TI  - #{@document.title}
+==PY  - #{@document.year}///
+==JO  - #{@document.journal}
+- unless @document.volume.blank?
+  ==VL  - #{@document.volume}
+- unless @document.number.blank?
+  ==IS  - #{@document.number}
+- unless @document.start_page.blank?
+  ==SP  - #{@document.start_page}
+- unless @document.end_page.blank?
+  ==EP  - #{@document.end_page}
+==UR  - #{document_url(@document)}
+ER  -

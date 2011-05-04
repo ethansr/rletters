@@ -16,6 +16,9 @@ class Document
   # by commas
   attr_reader :authors
   
+  # A list of document authors, for iteration
+  def author_list; authors.split(",").map!{ |a| a.strip! || a }; end
+  
   # The title of the document
   attr_reader :title
   
@@ -33,6 +36,23 @@ class Document
   
   # Page numbers of the article
   attr_reader :pages
+  
+  # Starting page of the article
+  def start_page
+    return '' if pages.blank?
+    pages.split('-')[0]
+  end
+  
+  # Ending page of the article, if present
+  def end_page
+    return '' if pages.blank?
+    parts = pages.split('-')
+    if parts.length > 1
+      parts[-1]
+    else
+      ''
+    end
+  end
   
   # OCR'ed full text of the document.  Available only if the document
   # is retrieved by +Document.find+ with the +fulltext+ parameter set
@@ -77,18 +97,12 @@ class Document
     params << "&rft.date=#{CGI::escape(year)}" unless year.blank?
     params << "&rft.volume=#{CGI::escape(volume)}" unless volume.blank?
     params << "&rft.issue=#{CGI::escape(number)}" unless number.blank?
-    unless pages.blank?
-      parts = pages.split('-')
-      params << "&rft.epage=#{CGI::escape(parts[-1])}"
-      params << "&rft.spage=#{CGI::escape(parts[0])}" if parts.length > 1
-    end
-    firstauthor = authors.split(',')[0]
-    parts = firstauthor.split(' ')
-    aulast = parts[-1]
-    aufirst = parts[0, parts.length - 1].join(' ')
-    params << "&rft.aufirst=#{CGI::escape(aufirst)}"
-    params << "&rft.aulast=#{CGI::escape(aulast)}"
-    params << "&rft.au=#{CGI::escape(firstauthor)}"
+    params << "&rft.spage=#{CGI::escape(start_page)}" unless start_page.blank?
+    params << "&rft.epage=#{CGI::escape(end_page)}" unless end_page.blank?
+    parts = Document.author_name_parts(author_list[0])
+    params << "&rft.aufirst=#{CGI::escape(parts[:first])}"
+    params << "&rft.aulast=#{CGI::escape(parts[:last])}"
+    params << "&rft.au=#{CGI::escape(author_list[0])}"
   end
   
   
@@ -335,6 +349,93 @@ class Document
   def to_param
     shasum
   end  
+  
+  
+  
+  def self.author_name_parts(a)
+    au = a.dup
+    first = ''
+    last = ''
+    von = ''
+    suffix = ''
+    
+    # Check for a BibTeX "von-part"
+    if m = au.match(/( |^)(von der|von|van der|van|del|de la|de|St|don|dos) /)
+      von = m[2]
+      s = m.begin(2)
+      e = m.end(2)
+      
+      # Special case: if the von part starts the string, then it'd better be
+      # comma-separated later (erase it and we'll fall through)
+      if s == 0
+        au[s...e] = ''
+      else
+        # Otherwise, this constitutes our splitter
+        first = au[0...s]
+        last = au[e...au.length]
+        au = ''
+      end
+    end
+    
+    # Check for a BibTeX "suffix-part"
+    if m = au.match(/(,? ((Jr|Sr|1st|2nd|3rd|IV|III|II|I)\.?))/)
+      suffix = m[2]
+      s = m.begin(1)
+      e = m.end(1)
+      
+      # If it's not at the end of the string, then it's a splitter, though
+      # make sure to check for a comma
+      if e != au.length
+        before = au[0...s]
+        after = au[e...au.length]
+        
+        if after[0] == ','
+          after[0] = ''
+        end
+        
+        last = before
+        first = after
+        au = ''
+      else
+        # Okay, we've got it, just erase it
+        au[s...e] = ''
+      end
+    end
+    
+    # Now we should have only first and last names, possibly separated by
+    # a comma.  If au is empty, though, we've already parsed them out.
+    unless au.blank?
+      # Look for a comma, that's the easy method
+      if m = au.match(/(,)/)
+        if m.begin(1) == 0
+          # Broken string that begins w/ a comma?
+          first = au[1, -1]
+          last = ''
+        else
+          last = au[0...m.begin(1)]
+          first = au[m.end(1)...au.length]
+        end
+      else
+        # No comma, take the last single name as the last name
+        parts = au.split(' ')
+        if parts.length == 1
+          last = au
+          first = ''
+        else
+          last = parts[-1]
+          first = parts[0...parts.length - 1].join(' ')
+        end
+      end
+    end
+    
+    # Trim everything
+    first.strip!
+    last.strip!
+    von.strip!
+    suffix.strip!
+
+    { :first => first, :last => last, :von => von, :suffix => suffix }
+  end
   
   
 
