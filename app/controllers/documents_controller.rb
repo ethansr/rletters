@@ -31,16 +31,40 @@ class DocumentsController < ApplicationController
   # Redirect to the appropriate page on Mendeley for this document
   def mendeley
     hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
-    res = Net::HTTP.start("api.mendeley.com") { |http| 
-      http.get("/oapi/documents/search/#{URI.escape(@document.title)}?consumer_key=#{APP_CONFIG['mendeley_consumer_key']}") 
-    }
-    json = res.body
-    result = ActiveSupport::JSON.decode(json)
     
-    mendeley_docs = result["documents"]
-    raise ActiveRecord::RecordNotFound unless mendeley_docs.size
+    begin
+      res = Net::HTTP.start("api.mendeley.com") { |http| 
+        http.get("/oapi/documents/search/#{URI.escape(@document.title)}?consumer_key=#{APP_CONFIG['mendeley_consumer_key']}") 
+      }
+      json = res.body
+      result = JSON.parse(json)
     
-    redirect_to mendeley_docs[0]["mendeley_url"]
+      mendeley_docs = result["documents"]
+      raise ActiveRecord::RecordNotFound unless mendeley_docs.size
+    
+      redirect_to mendeley_docs[0]["mendeley_url"]
+    rescue
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+  
+  # Redirect to the appropriate page on CiteULike for this document
+  def citeulike
+    hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
+    
+    begin
+      res = Net::HTTP.start("www.citeulike.org") { |http| 
+        http.get("/json/search/all?per_page=1&page=1&q=#{CGI::escape(@document.title)}")
+      }
+      json = res.body
+      cul_docs = JSON.parse(json)
+    
+      raise ActiveRecord::RecordNotFound unless cul_docs.size
+    
+      redirect_to cul_docs[0]["href"]
+    rescue
+      raise ActiveRecord::RecordNotFound
+    end
   end
   
   

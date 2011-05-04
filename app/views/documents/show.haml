@@ -27,4 +27,5 @@
       %li= link_to "WorldCat Gateway", "http://worldcatlibraries.org/registry/gateway?#{@document.openurl_query}"
       %li= link_to "UK OpenURL Router", "http://openurl.ac.uk/?#{@document.openurl_query}"
       %li= link_to "Mendeley", mendeley_document_path(@document), :rel => "external"
+      %li= link_to "CiteULike", citeulike_document_path(@document), :rel => "external"
 

@@ -5,6 +5,9 @@ gem 'rails', '3.0.5'
 # UUIDs
 gem "uuid"
 
+# JSON (much faster than the Rails default)
+gem "json"
+
 # HTML5 Boilerplate
 gem "compass", ">= 0.10.6"
 gem "haml"
