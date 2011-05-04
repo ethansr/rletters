@@ -1,5 +1,7 @@
 %h3= document.title
-%p= document.authors
+%p
+  = content_tag :span, '', :class => "Z3988", :title => document.openurl_query
+  = document.authors
 %p
   %em><
     = "#{document.journal}, "

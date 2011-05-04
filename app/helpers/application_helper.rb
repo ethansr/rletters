@@ -35,15 +35,16 @@ module ApplicationHelper
     end
   end
   
-  def add_help_page(id, &block)
+  def help_button(&block)
+    id = UUID.generate
     add_jquery_page(id) do
-      content_tag :div, 'data-role' => 'header', 'data-theme' => 'd', 'data-position' => 'inline', 'data-backbtn' => 'false' do
-        content_tag :h1, "Help"
+      content = content_tag(:div, 'data-role' => 'header', 'data-theme' => 'd', 'data-position' => 'inline', 'data-backbtn' => 'false') do
+        content_tag(:h1, "Help")
       end
-      content_tag :div, 'data-role' => 'content' do
-        block.call
-        link_to request.request_uri, 'Close', 'data-role' => 'button', 'data-rel' => 'back', 'data-theme' => 'b'
+      content << content_tag(:div, 'data-role' => 'content') do
+        block.call << link_to('Close', '#main', 'data-role' => 'button', 'data-rel' => 'back', 'data-theme' => 'b')
       end
     end
+    link_to 'Help', id, :class => 'helpbutton', 'data-rel' => 'dialog', 'data-role' => 'button', 'data-inline' => 'true', 'data-icon' => 'info', 'data-iconpos' => 'notext'
   end
 end

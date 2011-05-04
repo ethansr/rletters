@@ -11,7 +11,7 @@ class Document
   
   # A URL to the DOI-resolving page for the document
   def doi_url; "http://dx.doi.org/" + doi; end
-    
+  
   # The document's authors, in "First Last" format, separated
   # by commas
   attr_reader :authors
@@ -67,7 +67,29 @@ class Document
   
   # Highlighting snippets for this document.  An array of strings.
   attr_reader :snippets
-  
+
+  # The URL parameters for an OpenURL query
+  def openurl_query
+    params = "ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&rft.genre=article"
+    params << "&rft_id=info:doi%2F#{CGI::escape(doi)}" unless doi.blank?
+    params << "&rft.atitle=#{CGI::escape(title)}"
+    params << "&rft.title=#{CGI::escape(journal)}"
+    params << "&rft.date=#{CGI::escape(year)}" unless year.blank?
+    params << "&rft.volume=#{CGI::escape(volume)}" unless volume.blank?
+    params << "&rft.issue=#{CGI::escape(number)}" unless number.blank?
+    unless pages.blank?
+      parts = pages.split('-')
+      params << "&rft.epage=#{CGI::escape(parts[-1])}"
+      params << "&rft.spage=#{CGI::escape(parts[0])}" if parts.length > 1
+    end
+    firstauthor = authors.split(',')[0]
+    parts = firstauthor.split(' ')
+    aulast = parts[-1]
+    aufirst = parts[0, parts.length - 1].join(' ')
+    params << "&rft.aufirst=#{CGI::escape(aufirst)}"
+    params << "&rft.aulast=#{CGI::escape(aulast)}"
+    params << "&rft.au=#{CGI::escape(firstauthor)}"
+  end
   
   
   # Look up an individual document with the given shasum.  If the fulltext

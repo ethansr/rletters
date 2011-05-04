@@ -17,7 +17,7 @@
           in database
     - for doc in @documents
       %li{ 'data-icon' => 'info' }
-        = link_to document_path(doc) do
+        = link_to document_path(doc), 'rel' => 'external' do
           = render :partial => "cite", :locals => { :document => doc }
 
   %div.verticalpad
