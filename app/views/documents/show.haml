@@ -1,4 +1,5 @@
 - title "Document Information"
+=render :partial => 'dublin_core', :locals => { :document => @document }
 
 %ul{ 'data-role' => 'listview' }
   %li= render :partial => "cite", :locals => { :document => @document }
@@ -32,7 +33,8 @@
     Export/Download Citation
     %ul
       %li= link_to "Export to RefWorks", "http://www.refworks.com/express/ExpressImport.asp?vendor=evoText&filter=RIS%20Format&encoding=65001&url=#{CGI::escape(ris_document_url(@document))}", :rel => "external", :target => "RefWorksMain"
-      %li= link_to "Download in RIS Format (EndNote, RefMan)", ris_document_path(@document), :rel => "external"
+      %li= link_to "Download in RIS Format (Reference Manager, EndNote, ProCite, RefWorks)", ris_document_path(@document), :rel => "external"
+      %li= link_to "Download in Endnote Format", enw_document_path(@document), :rel => "external"
       %li= link_to "Download in BibTeX Format", bib_document_path(@document), :rel => "external"
       %li= link_to "Download in MODS Format", xml_mods_document_path(@document), :rel => "external"
       %li= link_to "Download in MARC Format", marc_document_path(@document), :rel => "external"

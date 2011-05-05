@@ -1,10 +1,9 @@
 TY  - JOUR
-- @document.author_list.each do |a|
-  - parts = Document.author_name_parts(a)
+- @document.formatted_author_list.each do |a|
   - str = "AU  - "
-  - str << "#{parts[:von]} " unless parts[:von].blank?
-  - str << "#{parts[:last]},#{parts[:first]}"
-  - str << ",#{parts[:suffix]}" unless parts[:suffix].blank?
+  - str << "#{a[:von]} " unless a[:von].blank?
+  - str << "#{a[:last]},#{a[:first]}"
+  - str << ",#{a[:suffix]}" unless a[:suffix].blank?
   = str
 ==TI  - #{@document.title}
 ==PY  - #{@document.year}///

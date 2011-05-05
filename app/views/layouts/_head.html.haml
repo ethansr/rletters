@@ -2,11 +2,10 @@
   %meta{ :charset => "utf-8" }/
   %meta{ :content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible" }/
   
-  %title
-    == evoText
-    - t = yield(:title)
-    = " - #{t}" unless t.blank?
-    
+  - title = "evoText"
+  - title << " - #{yield(:title)}" if content_for? :title
+  %title= title
+  
   %meta{ :content => "", :name => "description" }/
   %meta{ :content => "", :name => "author" }/
   
@@ -18,6 +17,9 @@
   -# %link{ :href => "/apple-touch-icon.png", :rel => "apple-touch-icon" }/
   
   = render :partial => 'layouts/stylesheets'
+  
+  -# Add a place to inject meta tags like Dublin Core terms
+  = yield :meta
 
   -# Modernizr, JQuery + Mobile, and the stock Rails stuff
   = javascript_include_tag 'modernizr.min'

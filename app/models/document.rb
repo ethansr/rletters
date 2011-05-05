@@ -19,6 +19,9 @@ class Document
   # A list of document authors, for iteration
   def author_list; authors.split(",").map!{ |a| a.strip! || a }; end
   
+  # A list of formatted author names, passed through +Document.author_name_parts+
+  attr_reader :formatted_author_list
+  
   # The title of the document
   attr_reader :title
   
@@ -99,9 +102,8 @@ class Document
     params << "&rft.issue=#{CGI::escape(number)}" unless number.blank?
     params << "&rft.spage=#{CGI::escape(start_page)}" unless start_page.blank?
     params << "&rft.epage=#{CGI::escape(end_page)}" unless end_page.blank?
-    parts = Document.author_name_parts(author_list[0])
-    params << "&rft.aufirst=#{CGI::escape(parts[:first])}"
-    params << "&rft.aulast=#{CGI::escape(parts[:last])}"
+    params << "&rft.aufirst=#{CGI::escape(formatted_author_list[0][:first])}"
+    params << "&rft.aulast=#{CGI::escape(formatted_author_list[0][:last])}"
     author_list[1...author_list.size].each do |a|
       params << "&rft.au=#{CGI::escape(a)}"
     end
@@ -122,7 +124,7 @@ class Document
     record.append(MARC::DataField.new('024', '7', '#',
       ['2', 'doi'], ['a', doi]))
     
-    parts = Document.author_name_parts(author_list[0])
+    parts = formatted_author_list[0]
     first_author = ''
     first_author << parts[:von] + ' ' unless parts[:von].blank?
     first_author << parts[:last]
@@ -131,13 +133,12 @@ class Document
     record.append(MARC::DataField.new('100', '1', '#',
       MARC::Subfield.new('a', first_author)))
     
-    author_list.each do |a|
-      parts = Document.author_name_parts(a)
+    formatted_author_list.each do |a|
       author = ''
-      author << parts[:von] + ' ' unless parts[:von].blank?
-      author << parts[:last]
-      author << ' ' + parts[:suffix] unless parts[:suffix].blank?
-      author << ', ' + parts[:first]
+      author << a[:von] + ' ' unless a[:von].blank?
+      author << a[:last]
+      author << ' ' + a[:suffix] unless a[:suffix].blank?
+      author << ', ' + a[:first]
       record.append(MARC::DataField.new('700', '1', '#',
         MARC::Subfield.new('a', author)))
     end
@@ -196,14 +197,13 @@ class Document
       mods.titleInfo do |ti|
         ti.title title
       end
-      author_list.each do |a|
-        parts = Document.author_name_parts(a)
+      formatted_author_list.each do |a|
         mods.name(:type => 'personal') do |name|
-          name.namePart(parts[:first], :type => 'given')
+          name.namePart(a[:first], :type => 'given')
           last_name = ''
-          last_name << " #{parts[:von]}" unless parts[:von].blank?
-          last_name << parts[:last]
-          last_name << ", #{parts[:suffix]}" unless parts[:suffix].blank?
+          last_name << " #{parts[:von]}" unless a[:von].blank?
+          last_name << a[:last]
+          last_name << ", #{parts[:suffix]}" unless a[:suffix].blank?
           name.namePart(last_name, :type => 'family')
           name.role do |role|
             role.roleTerm('author', :type => 'text')
@@ -481,6 +481,9 @@ class Document
         instance_variable_set("@#{k}", "".force_encoding("UTF-8"))
       end
     end
+    
+    @formatted_author_list = []
+    author_list.each { |a| @formatted_author_list << Document.author_name_parts(a) }
     
     @term_vectors = term_vectors
     @snippets = snippets
