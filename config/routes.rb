@@ -15,6 +15,8 @@ Evotext::Application.routes.draw do
       get 'ris'
       get 'bib'
       get 'enw'
+      get 'rdf'
+      get 'ttl'
       get 'marc'
       get 'xml_marc'
       get 'xml_mods'

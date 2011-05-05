@@ -36,6 +36,8 @@
       %li= link_to "Download in RIS Format (Reference Manager, EndNote, ProCite, RefWorks)", ris_document_path(@document), :rel => "external"
       %li= link_to "Download in Endnote Format", enw_document_path(@document), :rel => "external"
       %li= link_to "Download in BibTeX Format", bib_document_path(@document), :rel => "external"
+      %li= link_to "Download in RDF/XML Format", rdf_document_path(@document), :rel => "external"
+      %li= link_to "Download in RDF/Turtle Format", ttl_document_path(@document), :rel => "external"
       %li= link_to "Download in MODS Format", xml_mods_document_path(@document), :rel => "external"
       %li= link_to "Download in MARC Format", marc_document_path(@document), :rel => "external"
       %li= link_to "Download in MARCXML Format", xml_marc_document_path(@document), :rel => "external"

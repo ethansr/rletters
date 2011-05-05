@@ -247,6 +247,39 @@ class Document
       mods.target!
     end
   end
+  
+  def rdf_document
+    graph = RDF::Graph.new
+    doc = RDF::Node.new
+    
+    formatted_author_list.each do |a|
+      name = ''
+      name << "#{a[:von]} " unless a[:von].blank?
+      name << "#{a[:last]}"
+      name << " #{a[:suffix]}" unless a[:suffix].blank?
+      name << ", #{a[:first]}"
+      graph << [doc, RDF::DC.creator, name]
+    end
+    graph << [doc, RDF::DC.issued, year]
+
+    citation = "#{journal}"
+    citation << " #{volume}" unless volume.blank?
+    citation << ' ' if volume.blank?
+    citation << "(#{number})" unless number.blank?
+    citation << ", #{pages}" unless pages.blank?
+    citation << ". (#{year})"
+    graph << [doc, RDF::DC.bibliographicCitation, citation]
+    
+    ourl = RDF::Literal.new(openurl_query, :datatype => RDF::URI.new("info:ofi/fmt:kev:mtx:ctx"))
+    graph << [doc, RDF::DC.bibliographicCitation, ourl]
+    
+    graph << [doc, RDF::DC.relation, journal]
+    graph << [doc, RDF::DC.title, title]
+    graph << [doc, RDF::DC.type, 'Journal Article']
+    graph << [doc, RDF::DC.identifier, "info:doi/#{doi}"] unless doi.blank?
+    
+    graph
+  end
     
   
   # Look up an individual document with the given shasum.  If the fulltext

@@ -2,6 +2,7 @@
 - content_for :meta do
   = tag :link, :rel => 'schema.DCTERMS', :href => 'http://purl.org/dc/terms/'
   = tag :link, :rel => 'schema.DC', :href => 'http://purl.org/dc/elements/1.1/'
+  = tag :link, :rel => "schema.KEV", :href => "info:ofi/fmt:kev:mtx:"
   - document.formatted_author_list.each do |a|
     - name = ''
     - name << "#{a[:von]} " unless a[:von].blank?
