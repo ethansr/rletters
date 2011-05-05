@@ -1,0 +1,18 @@
+%0 Journal Article
+- @document.author_list.each do |a|
+  - parts = Document.author_name_parts(a)
+  - str = "%A #{parts[:last]}, #{parts[:first]}"
+  - str << " #{parts[:von]}" unless parts[:von].blank?
+  - str << ", #{parts[:suffix]}" unless parts[:suffix].blank?
+  = str
+==%T #{@document.title}
+==%D #{@document.year}
+==%J #{@document.journal}
+- unless @document.volume.blank?
+  ==%V #{@document.volume}
+- unless @document.number.blank?
+  ==%N #{@document.number}
+- unless @document.pages.blank?
+  ==%P #{@document.start_page}
+==%M #{@document.doi}
+==%U #{document_url(@document)}

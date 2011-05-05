@@ -30,7 +30,7 @@ class DocumentsController < ApplicationController
   end
   
   # All the views that render in plain text, offering a user download
-  %W(bib ris marc xml_marc xml_mods).each do |m|
+  %W(bib ris enw marc xml_marc xml_mods).each do |m|
     class_eval <<-RUBY
     def #{m}
       hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
@@ -46,6 +46,8 @@ class DocumentsController < ApplicationController
         mime = 'application/x-bibtex'
       when 'ris'
         mime = 'application/x-research-info-systems'
+      when 'enw'
+        mime = 'application/x-endnote-refer'
       when 'marc'
         mime = 'application/marc'
       when 'xml'
