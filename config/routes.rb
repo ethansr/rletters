@@ -25,4 +25,5 @@ Evotext::Application.routes.draw do
       get 'search'
     end
   end
+  match "unapi" => 'unapi#index', :via => :get
 end

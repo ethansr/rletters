@@ -18,6 +18,9 @@
   
   = render :partial => 'layouts/stylesheets'
   
+  -# Link up the unAPI service
+  %link{ :rel => 'unapi-server', :type => 'application/xml', :title => 'unAPI', :href => unapi_url }
+  
   -# Add a place to inject meta tags like Dublin Core terms
   = yield :meta
 

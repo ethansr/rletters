@@ -1,6 +1,7 @@
 %h3= document.title
 %p
   = content_tag :span, '', :class => "Z3988", :title => document.openurl_query
+  = content_tag :abbr, '', :class => 'unapi-id', :title => document.shasum
   = document.authors
 %p
   %em><

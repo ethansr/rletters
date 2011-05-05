@@ -41,7 +41,7 @@ class DocumentsController < ApplicationController
       headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
       headers["Expires"] = "0"
       
-      case "#{m}".split('_')[0]
+      case "#{m}"
       when 'bib'
         mime = 'application/x-bibtex'
       when 'ris'
@@ -54,8 +54,10 @@ class DocumentsController < ApplicationController
         mime = 'text/turtle'
       when 'marc'
         mime = 'application/marc'
-      when 'xml'
-        mime = 'application/xml'
+      when 'xml_marc'
+        mime = 'application/marcxml+xml'
+      when 'xml_mods'
+        mime = 'application/mods+xml'
       else
         mime = 'text/plain'
       end
@@ -103,10 +105,4 @@ class DocumentsController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
   end
-  
-  
-  def hash_to_instance_variables(h)
-    h.each { |k, v| instance_variable_set "@#{k.to_s}", v }
-  end
-  private :hash_to_instance_variables
 end
