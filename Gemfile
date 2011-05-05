@@ -24,3 +24,7 @@ gem "maruku"
 
 # JQuery
 gem "jquery-rails"
+
+# Various output formats: MARC, XML, etc.
+gem "marc"
+gem "builder"

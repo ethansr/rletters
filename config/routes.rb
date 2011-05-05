@@ -14,6 +14,9 @@ Evotext::Application.routes.draw do
       
       get 'ris'
       get 'bib'
+      get 'marc'
+      get 'xml_marc'
+      get 'xml_mods'
     end
     collection do
       get 'search'

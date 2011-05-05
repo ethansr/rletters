@@ -30,18 +30,31 @@ class DocumentsController < ApplicationController
   end
   
   # All the views that render in plain text, offering a user download
-  %W(bib ris).each do |m|
+  %W(bib ris marc xml_marc xml_mods).each do |m|
     class_eval <<-RUBY
     def #{m}
       hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
       
       headers["Pragma"] = "public"
-      filename = "evotext.#{m}"
+      filename = "evotext.#{m.split('_')[0]}"
       headers["Content-Disposition"] = 'attachment; filename="' + filename + '"'
       headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
       headers["Expires"] = "0"
       
-      render :layout => false, :content_type => 'text/plain'
+      case "#{m}".split('_')[0]
+      when 'bib'
+        mime = 'application/x-bibtex'
+      when 'ris'
+        mime = 'application/x-research-info-systems'
+      when 'marc'
+        mime = 'application/marc'
+      when 'xml'
+        mime = 'application/xml'
+      else
+        mime = 'text/plain'
+      end
+      
+      render :layout => false, :content_type => mime
     end
     RUBY
   end

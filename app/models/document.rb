@@ -102,10 +102,152 @@ class Document
     parts = Document.author_name_parts(author_list[0])
     params << "&rft.aufirst=#{CGI::escape(parts[:first])}"
     params << "&rft.aulast=#{CGI::escape(parts[:last])}"
-    params << "&rft.au=#{CGI::escape(author_list[0])}"
+    author_list[1...author_list.size].each do |a|
+      params << "&rft.au=#{CGI::escape(a)}"
+    end
+    params
   end
   
+  # Get a MARC record for this document
+  def marc_record
+    record = MARC::Record.new()
+    
+    record.append(MARC::ControlField.new('001', shasum))
+    record.append(MARC::ControlField.new('003', "PDFSHASUM"))
+    record.append(MARC::ControlField.new('005', Time.now.strftime("%Y%m%d%H%M%S.0")))
+    record.append(MARC::ControlField.new('008', "110501s#{sprintf '%04d', year}#######||||fo#####||0#0|eng#d"))
+    record.append(MARC::DataField.new('040', '#', '#',
+      ['a', 'evoText'], ['b', 'eng'], ['c', 'evoText']))
+    
+    record.append(MARC::DataField.new('024', '7', '#',
+      ['2', 'doi'], ['a', doi]))
+    
+    parts = Document.author_name_parts(author_list[0])
+    first_author = ''
+    first_author << parts[:von] + ' ' unless parts[:von].blank?
+    first_author << parts[:last]
+    first_author << ' ' + parts[:suffix] unless parts[:suffix].blank?
+    first_author << ', ' + parts[:first]
+    record.append(MARC::DataField.new('100', '1', '#',
+      MARC::Subfield.new('a', first_author)))
+    
+    author_list.each do |a|
+      parts = Document.author_name_parts(a)
+      author = ''
+      author << parts[:von] + ' ' unless parts[:von].blank?
+      author << parts[:last]
+      author << ' ' + parts[:suffix] unless parts[:suffix].blank?
+      author << ', ' + parts[:first]
+      record.append(MARC::DataField.new('700', '1', '#',
+        MARC::Subfield.new('a', author)))
+    end
+    
+    marc_title = title
+    marc_title << '.' unless title[-1] == '.'
+    record.append(MARC::DataField.new('245', '1', '0',
+      ['a', marc_title]))
+    
+    marc_volume = ''
+    marc_volume << "v. #{volume}" unless volume.blank?
+    marc_volume << " " unless volume.blank? or pages.blank?
+    marc_volume << "no. #{number}" unless number.blank?
+    record.append(MARC::DataField.new('490', '1', '#',
+      MARC::Subfield.new('a', journal),
+      MARC::Subfield.new('v', marc_volume)))
+    record.append(MARC::DataField.new('830', '#', '0',
+      MARC::Subfield.new('a', journal),
+      MARC::Subfield.new('v', marc_volume)))
+    
+    marc_free = ''
+    unless volume.blank?
+      marc_free << "Vol. #{volume}"
+      marc_free << (number.blank? ? " " : ", ")
+    end
+    marc_free << "no. #{number} " unless number.blank?
+    marc_free << "(#{year})"
+    marc_free << ", p. #{pages}" unless pages.blank?
+    
+    marc_enumeration = ''
+    marc_enumeration << volume unless volume.blank?
+    marc_enumeration << ":#{number}" unless number.blank?
+    marc_enumeration << "<#{start_page}" unless start_page.blank?
+    record.append(MARC::DataField.new('773', '0', '#',
+      ['t', journal], ['g', marc_free], ['q', marc_enumeration], ['7', 'nnas']))
+    
+    subfields = []
+    subfields << ['a', volume] unless volume.blank?
+    subfields << ['b', number] unless number.blank?
+    subfields << ['c', start_page] unless start_page.blank?
+    subfields << ['i', year]
+    record.append(MARC::DataField.new('363', '#', '#', *subfields))
+    
+    record.append(MARC::DataField.new('362', '0', '#', ['a', year + '.']))
+    
+    record
+  end
   
+  # Output in MODS XML format
+  def mods_document
+    xml = Builder::XmlMarkup.new(:indent => 2)
+    xml.mods("xmlns:xlink" => "http://www.w3.org/1999/xlink",
+      "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance",
+      "xmlns" => "http://www.loc.gov/mods/v3", "version" => "3.0",
+      "xsi:schemaLocation" => "http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd") do |mods|
+      mods.titleInfo do |ti|
+        ti.title title
+      end
+      author_list.each do |a|
+        parts = Document.author_name_parts(a)
+        mods.name(:type => 'personal') do |name|
+          name.namePart(parts[:first], :type => 'given')
+          last_name = ''
+          last_name << " #{parts[:von]}" unless parts[:von].blank?
+          last_name << parts[:last]
+          last_name << ", #{parts[:suffix]}" unless parts[:suffix].blank?
+          name.namePart(last_name, :type => 'family')
+          name.role do |role|
+            role.roleTerm('author', :type => 'text')
+          end
+        end
+      end
+      mods.typeOfResource 'text'
+      mods.genre 'article'
+      mods.originInfo do |oi|
+        oi.issuance 'monographic'
+      end
+      mods.relatedItem(:type => 'host') do |ri|
+        ri.titleInfo do |ti|
+          ti.title journal
+        end
+        ri.originInfo do |oi|
+          oi.issuance 'continuing'
+        end
+        ri.part do |part|
+          unless volume.blank?
+            part.detail(:type => 'volume') do |d|
+              d.number volume
+            end
+          end
+          unless number.blank?
+            part.detail(:type => 'issue') do |d|
+              d.number number
+              d.caption 'no.'
+            end
+          end
+          unless pages.blank?
+            part.extent(:unit => 'pages') do |e|
+              e.start start_page unless start_page.blank?
+              e.end end_page unless end_page.blank?
+            end
+          end
+          part.date year
+        end
+      end
+      mods.identifier(doi, :type => 'doi')
+      mods.target!
+    end
+  end
+    
   
   # Look up an individual document with the given shasum.  If the fulltext
   # parameter is set to true, +document.fulltext+ and +document.term_vectors+
