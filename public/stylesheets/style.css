@@ -11,6 +11,8 @@
 .max-width-480px #main div.header div .controls .searchbar { display: none; }
 #main div.header div h1.ui-title { width: 100%; margin: 0 !important; padding: .6em .8em .8em !important; text-align: left !important; }
 
+#main div.header div.nosearchbar div.controls div.buttons { right: 2% !important; }
+
 .searchbar form { position: relative; padding: 3px; }
 
 .searchbar form .ui-input-search { box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; width: 100% !important; }

@@ -39,6 +39,11 @@ $box-color: #f2f2f2;
   }
 }
 
+// Move button container when no searchbar is present
+#main div.header div.nosearchbar div.controls div.buttons {
+  right: 2% !important;
+}
+
 // Fix searchbar formatting (form elements in header/footer).
 // This is fragile, since it overrides an internal JQM style.
 .searchbar form { position: relative; padding: 3px; }

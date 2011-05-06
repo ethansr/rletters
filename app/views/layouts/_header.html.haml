@@ -1,8 +1,8 @@
-%div
+%div{ :class => (@no_searchbar ? 'nosearchbar' : 'headercontainer') }
   %h1.ui-title evoText
   
   %div.controls
-    %div.buttons{'data-inline' => 'true'}
+    %div.buttons{ 'data-inline' => 'true' }
       - unless request.env["HTTP_REFERER"].blank?
         = link_to 'Back', :back, 'data-role' => 'button', 'data-icon' => 'arrow-l', 'data-transition' => 'slide', 'data-rel' => 'back'
       - if params[:controller] != 'documents' or params[:action] != 'index'
