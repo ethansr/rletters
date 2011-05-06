@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 require 'tempfile'
 require 'zip/zip'
 require 'zip/zipfilesystem'

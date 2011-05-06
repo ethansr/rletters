@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 class ExportController < ApplicationController
   EXPORT_FORMATS = [
     { :action => "ris", :class => "RISCollection" },

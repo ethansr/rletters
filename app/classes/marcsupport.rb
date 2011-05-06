@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 
 module MARCSupport
   def MARCSupport.document_to_marc(document)

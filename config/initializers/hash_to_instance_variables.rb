@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 
 # Add a method for converting a hash into a set of instance variables
 class Object

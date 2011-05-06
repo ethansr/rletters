@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 
 module RDFSupport
   def RDFSupport.document_to_rdf(document)

@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 class UnapiController < ApplicationController
   def index
     if params[:id]
