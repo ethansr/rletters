@@ -206,7 +206,7 @@ class Document
           last_name << ", #{parts[:suffix]}" unless a[:suffix].blank?
           name.namePart(last_name, :type => 'family')
           name.role do |role|
-            role.roleTerm('author', :type => 'text')
+            role.roleTerm('author', :type => 'text', :authority => 'marcrelator')
           end
         end
       end
@@ -214,14 +214,18 @@ class Document
       mods.genre 'article'
       mods.originInfo do |oi|
         oi.issuance 'monographic'
+        oi.dateIssued year
       end
       mods.relatedItem(:type => 'host') do |ri|
-        ri.titleInfo do |ti|
+        ri.titleInfo(:type => 'abbreviated') do |ti|
           ti.title journal
         end
         ri.originInfo do |oi|
+          oi.dateIssued year
           oi.issuance 'continuing'
         end
+        ri.genre('periodical', :authority => 'marcgt')
+        ri.genre 'academic journal'
         ri.part do |part|
           unless volume.blank?
             part.detail(:type => 'volume') do |d|
@@ -235,7 +239,7 @@ class Document
             end
           end
           unless pages.blank?
-            part.extent(:unit => 'pages') do |e|
+            part.extent(:unit => 'page') do |e|
               e.start start_page unless start_page.blank?
               e.end end_page unless end_page.blank?
             end
