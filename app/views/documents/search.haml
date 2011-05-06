@@ -10,69 +10,76 @@
 
 %h3 Guided Advanced Search
 
-= form_tag(documents_path, { :method => "get" }) do
-  = hidden_field_tag(:precise, true)
+= form_tag documents_path, { :method => "get" } do
+  = hidden_field_tag :precise, true
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:authors, 'Authors:')
-    -#= help_image do
-    -#  Authors of articles, in "First Last, First Last, ..." format.
-    = text_field_tag(:authors)
+    = label_tag :authors do
+      %span Authors:
+      = help_button do
+        Authors of articles, in "First Last, First Last, ..." format.
+    = text_field_tag :authors
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:title, 'Title:')
-    -#= help_image do
-    -#  Title of journal article.
-    = text_field_tag(:title)
+    = label_tag :title do
+      %span Title:
+      = help_button do
+        Title of journal article.  If title search type is set to "Exact", this string will match the exact title.  If title search type is "fuzzy", it will match the stemmed title.  (The standard evoText search uses the stemmed search fields.)
+    = text_field_tag :title
   %div{ 'data-role' => 'fieldcontain' }
-    = field_set_tag('Title search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal') do
-      -#= help_image do
-      -#  If "Exact", search against the exact title.  If "fuzzy", search against the stemmed title.  (The standard evoText search uses the stemmed search fields.)
+    = field_set_tag 'Title search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
       = radio_button_tag(:title_type, "exact", true, :id => :title_type_exact)
       = label_tag(:title_type_exact, "Exact")
       = radio_button_tag(:title_type, "fuzzy", false, :id => :title_type_fuzzy)
       = label_tag(:title_type_fuzzy, "Fuzzy")
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:journal, 'Journal:')
-    -#= help_image do
-    -#  Journal in which article was published.
+    = label_tag :journal do
+      %span Journal:
+      = help_button do
+        Journal in which article was published. If journal search type is set to "Exact", this string will match the exact journal title.  If journal search type is "fuzzy", it will match the stemmed journal title.  (The standard evoText search uses the stemmed search fields.)
     = text_field_tag(:journal)
   %div{ 'data-role' => 'fieldcontain' }
-    = field_set_tag('Journal search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal') do
-      -# = help_image do
-      -#  If "Exact", search against the exact journal title.  If "fuzzy", search against the stemmed journal title.  (The standard evoText search uses the stemmed search fields.)
+    = field_set_tag 'Journal search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
       = radio_button_tag(:journal_type, "exact", true, :id => :journal_type_exact)
       = label_tag(:journal_type_exact, "Exact")
       = radio_button_tag(:journal_type, "fuzzy", false, :id => :journal_type_fuzzy)
       = label_tag(:journal_type_fuzzy, "Fuzzy")
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:year_start, 'Published between (start):')
+    = label_tag :year_start do
+      %span Published after:
+      = help_button do
+        Beginning of allowable range for publication dates.
     = text_field_tag(:year_start)
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:year_end, 'Published between (end):')
+    = label_tag :year_end do
+      %span Published before:
+      = help_button do
+        End of allowable range for publication dates.
     = text_field_tag(:year_end)
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:volume, 'Volume:')
-    -#= help_image do
-    -#  Volume of journal.
+    = label_tag :volume do
+      %span Volume:
+      = help_button do
+        Volume number of journal.
     = text_field_tag(:volume)
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:number, 'Issue number:')
-    -#= help_image do
-    -#  Issue number of journal.
+    = label_tag :number do
+      %span Issue number:
+      = help_button do
+        Issue number of journal.
     = text_field_tag(:number)
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:pages, 'Pages:')
-    -#= help_image do
-    -#  Page number of journal.  This is a text search, not a range search: you will have to specify a page number precisely as it appears in an article's citation information.
+    = label_tag :pages do
+      %span Pages:
+      = help_button do
+        Page number of journal.  This is a text search, not a range search: you will have to specify a page number precisely as it appears in an article's citation information.
     = text_field_tag(:pages)
   %div{ 'data-role' => 'fieldcontain' }
-    = label_tag(:fulltext, 'Full article text:')
-    -#= help_image do
-    -#  Terms appearing in the full text of the article.
+    = label_tag :fulltext do
+      %span Full article text:
+      = help_button do
+        Terms appearing in the full text of the article.  If full text search type is set to "Exact", this string will match the exact full text of the document.  If full text search type is "fuzzy", it will match the stemmed full text of the document.  (The standard evoText search uses the stemmed search fields.)
     = text_field_tag(:fulltext)
   %div{ 'data-role' => 'fieldcontain' }
-    = field_set_tag('Full text search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal') do
-      -#= help_image do
-      -#  If "Exact", search against the exact full text.  If "fuzzy", search against the stemmed full text.  (The standard evoText search uses the stemmed search fields.)
+    = field_set_tag 'Full text search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
       = radio_button_tag(:fulltext_type, "exact", true)
       = label_tag(:fulltext_type_exact, 'Exact')
       = radio_button_tag(:fulltext_type, "fuzzy", false)
@@ -86,22 +93,23 @@
 .solrform
   = form_tag(documents_path, :method => "get") do
     = hidden_field_tag(:precise, true)
-    = label_tag(:q, "Solr query string:")
-    -#= help_image 400 do
-    -#  :markdown
-    -#    The following fields are available in Solr for searching:
-    -#    
-    -#    *   `authors`: Authors, generally in the format "First Last, First Last..."  
-    -#    *   `title`: Verbatim title of article  
-    -#    *   `journal`: Verbatim journal of article  
-    -#    *   `year`: Year of article publication (format not standardized, may occasionally be something like "1945-1946")  
-    -#    *   `volume`: Journal volume  
-    -#    *   `number`: Journal issue number  
-    -#    *   `pages`: Journal pages (usually "1234-1235")  
-    -#    *   `fulltext`: Verbatim full text of the article  
-    -#    *   `title_search`: Article title, lowercased and stemmed  
-    -#    *   `journal_search`: Journal, lowercased and stemmed  
-    -#    *   `fulltext_search`: Full text of article, lowercased and stemmed  
+    = label_tag :q do
+      %span Solr query string:
+      = help_button do
+        :markdown
+          The following fields are available in Solr for searching:
+        
+          *   `authors`: Authors, generally in the format "First Last, First Last..."  
+          *   `title`: Verbatim title of article  
+          *   `journal`: Verbatim journal of article  
+          *   `year`: Year of article publication (format not standardized, may occasionally be something like "1945-1946")  
+          *   `volume`: Journal volume  
+          *   `number`: Journal issue number  
+          *   `pages`: Journal pages (usually "1234-1235")  
+          *   `fulltext`: Verbatim full text of the article  
+          *   `title_search`: Article title, lowercased and stemmed  
+          *   `journal_search`: Journal, lowercased and stemmed  
+          *   `fulltext_search`: Full text of article, lowercased and stemmed  
     = text_area_tag(:q, nil, { :escape => false })
     = submit_tag "Submit Solr Query"
 
