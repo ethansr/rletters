@@ -13,22 +13,11 @@ class UnapiController < ApplicationController
     end
   end
   
-  FORMAT_TO_ACTION = {
-    'bibtex' => 'bib',
-    'ris' => 'ris',
-    'endnote' => 'enw',
-    'rdf' => 'rdf',
-    'turtle' => 'ttl',
-    'marcxml' => 'xml_marc',
-    'marc' => 'marc',
-    'mods' => 'xml_mods'
-  }
-  
   def get_item(id, format)
-    if not FORMAT_TO_ACTION.has_key? format
+    unless ExportController.method_defined? format.to_sym
       render :file => "#{RAILS_ROOT}/public/404.html", :layout => false, :status => 406
     else
-      redirect_to :controller => 'documents', :action => FORMAT_TO_ACTION[format], :id => id
+      redirect_to :controller => 'export', :action => format, :id => id
     end
   end
 end

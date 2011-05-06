@@ -11,20 +11,11 @@ Evotext::Application.routes.draw do
       
       get 'mendeley'
       get 'citeulike'
-      
-      get 'ris'
-      get 'bib'
-      get 'enw'
-      get 'rdf'
-      get 'ttl'
-      get 'marc'
-      get 'xml_marc'
-      get 'xml_mods'
     end
     collection do
       get 'search'
     end
   end
-  match "export/:action", :controller => 'export'
+  match "export/:action", :controller => 'export', :via => :get
   match "unapi" => 'unapi#index', :via => :get
 end

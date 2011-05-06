@@ -1,8 +1,25 @@
 class ExportController < ApplicationController
-  def index
-    docs = get_documents
-    
-    render :text => docs.to_s
+  EXPORT_FORMATS = [
+    { :action => "ris", :class => "RISCollection" },
+    { :action => "bibtex", :class => "BIBCollection" },
+    { :action => "endnote", :class => "EndNoteCollection" },
+    { :action => "rdf", :class => "RDFCollection" },
+    { :action => "turtle", :class => "TurtleCollection" },
+    { :action => "marc", :class => "MARCCollection" },
+    { :action => "marcxml", :class => "MARCXMLCollection" },
+    { :action => "mods", :class => "MODSCollection" }
+  ]
+  
+  # This may be my favorite bit of Ruby meta-programming I've done yet.
+  EXPORT_FORMATS.each do |f|
+    class_eval <<-RUBY
+    def #{f[:action]}
+      headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+      headers["Expires"] = "0"
+      
+      Kernel.const_get("#{f[:class]}").new(get_documents).send(self)
+    end
+    RUBY
   end
   
   def get_documents

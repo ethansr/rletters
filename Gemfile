@@ -30,3 +30,7 @@ gem "marc"
 gem "builder"
 gem "rdf"
 gem "rdf-raptor"
+
+# Rubyzip for creating export ZIP files
+gem "rubyzip"
+

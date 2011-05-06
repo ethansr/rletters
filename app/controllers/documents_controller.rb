@@ -29,44 +29,6 @@ class DocumentsController < ApplicationController
     RUBY
   end
   
-  # All the views that render in plain text, offering a user download
-  %W(bib ris enw rdf ttl marc xml_marc xml_mods).each do |m|
-    class_eval <<-RUBY
-    def #{m}
-      hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
-      
-      headers["Pragma"] = "public"
-      filename = "evotext.#{m.split('_')[0]}"
-      headers["Content-Disposition"] = 'attachment; filename="' + filename + '"'
-      headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
-      headers["Expires"] = "0"
-      
-      case "#{m}"
-      when 'bib'
-        mime = 'application/x-bibtex'
-      when 'ris'
-        mime = 'application/x-research-info-systems'
-      when 'enw'
-        mime = 'application/x-endnote-refer'
-      when 'rdf'
-        mime = 'application/rdf+xml'
-      when 'ttl'
-        mime = 'text/turtle'
-      when 'marc'
-        mime = 'application/marc'
-      when 'xml_marc'
-        mime = 'application/marcxml+xml'
-      when 'xml_mods'
-        mime = 'application/mods+xml'
-      else
-        mime = 'text/plain'
-      end
-      
-      render :layout => false, :content_type => mime
-    end
-    RUBY
-  end
-  
   # Redirect to the appropriate page on Mendeley for this document
   def mendeley
     hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
