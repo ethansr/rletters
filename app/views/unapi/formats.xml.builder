@@ -1,6 +1,8 @@
 xml.instruct!
 
-xml.formats{
+opts = {}
+opts[:id] = id unless id.blank?
+xml.formats(opts) {
   xml.format(:name => 'bibtex', :type => 'application/x-bibtex', :docs => 'http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxdoc.pdf')
   xml.format(:name => 'ris', :type => 'application/x-research-info-systems', :docs => 'http://www.refman.com/support/risformat_intro.asp')
   xml.format(:name => 'endnote', :type => 'application/x-endnote-refer', :docs => 'http://auditorymodels.org/jba/bibs/NetBib/Tools/bp-0.2.97/doc/endnote.html')
