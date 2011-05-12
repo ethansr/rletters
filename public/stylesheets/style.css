@@ -25,6 +25,8 @@ footer { visibility: hidden; }
 
 div.verticalpad { margin-top: 30px; }
 
+.small-li { font-size: 75% !important; }
+
 .leftcolumn, .rightcolumn { margin: 0; padding: 0; border: 0; float: left; min-height: 1px; }
 
 .leftcolumn { clear: left; width: 72%; }

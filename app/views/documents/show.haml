@@ -29,17 +29,5 @@
       %li= link_to "UK OpenURL Router", "http://openurl.ac.uk/?#{@document.openurl_query}"
       %li= link_to "Mendeley", mendeley_document_path(@document), :rel => "external"
       %li= link_to "CiteULike", citeulike_document_path(@document), :rel => "external"
-  %li
-    Export/Download Citation
-    %ul
-      %li= link_to "Export to RefWorks", "http://www.refworks.com/express/ExpressImport.asp?vendor=evoText&filter=RIS%20Format&encoding=65001&url=#{CGI::escape(url_for(:controller => 'export', :action => 'ris', :id => @document.shasum, :only_path => false))}", :rel => "external", :target => "RefWorksMain"
-      %li= link_to "Download in RIS Format (Reference Manager, EndNote, ProCite, RefWorks)", { :controller => 'export', :action => 'ris', :id => @document.shasum }, :rel => "external"
-      %li= link_to "Download in Endnote Format", { :controller => 'export', :action => 'endnote', :id => @document.shasum }, :rel => "external"
-      %li= link_to "Download in BibTeX Format", { :controller => 'export', :action => 'bibtex', :id => @document.shasum }, :rel => "external"
-      %li= link_to "Download in RDF/XML Format", { :controller => 'export', :action => 'rdf', :id => @document.shasum }, :rel => "external"
-      %li= link_to "Download in RDF/Turtle Format", { :controller => 'export', :action => 'turtle', :id => @document.shasum }, :rel => "external"
-      %li= link_to "Download in MODS Format", { :controller => 'export', :action => 'mods', :id => @document.shasum }, :rel => "external"
-      %li= link_to "Download in MARC Format", { :controller => 'export', :action => 'marc', :id => @document.shasum }, :rel => "external"
-      %li= link_to "Download in MARCXML Format", { :controller => 'export', :action => 'marcxml', :id => @document.shasum }, :rel => "external"
-      
+  %li= link_to "Export/Download Citation", export_path(:id => @document.shasum)
 

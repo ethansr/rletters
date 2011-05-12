@@ -16,6 +16,7 @@ class DocumentsController < ApplicationController
     # Set all the variables, but then paginate the documents
     hash_to_instance_variables Document.search(params)
     @documents = @documents.paginate(:page => page, :per_page => num)
+    @document_ids = @documents.map { |d| d.shasum }
   end
   
   def search

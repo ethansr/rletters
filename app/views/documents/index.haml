@@ -19,10 +19,11 @@
       %li{ 'data-icon' => 'info' }
         = link_to document_path(doc), 'rel' => 'external' do
           = render :partial => "cite", :locals => { :document => doc }
+    - if @documents.total_pages > 1
+      %li= will_paginate @documents
+    %li{ :class => 'small-li', 'data-theme' => 'c' }= link_to "Export/download these citations", export_path(:id => @document_ids)
 
   %div.verticalpad
-
-  = will_paginate @documents
 
 %div.rightcolumn
   %ul{ :class => 'columnul', 'data-role' => 'listview', 'data-theme' => 'd', 'data-dividertheme' => 'c' }

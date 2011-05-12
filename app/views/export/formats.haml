@@ -1,0 +1,12 @@
+- title "Export Document"
+
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
+  %li= link_to "Export to RefWorks", "http://www.refworks.com/express/ExpressImport.asp?vendor=evoText&filter=RIS%20Format&encoding=65001&url=#{CGI::escape(url_for(:controller => 'export', :action => 'ris', :id => @document_ids, :only_path => false))}", :rel => "external", :target => "RefWorksMain"
+  %li= link_to "Download in RIS Format (Reference Manager, EndNote, ProCite, RefWorks)", { :controller => 'export', :action => 'ris', :id => @document_ids }, :rel => "external"
+  %li= link_to "Download in Endnote Format", { :controller => 'export', :action => 'endnote', :id => @document_ids }, :rel => "external"
+  %li= link_to "Download in BibTeX Format", { :controller => 'export', :action => 'bibtex', :id => @document_ids }, :rel => "external"
+  %li= link_to "Download in RDF/XML Format", { :controller => 'export', :action => 'rdf', :id => @document_ids }, :rel => "external"
+  %li= link_to "Download in RDF/Turtle Format", { :controller => 'export', :action => 'turtle', :id => @document_ids }, :rel => "external"
+  %li= link_to "Download in MODS Format", { :controller => 'export', :action => 'mods', :id => @document_ids }, :rel => "external"
+  %li= link_to "Download in MARC Format", { :controller => 'export', :action => 'marc', :id => @document_ids }, :rel => "external"
+  %li= link_to "Download in MARCXML Format", { :controller => 'export', :action => 'marcxml', :id => @document_ids }, :rel => "external"

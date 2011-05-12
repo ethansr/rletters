@@ -24,6 +24,11 @@ class ExportController < ApplicationController
     RUBY
   end
   
+  def formats
+    @documents = get_documents
+    @document_ids = @documents.map { |d| d.shasum }
+  end
+  
   def get_documents
     ids = params[:id]
     raise ActiveRecord::RecordNotFound if ids.blank?
