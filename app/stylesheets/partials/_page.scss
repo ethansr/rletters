@@ -11,11 +11,7 @@ $box-color: #f2f2f2;
     .buttons {
       position: absolute;
       top: 4px;
-      right: 37%;
-      
-      // Responsive layout for buttons
-      .max-width-768px & { right: 33% !important; }
-      .max-width-480px & { right: 4px !important; }
+      right: 37%;      
     }
     
     .searchbar {
@@ -25,10 +21,6 @@ $box-color: #f2f2f2;
       right: 0;
 
       form { padding: 0; }
-
-      // Responsive layout for search bar
-      .max-width-768px & { width: 30% !important; }
-      .max-width-480px & { display: none; }
     }
   }
   h1.ui-title {
@@ -58,7 +50,7 @@ $box-color: #f2f2f2;
 
 // Responsive layout: move search bar to the footer on iPhone
 footer { visibility: hidden; }
-.max-width-480px footer { visibility: visible; }
+@media screen and (max-width: 480px) { footer { visibility: visible; } }
 
 
 // Fix vertical overlap with full-width <ul>
@@ -81,11 +73,29 @@ div.verticalpad { margin-top: 30px; }
 .rightcolumn { width: 28%; font-size: 85% !important; }
 
 
+// Responsive layout for buttons and search bar
+@media screen and (max-width: 768px) {
+  #main div.header div .controls {
+    .buttons { right: 33% !important; }
+    .searchbar { width: 30% !important; }
+  }
+}
+@media screen and (max-width: 480px) { 
+  #main div.header div .controls {
+    .buttons { right: 4px !important; }
+    .searchbar { display: none; }
+  }
+}
+
+
 // Responsive layout: toggle sidebar at 768px
 .leftcolumn { display: block; }
 .leftcolumn .columnul { margin-right: 0 !important; }
 .rightcolumn .columnul { margin-left: 0 !important; }
-.max-width-768px .leftcolumn { width: 100% !important; }
-.max-width-768px .rightcolumn { margin-top: 30px; width: 100% !important; }
-.max-width-768px .leftcolumn .columnul { margin-right: -15px !important; }
-.max-width-768px .rightcolumn .columnul { margin-left: -15px !important; }
+
+@media screen and (max-width: 768px) {
+  .leftcolumn { width: 100% !important; }
+  .rightcolumn { margin-top: 30px; width: 100% !important; }
+  .leftcolumn .columnul { margin-right: -15px !important; }
+  .rightcolumn .columnul { margin-left: -15px !important; }
+}

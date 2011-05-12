@@ -3,12 +3,8 @@
 .helpbutton { margin: 0 0.3em !important; vertical-align: -7px; }
 
 #main div.header div .controls .buttons { position: absolute; top: 4px; right: 37%; }
-.max-width-768px #main div.header div .controls .buttons { right: 33% !important; }
-.max-width-480px #main div.header div .controls .buttons { right: 4px !important; }
 #main div.header div .controls .searchbar { width: 35%; position: absolute; top: 1px; right: 0; }
 #main div.header div .controls .searchbar form { padding: 0; }
-.max-width-768px #main div.header div .controls .searchbar { width: 30% !important; }
-.max-width-480px #main div.header div .controls .searchbar { display: none; }
 #main div.header div h1.ui-title { width: 100%; margin: 0 !important; padding: .6em .8em .8em !important; text-align: left !important; }
 
 #main div.header div.nosearchbar div.controls div.buttons { right: 2% !important; }
@@ -21,7 +17,7 @@
 
 footer { visibility: hidden; }
 
-.max-width-480px footer { visibility: visible; }
+@media screen and (max-width: 480px) { footer { visibility: visible; } }
 
 div.verticalpad { margin-top: 30px; }
 
@@ -33,19 +29,22 @@ div.verticalpad { margin-top: 30px; }
 
 .rightcolumn { width: 28%; font-size: 85% !important; }
 
+@media screen and (max-width: 768px) { #main div.header div .controls .buttons { right: 33% !important; }
+  #main div.header div .controls .searchbar { width: 30% !important; } }
+
+@media screen and (max-width: 480px) { #main div.header div .controls .buttons { right: 4px !important; }
+  #main div.header div .controls .searchbar { display: none; } }
+
 .leftcolumn { display: block; }
 
 .leftcolumn .columnul { margin-right: 0 !important; }
 
 .rightcolumn .columnul { margin-left: 0 !important; }
 
-.max-width-768px .leftcolumn { width: 100% !important; }
-
-.max-width-768px .rightcolumn { margin-top: 30px; width: 100% !important; }
-
-.max-width-768px .leftcolumn .columnul { margin-right: -15px !important; }
-
-.max-width-768px .rightcolumn .columnul { margin-left: -15px !important; }
+@media screen and (max-width: 768px) { .leftcolumn { width: 100% !important; }
+  .rightcolumn { margin-top: 30px; width: 100% !important; }
+  .leftcolumn .columnul { margin-right: -15px !important; }
+  .rightcolumn .columnul { margin-left: -15px !important; } }
 
 .helptip { vertical-align: text-bottom; }
 

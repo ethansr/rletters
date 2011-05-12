@@ -27,7 +27,7 @@
 
 %div.rightcolumn
   %ul{ :class => 'columnul', 'data-role' => 'listview', 'data-theme' => 'd', 'data-dividertheme' => 'c' }
-    %li{ 'data-theme' => 'c' } Browse database:
+    %li{ 'data-theme' => 'c' } Filter results:
     - rendered_facets = 0
     - unless params[:fq].blank?
       %li{ 'data-role' => 'list-divider' } Selected Filters

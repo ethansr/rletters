@@ -23,10 +23,14 @@
   
   -# Add a place to inject meta tags like Dublin Core terms
   = yield :meta
-
-  -# Modernizr, JQuery + Mobile, and the stock Rails stuff
-  = javascript_include_tag 'modernizr.min'
   
+  -# HTML5 and CSS3
+  = javascript_include_tag 'modernizr.min'
+  /[if lt IE 9]
+    = javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
+    = javascript_include_tag "http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"
+  
+  -# JQuery + Mobile and the stock Rails stuff
   = javascript_include_tag "http://code.jquery.com/jquery-1.6.min.js"
   = javascript_include_tag "http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"
 
