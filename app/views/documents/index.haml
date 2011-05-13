@@ -50,30 +50,4 @@
       = link_to 'Advanced Search...', search_documents_path
 
 - content_for :javascripts do
-  :javascript
-    var wasSmall = 'a';
-    
-    function createNestedList() {
-      $(document.createElement('div')).attr('class', 'facet-collapse').append($(document.createElement('h3')).text('Filter and Search...')).append($.mobile.activePage.find('.facet-list')).collapsible({theme:'c',refresh:true,collapsed:true}).appendTo('div.rightcolumn');
-    }
-    function destroyNestedList() {
-      $('div.rightcolumn').append($.mobile.activePage.find('.facet-list'));
-      $('.facet-collapse').remove();
-    }
-    
-    function checkNestedList() {
-      var width = $(window).width();
-      if (width <= 480 && wasSmall != true)
-      {
-        createNestedList();
-        wasSmall = true;
-      }
-      else if (width > 480 && wasSmall == true)
-      {
-        destroyNestedList();
-        wasSmall = false;
-      }
-    }
-    
-    $(document).ready( function() { checkNestedList(); });
-    $(window).resize( function() { checkNestedList(); });
+  = javascript_include_tag "collapse_list"

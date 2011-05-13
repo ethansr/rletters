@@ -8,10 +8,9 @@
       %div{ 'data-role' => 'content' }
         = render :partial => 'layouts/flashes'
         = yield
+      
+      -# Page-specific JS must come inside this 'page' tag
+      = yield :javascripts
     
     -# Other internal 'pages', for dialog boxes
-    = yield :pages
-    
-    -# Closing-page javascripts come here, via content_for :javascripts
-    = yield :javascripts
-    
+    = yield :pages    
