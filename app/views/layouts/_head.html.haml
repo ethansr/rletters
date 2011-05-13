@@ -1,20 +1,24 @@
 %head
   %meta{ :charset => "utf-8" }/
-  %meta{ :content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible" }/
   
   - title = "evoText"
   - title << " - #{yield(:title)}" if content_for? :title
   %title= title
   
-  %meta{ :content => "", :name => "description" }/
-  %meta{ :content => "", :name => "author" }/
+  %meta{ :content => "Database for searching and performing text analysis techniques on academic literature in the evolutionary sciences", :name => "description" }/
+  %meta{ :content => "evoText Team", :name => "author" }/
   
-  -# Mobile viewport optimized: j.mp/bplateviewport
-  %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport" }/
+  -# Mobile optimized meta tags for various browsers
+  %meta{ :name => 'HandheldFriendly', :content => 'True' }/
+  %meta{ :name => 'MobileOptimized', :content => 320 }/
+  %meta{ :name => 'viewport', :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0" }/
+  %meta{ 'http-equiv' => 'cleartype', :content => 'on' }/
   
-  -# Place favicon.ico and apple-touch-icon.png in the root of your domain and delete these references
-  -# %link{ :href => "/favicon.ico", :rel => "shortcut icon" }/
-  -# %link{ :href => "/apple-touch-icon.png", :rel => "apple-touch-icon" }/
+  -# Home screen icons (Retina iPhone, iPad, all others/Android)
+  %link{ :href => "/images/h/apple-touch-icon.png", :rel => "apple-touch-icon-precomposed", :sizes => "114x114" }/
+  %link{ :href => "/images/m/apple-touch-icon.png", :rel => "apple-touch-icon-precomposed", :sizes => "72x72" }/
+  %link{ :href => "/images/l/apple-touch-icon.png", :rel => "apple-touch-icon-precomposed" }/
+  %link{ :href => "/favicon.ico", :rel => "shortcut icon" }/
   
   = render :partial => 'layouts/stylesheets'
   

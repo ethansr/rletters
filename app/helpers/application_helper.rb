@@ -14,9 +14,10 @@ module ApplicationHelper
   def ie_html(attrs={}, &block)
     attrs.symbolize_keys!
     haml_concat("<!--[if lt IE 7]> #{ tag(:html, add_class('ie6', attrs), true) } <![endif]-->".html_safe)
+    haml_concat("<!--[if IEMobile 7]>    #{ tag(:html, add_class('iem7', attrs), true) } <![endif]-->".html_safe)
     haml_concat("<!--[if IE 7]>    #{ tag(:html, add_class('ie7', attrs), true) } <![endif]-->".html_safe)
     haml_concat("<!--[if IE 8]>    #{ tag(:html, add_class('ie8', attrs), true) } <![endif]-->".html_safe)
-    haml_concat("<!--[if gt IE 8]><!-->".html_safe)
+    haml_concat("<!--[if (gte IE 9)|!(IE)]><!-->".html_safe)
     haml_tag :html, attrs do
       haml_concat("<!--<![endif]-->".html_safe)
       block.call
