@@ -1,0 +1,26 @@
+CACHE MANIFEST
+# version 1
+
+CACHE:
+offline.html
+images/l/apple-touch-icon.png
+images/l/apple-touch-icon-precomposed.png
+images/l/splash.png
+images/m/apple-touch-icon.png
+images/h/apple-touch-icon.png
+images/h/splash.png
+stylesheets/style.css
+javascripts/application.js
+javascripts/collapse_list.js
+javascripts/dd_belatedpng.js
+javascripts/modernizr.min.js
+javascripts/plugins.js
+javascripts/rails.js
+# FIXME: I need to implement fallback loading for jQuery, jQM, etc.
+# here, since users can open the app while offline.
+
+NETWORK:
+*
+
+FALLBACK:
+/ /offline.html

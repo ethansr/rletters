@@ -3,7 +3,7 @@
 
 %ul.details{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-theme' => 'd' }
   %li{ 'data-icon' => 'back' }
-    = link_to document_path(document), 'data-transition' => 'flip', 'data-direction' => 'reverse', 'rel' => 'external' do
+    = link_to document_path(document), 'data-transition' => 'flip', 'data-direction' => 'reverse', 'data-ajax' => 'false' do
       = render :partial => "cite", :locals => { :document => document }
 
 %div.verticalpad

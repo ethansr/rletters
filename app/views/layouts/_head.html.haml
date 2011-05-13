@@ -14,6 +14,11 @@
   %meta{ :name => 'viewport', :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0" }/
   %meta{ 'http-equiv' => 'cleartype', :content => 'on' }/
   
+  -# Act like a web app on iOS
+  %meta{ :name => 'apple-mobile-web-app-capable', :content => 'yes' }/
+  %meta{ :name => 'apple-mobile-web-app-status-bar-style', :content => 'black' }/
+  %link{ :href => 'images/l/splash.png', :rel => 'apple-touch-startup-image' }/
+  
   -# Home screen icons (Retina iPhone, iPad, all others/Android)
   %link{ :href => "/images/h/apple-touch-icon.png", :rel => "apple-touch-icon-precomposed", :sizes => "114x114" }/
   %link{ :href => "/images/m/apple-touch-icon.png", :rel => "apple-touch-icon-precomposed", :sizes => "72x72" }/
