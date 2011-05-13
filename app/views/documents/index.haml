@@ -2,7 +2,9 @@
   - title "Search Results"
 
 %div.leftcolumn
-  %ul{ :class => 'columnul', 'data-role' => 'listview', 'data-theme' => 'd' }
+  %ul.columnul{ 'data-role' => 'listview', 'data-theme' => 'd' }
+    %li.list-searchbar{ 'data-theme' => 'c' }
+      = render :partial => "layouts/searchbar"
     - if @documents.length == 0
       %li{ 'data-icon' => 'warning', 'data-theme' => 'e' }
         %h3 No Documents Found
@@ -15,18 +17,18 @@
           found
         - else
           in database
-    - for doc in @documents
-      %li{ 'data-icon' => 'info' }
-        = link_to document_path(doc), 'rel' => 'external' do
-          = render :partial => "cite", :locals => { :document => doc }
-    - if @documents.total_pages > 1
-      %li= will_paginate @documents
-    %li{ :class => 'small-li', 'data-theme' => 'c' }= link_to "Export/download these citations", export_path(:id => @document_ids)
-
+      - for doc in @documents
+        %li{ 'data-icon' => 'info' }
+          = link_to document_path(doc), 'rel' => 'external' do
+            = render :partial => "cite", :locals => { :document => doc }
+      - if @documents.total_pages > 1
+        %li= will_paginate @documents
+      %li{ :class => 'small-li', 'data-theme' => 'c' }= link_to "Export/download these citations", export_path(:id => @document_ids)
+  
   %div.verticalpad
 
 %div.rightcolumn
-  %ul{ :class => 'columnul', 'data-role' => 'listview', 'data-theme' => 'd', 'data-dividertheme' => 'c' }
+  %ul.facet-list.columnul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-dividertheme' => 'c' }
     %li{ 'data-theme' => 'c' } Filter results:
     - rendered_facets = 0
     - unless params[:fq].blank?
@@ -46,3 +48,32 @@
 
     %li{ 'data-role' => 'list-divider', 'data-icon' => 'search', 'data-theme' => 'c' }
       = link_to 'Advanced Search...', search_documents_path
+
+- content_for :javascripts do
+  :javascript
+    var wasSmall = 'a';
+    
+    function createNestedList() {
+      $(document.createElement('div')).attr('class', 'facet-collapse').append($(document.createElement('h3')).text('Filter and Search...')).append($.mobile.activePage.find('.facet-list')).collapsible({theme:'c',refresh:true,collapsed:true}).appendTo('div.rightcolumn');
+    }
+    function destroyNestedList() {
+      $('div.rightcolumn').append($.mobile.activePage.find('.facet-list'));
+      $('.facet-collapse').remove();
+    }
+    
+    function checkNestedList() {
+      var width = $(window).width();
+      if (width <= 480 && wasSmall != true)
+      {
+        createNestedList();
+        wasSmall = true;
+      }
+      else if (width > 480 && wasSmall == true)
+      {
+        destroyNestedList();
+        wasSmall = false;
+      }
+    }
+    
+    $(document).ready( function() { checkNestedList(); });
+    $(window).resize( function() { checkNestedList(); });

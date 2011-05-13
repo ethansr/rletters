@@ -2,12 +2,12 @@
 
 .helpbutton { margin: 0 0.3em !important; vertical-align: -7px; }
 
-#main div.header div .controls .buttons { position: absolute; top: 4px; right: 37%; }
-#main div.header div .controls .searchbar { width: 35%; position: absolute; top: 1px; right: 0; }
-#main div.header div .controls .searchbar form { padding: 0; }
-#main div.header div h1.ui-title { width: 100%; margin: 0 !important; padding: .6em .8em .8em !important; text-align: left !important; }
+div.header div .controls .buttons { position: absolute; top: 4px; right: 37%; }
+div.header div .controls .searchbar { width: 35%; position: absolute; top: 1px; right: 0; }
+div.header div .controls .searchbar form { padding: 0; }
+div.header div h1.ui-title { width: 100%; margin: 0 !important; padding: .6em .8em .8em !important; text-align: left !important; }
 
-#main div.header div.nosearchbar div.controls div.buttons { right: 2% !important; }
+div.header div.nosearchbar div.controls div.buttons { right: 2% !important; }
 
 .searchbar form { position: relative; padding: 3px; }
 
@@ -15,9 +15,9 @@
 
 .searchbar form .ui-input-search input { width: 100% !important; }
 
-footer { visibility: hidden; }
+.list-searchbar { display: none !important; padding: 3px !important; }
 
-@media screen and (max-width: 480px) { footer { visibility: visible; } }
+@media screen and (max-width: 480px) { .list-searchbar { display: block !important; } }
 
 div.verticalpad { margin-top: 30px; }
 
@@ -29,11 +29,11 @@ div.verticalpad { margin-top: 30px; }
 
 .rightcolumn { width: 28%; font-size: 85% !important; }
 
-@media screen and (max-width: 768px) { #main div.header div .controls .buttons { right: 33% !important; }
-  #main div.header div .controls .searchbar { width: 30% !important; } }
+@media screen and (max-width: 768px) { div.header div .controls .buttons { right: 33% !important; }
+  div.header div .controls .searchbar { width: 30% !important; } }
 
-@media screen and (max-width: 480px) { #main div.header div .controls .buttons { right: 4px !important; }
-  #main div.header div .controls .searchbar { display: none; } }
+@media screen and (max-width: 480px) { div.header div .controls .buttons { right: 4px !important; }
+  div.header div .controls .searchbar { display: none; } }
 
 .leftcolumn { display: block; }
 
@@ -45,6 +45,10 @@ div.verticalpad { margin-top: 30px; }
   .rightcolumn { margin-top: 30px; width: 100% !important; }
   .leftcolumn .columnul { margin-right: -15px !important; }
   .rightcolumn .columnul { margin-left: -15px !important; } }
+
+.facet-collapse h3.ui-collapsible-heading { margin-bottom: 20px !important; }
+
+.facet-collapse div.ui-collapsible-content { padding: 0 !important; }
 
 .helptip { vertical-align: text-bottom; }
 
