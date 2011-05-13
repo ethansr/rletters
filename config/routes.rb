@@ -16,6 +16,8 @@ Evotext::Application.routes.draw do
       get 'search'
     end
   end
+  match 'links', :controller => 'links', :action => 'targets', :via => :get
+  match "links/:action", :controller => 'links', :via => :get
   match 'export', :controller => 'export', :action => 'formats', :via => :get
   match "export/:action", :controller => 'export', :via => :get
   match "unapi" => 'unapi#index', :via => :get

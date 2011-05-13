@@ -1,0 +1,10 @@
+- title "Online Resources for Document"
+
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
+  %li{ 'data-role' => 'list-divider' } Library Access
+  %li= link_to "WorldCat Gateway", "http://worldcatlibraries.org/registry/gateway?#{@document.openurl_query}"
+  %li= link_to "UK OpenURL Router", "http://openurl.ac.uk/?#{@document.openurl_query}"
+  %li{ 'data-role' => 'list-divider' } Online Resources
+  %li= link_to "Google Scholar", "http://scholar.google.com/scholar?q=#{CGI::escape(@document.title).gsub('%20','+')}"
+  %li= link_to "Mendeley", { :controller => 'links', :action => 'mendeley', :id => @document.shasum }, :rel => "external"
+  %li= link_to "CiteULike", { :controller => 'links', :action => 'citeulike', :id => @document.shasum }, :rel => "external"

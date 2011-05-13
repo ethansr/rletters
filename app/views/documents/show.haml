@@ -21,13 +21,6 @@
   %li{ 'data-role' => 'list-divider' } Get this Document:
   - unless @document.doi.blank?
     %li= link_to "From Publisher (DOI: #{@document.doi})", "http://dx.doi.org/#{@document.doi}"
-  %li
-    Other Access Methods
-    %ul
-      %li= link_to "Google Scholar", "http://scholar.google.com/scholar?q=#{CGI::escape(@document.title).gsub('%20','+')}"
-      %li= link_to "WorldCat Gateway", "http://worldcatlibraries.org/registry/gateway?#{@document.openurl_query}"
-      %li= link_to "UK OpenURL Router", "http://openurl.ac.uk/?#{@document.openurl_query}"
-      %li= link_to "Mendeley", mendeley_document_path(@document), :rel => "external"
-      %li= link_to "CiteULike", citeulike_document_path(@document), :rel => "external"
-  %li= link_to "Export/Download Citation", export_path(:id => @document.shasum)
+  %li= link_to "Online and Library Access", links_path(:id => @document.shasum)
+  %li= link_to "Export or Download Citation", export_path(:id => @document.shasum)
 
