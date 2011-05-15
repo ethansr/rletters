@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.5'
 
-# Translate my routes
+# Various i18n gems
 gem "translate_routes"
 
 # UUIDs

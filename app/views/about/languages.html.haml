@@ -1,0 +1,5 @@
+%p Available languages:
+
+%ul
+  - APP_CONFIG['available_locales'].each do |l|
+    %li= locale_name(l)

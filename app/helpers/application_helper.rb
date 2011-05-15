@@ -28,6 +28,15 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
   
+  def locale_name(locale)
+    if locale.index('-').nil?
+      str = I18n.t :"languages.#{locale}"
+    else
+      str = I18n.t :"languages.#{locale}", :default => [:"languages.#{locale.split('-')[0]}", "Unknown Language"]
+    end
+    str += " (#{locale})"
+  end
+  
   def add_jquery_page(id, &block)
     content_for :pages do
       content_tag :div, :id => id, 'data-role' => 'page', 'data-theme' => 'd' do
