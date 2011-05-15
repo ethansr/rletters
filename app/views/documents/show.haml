@@ -21,6 +21,6 @@
   %li{ 'data-role' => 'list-divider' } Get this Document:
   - unless @document.doi.blank?
     %li= link_to "From Publisher (DOI: #{@document.doi})", "http://dx.doi.org/#{@document.doi}"
-  %li= link_to "Online and Library Access", links_path(:id => @document.shasum)
-  %li= link_to "Export or Download Citation", export_path(:id => @document.shasum)
+  %li= link_to "Online and Library Access", targets_document_link_path(@document)
+  %li= link_to "Export or Download Citation", formats_document_export_path(@document)
 

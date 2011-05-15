@@ -2,8 +2,7 @@
 
 Evotext::Application.routes.draw do
   # See how all your routes lay out with "rake routes"
-  root :to => "documents#index"
-  resources :documents do
+  resources :documents, :only => [:index, :show] do
     member do
       get 'terms'
       get 'text'
@@ -12,12 +11,34 @@ Evotext::Application.routes.draw do
     collection do
       get 'search'
     end
+    
+    resource :link, :only => [:none] do
+      member do
+        get 'targets'
+        get 'mendeley'
+        get 'citeulike'
+      end
+    end
+    
+    resource :export, :only => [:none] do
+      member do
+        get 'formats'
+        get 'ris'
+        get 'bibtex'
+        get 'endnote'
+        get 'rdf'
+        get 'turtle'
+        get 'marc'
+        get 'marcxml'
+        get 'mods'
+      end
+    end
   end
-  match 'links', :controller => 'links', :action => 'targets', :via => :get
-  match "links/:action", :controller => 'links', :via => :get
-  match 'export', :controller => 'export', :action => 'formats', :via => :get
-  match "export/:action", :controller => 'export', :via => :get
-  match "unapi" => 'unapi#index', :via => :get
+  
+  resource :about, :only => [:index]  
+  match "unapi(/:id)" => 'unapi#index', :as => 'unapi'
+  
+  root :to => "documents#index"
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('config', 'routes-i18n.yml')

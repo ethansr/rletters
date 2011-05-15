@@ -1,13 +1,16 @@
-# Leave the default locale blank
+# Leave the default translation blank
 en:
   
 
+# Spanish (Charles Pence)
 es:
   documents: documentos
   terms: t%C3%A9rminos
   text: texto
   concordance: concordancia
   search: buscar
-  links: enlaces
+  link: enlace
+  targets: destinos
   export: exportar
+  formats: formatos
 

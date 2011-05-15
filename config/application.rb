@@ -19,6 +19,8 @@ module Evotext
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths << File.join(Rails.root, "app", "classes")
+    config.autoload_paths << File.join(Rails.root, "lib")
+    config.autoload_paths += Dir[File.join(Rails.root, "lib", "**")]
     config.eager_load_paths << File.join(Rails.root, "app", "classes")
 
     # Only load the plugins named here, in the order given (default is alphabetical).

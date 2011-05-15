@@ -1,7 +1,7 @@
 xml.instruct!
 
 opts = {}
-opts[:id] = id unless id.blank?
+opts[:id] = params[:id] unless params[:id].blank?
 xml.formats(opts) {
   xml.format(:name => 'bibtex', :type => 'application/x-bibtex', :docs => 'http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxdoc.pdf')
   xml.format(:name => 'ris', :type => 'application/x-research-info-systems', :docs => 'http://www.refman.com/support/risformat_intro.asp')

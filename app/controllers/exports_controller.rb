@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-class ExportController < ApplicationController
+class ExportsController < ApplicationController
   EXPORT_FORMATS = [
     { :action => "ris", :class => "RISCollection" },
     { :action => "bibtex", :class => "BIBCollection" },
@@ -30,7 +30,7 @@ class ExportController < ApplicationController
   end
   
   def get_documents
-    ids = params[:id]
+    ids = params[:document_id]
     raise ActiveRecord::RecordNotFound if ids.blank?
     ids = [ ids ] unless ids.is_a? Array
     

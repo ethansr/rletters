@@ -46,9 +46,7 @@ class LinksController < ApplicationController
   end
   
   def get_document
-    id = params[:id]
-    raise ActiveRecord::RecordNotFound if id.blank?
-    Document.find(id)[:document]
+    Document.find(params[:document_id])[:document]
   end
   private :get_document
 end
