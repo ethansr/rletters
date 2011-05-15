@@ -1,0 +1,16 @@
+TODO
+----
+
+- Proper help system with localized help messages
+- For all but the front page, can/should I strip down the HTML
+  to a minimal layout?  Saves bandwidth, but does it cause any
+  other problems?
+- Locale system
+  - Implement a user settings page with a locale switcher
+  - Wrap all the UI in translate calls
+- Public release?
+  - Figure out how to put a copy of the Solr schema into the
+    Git repository
+  - Abstract all the user-provided static content somehow (how
+    do other open source Rails projects deal with this?)
+
