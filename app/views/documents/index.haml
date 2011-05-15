@@ -23,7 +23,7 @@
             = render :partial => "cite", :locals => { :document => doc }
       - if @documents.total_pages > 1
         %li= will_paginate @documents
-      %li{ :class => 'small-li', 'data-theme' => 'c' }= link_to "Export/download these citations", formats_document_export_path(@documents)
+      %li{ :class => 'small-li', 'data-theme' => 'c' }= link_to "Export/download these citations", formats_document_export_path(@document_ids)
   
   %div.verticalpad
 

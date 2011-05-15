@@ -1,7 +1,5 @@
 # coding: UTF-8
 
-
-
 class DocumentsController < ApplicationController
   before_filter :default_attrs
   def default_attrs
@@ -16,7 +14,7 @@ class DocumentsController < ApplicationController
     # Set all the variables, but then paginate the documents
     hash_to_instance_variables Document.search(params)
     @documents = @documents.paginate(:page => page, :per_page => num)
-    @document_ids = @documents.map { |d| d.shasum }
+    @document_ids = @documents.map { |d| d.shasum }.join(',')
   end
   
   def search

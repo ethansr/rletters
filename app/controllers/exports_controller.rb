@@ -26,15 +26,12 @@ class ExportsController < ApplicationController
   
   def formats
     @documents = get_documents
-    @document_ids = @documents.map { |d| d.shasum }
+    @document_ids = params[:document_id]
   end
   
   def get_documents
-    ids = params[:document_id]
-    raise ActiveRecord::RecordNotFound if ids.blank?
-    ids = [ ids ] unless ids.is_a? Array
-    
-    ids.map { |i| Document.find(i)[:document] }
+    raise ActiveRecord::RecordNotFound if params[:document_id].blank?
+    params[:document_id].split(',').map { |i| Document.find(i)[:document] }
   end
   private :get_documents
 end
