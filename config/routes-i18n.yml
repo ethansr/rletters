@@ -1,0 +1,13 @@
+# Leave the default locale blank
+en:
+  
+
+es:
+  documents: documentos
+  terms: t%C3%A9rminos
+  text: texto
+  concordance: concordancia
+  search: buscar
+  links: enlaces
+  export: exportar
+

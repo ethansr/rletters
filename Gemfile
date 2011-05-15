@@ -2,13 +2,16 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.5'
 
+# Translate my routes
+gem "translate_routes"
+
 # UUIDs
 gem "uuid"
 
 # JSON (much faster than the Rails default)
 gem "json"
 
-# HTML5 Boilerplate
+# Compass and HAML
 gem "compass", ">= 0.10.6"
 gem "haml"
 

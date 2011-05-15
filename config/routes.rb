@@ -8,9 +8,6 @@ Evotext::Application.routes.draw do
       get 'terms'
       get 'text'
       get 'concordance'
-      
-      get 'mendeley'
-      get 'citeulike'
     end
     collection do
       get 'search'
@@ -22,3 +19,6 @@ Evotext::Application.routes.draw do
   match "export/:action", :controller => 'export', :via => :get
   match "unapi" => 'unapi#index', :via => :get
 end
+
+ActionDispatch::Routing::Translator.translate_from_file('config', 'routes-i18n.yml')
+
