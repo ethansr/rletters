@@ -35,7 +35,7 @@ Evotext::Application.routes.draw do
     end
   end
   
-  resource :about, :only => [:index]  
+  match "about(/:action)", :controller => 'about', :as => 'about'
   match "unapi(/:id)" => 'unapi#index', :as => 'unapi'
   
   root :to => "documents#index"
