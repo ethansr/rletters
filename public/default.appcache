@@ -1,8 +1,5 @@
 CACHE MANIFEST
-# version 2
-
-CACHE:
-offline.html
+# version 4
 images/l/apple-touch-icon.png
 images/l/apple-touch-icon-precomposed.png
 images/l/splash.png
@@ -10,9 +7,7 @@ images/m/apple-touch-icon.png
 images/h/apple-touch-icon.png
 images/h/splash.png
 images/brokentree.png
-
-NETWORK:
-*
-
 FALLBACK:
 / /offline.html
+NETWORK:
+*
