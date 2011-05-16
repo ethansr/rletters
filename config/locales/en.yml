@@ -11,17 +11,17 @@ en:
     no_documents_text: Your search produced no results.
     documents_found:
       one: 1 document found
-      other: '{{count}} documents found'
+      other: '%{count} documents found'
     documents_in_database:
       one: 1 document in database
-      other: '{{count}} documents in database'
+      other: '%{count} documents in database'
     export_download: Export/download these citations
     advanced_search: Advanced Search...
   
   filters:
     header: 'Filter results:'
     selected: Selected Filters
-    filter_title: 'Filter: {{filter_name}}'
+    filter_title: 'Filter: %{filter_name}'
     authors: Authors
     journals: Journals
     pub_date: Publication Date
@@ -35,7 +35,7 @@ en:
     excerpt_label: 'Excerpt:'
     more_details: 'More Document Details:'
     get: 'Get this Document:'
-    from_publisher: 'From Publisher (DOI: {{doi}})'
+    from_publisher: 'From Publisher (DOI: %{doi})'
     ol_library: Online and Library Access
     export_download: Export or Download Citation
   
@@ -73,18 +73,18 @@ en:
   
   about:
     languages_markdown: >
-      The following languages are available in {{app_name}}.  Not all of these
+      The following languages are available in %{app_name}.  Not all of these
       languages will result in a completely translated user interface -- many,
       in fact, contain merely placeholder translations of things like date
-      and time formats.  If you would like to help translate {{app_name}} into 
+      and time formats.  If you would like to help translate %{app_name} into 
       your language, please visit the 
       [RLetters homepage.](http://github.com/cpence/rletters)
     languages_list: 'Available languages:'
   
   citation:
-    volume_abbr: 'Vol. {{volume}}'
-    number_abbr: 'No. {{number}}'
-    pages_abbr: 'pp. {{pages}}'
+    volume_abbr: 'Vol. %{volume}'
+    number_abbr: 'No. %{number}'
+    pages_abbr: 'pp. %{pages}'
   
   terms:
     header: Term Frequencies
@@ -94,16 +94,16 @@ en:
     header: Term Concordance
     form_label: 'Display concordance for word:'
     form_button: Get Concordance
-    no_matches_list: 'No instances of term “{{term}}”'
-    matches_list: 'Concordance for term “{{term}}”'
+    no_matches_list: 'No instances of term “%{term}”'
+    matches_list: 'Concordance for term “%{term}”'
     instances:
       one: 1 instance
-      other: '{{count}} instances'
+      other: '%{count} instances'
   
   export:
     header: Export Document
     refworks: Export to RefWorks
-    download_format: 'Download in {{format}} Format'
+    download_format: 'Download in %{format} Format'
   
   links:
     header: Online Resources for Document
