@@ -17,13 +17,13 @@
   - if not @document.snippets
     %ul.conc_matches{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-dividertheme' => 'e' }
       %li{ 'data-role' => 'list-divider' }
-        No instances of term “#{params[:hl_word]}”
+        No instances of term “#{params[:hl_word].downcase}”
         %span.ui-li-count 0 instances
   - else
     %ul.conc_matches{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-theme' => 'd', 'data-dividertheme' => 'c' }
       %li{ 'data-role' => 'list-divider' }
-        Concordance for term “#{params[:hl_word]}”
-        %span.ui-li-count==  #{pluralize(@document.term_vectors[params[:hl_word]][:tf], 'instance')}
+        Concordance for term “#{params[:hl_word].downcase}”
+        %span.ui-li-count==  #{pluralize(@document.term_vectors[params[:hl_word].downcase][:tf], 'instance')}
       - @document.snippets.each do |s|
         %li
           = escape_once(s).gsub("&lt;em&gt;","<em>").gsub("&lt;/em&gt;","</em>")
