@@ -7,7 +7,7 @@
 
 %p{ 'data-theme' => 'd' }
   %strong Excerpt:
-  - help_button :'help.show.excerpt'
+  = help_button :'help.show.excerpt'
 %p{ 'data-theme' => 'd' }
   == #{@document.fulltext[0..200].sub(/ ?\S*$/,'')}&hellip;
 
