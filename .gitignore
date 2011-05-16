@@ -1,6 +1,7 @@
 .bundle
+app/views/about/index.*
+!app/views/about/index.html.markdown.dist
 config/config.yml
-db/*.sqlite3
 log/*
 tmp/
 *.lock

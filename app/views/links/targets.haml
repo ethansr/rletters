@@ -1,10 +1,10 @@
-- title "Online Resources for Document"
+- title t(:'links.header')
 
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
-  %li{ 'data-role' => 'list-divider' } Library Access
-  %li= link_to "WorldCat Gateway", "http://worldcatlibraries.org/registry/gateway?#{@document.openurl_query}"
-  %li= link_to "UK OpenURL Router", "http://openurl.ac.uk/?#{@document.openurl_query}"
-  %li{ 'data-role' => 'list-divider' } Online Resources
-  %li= link_to "Google Scholar", "http://scholar.google.com/scholar?q=#{CGI::escape(@document.title).gsub('%20','+')}"
+  %li{ 'data-role' => 'list-divider' }= t(:'links.libraries')
+  %li= link_to t(:'links.worldcat'), "http://worldcatlibraries.org/registry/gateway?#{@document.openurl_query}"
+  %li= link_to t(:'links.uk_openurl'), "http://openurl.ac.uk/?#{@document.openurl_query}"
+  %li{ 'data-role' => 'list-divider' }= t(:'links.online')
+  %li= link_to t(:'links.google_scholar'), "http://scholar.google.com/scholar?q=#{CGI::escape(@document.title).gsub('%20','+')}"
   %li= link_to "Mendeley", mendeley_document_link_path(@document), :rel => "external"
   %li= link_to "CiteULike", citeulike_document_link_path(@document), :rel => "external"

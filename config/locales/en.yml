@@ -1,21 +1,139 @@
 en:
+  header:
+    back_button: Back
+    home_button: Home
+    about_button: About
+    advanced_search_placeholder: '(advanced search)'
+  
+  index:
+    search_results: Search Results
+    no_documents_header: No Documents Found
+    no_documents_text: Your search produced no results.
+    documents_found:
+      one: 1 document found
+      other: '{{count}} documents found'
+    documents_in_database:
+      one: 1 document in database
+      other: '{{count}} documents in database'
+    export_download: Export/download these citations
+    advanced_search: Advanced Search...
+  
+  filters:
+    header: 'Filter results:'
+    selected: Selected Filters
+    filter_title: 'Filter: {{filter_name}}'
+    authors: Authors
+    journals: Journals
+    pub_date: Publication Date
+    pub_date_earlier: 1799 and earlier
+    pub_date_later: 2010 and later
+    remove_all: Remove all filters
+    no_filters: No Filters Available
+    
+  show:
+    title: Document Information
+    excerpt_label: 'Excerpt:'
+    more_details: 'More Document Details:'
+    get: 'Get this Document:'
+    from_publisher: 'From Publisher (DOI: {{doi}})'
+    ol_library: Online and Library Access
+    export_download: Export or Download Citation
+  
+  search:
+    title: Advanced Search
+    intro_markdown: >
+      This page lets you perform an advanced search of the evoText database.
+      You may choose either to utilize our guided search form, or to construct
+      a query directly in
+      [Solr's query syntax](http://wiki.apache.org/solr/SolrQuerySyntax), 
+      which is itself a superset of 
+      [Lucene query syntax](http://lucene.apache.org/java/2_9_1/queryparsersyntax.html).
+      These custom searches are extremely powerful.
+    
+    search_header: Guided Advanced Search
+    authors_label: 'Authors:'
+    title_label: 'Title:'
+    title_type_label: 'Title search type:'
+    type_exact: Exact
+    type_fuzzy: Fuzzy
+    journal_label: 'Journal:'
+    journal_type_label: 'Journal search type:'
+    year_start_label: 'Published after:'
+    year_end_label: 'Published before:'
+    volume_label: 'Volume:'
+    number_label: 'Issue number:'
+    pages_label: 'Pages:'
+    fulltext_label: 'Full article text:'
+    fulltext_type_label: 'Full text search type:'
+    search_button: Advanced Search
+    
+    solr_header: Solr Query Search
+    solr_label: 'Solr query string:'
+    solr_button: Submit Solr Query
+  
+  about:
+    languages_markdown: >
+      The following languages are available in {{app_name}}.  Not all of these
+      languages will result in a completely translated user interface -- many,
+      in fact, contain merely placeholder translations of things like date
+      and time formats.  If you would like to help translate {{app_name}} into 
+      your language, please visit the 
+      [RLetters homepage.](http://github.com/cpence/rletters)
+    languages_list: 'Available languages:'
+  
+  citation:
+    volume_abbr: 'Vol. {{volume}}'
+    number_abbr: 'No. {{number}}'
+    pages_abbr: 'pp. {{pages}}'
+  
+  terms:
+    header: Term Frequencies
+    table_header: Document Terms
+  
+  concordance:
+    header: Term Concordance
+    form_label: 'Display concordance for word:'
+    form_button: Get Concordance
+    no_matches_list: 'No instances of term “{{term}}”'
+    matches_list: 'Concordance for term “{{term}}”'
+    instances:
+      one: 1 instance
+      other: '{{count}} instances'
+  
+  export:
+    header: Export Document
+    refworks: Export to RefWorks
+    download_format: 'Download in {{format}} Format'
+  
+  links:
+    header: Online Resources for Document
+    libraries: Library Access
+    online: Online Resources
+    worldcat: WorldCat Gateway
+    uk_openurl: UK OpenURL Router
+    google_scholar: Google Scholar
+  
   help:
+    header: Help Message
+    button: Help
+    close_button: Close
+    
     show:
       excerpt: >
         For reasons of copyright, we show only the first 200 characters of 
         the document's full-text here.  For more, please access the document 
         using one of the access methods listed below.
     search:
-      authors: Authors of articles, in "First Last, First Last, ..." format.
+      authors: 'Authors of articles, in “First Last, First Last, ...” format.'
       title: >
-        Title of journal article.  If title search type is set to "Exact", 
+        Title of journal article.  If title search type is set to “Exact”, 
         this string will match the exact title.  If title search type is 
-        "fuzzy", it will match the stemmed title.  (The standard evoText 
+        “Fuzzy”, it will match the stemmed title.  (The standard evoText 
         search uses the stemmed search fields.)
       journal: >
         Journal in which article was published. If journal search type is 
-        set to "Exact", this string will match the exact journal title.  If 
-        journal search type is "fuzzy", it will match the stemmed journal 
+        set to “Exact”, this string will match the exact journal title.  If 
+        journal search type is “Fuzzy”, it will match the stemmed journal 
         title.  (The standard evoText search uses the stemmed search fields.)
       year_start: Beginning of allowable range for publication dates.
       year_end: End of allowable range for publication dates.
@@ -27,22 +145,22 @@ en:
         as it appears in an article's citation information.
       fulltext: >
         Terms appearing in the full text of the article.  If full text 
-        search type is set to "Exact", this string will match the exact full 
-        text of the document.  If full text search type is "fuzzy", it will 
+        search type is set to “Exact”, this string will match the exact full 
+        text of the document.  If full text search type is “Fuzzy”, it will 
         match the stemmed full text of the document.  (The standard evoText 
         search uses the stemmed search fields.)
       solr_query_markdown: |
         The following fields are available in Solr for searching:
       
-        *   `authors`: Authors, generally in the format "First Last, First 
-            Last..."  
+        *   `authors`: Authors, generally in the format “First Last, First 
+            Last...”  
         *   `title`: Verbatim title of article  
         *   `journal`: Verbatim journal of article  
         *   `year`: Year of article publication (format not standardized, may 
-            occasionally be something like "1945-1946")  
+            occasionally be something like “1945-1946”)  
         *   `volume`: Journal volume  
         *   `number`: Journal issue number  
-        *   `pages`: Journal pages (usually "1234-1235")  
+        *   `pages`: Journal pages (usually “1234-1235”)  
         *   `fulltext`: Verbatim full text of the article  
         *   `title_search`: Article title, lowercased and stemmed  
         *   `journal_search`: Journal, lowercased and stemmed  

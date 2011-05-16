@@ -13,7 +13,7 @@ div.header div.nosearchbar div.controls div.buttons { right: 2% !important; }
 
 .searchbar form .ui-input-search { box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; width: 100% !important; }
 
-.searchbar form .ui-input-search input { width: 100% !important; }
+.searchbar form .ui-input-search input { width: 100% !important; color: #efefef; }
 
 .list-searchbar { display: none !important; padding: 3px !important; }
 

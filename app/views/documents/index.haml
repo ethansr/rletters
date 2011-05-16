@@ -1,5 +1,5 @@
 - if params[:q] or params[:fq] or params[:precise]
-  - title "Search Results"
+  - title t :'index.search_results'
 
 %div.leftcolumn
   %ul.columnul{ 'data-role' => 'listview', 'data-theme' => 'd' }
@@ -7,32 +7,30 @@
       = render :partial => "layouts/searchbar"
     - if @documents.length == 0
       %li{ 'data-icon' => 'warning', 'data-theme' => 'e' }
-        %h3 No Documents Found
-        %p
-          Your search produced no results.
+        %h3= t :'index.no_documents_header'
+        %p= t :'index.no_documents_text'
     - else
       %li{ 'data-theme' => 'c' }
-        == #{pluralize(@documents.length, 'document')}
         - if params[:q] or params[:fq] or params[:precise]
-          found
+          = t :'index.documents_found', :count => @documents.length
         - else
-          in database
+          = t :'index.documents_in_database', :count => @documents.length
       - for doc in @documents
         %li{ 'data-icon' => 'info' }
           = link_to document_path(doc) do
             = render :partial => "cite", :locals => { :document => doc }
       - if @documents.total_pages > 1
         %li= will_paginate @documents
-      %li{ :class => 'small-li', 'data-theme' => 'c' }= link_to "Export/download these citations", formats_document_export_path(@document_ids)
+      %li{ :class => 'small-li', 'data-theme' => 'c' }= link_to t(:'index.export_download'), formats_document_export_path(@document_ids)
   
   %div.verticalpad
 
 %div.rightcolumn
   %ul.facet-list.columnul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-dividertheme' => 'c' }
-    %li{ 'data-theme' => 'c' } Filter results:
+    %li{ 'data-theme' => 'c' }= t :'filters.header'
     - rendered_facets = 0
     - unless params[:fq].blank?
-      %li{ 'data-role' => 'list-divider' } Selected Filters
+      %li{ 'data-role' => 'list-divider' }= t :'filters.selected'
       = render_selected_facets(params)
       - rendered_facets += 1
     - get_facets.each do |facet|
@@ -40,11 +38,11 @@
       - next if content.blank?
       - rendered_facets += 1
       
-      %li{ 'data-role' => 'list-divider' }== Filter: #{facet[:name]}
+      %li{ 'data-role' => 'list-divider' }= t :'filters.filter_title', :filter_name => facet[:name]
       = content
     
     - if rendered_facets == 0
-      %li{ 'data-role' => 'list-divider' } No Filters Available
+      %li{ 'data-role' => 'list-divider' }= t :'filters.no_filters'
 
     %li{ 'data-role' => 'list-divider', 'data-icon' => 'search', 'data-theme' => 'c' }
-      = link_to 'Advanced Search...', search_documents_path
+      = link_to t(:'index.advanced_search'), search_documents_path

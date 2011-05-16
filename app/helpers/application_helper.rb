@@ -34,10 +34,10 @@ module ApplicationHelper
     else
       str = I18n.t :"languages.#{locale}", :default => [:"languages.#{locale.split('-')[0]}", "Unknown Language"]
     end
-    str += " (#{locale})"
+    str
   end
   
   def help_button(id)
-    link_to 'Help', help_path(:id => id), :class => 'helpbutton', 'data-rel' => 'dialog', 'data-role' => 'button', 'data-inline' => 'true', 'data-icon' => 'info', 'data-iconpos' => 'notext'
+    link_to t(:'help.button'), help_path(:id => id), :class => 'helpbutton', 'data-rel' => 'dialog', 'data-role' => 'button', 'data-inline' => 'true', 'data-icon' => 'info', 'data-iconpos' => 'notext'
   end
 end

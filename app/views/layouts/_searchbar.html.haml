@@ -3,4 +3,4 @@
     - if params[:fq]
       - params[:fq].each do |p|
         = hidden_field_tag "fq[]", p
-    = search_field_tag :q, (params[:precise] ? "(advanced search)" : params[:q])
+    = search_field_tag :q, (params[:precise] ? t(:'header.advanced_search_placeholder') : params[:q])

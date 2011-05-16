@@ -2,11 +2,11 @@
 
 module DocumentsHelper
   FACETS = [
-      { :name => "Authors", :key => :author, 
+      { :name => I18n.t(:'filters.authors'), :key => :author, 
         :field => 'authors_facet', :func => :author_link },
-      { :name => "Journals", :key => :journal,
+      { :name => I18n.t(:'filters.journals'), :key => :journal,
         :field => 'journal_facet', :func => :journal_link },
-      { :name => "Publication Date", :key => :year,
+      { :name => I18n.t(:'filters.pub_date'), :key => :year,
         :field => 'year', :func => :decade_link }
     ]
   
@@ -65,19 +65,25 @@ module DocumentsHelper
     params[:fq].each do |query|
       arr = query.split(":")
       
-      field = get_facets.find { |f| f[:field] == arr[0] }[:name]
+      facet = get_facets.find { |f| f[:field] == arr[0] }
       value = arr[1].gsub("\"", "")
       
-      if field == "Decade of Publication"
+      if facet[:field] == 'year'
         parts = value[1..-2].split(" ")
-        value = parts[0] == '*' ? "1790s and earlier" : "#{parts[0]}s"
+        if parts[0] == '*'
+          value = I18n.t(:'filters.pub_date_later')
+        elsif parts[2] == '*'
+          value = I18n.t(:'filters.pub_date_later')
+        else
+          value = "#{parts[0]}-#{parts[2]}"
+        end
       end
       
       new_params = params.dup
       new_params[:fq].delete(query)
       
       ret += content_tag :li, 'data-icon' => 'delete' do
-        link_to "#{field}: #{value}", documents_path(new_params), 'data-transition' => 'none'
+        link_to "#{facet[:name]}: #{value}", documents_path(new_params), 'data-transition' => 'none'
       end
     end
     
@@ -85,7 +91,7 @@ module DocumentsHelper
     no_facets_params.delete(:fq)
     
     ret += content_tag :li, 'data-icon' => 'delete' do
-      link_to "Remove all filters", documents_path(no_facets_params), 'data-transition' => 'none'
+      link_to I18n.t(:'filters.remove_all'), documents_path(no_facets_params), 'data-transition' => 'none'
     end
     
     raw(ret)
@@ -112,8 +118,13 @@ module DocumentsHelper
         
         next if params[:fq] and params[:fq].count("year:[#{year_start} TO #{year_end}]") > 0
         
-        link_text = "#{key}s"
-        link_text += " and earlier" if key == "1790"
+        if year_start == '*'
+          link_text = I18n.t(:'pub_date_earlier')
+        elsif year_end == '*'
+          link_text = I18n.t(:'pub_date_later')
+        else
+          link_text = "#{year_start}-#{year_end}"
+        end
       else
         next if params[:fq] and params[:fq].count("#{facet[:field]}:\"#{key}\"") > 0
         link_text = key

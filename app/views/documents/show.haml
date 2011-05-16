@@ -1,4 +1,4 @@
-- title "Document Information"
+- title t(:'show.title')
 
 %ul{ 'data-role' => 'listview' }
   %li= render :partial => "cite", :locals => { :document => @document }
@@ -6,18 +6,18 @@
 %div.verticalpad
 
 %p{ 'data-theme' => 'd' }
-  %strong Excerpt:
+  %strong= t :'show.excerpt_label'
   = help_button :'help.show.excerpt'
 %p{ 'data-theme' => 'd' }
   == #{@document.fulltext[0..200].sub(/ ?\S*$/,'')}&hellip;
 
 %ul{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
-  %li{ 'data-role' => 'list-divider' } More Document Details:
-  %li= link_to 'Term Frequencies', terms_document_path(@document), 'data-transition' => 'flip'
-  %li= link_to 'Term Concordance', concordance_document_path(@document), 'data-transition' => 'flip'
-  %li{ 'data-role' => 'list-divider' } Get this Document:
+  %li{ 'data-role' => 'list-divider' }= t :'show.more_details'
+  %li= link_to t(:'terms.header'), terms_document_path(@document), 'data-transition' => 'flip'
+  %li= link_to t(:'concordance.header'), concordance_document_path(@document), 'data-transition' => 'flip'
+  %li{ 'data-role' => 'list-divider' }= t :'show.get'
   - unless @document.doi.blank?
-    %li= link_to "From Publisher (DOI: #{@document.doi})", "http://dx.doi.org/#{@document.doi}"
-  %li= link_to "Online and Library Access", targets_document_link_path(@document)
-  %li= link_to "Export or Download Citation", formats_document_export_path(@document)
+    %li= link_to t(:'show.from_publisher', :doi => @document.doi), "http://dx.doi.org/#{@document.doi}"
+  %li= link_to t(:'show.ol_library'), targets_document_link_path(@document)
+  %li= link_to t(:'show.export_download'), formats_document_export_path(@document)
 

@@ -1,12 +1,12 @@
-- title "Export Document"
+- title t(:'export.header')
 
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
-  %li= link_to "Export to RefWorks", "http://www.refworks.com/express/ExpressImport.asp?vendor=evoText&filter=RIS%20Format&encoding=65001&url=#{CGI::escape(ris_document_export_url(@document_ids))}", :rel => "external", :target => "RefWorksMain"
-  %li= link_to "Download in RIS Format (Reference Manager, EndNote, ProCite, RefWorks)", ris_document_export_path(@document_ids), :rel => "external"
-  %li= link_to "Download in Endnote Format", endnote_document_export_path(@document_ids), :rel => "external"
-  %li= link_to "Download in BibTeX Format", bibtex_document_export_path(@document_ids), :rel => "external"
-  %li= link_to "Download in RDF/XML Format", rdf_document_export_path(@document_ids), :rel => "external"
-  %li= link_to "Download in RDF/Turtle Format", turtle_document_export_path(@document_ids), :rel => "external"
-  %li= link_to "Download in MODS Format", mods_document_export_path(@document_ids), :rel => "external"
-  %li= link_to "Download in MARC Format", marc_document_export_path(@document_ids), :rel => "external"
-  %li= link_to "Download in MARCXML Format", marcxml_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.refworks'), "http://www.refworks.com/express/ExpressImport.asp?vendor=evoText&filter=RIS%20Format&encoding=65001&url=#{CGI::escape(ris_document_export_url(@document_ids))}", :rel => "external", :target => "RefWorksMain"
+  %li= link_to t(:'export.download_format', :format => 'RIS (Reference Manager, EndNote, ProCite, RefWorks)'), ris_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.download_format', :format => 'Endnote'), endnote_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.download_format', :format => 'BibTeX'), bibtex_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.download_format', :format => 'RDF/XML'), rdf_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.download_format', :format => 'RDF/Turtle'), turtle_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.download_format', :format => 'MODS'), mods_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.download_format', :format => 'MARC'), marc_document_export_path(@document_ids), :rel => "external"
+  %li= link_to t(:'export.download_format', :format => 'MARCXML'), marcxml_document_export_path(@document_ids), :rel => "external"

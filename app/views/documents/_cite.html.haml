@@ -7,10 +7,10 @@
   %em><
     = "#{document.journal}, "
   - unless document.volume.empty?
-    == Vol. #{document.volume},
+    == #{t(:'citation.volume_abbr', :volume => document.volume)},
   - unless document.number.empty?
-    == No. #{document.number}
+    == #{t(:'citation.number_abbr', :number => document.number)}
   - unless document.year.empty?
     == (#{document.year}),
   - unless document.pages.empty?
-    == pp. #{document.pages}
+    == #{t(:'citation.pages_abbr', :pages => document.pages)}

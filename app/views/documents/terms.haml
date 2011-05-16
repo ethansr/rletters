@@ -1,11 +1,11 @@
-- title "Term Frequencies"
+- title t(:'terms.header')
 
-= render :partial => 'documents/detailheader', :locals => { :document => @document, :title => 'Term Frequencies' }
+= render :partial => 'documents/detailheader', :locals => { :document => @document, :title => t(:'terms.header') }
 
 - num_columns = 4
 %table.terms
   %tr
-    %th{:colspan => num_columns * 2} Document Terms
+    %th{:colspan => num_columns * 2}= t :'terms.table_header'
   %tr
     - num_columns.times do
       %th Term

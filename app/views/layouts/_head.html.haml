@@ -1,12 +1,12 @@
 %head
   %meta{ :charset => "utf-8" }/
   
-  - title = "evoText"
+  - title = APP_CONFIG['app_name']
   - title << " - #{yield(:title)}" if content_for? :title
   %title= title
   
-  %meta{ :content => "Database for searching and performing text analysis techniques on academic literature in the evolutionary sciences", :name => "description" }/
-  %meta{ :content => "evoText Team", :name => "author" }/
+  %meta{ :content => APP_CONFIG['app_description'], :name => "description" }/
+  %meta{ :content => APP_CONFIG['app_author'], :name => "author" }/
   
   -# Mobile optimized meta tags for various browsers
   %meta{ :name => 'HandheldFriendly', :content => 'True' }/
