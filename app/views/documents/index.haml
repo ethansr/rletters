@@ -19,7 +19,7 @@
           in database
       - for doc in @documents
         %li{ 'data-icon' => 'info' }
-          = link_to document_path(doc), 'data-ajax' => 'false' do
+          = link_to document_path(doc) do
             = render :partial => "cite", :locals => { :document => doc }
       - if @documents.total_pages > 1
         %li= will_paginate @documents
