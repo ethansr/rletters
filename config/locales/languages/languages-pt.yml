@@ -1,66 +1,5 @@
-pt-PT: 
+pt:
   languages: 
-    af: afrikaans
-    art: "idioma artifical"
-    awa: Awadhi
-    bai: "bamileke Languages"
-    bug: Buginese
-    ce: chechene
-    cel: "idioma céltico"
-    chn: "jargão chinook"
-    cpe: "crioulo ou pidgin do inglês"
-    cpf: "crioulo ou pidgin do francês"
-    cpp: "crioulo ou pidgin do português"
-    cs: checo
-    cus: "idioma cuchita"
-    dra: "idioma dravítico"
-    dyu: diula
-    egy: "egípcio clássico"
-    en: Inglês
-    enm: "inglês medieval"
-    et: estónio
-    fiu: "idioma ugro-finês"
-    frm: "francês medieval"
-    frs: "frísio oriental"
-    gmh: "alemão medieval alto"
-    grc: "grego clássico"
-    gsw: "alemão da Suíça"
-    hsb: "sorbiano superior"
-    hy: arménio
-    iba: Iban
-    ig: igbo
-    ik: Inupiaq
-    khi: khoisan
-    lez: lezghiano
-    mga: "irlandês, medieval (900-1200)"
-    mk: macedónio
-    nah: Nauatle
-    nds: "baixo alemão"
-    nic: "nigeriano - cordofano"
-    nl-BE: "flamengo (Bélgica)"
-    non: "norse, old"
-    oc: provençal
-    os: ossético
-    peo: "persa arcaico (aprox. 600-400 a.C.)"
-    pl: polaco
-    pra: "idioma prácito"
-    pro: "provençal, arcaico (até 1500)"
-    pt-PT: "português europeu"
-    rm: reto-romance
-    rom: romanês
-    sai: "idioma indígeno sul-americano"
-    sal: "salishan languages"
-    sgn: "linguages de sinais"
-    ssa: "idioma nilo-sariano"
-    ta: tamil
-    tai: "idioma tailândes"
-    tg: tajique
-    tl: tagalogue
-    to: tonga
-    tog: toganês
-    tyv: tuviniano
-    wen: "idioma sórbio"
-    zza: zazaki
     aa: afar
     ab: abcázio
     ace: achém
@@ -68,6 +7,7 @@ pt-PT:
     ada: adangme
     ady: adigue
     ae: avéstico
+    af: africâner
     afa: "idioma afro-asiático"
     afh: afrihili
     ain: ainu
@@ -85,16 +25,19 @@ pt-PT:
     arc: aramaico
     arn: araucano
     arp: arapaho
+    art: "idioma artificial"
     arw: arauaqui
     as: assamês
     ast: asturiano
     ath: "idioma atabascano"
     aus: "idioma australiano"
     av: avaric
+    awa: awadhi
     ay: aimara
     az: azerbaijano
     ba: bashkir
     bad: banda
+    bai: "idioma bamileke"
     bal: balúchi
     ban: balinês
     bas: basa
@@ -119,6 +62,7 @@ pt-PT:
     bs: bósnio
     btk: bataque
     bua: buriat
+    bug: buguinês
     byn: blin
     ca: catalão
     cad: caddo
@@ -126,12 +70,15 @@ pt-PT:
     car: caribe
     cau: "idioma caucásico"
     cch: atsam
+    ce: checheno
     ceb: cebuano
+    cel: "idioma celta"
     ch: chamorro
     chb: chibcha
     chg: chagatai
     chk: chuukese
     chm: mari
+    chn: "chinook jargon"
     cho: choctaw
     chp: chipewyan
     chr: cherokee
@@ -139,11 +86,16 @@ pt-PT:
     cmc: "idioma chamic"
     co: córsico
     cop: copta
+    cpe: "crioulo ou pidgin baseado no inglês"
+    cpf: "crioulo ou pidgin baseado no francês"
+    cpp: "crioulo ou pidgin baseado no português"
     cr: cree
     crh: "turco da Crimeia"
     crp: "crioulo ou pidgin"
+    cs: tcheco
     csb: kashubian
     cu: "eslavo eclesiástico"
+    cus: "idioma cuchítico"
     cv: chuvash
     cy: galês
     da: dinamarquês
@@ -158,24 +110,30 @@ pt-PT:
     dgr: dogrib
     din: dinka
     doi: dogri
+    dra: "idioma dravidiano"
     dsb: "sérvio baixo"
     dua: duala
     dum: "holandês médio"
     dv: divehi
+    dyu: diúla
     dz: dzonga
     ee: eve
     efi: efique
+    egy: "egípcio arcaico"
     eka: ekajuk
     el: grego
     elx: elamite
+    en: inglês
     en-AU: "inglês australiano"
     en-CA: "inglês canadense"
     en-GB: "inglês britânico"
     en-US: "inglês americano"
+    enm: "inglês médio"
     eo: esperanto
     es: espanhol
     es-419: "espanhol latino-americano"
     es-ES: "espanhol ibérico"
+    et: estoniano
     eu: basco
     ewo: ewondo
     fa: persa
@@ -184,14 +142,17 @@ pt-PT:
     ff: fula
     fi: finlandês
     fil: filipino
+    fiu: "idioma fino-úgrico"
     fj: fijiano
     fo: feroês
     fon: fom
     fr: francês
     fr-CA: "francês canadense"
     fr-CH: "francês suíço"
+    frm: "francês médio"
     fro: "francês arcaico"
     frr: "frísio setentrional"
+    frs: "frisão oriental"
     fur: friulano
     fy: "frísio ocidental"
     ga: irlandês
@@ -203,12 +164,15 @@ pt-PT:
     gez: geez
     gil: gilbertês
     gl: galego
+    gmh: "alemão médio-alto"
     gn: guarani
     goh: "alemão arcaico alto"
     gon: gondi
     gor: gorontalo
     got: gótico
     grb: grebo
+    grc: "grego arcaico"
+    gsw: "alemão suíço"
     gu: guzerate
     gv: manx
     gwi: gwichʼin
@@ -223,15 +187,20 @@ pt-PT:
     hmn: hmong
     ho: "hiri motu"
     hr: croata
+    hsb: "sorábio superior"
     ht: haitiano
     hu: húngaro
     hup: hupa
+    hy: armênio
     hz: herero
     ia: interlíngua
+    iba: iban
     id: indonésio
     ie: interlingue
+    ig: ibo
     ii: "sichuan yi"
     ijo: ijo
+    ik: inupiaque
     ilo: ilocano
     inc: "idioma índico"
     ine: "idioma indo-europeu"
@@ -260,6 +229,7 @@ pt-PT:
     kfo: koro
     kg: congolês
     kha: khasi
+    khi: "idioma coisã"
     kho: khotanês
     ki: quicuio
     kj: kuanyama
@@ -289,6 +259,7 @@ pt-PT:
     lah: lahnda
     lam: lamba
     lb: luxemburguês
+    lez: lezghian
     lg: luganda
     li: limburguês
     ln: lingala
@@ -314,11 +285,13 @@ pt-PT:
     mdr: mandar
     men: mende
     mg: malgaxe
+    mga: "irlandês médio"
     mh: marshalês
     mi: maori
     mic: miquemaque
     min: minangkabau
     mis: "idiomas diversos"
+    mk: macedônio
     mkh: "idioma mon-khmer"
     ml: malaiala
     mn: mongol
@@ -340,19 +313,24 @@ pt-PT:
     myn: maia
     myv: erzya
     na: nauruano
+    nah: náuatle
     nai: "idioma indígena norte-americano"
     nap: napolitano
     nb: "bokmål norueguês"
     nd: "ndebele do norte"
+    nds: baixo-alemão
     ne: nepali
     new: newari
     ng: dongo
     nia: nias
+    nic: "idioma cordofano-nigeriano"
     niu: niueano
     nl: holandês
+    nl-BE: flamengo
     nn: "nynorsk norueguês"
     "no": norueguês
     nog: nogai
+    non: "nórdico arcaico"
     nqo: n'ko
     nr: "ndebele do sul"
     nso: "soto setentrional"
@@ -364,9 +342,11 @@ pt-PT:
     nyn: nyankole
     nyo: nyoro
     nzi: nzima
+    oc: occitânico
     oj: ojibwa
     om: oromo
     or: oriya
+    os: ossetic
     osa: osage
     ota: "turco otomano"
     oto: "idioma otomano"
@@ -377,20 +357,27 @@ pt-PT:
     pam: pampanga
     pap: papiamento
     pau: palauano
+    peo: "persa arcaico"
     phi: "idioma filipino"
     phn: fenício
     pi: páli
+    pl: polonês
     pon: pohnpeian
+    pra: "idioma prácrito"
+    pro: "provençal arcaico"
     ps: pashto
     pt: português
     pt-BR: "português do Brasil"
+    pt-PT: "português ibérico"
     qu: quíchua
     raj: rajastani
     rap: rapanui
     rar: rarotongano
+    rm: reto-romano
     rn: rundi
     ro: romeno
     roa: "idioma românico"
+    rom: romani
     root: root
     ru: russo
     rup: aromeno
@@ -398,6 +385,8 @@ pt-PT:
     sa: sânscrito
     sad: sandawe
     sah: iacuto
+    sai: "idioma indígena sul-americano"
+    sal: "idioma salisano"
     sam: "aramaico samaritano"
     sas: sasak
     sat: santali
@@ -410,6 +399,7 @@ pt-PT:
     sem: "idioma semítico"
     sg: sango
     sga: "irlandês arcaico"
+    sgn: "linguagem de sinais"
     sh: servo-croata
     shn: shan
     si: cingalês
@@ -435,6 +425,7 @@ pt-PT:
     srn: "idioma surinamês"
     srr: serere
     ss: swati
+    ssa: "idioma nilo-saariano"
     st: "soto do sul"
     su: sundanês
     suk: sukuma
@@ -444,20 +435,26 @@ pt-PT:
     sw: suaili
     syc: "siríaco clássico"
     syr: siríaco
+    ta: tâmil
+    tai: "idioma tailandês"
     te: telugu
     tem: timne
     ter: tereno
     tet: tétum
+    tg: tadjique
     th: tailandês
     ti: tigrínia
     tig: tigré
     tiv: tiv
     tk: turcomano
     tkl: toquelauano
+    tl: tagalo
     tlh: klingon
     tli: tlinguite
     tmh: tamaxeque
     tn: tswana
+    to: tonganês
+    tog: "tonganês de Nyasa"
     tpi: "tok pisin"
     tr: turco
     ts: tsonga
@@ -469,6 +466,7 @@ pt-PT:
     tvl: tuvaluano
     tw: twi
     ty: taitiano
+    tyv: tuvinian
     udm: udmurt
     ug: uighur
     uga: ugarítico
@@ -487,6 +485,7 @@ pt-PT:
     wal: walamo
     war: waray
     was: washo
+    wen: "idioma sorábio"
     wo: uólofe
     xal: kalmyk
     xh: xosa
@@ -506,3 +505,4 @@ pt-PT:
     zu: zulu
     zun: zunhi
     zxx: "sem conteúdo linguístico"
+    zza: zaza
