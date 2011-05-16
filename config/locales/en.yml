@@ -103,7 +103,7 @@ en:
   export:
     header: Export Document
     refworks: Export to RefWorks
-    download_format: 'Download in %{format} Format'
+    download_format: 'Download in %{dl_format} Format'
   
   links:
     header: Online Resources for Document
