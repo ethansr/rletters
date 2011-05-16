@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 
 # A nice one-liner to enable markdown-based templates with Maruku
 ActionView::Template.register_template_handler :markdown,

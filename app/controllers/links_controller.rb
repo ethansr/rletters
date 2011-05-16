@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 class LinksController < ApplicationController
   
   # Show a list of all online and library link targets for this

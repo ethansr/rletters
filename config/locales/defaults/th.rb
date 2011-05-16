@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 # Thai translation for Ruby on Rails
 # original by Prem Sichanugrist (s@sikachu.com/sikandsak@gmail.com)
 # activerecord keys fixed by Jittat Fakcharoenphol (jittat@gmail.com)

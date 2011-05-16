@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 class AboutController < ApplicationController
   %W(index about).each do |m|
     class_eval <<-RUBY
