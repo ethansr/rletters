@@ -37,24 +37,7 @@ module ApplicationHelper
     str += " (#{locale})"
   end
   
-  def add_jquery_page(id, &block)
-    content_for :pages do
-      content_tag :div, :id => id, 'data-role' => 'page', 'data-theme' => 'd' do
-        block.call
-      end
-    end
-  end
-  
-  def help_button(&block)
-    id = UUID.generate
-    add_jquery_page(id) do
-      content = content_tag(:div, 'data-role' => 'header', 'data-theme' => 'd', 'data-position' => 'inline', 'data-backbtn' => 'false') do
-        content_tag(:h1, "Help")
-      end
-      content << content_tag(:div, 'data-role' => 'content') do
-        block.call << link_to('Close', '#main', 'data-role' => 'button', 'data-rel' => 'back', 'data-theme' => 'b')
-      end
-    end
-    link_to 'Help', id, :class => 'helpbutton', 'data-rel' => 'dialog', 'data-role' => 'button', 'data-inline' => 'true', 'data-icon' => 'info', 'data-iconpos' => 'notext'
+  def help_button(id)
+    link_to 'Help', help_path(:id => id), :class => 'helpbutton', 'data-rel' => 'dialog', 'data-role' => 'button', 'data-inline' => 'true', 'data-icon' => 'info', 'data-iconpos' => 'notext'
   end
 end

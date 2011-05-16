@@ -36,6 +36,7 @@ Evotext::Application.routes.draw do
   end
   
   match "about(/:action)", :controller => 'about', :as => 'about'
+  match "help(/:id)", :controller => 'help', :action => 'message', :constraints => { :id => /[^\/]+/ }, :as => 'help'
   match "unapi(/:id)" => 'unapi#index', :as => 'unapi'
   
   root :to => "documents#index"

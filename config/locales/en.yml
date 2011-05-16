@@ -1,2 +1,50 @@
 en:
-  hello: "Hello world"
+  help:
+    show:
+      excerpt: >
+        For reasons of copyright, we show only the first 200 characters of 
+        the document's full-text here.  For more, please access the document 
+        using one of the access methods listed below.
+    search:
+      authors: Authors of articles, in "First Last, First Last, ..." format.
+      title: >
+        Title of journal article.  If title search type is set to "Exact", 
+        this string will match the exact title.  If title search type is 
+        "fuzzy", it will match the stemmed title.  (The standard evoText 
+        search uses the stemmed search fields.)
+      journal: >
+        Journal in which article was published. If journal search type is 
+        set to "Exact", this string will match the exact journal title.  If 
+        journal search type is "fuzzy", it will match the stemmed journal 
+        title.  (The standard evoText search uses the stemmed search fields.)
+      year_start: Beginning of allowable range for publication dates.
+      year_end: End of allowable range for publication dates.
+      volume: Volume number of journal.
+      issue: Issue number of journal.
+      pages: >
+        Page number of article within journal issue.  This is a text search, 
+        not a range search: you will have to specify a page number precisely 
+        as it appears in an article's citation information.
+      fulltext: >
+        Terms appearing in the full text of the article.  If full text 
+        search type is set to "Exact", this string will match the exact full 
+        text of the document.  If full text search type is "fuzzy", it will 
+        match the stemmed full text of the document.  (The standard evoText 
+        search uses the stemmed search fields.)
+      solr_query_markdown: |
+        The following fields are available in Solr for searching:
+      
+        *   `authors`: Authors, generally in the format "First Last, First 
+            Last..."  
+        *   `title`: Verbatim title of article  
+        *   `journal`: Verbatim journal of article  
+        *   `year`: Year of article publication (format not standardized, may 
+            occasionally be something like "1945-1946")  
+        *   `volume`: Journal volume  
+        *   `number`: Journal issue number  
+        *   `pages`: Journal pages (usually "1234-1235")  
+        *   `fulltext`: Verbatim full text of the article  
+        *   `title_search`: Article title, lowercased and stemmed  
+        *   `journal_search`: Journal, lowercased and stemmed  
+        *   `fulltext_search`: Full text of article, lowercased and stemmed
+      

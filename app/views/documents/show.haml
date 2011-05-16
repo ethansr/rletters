@@ -8,9 +8,7 @@
 
 %p{ 'data-theme' => 'd' }
   %strong Excerpt:
-  - help_button do
-    :markdown
-      For reasons of copyright, we show only the first 200 characters of the document's full-text here.  For more, please access the document using one of the access methods listed below.
+  - help_button :'help.show.excerpt'
 %p{ 'data-theme' => 'd' }
   == #{@document.fulltext[0..200].sub(/ ?\S*$/,'')}&hellip;
 

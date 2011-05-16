@@ -15,14 +15,12 @@
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :authors do
       %span Authors:
-      = help_button do
-        Authors of articles, in "First Last, First Last, ..." format.
+      = help_button :'help.search.authors'
     = text_field_tag :authors
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :title do
       %span Title:
-      = help_button do
-        Title of journal article.  If title search type is set to "Exact", this string will match the exact title.  If title search type is "fuzzy", it will match the stemmed title.  (The standard evoText search uses the stemmed search fields.)
+      = help_button :'help.search.title'
     = text_field_tag :title
   %div{ 'data-role' => 'fieldcontain' }
     = field_set_tag 'Title search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
@@ -33,8 +31,7 @@
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :journal do
       %span Journal:
-      = help_button do
-        Journal in which article was published. If journal search type is set to "Exact", this string will match the exact journal title.  If journal search type is "fuzzy", it will match the stemmed journal title.  (The standard evoText search uses the stemmed search fields.)
+      = help_button :'help.search.journal'
     = text_field_tag(:journal)
   %div{ 'data-role' => 'fieldcontain' }
     = field_set_tag 'Journal search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
@@ -45,38 +42,32 @@
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :year_start do
       %span Published after:
-      = help_button do
-        Beginning of allowable range for publication dates.
+      = help_button :'help.search.year_start'
     = text_field_tag(:year_start)
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :year_end do
       %span Published before:
-      = help_button do
-        End of allowable range for publication dates.
+      = help_button :'help.search.year_end'
     = text_field_tag(:year_end)
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :volume do
       %span Volume:
-      = help_button do
-        Volume number of journal.
+      = help_button :'help.search.volume'
     = text_field_tag(:volume)
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :number do
       %span Issue number:
-      = help_button do
-        Issue number of journal.
+      = help_button :'help.search.issue'
     = text_field_tag(:number)
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :pages do
       %span Pages:
-      = help_button do
-        Page number of journal.  This is a text search, not a range search: you will have to specify a page number precisely as it appears in an article's citation information.
+      = help_button :'help.search.pages'
     = text_field_tag(:pages)
   %div{ 'data-role' => 'fieldcontain' }
     = label_tag :fulltext do
       %span Full article text:
-      = help_button do
-        Terms appearing in the full text of the article.  If full text search type is set to "Exact", this string will match the exact full text of the document.  If full text search type is "fuzzy", it will match the stemmed full text of the document.  (The standard evoText search uses the stemmed search fields.)
+      = help_button :'help.search.fulltext'
     = text_field_tag(:fulltext)
   %div{ 'data-role' => 'fieldcontain' }
     = field_set_tag 'Full text search type:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
@@ -95,21 +86,7 @@
     = hidden_field_tag(:precise, true)
     = label_tag :q do
       %span Solr query string:
-      = help_button do
-        :markdown
-          The following fields are available in Solr for searching:
-        
-          *   `authors`: Authors, generally in the format "First Last, First Last..."  
-          *   `title`: Verbatim title of article  
-          *   `journal`: Verbatim journal of article  
-          *   `year`: Year of article publication (format not standardized, may occasionally be something like "1945-1946")  
-          *   `volume`: Journal volume  
-          *   `number`: Journal issue number  
-          *   `pages`: Journal pages (usually "1234-1235")  
-          *   `fulltext`: Verbatim full text of the article  
-          *   `title_search`: Article title, lowercased and stemmed  
-          *   `journal_search`: Journal, lowercased and stemmed  
-          *   `fulltext_search`: Full text of article, lowercased and stemmed  
+      = help_button :'help.search.solr_query_markdown'
     = text_area_tag(:q, nil, { :escape => false })
     = submit_tag "Submit Solr Query"
 

@@ -1,16 +1,10 @@
 !!! 5
 - ie_html :class => 'no-js', :manifest => 'default.appcache' do
   = render :partial => 'layouts/head'
-  %body{ :lang => 'en', :class => "#{controller.controller_name}" }
+  %body{ :lang => 'en' }
     %div{ 'data-role' => 'page', 'data-theme' => 'd' }
       %div{ 'class' => 'header', 'data-role' => 'header', 'data-backbtn' => 'false', 'data-theme' => 'a' }
         = render :partial => 'layouts/header'
       %div{ 'data-role' => 'content' }
         = render :partial => 'layouts/flashes'
         = yield
-      
-      -# Page-specific JS must come inside this 'page' tag
-      = yield :javascripts
-    
-    -# Other internal 'pages', for dialog boxes
-    = yield :pages    
