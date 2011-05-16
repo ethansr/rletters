@@ -1,7 +1,6 @@
 TODO
 ----
 
-- Proper help system with localized help messages
 - For all but the front page, can/should I strip down the HTML
   to a minimal layout?  Saves bandwidth, but does it cause any
   other problems?
