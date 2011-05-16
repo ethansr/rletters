@@ -1,0 +1,10 @@
+!!! 5
+- ie_html :class => 'no-js', :manifest => 'default.appcache' do
+  = render :partial => 'layouts/head'
+  %body{ :lang => "#{I18n.locale}" }
+    %div{ 'data-role' => 'page', 'data-theme' => 'd' }
+      %div{ 'class' => 'header', 'data-role' => 'header', 'data-backbtn' => 'false', 'data-theme' => 'a' }
+        = render :partial => 'layouts/header'
+      %div{ 'data-role' => 'content' }
+        = render :partial => 'layouts/flashes'
+        = yield

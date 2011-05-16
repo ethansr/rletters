@@ -1,9 +1,6 @@
 TODO
 ----
 
-- For all but the front page, can/should I strip down the HTML
-  to a minimal layout?  Saves bandwidth, but does it cause any
-  other problems?
 - Locale system
   - Implement a user settings page with a locale switcher
   - Wrap all the UI in translate calls
@@ -12,4 +9,8 @@ TODO
     Git repository
   - Abstract all the user-provided static content somehow (how
     do other open source Rails projects deal with this?)
-
+- Come up with something intelligent to do with the flashes.
+  Could I redirect them into a JQM dialog box somehow?
+- Figure out how to save/edit user definable parameters, such
+  as locale, documents-per-page, etc. (are there more of these
+  than that, or should there be?)

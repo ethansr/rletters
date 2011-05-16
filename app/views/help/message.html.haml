@@ -1,15 +1,8 @@
-!!! 5
-- ie_html :class => 'no-js', :manifest => 'default.appcache' do
-  = render :partial => 'layouts/head'
-  %body{ :lang => 'en' }
-    %div{ 'data-role' => 'page', 'data-theme' => 'd' }
-      %div{ 'data-role' => 'header', 'data-theme' => 'd', 'data-position' => 'inline', 'data-backbtn' => 'false' }
-        %h1 Help
-      %div{ 'data-role' => 'content' }
-        
-        - if params[:id].to_s.end_with? '_markdown'
-          = raw(Maruku.new(t params[:id]).to_html)
-        - else
-          %p= t params[:id]
-        
-        %p= link_to 'Close', ':back', 'data-role' => 'button', 'data-rel' => 'back', 'data-theme' => 'b'
+- title "Help"
+
+- if params[:id].to_s.end_with? '_markdown'
+  = raw(Maruku.new(t params[:id]).to_html)
+- else
+  %p= t params[:id]
+
+%p= link_to 'Close', ':back', 'data-role' => 'button', 'data-rel' => 'back', 'data-theme' => 'b'

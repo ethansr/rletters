@@ -1,10 +1,21 @@
 !!! 5
-- ie_html :class => 'no-js', :manifest => 'default.appcache' do
-  = render :partial => 'layouts/head'
-  %body{ :lang => 'en' }
+%html
+  %head
+    %meta{ :charset => "utf-8" }/
+    - title = "evoText"
+    - title << " - #{yield(:title)}" if content_for? :title
+    %title= title
+  
+  %body{ :lang => "#{I18n.locale}" }
     %div{ 'data-role' => 'page', 'data-theme' => 'd' }
-      %div{ 'class' => 'header', 'data-role' => 'header', 'data-backbtn' => 'false', 'data-theme' => 'a' }
-        = render :partial => 'layouts/header'
+      
+      - dialog = false if local_assigns[:dialog].nil?
+      %div{ 'class' => 'header', 'data-role' => 'header', 'data-backbtn' => 'false', 'data-theme' => "#{dialog ? 'd' : 'a'}" }
+        - if dialog
+          %h1= yield :title
+        - else
+          = render :partial => 'layouts/header'
+      
       %div{ 'data-role' => 'content' }
         = render :partial => 'layouts/flashes'
         = yield
