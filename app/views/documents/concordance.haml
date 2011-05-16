@@ -8,7 +8,7 @@
 = form_tag(concordance_document_path(@document), { :method => "get", 'data-transition' => 'none' }) do
   %div.fieldcontain
     = label_tag(:hl_word, 'Display concordance for word:', :for => 'field_hl_word')
-    = text_field_tag(:hl_word, params[:hl_word], :id => 'field_hl_word')
+    = text_field_tag(:hl_word, params[:hl_word], :id => 'field_hl_word', :autocapitalize => 'off')
   = submit_tag "Get Concordance"
 
 %div.verticalpad
