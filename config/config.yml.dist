@@ -1,8 +1,9 @@
 defaults: &defaults
+  available_locales: [ar, cs, cy, da, de, en, eo, es, et, eu, fa, fi, fr, gsw, he, hi, is, it, ja, ko, lv, nb, nl, pl, pt, ru, sk, sv, sw, th, uk, zh]
+  
   solr_server_url: http://localhost:8080/solr
   google_account_id: 'UA-XXXXXXXX-X'
   mendeley_consumer_key: '1234567890abcdef1234567890abcdef123456789'
-  available_locales: [ar, cs, cy, da, de, en-AU, en-GB, en-US, eo, es-AR, es-CL, es-CO, es-MX, es, et, eu, fa, fi, fr-CA, fr-CH, fr, gsw-CH, he, hi-IN, hi, is, it, ja, ko, lv, nb, nl, pl, pt-BR, pt-PT, ru, sk, sv-SE, sw, th, uk, zh-CN, zh-TW]
 
 development:
   <<: *defaults
