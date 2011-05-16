@@ -1,9 +1,11 @@
-# Australian English translations for Ruby on Rails
+# US English translations for Ruby on Rails
+#
+# Use this as the base for the locale file of your language.
 
-"en-AU":
+"en":
   date:
     formats:
-      default: "%d-%m-%Y"
+      default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"
 

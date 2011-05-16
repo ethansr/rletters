@@ -2,7 +2,7 @@
 #
 #
 
-"pt-PT":
+"pt":
   date:
     formats:
       default: "%d/%m/%Y"

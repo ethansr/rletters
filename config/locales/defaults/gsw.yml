@@ -3,7 +3,7 @@
 #
 # Adapted from de-CH by Clemens Kofler (clemens@railway.at).
 
-gsw-CH:
+gsw:
   date:
     formats:
       default: "%d.%m.%Y"
