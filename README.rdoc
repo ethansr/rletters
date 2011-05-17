@@ -8,6 +8,7 @@ RLetters is developed by the Digital Humanities Working Group at the University 
 == Features
 
 * Maintain a large index of academic journal publications.
+* "Web-application" interface built with {jQuery Mobile}[http://jquerymobile.com], accessible on the desktop, tablet devices, and smartphones.  Advanced integration available with Apple iOS devices.
 * Complex full-text searching of this index using the search facilities provided by {Solr}[http://lucene.apache.org/solr/] (and its underlying {Lucene}[http://lucene.apache.org/java/docs/index.html] engine).
 * Export your database in a variety of export formats (RIS, EndNote, RefWorks, BibTeX, MARC, MARCXML, MODS, etc.).
 * {unAPI}[http://unapi.info/] support for connecting with bibliography managers like {Zotero.}[http://www.zotero.org]
