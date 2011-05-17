@@ -1,11 +1,18 @@
 # coding: UTF-8
 
 
+# Class which encapsulates the export of a collection of +Document+ instances
+# to RIS format.
 class RISCollection
+  
+  # Create a new RIS collection.  +documents+ should be an array of 
+  # +Document+ objects.
   def initialize(documents)
     @documents = documents
   end
   
+  # Convert the array of documents to a string containing the RIS records
+  # for the entire collection.
   def to_s
     ret = ""
     
@@ -31,6 +38,8 @@ class RISCollection
     ret
   end
   
+  # Convert to RIS and send to the client using the 
+  # <tt>controller.send_data</tt> method of an <tt>ActionController.</tt>
   def send(controller)
     controller.send_data to_s, :filename => "export.ris", 
       :type => 'application/x-research-info-systems',

@@ -1,11 +1,18 @@
 # coding: UTF-8
 
 
+# Class which encapsulates the export of a collection of +Document+ instances
+# to BibTeX format.
 class BIBCollection
+  
+  # Create a new BibTeX collection.  +documents+ should be an array of 
+  # +Document+ objects.
   def initialize(documents)
     @documents = documents
   end
   
+  # Convert the array of documents to a string containing the BibTeX records
+  # for the entire collection.
   def to_s
     citekeys = []
     ret = ""
@@ -35,6 +42,8 @@ class BIBCollection
     ret
   end
   
+  # Convert to BibTeX and send to the client using the 
+  # <tt>controller.send_data</tt> method of an <tt>ActionController.</tt>
   def send(controller)
     controller.send_data to_s, :filename => "export.bib", 
       :type => 'application/x-bibtex', :disposition => 'attachment'

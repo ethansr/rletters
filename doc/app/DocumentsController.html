@@ -69,11 +69,19 @@
 				<h3 class="section-header">Methods</h3>
 				<ul class="link-list">
 					
+					<li><a href="#method-i-concordance">#concordance</a></li>
+					
 					<li><a href="#method-i-default_attrs">#default_attrs</a></li>
+					
+					<li><a href="#method-i-get_document">#get_document</a></li>
 					
 					<li><a href="#method-i-index">#index</a></li>
 					
 					<li><a href="#method-i-search">#search</a></li>
+					
+					<li><a href="#method-i-show">#show</a></li>
+					
+					<li><a href="#method-i-terms">#terms</a></li>
 					
 				</ul>
 			</div>
@@ -162,7 +170,8 @@
 
 		<div id="description">
 			<p>
-coding: UTF-8
+The primary controller, which serves all requests having to do with
+document display and searching.
 </p>
 
 		</div>
@@ -179,6 +188,40 @@ coding: UTF-8
 			<h3 class="section-header">Public Instance Methods</h3>
 
 		
+			<div id="concordance-method" class="method-detail ">
+				<a name="method-i-concordance"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">concordance</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Get a term concordance for one document.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="concordance-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 55</span>
+55:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">concordance</span>; <span class="ruby-identifier">get_document</span>; <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
 			<div id="default-attrs-method" class="method-detail ">
 				<a name="method-i-default_attrs"></a>
 
@@ -192,17 +235,21 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+By default, show the search bar in the header.  We only disable it on the
+advanced search page, where the presence of two separate search methods
+would be distracting.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="default-attrs-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 5</span>
-5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_attrs</span>
-6:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">false</span>
-7:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 12</span>
+12:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_attrs</span>
+13:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">false</span>
+14:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -226,26 +273,34 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+The primary document index, showing a list of documents, from a flat query
+to the database, as a result of filtered browsing, or as a set of search
+results.
+</p>
+<p>
+<b>FIXME</b> &#8212; We need a configurable way to set the
+&#8220;per_page&#8220; parameter site-wide, so that users can configure the
+size of result sets.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="index-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
-10:     <span class="ruby-comment cmt"># FIXME: configurable per_page, sitewide</span>
-11:     <span class="ruby-identifier">page</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:page</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">1</span>;
-12:     <span class="ruby-identifier">num</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:num</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:num</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">10</span>;
-13:     
-14:     <span class="ruby-comment cmt"># Set all the variables, but then paginate the documents</span>
-15:     <span class="ruby-identifier">hash_to_instance_variables</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>)
-16:     <span class="ruby-ivar">@documents</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">page</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>)
-17:     <span class="ruby-ivar">@document_ids</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">shasum</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">','</span>)
-18:     
-19:     <span class="ruby-identifier">render</span> <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'index'</span>
-20:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 22</span>
+22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
+23:     <span class="ruby-identifier">page</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:page</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">1</span>;
+24:     <span class="ruby-identifier">num</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:num</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:num</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">10</span>;
+25:     
+26:     <span class="ruby-comment cmt"># Set all the variables, but then paginate the documents</span>
+27:     <span class="ruby-identifier">hash_to_instance_variables</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>)
+28:     <span class="ruby-ivar">@documents</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">page</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>)
+29:     <span class="ruby-ivar">@document_ids</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">shasum</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">','</span>)
+30:     
+31:     <span class="ruby-identifier">render</span> <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'index'</span>
+32:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -269,17 +324,131 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+The advanced search page.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="search-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search</span>
-23:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">true</span>
-24:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 35</span>
+35:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search</span>
+36:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">true</span>
+37:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="show-method" class="method-detail ">
+				<a name="method-i-show"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">show</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Show the detailed citation information and access links for one document.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="show-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 49</span>
+49:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>; <span class="ruby-identifier">get_document</span>; <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="terms-method" class="method-detail ">
+				<a name="method-i-terms"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">terms</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Get a list of term frequencies for one document.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="terms-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 52</span>
+52:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">terms</span>; <span class="ruby-identifier">get_document</span>; <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="private-instance-method-details" class="method-section section">
+			<h3 class="section-header">Private Instance Methods</h3>
+
+		
+			<div id="get-document-method" class="method-detail ">
+				<a name="method-i-get_document"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">get_document</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Common code for all the views that operate on a single document, returning
+a page of information about that document.  Queries the database to return
+the document, including its full text, possibly with a highlighting query.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="get-document-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 43</span>
+43:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_document</span> <span class="ruby-comment cmt"># :doc:</span>
+44:     <span class="ruby-identifier">hash_to_instance_variables</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>], <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:hl_word</span>])
+45:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

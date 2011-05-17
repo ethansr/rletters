@@ -162,7 +162,8 @@
 
 		<div id="description">
 			<p>
-coding: UTF-8
+Class which encapsulates the export of a collection of <tt>Document</tt>
+instances to MARCXML format.
 </p>
 
 		</div>
@@ -192,17 +193,20 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Create a new MARCXML collection.  <tt>documents</tt> should be an array of 
+<tt>Document</tt> objects.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="new-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/classes/marcxmlcollection.rb, line 5</span>
-5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">documents</span>)
-6:     <span class="ruby-ivar">@documents</span> = <span class="ruby-identifier">documents</span>
-7:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/classes/marcxmlcollection.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">documents</span>)
+11:     <span class="ruby-ivar">@documents</span> = <span class="ruby-identifier">documents</span>
+12:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -232,18 +236,21 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Convert to MARCXML and send to the client using the 
+<tt>controller.send_data</tt> method of an <tt>ActionController.</tt>
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="send-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/classes/marcxmlcollection.rb, line 28</span>
-28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">controller</span>)
-29:     <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">send_data</span> <span class="ruby-identifier">to_s</span>, <span class="ruby-value">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;export_marcxml.xml&quot;</span>, 
-30:       <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/marcxml+xml'</span>, <span class="ruby-value">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachment'</span>
-31:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/classes/marcxmlcollection.rb, line 37</span>
+37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">controller</span>)
+38:     <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">send_data</span> <span class="ruby-identifier">to_s</span>, <span class="ruby-value">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;export_marcxml.xml&quot;</span>, 
+39:       <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/marcxml+xml'</span>, <span class="ruby-value">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachment'</span>
+40:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -267,32 +274,35 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Convert the array of documents to a string containing the MARCXML records
+for the entire collection.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="to-s-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/classes/marcxmlcollection.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
-10:     <span class="ruby-identifier">marc_records</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">MARCSupport</span>.<span class="ruby-identifier">document_to_marc</span>(<span class="ruby-identifier">d</span>) }
-11:     <span class="ruby-identifier">xml_documents</span> = <span class="ruby-identifier">marc_records</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-constant">MARC</span><span class="ruby-operator">::</span><span class="ruby-constant">XMLWriter</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">r</span>) }
-12:     
-13:     <span class="ruby-identifier">document</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>
-14:     
-15:     <span class="ruby-identifier">collection</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span> <span class="ruby-value str">'collection'</span>
-16:     <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">add_attribute</span>(<span class="ruby-value str">'xmlns'</span>, <span class="ruby-value str">'http://www.loc.gov/MARC21/slim'</span>)
-17:     
-18:     <span class="ruby-identifier">xml_documents</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">d</span>.<span class="ruby-identifier">root</span>) }
+    <span class="ruby-comment cmt"># File app/classes/marcxmlcollection.rb, line 16</span>
+16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+17:     <span class="ruby-identifier">marc_records</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">MARCSupport</span>.<span class="ruby-identifier">document_to_marc</span>(<span class="ruby-identifier">d</span>) }
+18:     <span class="ruby-identifier">xml_documents</span> = <span class="ruby-identifier">marc_records</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-constant">MARC</span><span class="ruby-operator">::</span><span class="ruby-constant">XMLWriter</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">r</span>) }
 19:     
-20:     <span class="ruby-identifier">document</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">XMLDecl</span>.<span class="ruby-identifier">new</span>
-21:     <span class="ruby-identifier">document</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">collection</span>
-22:     
-23:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">''</span>
-24:     <span class="ruby-identifier">document</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">ret</span>, <span class="ruby-value">2</span>)
-25:     <span class="ruby-identifier">ret</span>
-26:   <span class="ruby-keyword kw">end</span></pre>
+20:     <span class="ruby-identifier">document</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>
+21:     
+22:     <span class="ruby-identifier">collection</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span> <span class="ruby-value str">'collection'</span>
+23:     <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">add_attribute</span>(<span class="ruby-value str">'xmlns'</span>, <span class="ruby-value str">'http://www.loc.gov/MARC21/slim'</span>)
+24:     
+25:     <span class="ruby-identifier">xml_documents</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">d</span>.<span class="ruby-identifier">root</span>) }
+26:     
+27:     <span class="ruby-identifier">document</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">XMLDecl</span>.<span class="ruby-identifier">new</span>
+28:     <span class="ruby-identifier">document</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">collection</span>
+29:     
+30:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">''</span>
+31:     <span class="ruby-identifier">document</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">ret</span>, <span class="ruby-value">2</span>)
+32:     <span class="ruby-identifier">ret</span>
+33:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

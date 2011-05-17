@@ -79,25 +79,15 @@
 					
 					<li><a href="#method-i-author_list">#author_list</a></li>
 					
-					<li><a href="#method-i-destroyed%3F">#destroyed?</a></li>
-					
 					<li><a href="#method-i-doi_url">#doi_url</a></li>
 					
 					<li><a href="#method-i-end_page">#end_page</a></li>
-					
-					<li><a href="#method-i-errors">#errors</a></li>
-					
-					<li><a href="#method-i-new_record%3F">#new_record?</a></li>
 					
 					<li><a href="#method-i-openurl_query">#openurl_query</a></li>
 					
 					<li><a href="#method-i-start_page">#start_page</a></li>
 					
-					<li><a href="#method-i-to_model">#to_model</a></li>
-					
 					<li><a href="#method-i-to_param">#to_param</a></li>
-					
-					<li><a href="#method-i-valid%3F">#valid?</a></li>
 					
 				</ul>
 			</div>
@@ -185,7 +175,10 @@
 		<h1 class="class">Document</h1>
 
 		<div id="description">
-			
+			<p>
+The class representing a document present in the Solr database.
+</p>
+
 		</div>
 
 		<!-- Constants -->
@@ -465,98 +458,111 @@ Highlighting snippets for this document.  An array of strings.
 
 				<div class="method-description">
 					
-					
+					<p>
+Split the name of an author into parts in much the way that BibTeX does.
+This function returns a hash:
+</p>
+<pre>
+  h = Document.author_name_parts(&quot;John van der Johnson, Sr.&quot;)
+  h[:first] = 'John'
+  h[:last] = 'Johnson'
+  h[:von] = 'van der'
+  h[:suffix] = 'Sr'
+</pre>
+<p>
+The parsing is fairly robust, but not bullet-proof.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="author-name-parts-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 362</span>
-362:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">author_name_parts</span>(<span class="ruby-identifier">a</span>)
-363:     <span class="ruby-identifier">au</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">dup</span>
-364:     <span class="ruby-identifier">first</span> = <span class="ruby-value str">''</span>
-365:     <span class="ruby-identifier">last</span> = <span class="ruby-value str">''</span>
-366:     <span class="ruby-identifier">von</span> = <span class="ruby-value str">''</span>
-367:     <span class="ruby-identifier">suffix</span> = <span class="ruby-value str">''</span>
-368:     
-369:     <span class="ruby-comment cmt"># Check for a BibTeX &quot;von-part&quot;</span>
-370:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/( |^)(von der|von|van der|van|del|de la|de|St|don|dos) /</span>)
-371:       <span class="ruby-identifier">von</span> = <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]
-372:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">2</span>)
-373:       <span class="ruby-identifier">e</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">end</span>(<span class="ruby-value">2</span>)
-374:       
-375:       <span class="ruby-comment cmt"># Special case: if the von part starts the string, then it'd better be</span>
-376:       <span class="ruby-comment cmt"># comma-separated later (erase it and we'll fall through)</span>
-377:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-378:         <span class="ruby-identifier">au</span>[<span class="ruby-identifier">s</span><span class="ruby-operator">...</span><span class="ruby-identifier">e</span>] = <span class="ruby-value str">''</span>
-379:       <span class="ruby-keyword kw">else</span>
-380:         <span class="ruby-comment cmt"># Otherwise, this constitutes our splitter</span>
-381:         <span class="ruby-identifier">first</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">s</span>]
-382:         <span class="ruby-identifier">last</span> = <span class="ruby-identifier">au</span>[<span class="ruby-identifier">e</span><span class="ruby-operator">...</span><span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>]
-383:         <span class="ruby-identifier">au</span> = <span class="ruby-value str">''</span>
-384:       <span class="ruby-keyword kw">end</span>
-385:     <span class="ruby-keyword kw">end</span>
-386:     
-387:     <span class="ruby-comment cmt"># Check for a BibTeX &quot;suffix-part&quot;</span>
-388:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/(,? ((Jr|Sr|1st|2nd|3rd|IV|III|II|I)\.?))/</span>)
-389:       <span class="ruby-identifier">suffix</span> = <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]
-390:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">1</span>)
-391:       <span class="ruby-identifier">e</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">end</span>(<span class="ruby-value">1</span>)
-392:       
-393:       <span class="ruby-comment cmt"># If it's not at the end of the string, then it's a splitter, though</span>
-394:       <span class="ruby-comment cmt"># make sure to check for a comma</span>
-395:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>
-396:         <span class="ruby-identifier">before</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">s</span>]
-397:         <span class="ruby-identifier">after</span> = <span class="ruby-identifier">au</span>[<span class="ruby-identifier">e</span><span class="ruby-operator">...</span><span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>]
-398:         
-399:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">after</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">','</span>
-400:           <span class="ruby-identifier">after</span>[<span class="ruby-value">0</span>] = <span class="ruby-value str">''</span>
-401:         <span class="ruby-keyword kw">end</span>
-402:         
-403:         <span class="ruby-identifier">last</span> = <span class="ruby-identifier">before</span>
-404:         <span class="ruby-identifier">first</span> = <span class="ruby-identifier">after</span>
-405:         <span class="ruby-identifier">au</span> = <span class="ruby-value str">''</span>
-406:       <span class="ruby-keyword kw">else</span>
-407:         <span class="ruby-comment cmt"># Okay, we've got it, just erase it</span>
-408:         <span class="ruby-identifier">au</span>[<span class="ruby-identifier">s</span><span class="ruby-operator">...</span><span class="ruby-identifier">e</span>] = <span class="ruby-value str">''</span>
-409:       <span class="ruby-keyword kw">end</span>
-410:     <span class="ruby-keyword kw">end</span>
-411:     
-412:     <span class="ruby-comment cmt"># Now we should have only first and last names, possibly separated by</span>
-413:     <span class="ruby-comment cmt"># a comma.  If au is empty, though, we've already parsed them out.</span>
-414:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">au</span>.<span class="ruby-identifier">blank?</span>
-415:       <span class="ruby-comment cmt"># Look for a comma, that's the easy method</span>
-416:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/(,)/</span>)
-417:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-418:           <span class="ruby-comment cmt"># Broken string that begins w/ a comma?</span>
-419:           <span class="ruby-identifier">first</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">1</span>, <span class="ruby-value">1</span>]
-420:           <span class="ruby-identifier">last</span> = <span class="ruby-value str">''</span>
-421:         <span class="ruby-keyword kw">else</span>
-422:           <span class="ruby-identifier">last</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">1</span>)]
-423:           <span class="ruby-identifier">first</span> = <span class="ruby-identifier">au</span>[<span class="ruby-identifier">m</span>.<span class="ruby-identifier">end</span>(<span class="ruby-value">1</span>)<span class="ruby-operator">...</span><span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>]
-424:         <span class="ruby-keyword kw">end</span>
-425:       <span class="ruby-keyword kw">else</span>
-426:         <span class="ruby-comment cmt"># No comma, take the last single name as the last name</span>
-427:         <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">' '</span>)
-428:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
-429:           <span class="ruby-identifier">last</span> = <span class="ruby-identifier">au</span>
-430:           <span class="ruby-identifier">first</span> = <span class="ruby-value str">''</span>
-431:         <span class="ruby-keyword kw">else</span>
-432:           <span class="ruby-identifier">last</span> = <span class="ruby-identifier">parts</span>[<span class="ruby-value">1</span>]
-433:           <span class="ruby-identifier">first</span> = <span class="ruby-identifier">parts</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">parts</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>)
-434:         <span class="ruby-keyword kw">end</span>
-435:       <span class="ruby-keyword kw">end</span>
-436:     <span class="ruby-keyword kw">end</span>
-437:     
-438:     <span class="ruby-comment cmt"># Trim everything</span>
-439:     <span class="ruby-identifier">first</span>.<span class="ruby-identifier">strip!</span>
-440:     <span class="ruby-identifier">last</span>.<span class="ruby-identifier">strip!</span>
-441:     <span class="ruby-identifier">von</span>.<span class="ruby-identifier">strip!</span>
-442:     <span class="ruby-identifier">suffix</span>.<span class="ruby-identifier">strip!</span>
-443: 
-444:     { <span class="ruby-value">:first</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">first</span>, <span class="ruby-value">:last</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">last</span>, <span class="ruby-value">:von</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">von</span>, <span class="ruby-value">:suffix</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">suffix</span> }
-445:   <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File app/models/document.rb, line 374</span>
+374:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">author_name_parts</span>(<span class="ruby-identifier">a</span>)
+375:     <span class="ruby-identifier">au</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">dup</span>
+376:     <span class="ruby-identifier">first</span> = <span class="ruby-value str">''</span>
+377:     <span class="ruby-identifier">last</span> = <span class="ruby-value str">''</span>
+378:     <span class="ruby-identifier">von</span> = <span class="ruby-value str">''</span>
+379:     <span class="ruby-identifier">suffix</span> = <span class="ruby-value str">''</span>
+380:     
+381:     <span class="ruby-comment cmt"># Check for a BibTeX &quot;von-part&quot;</span>
+382:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/( |^)(von der|von|van der|van|del|de la|de|St|don|dos) /</span>)
+383:       <span class="ruby-identifier">von</span> = <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]
+384:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">2</span>)
+385:       <span class="ruby-identifier">e</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">end</span>(<span class="ruby-value">2</span>)
+386:       
+387:       <span class="ruby-comment cmt"># Special case: if the von part starts the string, then it'd better be</span>
+388:       <span class="ruby-comment cmt"># comma-separated later (erase it and we'll fall through)</span>
+389:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+390:         <span class="ruby-identifier">au</span>[<span class="ruby-identifier">s</span><span class="ruby-operator">...</span><span class="ruby-identifier">e</span>] = <span class="ruby-value str">''</span>
+391:       <span class="ruby-keyword kw">else</span>
+392:         <span class="ruby-comment cmt"># Otherwise, this constitutes our splitter</span>
+393:         <span class="ruby-identifier">first</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">s</span>]
+394:         <span class="ruby-identifier">last</span> = <span class="ruby-identifier">au</span>[<span class="ruby-identifier">e</span><span class="ruby-operator">...</span><span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>]
+395:         <span class="ruby-identifier">au</span> = <span class="ruby-value str">''</span>
+396:       <span class="ruby-keyword kw">end</span>
+397:     <span class="ruby-keyword kw">end</span>
+398:     
+399:     <span class="ruby-comment cmt"># Check for a BibTeX &quot;suffix-part&quot;</span>
+400:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/(,? ((Jr|Sr|1st|2nd|3rd|IV|III|II|I)\.?))/</span>)
+401:       <span class="ruby-identifier">suffix</span> = <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]
+402:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">1</span>)
+403:       <span class="ruby-identifier">e</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">end</span>(<span class="ruby-value">1</span>)
+404:       
+405:       <span class="ruby-comment cmt"># If it's not at the end of the string, then it's a splitter, though</span>
+406:       <span class="ruby-comment cmt"># make sure to check for a comma</span>
+407:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>
+408:         <span class="ruby-identifier">before</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">s</span>]
+409:         <span class="ruby-identifier">after</span> = <span class="ruby-identifier">au</span>[<span class="ruby-identifier">e</span><span class="ruby-operator">...</span><span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>]
+410:         
+411:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">after</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">','</span>
+412:           <span class="ruby-identifier">after</span>[<span class="ruby-value">0</span>] = <span class="ruby-value str">''</span>
+413:         <span class="ruby-keyword kw">end</span>
+414:         
+415:         <span class="ruby-identifier">last</span> = <span class="ruby-identifier">before</span>
+416:         <span class="ruby-identifier">first</span> = <span class="ruby-identifier">after</span>
+417:         <span class="ruby-identifier">au</span> = <span class="ruby-value str">''</span>
+418:       <span class="ruby-keyword kw">else</span>
+419:         <span class="ruby-comment cmt"># Okay, we've got it, just erase it</span>
+420:         <span class="ruby-identifier">au</span>[<span class="ruby-identifier">s</span><span class="ruby-operator">...</span><span class="ruby-identifier">e</span>] = <span class="ruby-value str">''</span>
+421:       <span class="ruby-keyword kw">end</span>
+422:     <span class="ruby-keyword kw">end</span>
+423:     
+424:     <span class="ruby-comment cmt"># Now we should have only first and last names, possibly separated by</span>
+425:     <span class="ruby-comment cmt"># a comma.  If au is empty, though, we've already parsed them out.</span>
+426:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">au</span>.<span class="ruby-identifier">blank?</span>
+427:       <span class="ruby-comment cmt"># Look for a comma, that's the easy method</span>
+428:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/(,)/</span>)
+429:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+430:           <span class="ruby-comment cmt"># Broken string that begins w/ a comma?</span>
+431:           <span class="ruby-identifier">first</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">1</span>, <span class="ruby-value">1</span>]
+432:           <span class="ruby-identifier">last</span> = <span class="ruby-value str">''</span>
+433:         <span class="ruby-keyword kw">else</span>
+434:           <span class="ruby-identifier">last</span> = <span class="ruby-identifier">au</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">m</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-value">1</span>)]
+435:           <span class="ruby-identifier">first</span> = <span class="ruby-identifier">au</span>[<span class="ruby-identifier">m</span>.<span class="ruby-identifier">end</span>(<span class="ruby-value">1</span>)<span class="ruby-operator">...</span><span class="ruby-identifier">au</span>.<span class="ruby-identifier">length</span>]
+436:         <span class="ruby-keyword kw">end</span>
+437:       <span class="ruby-keyword kw">else</span>
+438:         <span class="ruby-comment cmt"># No comma, take the last single name as the last name</span>
+439:         <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">au</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">' '</span>)
+440:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+441:           <span class="ruby-identifier">last</span> = <span class="ruby-identifier">au</span>
+442:           <span class="ruby-identifier">first</span> = <span class="ruby-value str">''</span>
+443:         <span class="ruby-keyword kw">else</span>
+444:           <span class="ruby-identifier">last</span> = <span class="ruby-identifier">parts</span>[<span class="ruby-value">1</span>]
+445:           <span class="ruby-identifier">first</span> = <span class="ruby-identifier">parts</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">parts</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>)
+446:         <span class="ruby-keyword kw">end</span>
+447:       <span class="ruby-keyword kw">end</span>
+448:     <span class="ruby-keyword kw">end</span>
+449:     
+450:     <span class="ruby-comment cmt"># Trim everything</span>
+451:     <span class="ruby-identifier">first</span>.<span class="ruby-identifier">strip!</span>
+452:     <span class="ruby-identifier">last</span>.<span class="ruby-identifier">strip!</span>
+453:     <span class="ruby-identifier">von</span>.<span class="ruby-identifier">strip!</span>
+454:     <span class="ruby-identifier">suffix</span>.<span class="ruby-identifier">strip!</span>
+455: 
+456:     { <span class="ruby-value">:first</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">first</span>, <span class="ruby-value">:last</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">last</span>, <span class="ruby-value">:von</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">von</span>, <span class="ruby-value">:suffix</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">suffix</span> }
+457:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -608,80 +614,80 @@ This function returns a hash:
 					<div class="method-source-code"
 						id="find-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 132</span>
-132:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">shasum</span>, <span class="ruby-identifier">fulltext</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">hl_word</span> = <span class="ruby-keyword kw">nil</span>)
-133:     <span class="ruby-identifier">solr</span> = <span class="ruby-constant">RSolr</span>.<span class="ruby-identifier">connect</span> <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">APP_CONFIG</span>[<span class="ruby-value str">'solr_server_url'</span>]
-134:     
-135:     <span class="ruby-comment cmt"># This is the only method here that can fail -- if we get no response,</span>
-136:     <span class="ruby-comment cmt"># a bad response, or something that cannot be evaluated, then we have</span>
-137:     <span class="ruby-comment cmt"># trouble.  But we'll just let that exception percolate up and cause a</span>
-138:     <span class="ruby-comment cmt"># 500 error.</span>
-139:     <span class="ruby-identifier">query_params</span> = {}
-140:     <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-node">&quot;shasum:#{shasum}&quot;</span>
-141:     <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:qt</span>] = <span class="ruby-identifier">fulltext</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;fulltext&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;precise&quot;</span>
-142:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fulltext</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">hl_word</span>
-143:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; fulltext:#{hl_word}&quot;</span>
-144:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:hl</span>] = <span class="ruby-value str">&quot;on&quot;</span>
-145:     <span class="ruby-keyword kw">end</span>
-146:     <span class="ruby-identifier">solr_response</span> = <span class="ruby-identifier">solr</span>.<span class="ruby-identifier">get</span>(<span class="ruby-value str">'select'</span>, <span class="ruby-value">:params</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query_params</span>)
-147:     
-148:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>]
-149:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;numFound&quot;</span>]
-150:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;numFound&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-151:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>]
-152:     
-153:     <span class="ruby-comment cmt"># Get term vectors, if we're full-text</span>
-154:     <span class="ruby-identifier">term_vectors</span> = <span class="ruby-keyword kw">nil</span>
-155:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fulltext</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;termVectors&quot;</span>]
-156:       <span class="ruby-comment cmt"># The response format here is incredibly arcane and nearly useless,</span>
-157:       <span class="ruby-comment cmt"># turn it into something worthwhile</span>
-158:       <span class="ruby-identifier">tvec_array</span> = <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;termVectors&quot;</span>][<span class="ruby-value">1</span>][<span class="ruby-value">3</span>]
-159:       <span class="ruby-identifier">term_vectors</span> = {}
-160:       
-161:       (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">tvec_array</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-162:         <span class="ruby-identifier">term</span> = <span class="ruby-identifier">tvec_array</span>[<span class="ruby-identifier">i</span>]
-163:         <span class="ruby-identifier">attr_array</span> = <span class="ruby-identifier">tvec_array</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]
-164:         <span class="ruby-identifier">hash</span> = {}
-165:         
-166:         (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">attr_array</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
-167:           <span class="ruby-identifier">key</span> = <span class="ruby-identifier">attr_array</span>[<span class="ruby-identifier">j</span>]
-168:           <span class="ruby-identifier">val</span> = <span class="ruby-identifier">attr_array</span>[<span class="ruby-identifier">j</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]
-169:           
-170:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">key</span>
-171:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'tf'</span>
-172:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tf</span>] = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>)
-173:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'offsets'</span>
-174:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:offsets</span>] = []
-175:             (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">val</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">4</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
-176:               <span class="ruby-identifier">s</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>])
-177:               <span class="ruby-identifier">e</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-value">3</span>])
-178:               <span class="ruby-identifier">hash</span>[<span class="ruby-value">:offsets</span>] <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">s</span><span class="ruby-operator">...</span><span class="ruby-identifier">e</span>)
-179:             <span class="ruby-keyword kw">end</span>
-180:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'positions'</span>
-181:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:positions</span>] = []
-182:             (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">val</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
-183:               <span class="ruby-identifier">p</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>])
-184:               <span class="ruby-identifier">hash</span>[<span class="ruby-value">:positions</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>
-185:             <span class="ruby-keyword kw">end</span>
-186:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'df'</span>
-187:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:df</span>] = <span class="ruby-constant">Float</span>(<span class="ruby-identifier">val</span>)
-188:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'tf-idf'</span>
-189:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tfidf</span>] = <span class="ruby-constant">Float</span>(<span class="ruby-identifier">val</span>)
-190:           <span class="ruby-keyword kw">end</span>
-191:         <span class="ruby-keyword kw">end</span>
-192:         
-193:         <span class="ruby-identifier">term_vectors</span>[<span class="ruby-identifier">term</span>] = <span class="ruby-identifier">hash</span>
-194:       <span class="ruby-keyword kw">end</span>
-195:     <span class="ruby-keyword kw">end</span>
-196:     
-197:     <span class="ruby-identifier">snippets</span> = <span class="ruby-keyword kw">nil</span>
-198:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fulltext</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;highlighting&quot;</span>]
-199:       <span class="ruby-identifier">snippets</span> = <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;highlighting&quot;</span>][<span class="ruby-identifier">shasum</span>][<span class="ruby-value str">&quot;fulltext&quot;</span>]
-200:     <span class="ruby-keyword kw">end</span>
-201:     
-202:     { <span class="ruby-value">:document</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>][<span class="ruby-value">0</span>], <span class="ruby-identifier">term_vectors</span>, <span class="ruby-identifier">snippets</span>),
-203:       <span class="ruby-value">:query_time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;responseHeader&quot;</span>][<span class="ruby-value str">&quot;QTime&quot;</span>]) <span class="ruby-operator">/</span> <span class="ruby-value">1000.0</span> }
-204:   <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File app/models/document.rb, line 135</span>
+135:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">shasum</span>, <span class="ruby-identifier">fulltext</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">hl_word</span> = <span class="ruby-keyword kw">nil</span>)
+136:     <span class="ruby-identifier">solr</span> = <span class="ruby-constant">RSolr</span>.<span class="ruby-identifier">connect</span> <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">APP_CONFIG</span>[<span class="ruby-value str">'solr_server_url'</span>]
+137:     
+138:     <span class="ruby-comment cmt"># This is the only method here that can fail -- if we get no response,</span>
+139:     <span class="ruby-comment cmt"># a bad response, or something that cannot be evaluated, then we have</span>
+140:     <span class="ruby-comment cmt"># trouble.  But we'll just let that exception percolate up and cause a</span>
+141:     <span class="ruby-comment cmt"># 500 error.</span>
+142:     <span class="ruby-identifier">query_params</span> = {}
+143:     <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-node">&quot;shasum:#{shasum}&quot;</span>
+144:     <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:qt</span>] = <span class="ruby-identifier">fulltext</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;fulltext&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;precise&quot;</span>
+145:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fulltext</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">hl_word</span>
+146:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; fulltext:#{hl_word}&quot;</span>
+147:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:hl</span>] = <span class="ruby-value str">&quot;on&quot;</span>
+148:     <span class="ruby-keyword kw">end</span>
+149:     <span class="ruby-identifier">solr_response</span> = <span class="ruby-identifier">solr</span>.<span class="ruby-identifier">get</span>(<span class="ruby-value str">'select'</span>, <span class="ruby-value">:params</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query_params</span>)
+150:     
+151:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>]
+152:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;numFound&quot;</span>]
+153:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;numFound&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+154:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>]
+155:     
+156:     <span class="ruby-comment cmt"># Get term vectors, if we're full-text</span>
+157:     <span class="ruby-identifier">term_vectors</span> = <span class="ruby-keyword kw">nil</span>
+158:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fulltext</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;termVectors&quot;</span>]
+159:       <span class="ruby-comment cmt"># The response format here is incredibly arcane and nearly useless,</span>
+160:       <span class="ruby-comment cmt"># turn it into something worthwhile</span>
+161:       <span class="ruby-identifier">tvec_array</span> = <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;termVectors&quot;</span>][<span class="ruby-value">1</span>][<span class="ruby-value">3</span>]
+162:       <span class="ruby-identifier">term_vectors</span> = {}
+163:       
+164:       (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">tvec_array</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+165:         <span class="ruby-identifier">term</span> = <span class="ruby-identifier">tvec_array</span>[<span class="ruby-identifier">i</span>]
+166:         <span class="ruby-identifier">attr_array</span> = <span class="ruby-identifier">tvec_array</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]
+167:         <span class="ruby-identifier">hash</span> = {}
+168:         
+169:         (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">attr_array</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+170:           <span class="ruby-identifier">key</span> = <span class="ruby-identifier">attr_array</span>[<span class="ruby-identifier">j</span>]
+171:           <span class="ruby-identifier">val</span> = <span class="ruby-identifier">attr_array</span>[<span class="ruby-identifier">j</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]
+172:           
+173:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">key</span>
+174:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'tf'</span>
+175:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tf</span>] = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>)
+176:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'offsets'</span>
+177:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:offsets</span>] = []
+178:             (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">val</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">4</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+179:               <span class="ruby-identifier">s</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>])
+180:               <span class="ruby-identifier">e</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-value">3</span>])
+181:               <span class="ruby-identifier">hash</span>[<span class="ruby-value">:offsets</span>] <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">s</span><span class="ruby-operator">...</span><span class="ruby-identifier">e</span>)
+182:             <span class="ruby-keyword kw">end</span>
+183:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'positions'</span>
+184:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:positions</span>] = []
+185:             (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">val</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+186:               <span class="ruby-identifier">p</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">val</span>[<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>])
+187:               <span class="ruby-identifier">hash</span>[<span class="ruby-value">:positions</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>
+188:             <span class="ruby-keyword kw">end</span>
+189:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'df'</span>
+190:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:df</span>] = <span class="ruby-constant">Float</span>(<span class="ruby-identifier">val</span>)
+191:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'tf-idf'</span>
+192:             <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tfidf</span>] = <span class="ruby-constant">Float</span>(<span class="ruby-identifier">val</span>)
+193:           <span class="ruby-keyword kw">end</span>
+194:         <span class="ruby-keyword kw">end</span>
+195:         
+196:         <span class="ruby-identifier">term_vectors</span>[<span class="ruby-identifier">term</span>] = <span class="ruby-identifier">hash</span>
+197:       <span class="ruby-keyword kw">end</span>
+198:     <span class="ruby-keyword kw">end</span>
+199:     
+200:     <span class="ruby-identifier">snippets</span> = <span class="ruby-keyword kw">nil</span>
+201:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fulltext</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;highlighting&quot;</span>]
+202:       <span class="ruby-identifier">snippets</span> = <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;highlighting&quot;</span>][<span class="ruby-identifier">shasum</span>][<span class="ruby-value str">&quot;fulltext&quot;</span>]
+203:     <span class="ruby-keyword kw">end</span>
+204:     
+205:     { <span class="ruby-value">:document</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>][<span class="ruby-value">0</span>], <span class="ruby-identifier">term_vectors</span>, <span class="ruby-identifier">snippets</span>),
+206:       <span class="ruby-value">:query_time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;responseHeader&quot;</span>][<span class="ruby-value str">&quot;QTime&quot;</span>]) <span class="ruby-operator">/</span> <span class="ruby-value">1000.0</span> }
+207:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -721,22 +727,22 @@ those in, otherwise they will be nil by default.
 					<div class="method-source-code"
 						id="new-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 338</span>
-338:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">solr_doc</span>, <span class="ruby-identifier">term_vectors</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">snippets</span> = <span class="ruby-keyword kw">nil</span>)
-339:     <span class="ruby-node">%(shasum doi authors title journal year volume number pages fulltext)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
-340:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_doc</span>[<span class="ruby-identifier">k</span>]
-341:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-identifier">solr_doc</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">force_encoding</span>(<span class="ruby-value str">&quot;UTF-8&quot;</span>))
-342:       <span class="ruby-keyword kw">else</span>
-343:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-value str">&quot;UTF-8&quot;</span>))
-344:       <span class="ruby-keyword kw">end</span>
-345:     <span class="ruby-keyword kw">end</span>
-346:     
-347:     <span class="ruby-ivar">@formatted_author_list</span> = []
-348:     <span class="ruby-identifier">author_list</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@formatted_author_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">author_name_parts</span>(<span class="ruby-identifier">a</span>) }
+     <span class="ruby-comment cmt"># File app/models/document.rb, line 341</span>
+341:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">solr_doc</span>, <span class="ruby-identifier">term_vectors</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">snippets</span> = <span class="ruby-keyword kw">nil</span>)
+342:     <span class="ruby-node">%(shasum doi authors title journal year volume number pages fulltext)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+343:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_doc</span>[<span class="ruby-identifier">k</span>]
+344:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-identifier">solr_doc</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">force_encoding</span>(<span class="ruby-value str">&quot;UTF-8&quot;</span>))
+345:       <span class="ruby-keyword kw">else</span>
+346:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-value str">&quot;UTF-8&quot;</span>))
+347:       <span class="ruby-keyword kw">end</span>
+348:     <span class="ruby-keyword kw">end</span>
 349:     
-350:     <span class="ruby-ivar">@term_vectors</span> = <span class="ruby-identifier">term_vectors</span>
-351:     <span class="ruby-ivar">@snippets</span> = <span class="ruby-identifier">snippets</span>
-352:   <span class="ruby-keyword kw">end</span></pre>
+350:     <span class="ruby-ivar">@formatted_author_list</span> = []
+351:     <span class="ruby-identifier">author_list</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@formatted_author_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">author_name_parts</span>(<span class="ruby-identifier">a</span>) }
+352:     
+353:     <span class="ruby-ivar">@term_vectors</span> = <span class="ruby-identifier">term_vectors</span>
+354:     <span class="ruby-ivar">@snippets</span> = <span class="ruby-identifier">snippets</span>
+355:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -819,85 +825,85 @@ will not throw an exception unless an RSolr error occurs.
 					<div class="method-source-code"
 						id="search-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 253</span>
-253:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>)
-254:     <span class="ruby-identifier">solr</span> = <span class="ruby-constant">RSolr</span>.<span class="ruby-identifier">connect</span> <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">APP_CONFIG</span>[<span class="ruby-value str">'solr_server_url'</span>]
-255:     
-256:     <span class="ruby-identifier">params</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">blank?</span> }
-257:     <span class="ruby-identifier">query_params</span> = { <span class="ruby-value">:fq</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>] }
+     <span class="ruby-comment cmt"># File app/models/document.rb, line 256</span>
+256:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>)
+257:     <span class="ruby-identifier">solr</span> = <span class="ruby-constant">RSolr</span>.<span class="ruby-identifier">connect</span> <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">APP_CONFIG</span>[<span class="ruby-value str">'solr_server_url'</span>]
 258:     
-259:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-value">:precise</span>
-260:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:qt</span>] = <span class="ruby-value str">&quot;precise&quot;</span>
-261:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-node">&quot;#{params[:q]} &quot;</span>
-262:       
-263:       <span class="ruby-node">%(authors volume number pages)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-264:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; #{f}:(#{params[f.to_sym]})&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_sym</span>]
-265:       <span class="ruby-keyword kw">end</span>
-266:       
-267:       <span class="ruby-node">%(title journal fulltext)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-268:         <span class="ruby-identifier">field</span> = <span class="ruby-identifier">f</span>
-269:         <span class="ruby-identifier">field</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;_search&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[(<span class="ruby-identifier">f</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_type&quot;</span>).<span class="ruby-identifier">to_sym</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[(<span class="ruby-identifier">f</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_type&quot;</span>).<span class="ruby-identifier">to_sym</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;fuzzy&quot;</span>
-270:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; #{field}:(#{params[f.to_sym]})&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_sym</span>]
-271:       <span class="ruby-keyword kw">end</span>
-272:       
-273:       <span class="ruby-comment cmt"># Year has to be handled separately for range support</span>
-274:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_start</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_end</span>]
-275:         <span class="ruby-identifier">year</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_start</span>]
-276:         <span class="ruby-identifier">year</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_end</span>]
-277:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_start</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_end</span>]
-278:           <span class="ruby-identifier">year</span> = <span class="ruby-node">&quot;[#{params[:year_start]} TO #{params[:year_end]}]&quot;</span>
-279:         <span class="ruby-keyword kw">end</span>
-280:         
-281:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; year:(#{year})&quot;</span>
-282:       <span class="ruby-keyword kw">end</span>
-283:       
-284:       <span class="ruby-comment cmt"># If there's still no query, return all documents</span>
-285:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>].<span class="ruby-identifier">strip!</span>
-286:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>].<span class="ruby-identifier">empty?</span>
-287:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-value str">&quot;*:*&quot;</span>
-288:       <span class="ruby-keyword kw">end</span>
-289:     <span class="ruby-keyword kw">else</span>
-290:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-value">:q</span>
-291:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-value str">&quot;*:*&quot;</span>
-292:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:qt</span>] = <span class="ruby-value str">&quot;precise&quot;</span>
-293:       <span class="ruby-keyword kw">else</span>
-294:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:q</span>]
-295:       <span class="ruby-keyword kw">end</span>
-296:     <span class="ruby-keyword kw">end</span>
-297:     
-298:     <span class="ruby-comment cmt"># See the note on solr.get in self.find</span>
-299:     <span class="ruby-identifier">solr_response</span> = <span class="ruby-identifier">solr</span>.<span class="ruby-identifier">get</span>(<span class="ruby-value str">'select'</span>, <span class="ruby-value">:params</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query_params</span>)
-300:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>]
-301:       <span class="ruby-keyword kw">return</span> { <span class="ruby-value">:documents</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:query_time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-value">:facets</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span> }
-302:     <span class="ruby-keyword kw">end</span>
-303:     
-304:     <span class="ruby-comment cmt"># Process the facet information</span>
-305:     <span class="ruby-identifier">facets</span> = <span class="ruby-keyword kw">nil</span>
-306:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;facet_counts&quot;</span>]
-307:       <span class="ruby-identifier">facets</span> = {}
-308:       <span class="ruby-identifier">solr_facets</span> = <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;facet_counts&quot;</span>]
-309:       
-310:       <span class="ruby-comment cmt"># The &quot;year&quot; facets are handled as separate queries</span>
-311:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_queries&quot;</span>]
-312:         <span class="ruby-identifier">facets</span>[<span class="ruby-value">:year</span>] = {}
-313:         <span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_queries&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-314:           <span class="ruby-identifier">decade</span> = <span class="ruby-identifier">k</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-value">6</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>).<span class="ruby-identifier">split</span>[<span class="ruby-value">0</span>]
-315:           <span class="ruby-identifier">decade</span> = <span class="ruby-value str">&quot;1790&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">decade</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;*&quot;</span>
-316:           <span class="ruby-identifier">facets</span>[<span class="ruby-value">:year</span>][<span class="ruby-identifier">decade</span>] = <span class="ruby-identifier">v</span>
-317:         <span class="ruby-keyword kw">end</span>
-318:       <span class="ruby-keyword kw">end</span>
-319:       
-320:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_fields&quot;</span>]
-321:         { <span class="ruby-value str">&quot;authors_facet&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:author</span>, <span class="ruby-value str">&quot;journal_facet&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:journal</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span>, <span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-322:           <span class="ruby-identifier">facets</span>[<span class="ruby-identifier">f</span>] = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_fields&quot;</span>][<span class="ruby-identifier">s</span>].<span class="ruby-identifier">flatten</span>]
-323:         <span class="ruby-keyword kw">end</span>
-324:       <span class="ruby-keyword kw">end</span>
-325:     <span class="ruby-keyword kw">end</span>
-326:     
-327:     { <span class="ruby-value">:documents</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>].<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">doc</span><span class="ruby-operator">|</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">doc</span> },
-328:       <span class="ruby-value">:query_time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;responseHeader&quot;</span>][<span class="ruby-value str">&quot;QTime&quot;</span>]) <span class="ruby-operator">/</span> <span class="ruby-value">1000.0</span>,
-329:       <span class="ruby-value">:facets</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">facets</span> }
-330:   <span class="ruby-keyword kw">end</span></pre>
+259:     <span class="ruby-identifier">params</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">blank?</span> }
+260:     <span class="ruby-identifier">query_params</span> = { <span class="ruby-value">:fq</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>] }
+261:     
+262:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-value">:precise</span>
+263:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:qt</span>] = <span class="ruby-value str">&quot;precise&quot;</span>
+264:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-node">&quot;#{params[:q]} &quot;</span>
+265:       
+266:       <span class="ruby-node">%(authors volume number pages)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+267:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; #{f}:(#{params[f.to_sym]})&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_sym</span>]
+268:       <span class="ruby-keyword kw">end</span>
+269:       
+270:       <span class="ruby-node">%(title journal fulltext)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+271:         <span class="ruby-identifier">field</span> = <span class="ruby-identifier">f</span>
+272:         <span class="ruby-identifier">field</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;_search&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[(<span class="ruby-identifier">f</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_type&quot;</span>).<span class="ruby-identifier">to_sym</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[(<span class="ruby-identifier">f</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_type&quot;</span>).<span class="ruby-identifier">to_sym</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;fuzzy&quot;</span>
+273:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; #{field}:(#{params[f.to_sym]})&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_sym</span>]
+274:       <span class="ruby-keyword kw">end</span>
+275:       
+276:       <span class="ruby-comment cmt"># Year has to be handled separately for range support</span>
+277:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_start</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_end</span>]
+278:         <span class="ruby-identifier">year</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_start</span>]
+279:         <span class="ruby-identifier">year</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_end</span>]
+280:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_start</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:year_end</span>]
+281:           <span class="ruby-identifier">year</span> = <span class="ruby-node">&quot;[#{params[:year_start]} TO #{params[:year_end]}]&quot;</span>
+282:         <span class="ruby-keyword kw">end</span>
+283:         
+284:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; year:(#{year})&quot;</span>
+285:       <span class="ruby-keyword kw">end</span>
+286:       
+287:       <span class="ruby-comment cmt"># If there's still no query, return all documents</span>
+288:       <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>].<span class="ruby-identifier">strip!</span>
+289:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>].<span class="ruby-identifier">empty?</span>
+290:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-value str">&quot;*:*&quot;</span>
+291:       <span class="ruby-keyword kw">end</span>
+292:     <span class="ruby-keyword kw">else</span>
+293:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-value">:q</span>
+294:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-value str">&quot;*:*&quot;</span>
+295:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:qt</span>] = <span class="ruby-value str">&quot;precise&quot;</span>
+296:       <span class="ruby-keyword kw">else</span>
+297:         <span class="ruby-identifier">query_params</span>[<span class="ruby-value">:q</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:q</span>]
+298:       <span class="ruby-keyword kw">end</span>
+299:     <span class="ruby-keyword kw">end</span>
+300:     
+301:     <span class="ruby-comment cmt"># See the note on solr.get in self.find</span>
+302:     <span class="ruby-identifier">solr_response</span> = <span class="ruby-identifier">solr</span>.<span class="ruby-identifier">get</span>(<span class="ruby-value str">'select'</span>, <span class="ruby-value">:params</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query_params</span>)
+303:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>]
+304:       <span class="ruby-keyword kw">return</span> { <span class="ruby-value">:documents</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:query_time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-value">:facets</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span> }
+305:     <span class="ruby-keyword kw">end</span>
+306:     
+307:     <span class="ruby-comment cmt"># Process the facet information</span>
+308:     <span class="ruby-identifier">facets</span> = <span class="ruby-keyword kw">nil</span>
+309:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;facet_counts&quot;</span>]
+310:       <span class="ruby-identifier">facets</span> = {}
+311:       <span class="ruby-identifier">solr_facets</span> = <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;facet_counts&quot;</span>]
+312:       
+313:       <span class="ruby-comment cmt"># The &quot;year&quot; facets are handled as separate queries</span>
+314:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_queries&quot;</span>]
+315:         <span class="ruby-identifier">facets</span>[<span class="ruby-value">:year</span>] = {}
+316:         <span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_queries&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+317:           <span class="ruby-identifier">decade</span> = <span class="ruby-identifier">k</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-value">6</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>).<span class="ruby-identifier">split</span>[<span class="ruby-value">0</span>]
+318:           <span class="ruby-identifier">decade</span> = <span class="ruby-value str">&quot;1790&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">decade</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;*&quot;</span>
+319:           <span class="ruby-identifier">facets</span>[<span class="ruby-value">:year</span>][<span class="ruby-identifier">decade</span>] = <span class="ruby-identifier">v</span>
+320:         <span class="ruby-keyword kw">end</span>
+321:       <span class="ruby-keyword kw">end</span>
+322:       
+323:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_fields&quot;</span>]
+324:         { <span class="ruby-value str">&quot;authors_facet&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:author</span>, <span class="ruby-value str">&quot;journal_facet&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:journal</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span>, <span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+325:           <span class="ruby-identifier">facets</span>[<span class="ruby-identifier">f</span>] = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">solr_facets</span>[<span class="ruby-value str">&quot;facet_fields&quot;</span>][<span class="ruby-identifier">s</span>].<span class="ruby-identifier">flatten</span>]
+326:         <span class="ruby-keyword kw">end</span>
+327:       <span class="ruby-keyword kw">end</span>
+328:     <span class="ruby-keyword kw">end</span>
+329:     
+330:     { <span class="ruby-value">:documents</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;response&quot;</span>][<span class="ruby-value str">&quot;docs&quot;</span>].<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">doc</span><span class="ruby-operator">|</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">doc</span> },
+331:       <span class="ruby-value">:query_time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">solr_response</span>[<span class="ruby-value str">&quot;responseHeader&quot;</span>][<span class="ruby-value str">&quot;QTime&quot;</span>]) <span class="ruby-operator">/</span> <span class="ruby-value">1000.0</span>,
+332:       <span class="ruby-value">:facets</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">facets</span> }
+333:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -936,40 +942,8 @@ A list of document authors, for iteration
 					<div class="method-source-code"
 						id="author-list-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/document.rb, line 20</span>
-20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author_list</span>; <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;,&quot;</span>).<span class="ruby-identifier">map!</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">strip!</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">a</span> }; <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="destroyed--method" class="method-detail ">
-				<a name="method-i-destroyed%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">destroyed?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="destroyed--source">
-<pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 458</span>
-458:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroyed?</span>()  <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/models/document.rb, line 23</span>
+23:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author_list</span>; <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;,&quot;</span>).<span class="ruby-identifier">map!</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">strip!</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">a</span> }; <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -1002,8 +976,8 @@ A URL to the DOI-resolving page for the document
 					<div class="method-source-code"
 						id="doi-url-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/document.rb, line 13</span>
-13:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">doi_url</span>; <span class="ruby-value str">&quot;http://dx.doi.org/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">doi</span>; <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/models/document.rb, line 16</span>
+16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">doi_url</span>; <span class="ruby-value str">&quot;http://dx.doi.org/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">doi</span>; <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -1036,85 +1010,16 @@ Ending page of the article, if present
 					<div class="method-source-code"
 						id="end-page-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/document.rb, line 50</span>
-50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">end_page</span>
-51:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">blank?</span>
-52:     <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'-'</span>)
-53:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
-54:       <span class="ruby-identifier">parts</span>[<span class="ruby-value">1</span>]
-55:     <span class="ruby-keyword kw">else</span>
-56:       <span class="ruby-value str">''</span>
-57:     <span class="ruby-keyword kw">end</span>
-58:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="errors-method" class="method-detail ">
-				<a name="method-i-errors"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">errors</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="errors-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 460</span>
-460:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">errors</span>
-461:     <span class="ruby-identifier">obj</span> = <span class="ruby-constant">Object</span>.<span class="ruby-identifier">new</span>
-462:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obj</span>.<span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>) [] <span class="ruby-keyword kw">end</span>
-463:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">full_messages</span>() [] <span class="ruby-keyword kw">end</span>
-464:     <span class="ruby-identifier">obj</span>
-465:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="new-record--method" class="method-detail ">
-				<a name="method-i-new_record%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">new_record?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="new-record--source">
-<pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 457</span>
-457:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_record?</span>() <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/models/document.rb, line 53</span>
+53:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">end_page</span>
+54:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">blank?</span>
+55:     <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'-'</span>)
+56:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+57:       <span class="ruby-identifier">parts</span>[<span class="ruby-value">1</span>]
+58:     <span class="ruby-keyword kw">else</span>
+59:       <span class="ruby-value str">''</span>
+60:     <span class="ruby-keyword kw">end</span>
+61:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -1147,24 +1052,24 @@ The URL parameters for an OpenURL query
 					<div class="method-source-code"
 						id="openurl-query-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 95</span>
- 95:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">openurl_query</span>
- 96:     <span class="ruby-identifier">params</span> = <span class="ruby-value str">&quot;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&quot;</span>
- 97:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft_id=info:doi%2F#{CGI::escape(doi)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">doi</span>.<span class="ruby-identifier">blank?</span>
- 98:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.atitle=#{CGI::escape(title)}&quot;</span>
- 99:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.title=#{CGI::escape(journal)}&quot;</span>
-100:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.date=#{CGI::escape(year)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">year</span>.<span class="ruby-identifier">blank?</span>
-101:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.volume=#{CGI::escape(volume)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">volume</span>.<span class="ruby-identifier">blank?</span>
-102:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.issue=#{CGI::escape(number)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">number</span>.<span class="ruby-identifier">blank?</span>
-103:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.spage=#{CGI::escape(start_page)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">start_page</span>.<span class="ruby-identifier">blank?</span>
-104:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.epage=#{CGI::escape(end_page)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">end_page</span>.<span class="ruby-identifier">blank?</span>
-105:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.aufirst=#{CGI::escape(formatted_author_list[0][:first])}&quot;</span>
-106:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.aulast=#{CGI::escape(formatted_author_list[0][:last])}&quot;</span>
-107:     <span class="ruby-identifier">author_list</span>[<span class="ruby-value">1</span><span class="ruby-operator">...</span><span class="ruby-identifier">author_list</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-108:       <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.au=#{CGI::escape(a)}&quot;</span>
-109:     <span class="ruby-keyword kw">end</span>
-110:     <span class="ruby-identifier">params</span>
-111:   <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File app/models/document.rb, line 98</span>
+ 98:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">openurl_query</span>
+ 99:     <span class="ruby-identifier">params</span> = <span class="ruby-value str">&quot;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&quot;</span>
+100:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft_id=info:doi%2F#{CGI::escape(doi)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">doi</span>.<span class="ruby-identifier">blank?</span>
+101:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.atitle=#{CGI::escape(title)}&quot;</span>
+102:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.title=#{CGI::escape(journal)}&quot;</span>
+103:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.date=#{CGI::escape(year)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">year</span>.<span class="ruby-identifier">blank?</span>
+104:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.volume=#{CGI::escape(volume)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">volume</span>.<span class="ruby-identifier">blank?</span>
+105:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.issue=#{CGI::escape(number)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">number</span>.<span class="ruby-identifier">blank?</span>
+106:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.spage=#{CGI::escape(start_page)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">start_page</span>.<span class="ruby-identifier">blank?</span>
+107:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.epage=#{CGI::escape(end_page)}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">end_page</span>.<span class="ruby-identifier">blank?</span>
+108:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.aufirst=#{CGI::escape(formatted_author_list[0][:first])}&quot;</span>
+109:     <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.aulast=#{CGI::escape(formatted_author_list[0][:last])}&quot;</span>
+110:     <span class="ruby-identifier">author_list</span>[<span class="ruby-value">1</span><span class="ruby-operator">...</span><span class="ruby-identifier">author_list</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+111:       <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;rft.au=#{CGI::escape(a)}&quot;</span>
+112:     <span class="ruby-keyword kw">end</span>
+113:     <span class="ruby-identifier">params</span>
+114:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -1197,45 +1102,11 @@ Starting page of the article
 					<div class="method-source-code"
 						id="start-page-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/document.rb, line 44</span>
-44:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_page</span>
-45:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">blank?</span>
-46:     <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'-'</span>)[<span class="ruby-value">0</span>]
-47:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="to-model-method" class="method-detail ">
-				<a name="method-i-to_model"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">to_model</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="to-model-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 452</span>
-452:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_model</span>
-453:     <span class="ruby-keyword kw">self</span>
-454:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/models/document.rb, line 47</span>
+47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_page</span>
+48:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">blank?</span>
+49:     <span class="ruby-identifier">pages</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'-'</span>)[<span class="ruby-value">0</span>]
+50:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -1269,42 +1140,10 @@ URL parameter for a document.
 					<div class="method-source-code"
 						id="to-param-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 356</span>
-356:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_param</span>
-357:     <span class="ruby-identifier">shasum</span>
-358:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="valid--method" class="method-detail ">
-				<a name="method-i-valid%3F"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">valid?</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="valid--source">
-<pre>
-     <span class="ruby-comment cmt"># File app/models/document.rb, line 456</span>
-456:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valid?</span>()      <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File app/models/document.rb, line 359</span>
+359:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_param</span>
+360:     <span class="ruby-identifier">shasum</span>
+361:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

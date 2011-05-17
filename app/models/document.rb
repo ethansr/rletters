@@ -1,8 +1,11 @@
 # coding: UTF-8
 
+
 require 'active_record'
 
+# The class representing a document present in the Solr database.
 class Document
+  
   # The SHA-1 hash of the document's PDF file
   attr_reader :shasum
   
@@ -358,7 +361,16 @@ class Document
   end  
   
   
-  
+  # Split the name of an author into parts in much the way that BibTeX does.
+  # This function returns a hash:
+  #
+  #   h = Document.author_name_parts("John van der Johnson, Sr.")
+  #   h[:first] = 'John'
+  #   h[:last] = 'Johnson'
+  #   h[:von] = 'van der'
+  #   h[:suffix] = 'Sr'
+  #
+  # The parsing is fairly robust, but not bullet-proof.
   def self.author_name_parts(a)
     au = a.dup
     first = ''
@@ -446,17 +458,13 @@ class Document
   
   
 
-  # Glue for making us act like an ActiveModel object
+  # Glue for making us act like an ActiveModel object, don't document
+  # :enddoc:
   extend ActiveModel::Naming
-  
-  def to_model
-    self
-  end
-  
+  def to_model; self; end
   def valid?()      true end
   def new_record?() true end
   def destroyed?()  true end
-  
   def errors
     obj = Object.new
     def obj.[](key) [] end

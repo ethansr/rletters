@@ -1,10 +1,8 @@
 # coding: UTF-8
 
+
+# Controller serving our static "about" page.
 class AboutController < ApplicationController
-  %W(index about).each do |m|
-    class_eval <<-RUBY
-    def #{m}
-    end
-    RUBY
-  end
+  # The primary "about" page.  Entirely static content.
+  def index; end
 end

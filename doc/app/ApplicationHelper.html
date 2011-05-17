@@ -159,7 +159,7 @@
 
 		<div id="description">
 			<p>
-coding: UTF-8
+Helper code for markup generation throughout the application
 </p>
 
 		</div>
@@ -190,7 +190,10 @@ coding: UTF-8
 				<div class="method-description">
 					
 					<p>
-Thanks to Peter Gumeson&#8217;s HTML5 Boilerplate gem for this
+Add a class to a given element.  Used to set IE-specific classes on the
+HTML element in <tt><a
+href="ApplicationHelper.html#method-i-ie_html">ie_html</a></tt>. Thanks to
+Peter Gumeson&#8217;s HTML5  Boilerplate gem for this.
 </p>
 					
 
@@ -198,14 +201,14 @@ Thanks to Peter Gumeson&#8217;s HTML5 Boilerplate gem for this
 					<div class="method-source-code"
 						id="add-class-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 6</span>
- 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_class</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>)
- 7:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-value">:class</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>
- 8:     <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">strip!</span>
- 9:     <span class="ruby-identifier">classes</span> = <span class="ruby-value str">' '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">classes</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">classes</span>.<span class="ruby-identifier">blank?</span>
-10:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">classes</span>
-11:     <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">classes</span>)
-12:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_class</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>)
+11:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-value">:class</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>
+12:     <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">strip!</span>
+13:     <span class="ruby-identifier">classes</span> = <span class="ruby-value str">' '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">classes</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">classes</span>.<span class="ruby-identifier">blank?</span>
+14:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">classes</span>
+15:     <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">classes</span>)
+16:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -229,17 +232,20 @@ Thanks to Peter Gumeson&#8217;s HTML5 Boilerplate gem for this
 
 				<div class="method-description">
 					
-					
+					<p>
+Produce a no-text help button which calls the help controller to display a
+help message in a dialog box.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="help-button-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 40</span>
-40:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">help_button</span>(<span class="ruby-identifier">id</span>)
-41:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">t</span>(<span class="ruby-value">:'help.button'</span>), <span class="ruby-identifier">help_path</span>(<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>), <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'helpbutton'</span>, <span class="ruby-value str">'data-rel'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'dialog'</span>, <span class="ruby-value str">'data-role'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'button'</span>, <span class="ruby-value str">'data-inline'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>, <span class="ruby-value str">'data-icon'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'info'</span>, <span class="ruby-value str">'data-iconpos'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'notext'</span>
-42:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 52</span>
+52:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">help_button</span>(<span class="ruby-identifier">id</span>)
+53:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">t</span>(<span class="ruby-value">:'help.button'</span>), <span class="ruby-identifier">help_path</span>(<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>), <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'helpbutton'</span>, <span class="ruby-value str">'data-rel'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'dialog'</span>, <span class="ruby-value str">'data-role'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'button'</span>, <span class="ruby-value str">'data-inline'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>, <span class="ruby-value str">'data-icon'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'info'</span>, <span class="ruby-value str">'data-iconpos'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'notext'</span>
+54:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -263,26 +269,29 @@ Thanks to Peter Gumeson&#8217;s HTML5 Boilerplate gem for this
 
 				<div class="method-description">
 					
-					
+					<p>
+Produce an <tt>&lt;html&gt;</tt> element with the appropriate classes and
+conditional comments for detecting various versions of IE.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="ie-html-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 14</span>
-14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ie_html</span>(<span class="ruby-identifier">attrs</span>={}, &amp;<span class="ruby-identifier">block</span>)
-15:     <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">symbolize_keys!</span>
-16:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if lt IE 7]&gt; #{ tag(:html, add_class('ie6', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
-17:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IEMobile 7]&gt;    #{ tag(:html, add_class('iem7', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
-18:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IE 7]&gt;    #{ tag(:html, add_class('ie7', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
-19:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IE 8]&gt;    #{ tag(:html, add_class('ie8', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
-20:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-value str">&quot;&lt;!--[if (gte IE 9)|!(IE)]&gt;&lt;!--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
-21:     <span class="ruby-identifier">haml_tag</span> <span class="ruby-value">:html</span>, <span class="ruby-identifier">attrs</span> <span class="ruby-keyword kw">do</span>
-22:       <span class="ruby-identifier">haml_concat</span>(<span class="ruby-value str">&quot;&lt;!--&lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
-23:       <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>
-24:     <span class="ruby-keyword kw">end</span>
-25:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 20</span>
+20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ie_html</span>(<span class="ruby-identifier">attrs</span>={}, &amp;<span class="ruby-identifier">block</span>)
+21:     <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">symbolize_keys!</span>
+22:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if lt IE 7]&gt; #{ tag(:html, add_class('ie6', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+23:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IEMobile 7]&gt;    #{ tag(:html, add_class('iem7', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+24:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IE 7]&gt;    #{ tag(:html, add_class('ie7', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+25:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IE 8]&gt;    #{ tag(:html, add_class('ie8', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+26:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-value str">&quot;&lt;!--[if (gte IE 9)|!(IE)]&gt;&lt;!--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+27:     <span class="ruby-identifier">haml_tag</span> <span class="ruby-value">:html</span>, <span class="ruby-identifier">attrs</span> <span class="ruby-keyword kw">do</span>
+28:       <span class="ruby-identifier">haml_concat</span>(<span class="ruby-value str">&quot;&lt;!--&lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+29:       <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>
+30:     <span class="ruby-keyword kw">end</span>
+31:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -306,22 +315,26 @@ Thanks to Peter Gumeson&#8217;s HTML5 Boilerplate gem for this
 
 				<div class="method-description">
 					
-					
+					<p>
+Get the user-friendly name of a locale.  Though we don&#8217;t currently
+have any, this does have support for dialects.  (Rails I18n support for 
+dialects is currently spotty.)
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="locale-name-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 31</span>
-31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">locale_name</span>(<span class="ruby-identifier">locale</span>)
-32:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">locale</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'-'</span>).<span class="ruby-identifier">nil?</span>
-33:       <span class="ruby-identifier">str</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span> <span class="ruby-value">:&quot;languages.#{locale}&quot;</span>
-34:     <span class="ruby-keyword kw">else</span>
-35:       <span class="ruby-identifier">str</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span> <span class="ruby-value">:&quot;languages.#{locale}&quot;</span>, <span class="ruby-value">:default</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">:&quot;languages.#{locale.split('-')[0]}&quot;</span>, <span class="ruby-value str">&quot;Unknown Language&quot;</span>]
-36:     <span class="ruby-keyword kw">end</span>
-37:     <span class="ruby-identifier">str</span>
-38:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 41</span>
+41:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">locale_name</span>(<span class="ruby-identifier">locale</span>)
+42:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">locale</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'-'</span>).<span class="ruby-identifier">nil?</span>
+43:       <span class="ruby-identifier">str</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span> <span class="ruby-value">:&quot;languages.#{locale}&quot;</span>
+44:     <span class="ruby-keyword kw">else</span>
+45:       <span class="ruby-identifier">str</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span> <span class="ruby-value">:&quot;languages.#{locale}&quot;</span>, <span class="ruby-value">:default</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">:&quot;languages.#{locale.split('-')[0]}&quot;</span>, <span class="ruby-value str">&quot;Unknown Language&quot;</span>]
+46:     <span class="ruby-keyword kw">end</span>
+47:     <span class="ruby-identifier">str</span>
+48:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -345,17 +358,19 @@ Thanks to Peter Gumeson&#8217;s HTML5 Boilerplate gem for this
 
 				<div class="method-description">
 					
-					
+					<p>
+Add content to the page title block.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="title-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 27</span>
-27:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>(<span class="ruby-identifier">page_title</span>)
-28:     <span class="ruby-identifier">content_for</span>(<span class="ruby-value">:title</span>) { <span class="ruby-identifier">page_title</span> }
-29:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 34</span>
+34:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>(<span class="ruby-identifier">page_title</span>)
+35:     <span class="ruby-identifier">content_for</span>(<span class="ruby-value">:title</span>) { <span class="ruby-identifier">page_title</span> }
+36:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

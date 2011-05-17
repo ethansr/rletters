@@ -1,7 +1,21 @@
 # coding: UTF-8
 
 
+# Support module providing an interface between our +Document+ objects and
+# the {RDF.rb}[http://rdf.rubyforge.org/] library.
 module RDFSupport
+  
+  # Convert the supplied document to an
+  # {<tt>RDF::Graph</tt>}[http://rdf.rubyforge.org/RDF/Graph.html]
+  # object.
+  #
+  # For the moment, we only provide RDF for baseline Dubline Core metadata
+  # items, as well as the Dublin Core
+  # {"bibliographicCitation" element.}[http://dublincore.org/documents/dc-citation-guidelines/]
+  # We also encode an OpenURL reference (using the standard OpenURL namespace)
+  # into a second bibliographicCitation element.  The precise way to encode
+  # journal articles as DC is highly non-standard, but this should provide a
+  # reasonable solution.
   def RDFSupport.document_to_rdf(document)
     graph = RDF::Graph.new
     doc = RDF::Node.new

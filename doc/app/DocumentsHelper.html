@@ -64,13 +64,13 @@
 					
 					<li><a href="#method-i-decade_link">#decade_link</a></li>
 					
+					<li><a href="#method-i-facet_link">#facet_link</a></li>
+					
 					<li><a href="#method-i-get_facets">#get_facets</a></li>
 					
 					<li><a href="#method-i-render_selected_facets">#render_selected_facets</a></li>
 					
 					<li><a href="#method-i-render_solr_facet">#render_solr_facet</a></li>
-					
-					<li><a href="#method-i-year_link">#year_link</a></li>
 					
 				</ul>
 			</div>
@@ -159,7 +159,8 @@
 
 		<div id="description">
 			<p>
-coding: UTF-8
+Markup helper code for the documents controller.  Primarily extensive code
+to help process Solr faceted browsing queries.
 </p>
 
 		</div>
@@ -172,7 +173,10 @@ coding: UTF-8
 			
 				<dt><a name="FACETS">FACETS</a></dt>
 				
-				<dd class="description"></dd>
+				<dd class="description"><p>
+A list of available facets.  We allow faceted browsing on authors,
+journals, and decade of publication.
+</p></dd>
 				
 			
 			</dl>
@@ -201,29 +205,80 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Construct a link to a faceted browsing page that is the result of taking
+our current query parameters and adding a facet for the <tt>year</tt> field
+limiting to the decade beginning with the year <tt>decade</tt>.  If
+<tt>link</tt> is specified, use it for the text of the link, otherwise just
+use the <tt>decade</tt> string.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="decade-link-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 32</span>
-32:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decade_link</span>(<span class="ruby-identifier">decade</span>, <span class="ruby-identifier">link</span> = <span class="ruby-keyword kw">nil</span>)
-33:     <span class="ruby-identifier">link</span> = <span class="ruby-identifier">decade</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">link</span>
-34:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">decade</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;1790&quot;</span>
-35:       <span class="ruby-identifier">query</span> = <span class="ruby-value str">&quot;[* TO 1799]&quot;</span>
-36:     <span class="ruby-keyword kw">else</span>
-37:       <span class="ruby-identifier">last</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">decade</span>) <span class="ruby-operator">+</span> <span class="ruby-value">9</span>
-38:       <span class="ruby-identifier">query</span> = <span class="ruby-node">&quot;[#{decade} TO #{last}]&quot;</span>
-39:     <span class="ruby-keyword kw">end</span>
-40: 
-41:     <span class="ruby-identifier">new_params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>
-42:     <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-operator">||=</span> []
-43:     <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;year:#{query}&quot;</span>
-44:     
-45:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">link</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-identifier">new_params</span>), <span class="ruby-value str">'data-transition'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'none'</span>
-46:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 41</span>
+41:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decade_link</span>(<span class="ruby-identifier">decade</span>, <span class="ruby-identifier">link</span> = <span class="ruby-keyword kw">nil</span>)
+42:     <span class="ruby-identifier">link</span> = <span class="ruby-identifier">decade</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">link</span>
+43:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">decade</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;1790&quot;</span>
+44:       <span class="ruby-identifier">query</span> = <span class="ruby-value str">&quot;[* TO 1799]&quot;</span>
+45:     <span class="ruby-keyword kw">else</span>
+46:       <span class="ruby-identifier">last</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">decade</span>) <span class="ruby-operator">+</span> <span class="ruby-value">9</span>
+47:       <span class="ruby-identifier">query</span> = <span class="ruby-node">&quot;[#{decade} TO #{last}]&quot;</span>
+48:     <span class="ruby-keyword kw">end</span>
+49: 
+50:     <span class="ruby-identifier">new_params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>
+51:     <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-operator">||=</span> []
+52:     <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;year:#{query}&quot;</span>
+53:     
+54:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">link</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-identifier">new_params</span>), <span class="ruby-value str">'data-transition'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'none'</span>
+55:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="facet-link-method" class="method-detail ">
+				<a name="method-i-facet_link"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">facet_link</span><span
+						class="method-args">(field, val, link = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Construct a link to a faceted browsing page that is the result of taking
+our current query parameters and adding a facet for <tt>field</tt> set to
+<tt>val</tt>.  If <tt>link</tt> is specified, use it for the text of the
+link, otherwise just use the <tt>val</tt> string.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="facet-link-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 26</span>
+26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">facet_link</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">val</span>, <span class="ruby-identifier">link</span> = <span class="ruby-keyword kw">nil</span>)
+27:     <span class="ruby-identifier">link</span> = <span class="ruby-identifier">val</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">link</span>
+28:     
+29:     <span class="ruby-identifier">new_params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>
+30:     <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-operator">||=</span> []
+31:     <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%(#{field}:&quot;)</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'&quot;'</span>
+32:     
+33:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">link</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-identifier">new_params</span>), <span class="ruby-value str">'data-transition'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'none'</span>
+34:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -247,15 +302,18 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Allow the views to access the <a
+href="DocumentsHelper.html#FACETS">FACETS</a> variable.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="get-facets-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 13</span>
-13:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_facets</span>; <span class="ruby-constant">FACETS</span>; <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 20</span>
+20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_facets</span>; <span class="ruby-constant">FACETS</span>; <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -272,59 +330,72 @@ coding: UTF-8
 				<div class="method-heading">
 				
 					<span class="method-name">render_selected_facets</span><span
-						class="method-args">(params)</span>
+						class="method-args">()</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
 
 				<div class="method-description">
 					
-					
+					<p>
+Render, as a set of <tt>&lt;li&gt;</tt> tags, the currently-active Solr
+facets, as determined by checking <tt>params[:fq]</tt>.  Each of these list
+elements is, further, a link which will remove the given facet from the set
+of currently active facets.  Finally, the last item in the list will be a
+link which allows the user to remove all currently active facets.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="render-selected-facets-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 61</span>
-61:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_selected_facets</span>(<span class="ruby-identifier">params</span>)
-62:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">blank?</span>
-63:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">&quot;&quot;</span>
-64:     
-65:     <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">query</span><span class="ruby-operator">|</span>
-66:       <span class="ruby-identifier">arr</span> = <span class="ruby-identifier">query</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;:&quot;</span>)
-67:       
-68:       <span class="ruby-identifier">facet</span> = <span class="ruby-identifier">get_facets</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>[<span class="ruby-value">:field</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">arr</span>[<span class="ruby-value">0</span>] }
-69:       <span class="ruby-identifier">value</span> = <span class="ruby-identifier">arr</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;\&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>)
-70:       
-71:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">facet</span>[<span class="ruby-value">:field</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'year'</span>
-72:         <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">value</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">2</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot; &quot;</span>)
-73:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
-74:           <span class="ruby-identifier">value</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'filters.pub_date_later'</span>)
-75:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">parts</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
-76:           <span class="ruby-identifier">value</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'filters.pub_date_later'</span>)
-77:         <span class="ruby-keyword kw">else</span>
-78:           <span class="ruby-identifier">value</span> = <span class="ruby-node">&quot;#{parts[0]}-#{parts[2]}&quot;</span>
-79:         <span class="ruby-keyword kw">end</span>
-80:       <span class="ruby-keyword kw">end</span>
-81:       
-82:       <span class="ruby-identifier">new_params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>
-83:       <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">query</span>)
-84:       
-85:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">content_tag</span> <span class="ruby-value">:li</span>, <span class="ruby-value str">'data-icon'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'delete'</span> <span class="ruby-keyword kw">do</span>
-86:         <span class="ruby-identifier">link_to</span> <span class="ruby-node">&quot;#{facet[:name]}: #{value}&quot;</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-identifier">new_params</span>), <span class="ruby-value str">'data-transition'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'none'</span>
-87:       <span class="ruby-keyword kw">end</span>
-88:     <span class="ruby-keyword kw">end</span>
-89:     
-90:     <span class="ruby-identifier">no_facets_params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>
-91:     <span class="ruby-identifier">no_facets_params</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:fq</span>)
-92:     
-93:     <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">content_tag</span> <span class="ruby-value">:li</span>, <span class="ruby-value str">'data-icon'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'delete'</span> <span class="ruby-keyword kw">do</span>
-94:       <span class="ruby-identifier">link_to</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'filters.remove_all'</span>), <span class="ruby-identifier">documents_path</span>(<span class="ruby-identifier">no_facets_params</span>), <span class="ruby-value str">'data-transition'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'none'</span>
-95:     <span class="ruby-keyword kw">end</span>
-96:     
-97:     <span class="ruby-identifier">raw</span>(<span class="ruby-identifier">ret</span>)
-98:   <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 63</span>
+ 63:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_selected_facets</span>
+ 64:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">blank?</span>
+ 65:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">&quot;&quot;</span>
+ 66:     
+ 67:     <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">query</span><span class="ruby-operator">|</span>
+ 68:       <span class="ruby-identifier">arr</span> = <span class="ruby-identifier">query</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;:&quot;</span>)
+ 69:       
+ 70:       <span class="ruby-comment cmt"># Get the facet and the value on which we're filtering</span>
+ 71:       <span class="ruby-identifier">facet</span> = <span class="ruby-constant">FACETS</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>[<span class="ruby-value">:field</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">arr</span>[<span class="ruby-value">0</span>] }
+ 72:       <span class="ruby-identifier">value</span> = <span class="ruby-identifier">arr</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;\&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>)
+ 73:       
+ 74:       <span class="ruby-comment cmt"># As usual, special filtering to deal with the year string, which is</span>
+ 75:       <span class="ruby-comment cmt"># of the format &quot;1900 TO 1909&quot;.</span>
+ 76:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">facet</span>[<span class="ruby-value">:field</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'year'</span>
+ 77:         <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">value</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">2</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot; &quot;</span>)
+ 78:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
+ 79:           <span class="ruby-identifier">value</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'filters.pub_date_later'</span>)
+ 80:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">parts</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
+ 81:           <span class="ruby-identifier">value</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'filters.pub_date_later'</span>)
+ 82:         <span class="ruby-keyword kw">else</span>
+ 83:           <span class="ruby-identifier">value</span> = <span class="ruby-node">&quot;#{parts[0]}-#{parts[2]}&quot;</span>
+ 84:         <span class="ruby-keyword kw">end</span>
+ 85:       <span class="ruby-keyword kw">end</span>
+ 86:       
+ 87:       <span class="ruby-comment cmt"># Construct the query without the given facet</span>
+ 88:       <span class="ruby-identifier">new_params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>
+ 89:       <span class="ruby-identifier">new_params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">query</span>)
+ 90:       
+ 91:       <span class="ruby-comment cmt"># Create the list item</span>
+ 92:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">content_tag</span> <span class="ruby-value">:li</span>, <span class="ruby-value str">'data-icon'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'delete'</span> <span class="ruby-keyword kw">do</span>
+ 93:         <span class="ruby-identifier">link_to</span> <span class="ruby-node">&quot;#{facet[:name]}: #{value}&quot;</span>, <span class="ruby-identifier">documents_path</span>(<span class="ruby-identifier">new_params</span>), <span class="ruby-value str">'data-transition'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'none'</span>
+ 94:       <span class="ruby-keyword kw">end</span>
+ 95:     <span class="ruby-keyword kw">end</span>
+ 96:     
+ 97:     <span class="ruby-comment cmt"># Strip out all facet parameters</span>
+ 98:     <span class="ruby-identifier">no_facets_params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>
+ 99:     <span class="ruby-identifier">no_facets_params</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:fq</span>)
+100:     
+101:     <span class="ruby-comment cmt"># Create the remove all list item</span>
+102:     <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">content_tag</span> <span class="ruby-value">:li</span>, <span class="ruby-value str">'data-icon'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'delete'</span> <span class="ruby-keyword kw">do</span>
+103:       <span class="ruby-identifier">link_to</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'filters.remove_all'</span>), <span class="ruby-identifier">documents_path</span>(<span class="ruby-identifier">no_facets_params</span>), <span class="ruby-value str">'data-transition'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'none'</span>
+104:     <span class="ruby-keyword kw">end</span>
+105:     
+106:     <span class="ruby-identifier">raw</span>(<span class="ruby-identifier">ret</span>)
+107:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -341,104 +412,84 @@ coding: UTF-8
 				<div class="method-heading">
 				
 					<span class="method-name">render_solr_facet</span><span
-						class="method-args">(params, facet, solr_values)</span>
+						class="method-args">(facet, solr_values)</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
 
 				<div class="method-description">
 					
-					
+					<p>
+Render, as a set of <tt>&lt;li&gt;</tt> items, Solr&#8217;s faceting
+results for the given facet.  The <tt>facet</tt> parameter is one of the
+facets from <tt>FACETS</tt>.  The <tt>solr_values</tt> parameter is
+expected to be the appropriate portion of the Solr query, as returned by
+our <tt>Document</tt> model this is <tt>@facets[facet[:key]]</tt>.
+</p>
+<p>
+<b>FIXME</b> &#8212; Requiring the user to pass in precisely
+@facets[facet[:key]] seems like a pretty draconian requirement to place on
+the caller.  Should that get refactored?
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="render-solr-facet-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 100</span>
-100:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_solr_facet</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">facet</span>, <span class="ruby-identifier">solr_values</span>)
-101:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_values</span>.<span class="ruby-identifier">blank?</span>
-102:     
-103:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">&quot;&quot;</span>
-104:     <span class="ruby-identifier">solr_values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
-105:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-106:       
-107:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">facet</span>[<span class="ruby-value">:field</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'year'</span>
-108:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;*&quot;</span>
-109:           <span class="ruby-identifier">year_start</span> = <span class="ruby-value str">&quot;*&quot;</span>
-110:           <span class="ruby-identifier">year_end</span> = <span class="ruby-value str">&quot;1799&quot;</span>
-111:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;2010&quot;</span>
-112:           <span class="ruby-identifier">year_start</span> = <span class="ruby-identifier">key</span>
-113:           <span class="ruby-identifier">year_end</span> = <span class="ruby-value str">&quot;*&quot;</span>
-114:         <span class="ruby-keyword kw">else</span>
-115:           <span class="ruby-identifier">year_start</span> = <span class="ruby-identifier">key</span>
-116:           <span class="ruby-identifier">year_end</span> = (<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">year_start</span>) <span class="ruby-operator">+</span> <span class="ruby-value">9</span>).<span class="ruby-identifier">to_s</span>
-117:         <span class="ruby-keyword kw">end</span>
-118:         
-119:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">count</span>(<span class="ruby-node">&quot;year:[#{year_start} TO #{year_end}]&quot;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-120:         
-121:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">year_start</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
-122:           <span class="ruby-identifier">link_text</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'pub_date_earlier'</span>)
-123:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">year_end</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
-124:           <span class="ruby-identifier">link_text</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'pub_date_later'</span>)
-125:         <span class="ruby-keyword kw">else</span>
-126:           <span class="ruby-identifier">link_text</span> = <span class="ruby-node">&quot;#{year_start}-#{year_end}&quot;</span>
-127:         <span class="ruby-keyword kw">end</span>
-128:       <span class="ruby-keyword kw">else</span>
-129:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">count</span>(<span class="ruby-node">&quot;#{facet[:field]}:\&quot;#{key}\&quot;&quot;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-130:         <span class="ruby-identifier">link_text</span> = <span class="ruby-identifier">key</span>
-131:       <span class="ruby-keyword kw">end</span>
-132:       
-133:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:li</span>) <span class="ruby-keyword kw">do</span>
-134:         <span class="ruby-identifier">method</span>(<span class="ruby-identifier">facet</span>[<span class="ruby-value">:func</span>]).<span class="ruby-identifier">call</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">link_text</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span>
-135:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:span</span>, <span class="ruby-node">&quot;#{count}&quot;</span>, <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'ui-li-count'</span>)
-136:       <span class="ruby-keyword kw">end</span>
-137:     <span class="ruby-keyword kw">end</span>
-138:     
-139:     <span class="ruby-identifier">raw</span>(<span class="ruby-identifier">ret</span>)
-140:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="year-link-method" class="method-detail ">
-				<a name="method-i-year_link"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">year_link</span><span
-						class="method-args">(year, link = nil)</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="year-link-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 48</span>
-48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">year_link</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">link</span> = <span class="ruby-keyword kw">nil</span>)
-49:     <span class="ruby-identifier">link</span> = <span class="ruby-identifier">year</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">link</span>
-50:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">year</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-value">1799</span>
-51:       <span class="ruby-identifier">decade</span> = <span class="ruby-value str">&quot;1790&quot;</span>
-52:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">year</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">2010</span>
-53:       <span class="ruby-identifier">decade</span> = <span class="ruby-value str">&quot;2010&quot;</span>
-54:     <span class="ruby-keyword kw">else</span>
-55:       <span class="ruby-identifier">decade</span> = ((<span class="ruby-constant">Float</span>(<span class="ruby-identifier">year</span>) <span class="ruby-operator">/</span> <span class="ruby-value">10.0</span>).<span class="ruby-identifier">floor</span> * <span class="ruby-value">10</span>).<span class="ruby-identifier">to_s</span>
-56:     <span class="ruby-keyword kw">end</span>
-57:     <span class="ruby-identifier">decade_link</span> <span class="ruby-identifier">decade</span>, <span class="ruby-identifier">link</span>
-58:   <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File app/helpers/documents_helper.rb, line 119</span>
+119:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_solr_facet</span>(<span class="ruby-identifier">facet</span>, <span class="ruby-identifier">solr_values</span>)
+120:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">solr_values</span>.<span class="ruby-identifier">blank?</span>
+121:     
+122:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">&quot;&quot;</span>
+123:     <span class="ruby-identifier">solr_values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
+124:       <span class="ruby-comment cmt"># Don't render empty facets (which still get returned by Solr)</span>
+125:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+126:       
+127:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">facet</span>[<span class="ruby-value">:field</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'year'</span>
+128:         <span class="ruby-comment cmt"># Translate the Solr key into start and end years</span>
+129:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;*&quot;</span>
+130:           <span class="ruby-identifier">year_start</span> = <span class="ruby-value str">&quot;*&quot;</span>
+131:           <span class="ruby-identifier">year_end</span> = <span class="ruby-value str">&quot;1799&quot;</span>
+132:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;2010&quot;</span>
+133:           <span class="ruby-identifier">year_start</span> = <span class="ruby-identifier">key</span>
+134:           <span class="ruby-identifier">year_end</span> = <span class="ruby-value str">&quot;*&quot;</span>
+135:         <span class="ruby-keyword kw">else</span>
+136:           <span class="ruby-identifier">year_start</span> = <span class="ruby-identifier">key</span>
+137:           <span class="ruby-identifier">year_end</span> = (<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">year_start</span>) <span class="ruby-operator">+</span> <span class="ruby-value">9</span>).<span class="ruby-identifier">to_s</span>
+138:         <span class="ruby-keyword kw">end</span>
+139:         
+140:         <span class="ruby-comment cmt"># Don't show this facet if it's active</span>
+141:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">count</span>(<span class="ruby-node">&quot;year:[#{year_start} TO #{year_end}]&quot;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+142:         
+143:         <span class="ruby-comment cmt"># Figure out the correct link text</span>
+144:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">year_start</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
+145:           <span class="ruby-identifier">link_text</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'pub_date_earlier'</span>)
+146:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">year_end</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'*'</span>
+147:           <span class="ruby-identifier">link_text</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:'pub_date_later'</span>)
+148:         <span class="ruby-keyword kw">else</span>
+149:           <span class="ruby-identifier">link_text</span> = <span class="ruby-node">&quot;#{year_start}-#{year_end}&quot;</span>
+150:         <span class="ruby-keyword kw">end</span>
+151:         
+152:         <span class="ruby-comment cmt"># Create the link</span>
+153:         <span class="ruby-identifier">link</span> = <span class="ruby-identifier">decade_link</span> <span class="ruby-identifier">key</span>, <span class="ruby-identifier">link_text</span>
+154:       <span class="ruby-keyword kw">else</span>
+155:         <span class="ruby-comment cmt"># Don't show this facet if it's active</span>
+156:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>].<span class="ruby-identifier">count</span>(<span class="ruby-node">&quot;#{facet[:field]}:\&quot;#{key}\&quot;&quot;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+157:         
+158:         <span class="ruby-comment cmt"># Create the link</span>
+159:         <span class="ruby-identifier">link_text</span> = <span class="ruby-identifier">key</span>
+160:         <span class="ruby-identifier">link</span> = <span class="ruby-identifier">facet_link</span> <span class="ruby-identifier">facet</span>[<span class="ruby-value">:field</span>], <span class="ruby-identifier">key</span>, <span class="ruby-identifier">link_text</span>
+161:       <span class="ruby-keyword kw">end</span>
+162:       
+163:       <span class="ruby-comment cmt"># Create a list item</span>
+164:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:li</span>) <span class="ruby-keyword kw">do</span>
+165:         <span class="ruby-identifier">link</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:span</span>, <span class="ruby-node">&quot;#{count}&quot;</span>, <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'ui-li-count'</span>)
+166:       <span class="ruby-keyword kw">end</span>
+167:     <span class="ruby-keyword kw">end</span>
+168:     
+169:     <span class="ruby-identifier">raw</span>(<span class="ruby-identifier">ret</span>)
+170:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

@@ -1,7 +1,21 @@
 # coding: UTF-8
 
 
+# Support module providing an interface between our +Document+ objects and
+# the Ruby {MARC}[http://marc.rubyforge.org/] library.
 module MARCSupport
+  
+  # Convert the supplied document to a 
+  # {<tt>MARC::Record</tt>}[http://marc.rubyforge.org/MARC/Record.html]
+  # object.
+  #
+  # Support for individual-article MARC records is spotty at best.  To
+  # generate these records, we primarily follow
+  # {PROPOSAL 2003-03}[http://www.loc.gov/marc/marbi/2003/2003-03.html],
+  # "Definition of Data Elements for Article Level Description."  We also
+  # adhere to the prior standard of providing a "free-form" citation entry
+  # in field 773, subfield $g (Host Item Entry, Related Parts).  This should
+  # ensure a reasonable degree of compatibility.
   def MARCSupport.document_to_marc(document)
     record = MARC::Record.new()
     

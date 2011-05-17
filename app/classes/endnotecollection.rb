@@ -1,11 +1,18 @@
 # coding: UTF-8
 
 
+# Class which encapsulates the export of a collection of +Document+ instances
+# to EndNote (.enw) format.
 class EndNoteCollection
+  
+  # Create a new EndNote collection.  +documents+ should be an array of 
+  # +Document+ objects.
   def initialize(documents)
     @documents = documents
   end
   
+  # Convert the array of documents to a string containing the EndNote records
+  # for the entire collection.
   def to_s
     ret = ""
     
@@ -30,6 +37,8 @@ class EndNoteCollection
     ret
   end
   
+  # Convert to EndNote and send to the client using the 
+  # <tt>controller.send_data</tt> method of an <tt>ActionController.</tt>
   def send(controller)
     controller.send_data to_s, :filename => "export.enw", 
       :type => 'application/x-endnote-refer', :disposition => 'attachment'

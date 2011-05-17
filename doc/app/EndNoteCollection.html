@@ -162,7 +162,8 @@
 
 		<div id="description">
 			<p>
-coding: UTF-8
+Class which encapsulates the export of a collection of <tt>Document</tt>
+instances to EndNote (.enw) format.
 </p>
 
 		</div>
@@ -192,17 +193,20 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Create a new EndNote collection.  <tt>documents</tt> should be an array of 
+<tt>Document</tt> objects.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="new-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/classes/endnotecollection.rb, line 5</span>
-5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">documents</span>)
-6:     <span class="ruby-ivar">@documents</span> = <span class="ruby-identifier">documents</span>
-7:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/classes/endnotecollection.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">documents</span>)
+11:     <span class="ruby-ivar">@documents</span> = <span class="ruby-identifier">documents</span>
+12:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -232,18 +236,21 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Convert to EndNote and send to the client using the 
+<tt>controller.send_data</tt> method of an <tt>ActionController.</tt>
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="send-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/classes/endnotecollection.rb, line 33</span>
-33:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">controller</span>)
-34:     <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">send_data</span> <span class="ruby-identifier">to_s</span>, <span class="ruby-value">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;export.enw&quot;</span>, 
-35:       <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-endnote-refer'</span>, <span class="ruby-value">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachment'</span>
-36:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/classes/endnotecollection.rb, line 42</span>
+42:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">controller</span>)
+43:     <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">send_data</span> <span class="ruby-identifier">to_s</span>, <span class="ruby-value">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;export.enw&quot;</span>, 
+44:       <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'application/x-endnote-refer'</span>, <span class="ruby-value">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachment'</span>
+45:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -267,37 +274,40 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Convert the array of documents to a string containing the EndNote records
+for the entire collection.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="to-s-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/classes/endnotecollection.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
-10:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">&quot;&quot;</span>
-11:     
-12:     <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
-13:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;%0 Journal Article\n&quot;</span>
-14:       <span class="ruby-identifier">d</span>.<span class="ruby-identifier">formatted_author_list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-15:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%A #{a[:last]}, #{a[:first]}&quot;</span>
-16:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; #{a[:von]}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">:von</span>].<span class="ruby-identifier">blank?</span>
-17:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;, #{a[:suffix]}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">:suffix</span>].<span class="ruby-identifier">blank?</span>
-18:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
-19:       <span class="ruby-keyword kw">end</span>
-20:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%T #{d.title}\n&quot;</span>
-21:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%D #{d.year}\n&quot;</span>
-22:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%J #{d.journal}\n&quot;</span>
-23:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%V #{d.volume}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">volume</span>.<span class="ruby-identifier">blank?</span>
-24:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%N #{d.number}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">number</span>.<span class="ruby-identifier">blank?</span>
-25:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%P #{d.pages}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">pages</span>.<span class="ruby-identifier">blank?</span>
-26:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%M #{d.doi}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">doi</span>.<span class="ruby-identifier">blank?</span>
-27:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
-28:     <span class="ruby-keyword kw">end</span>
-29:     
-30:     <span class="ruby-identifier">ret</span>
-31:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/classes/endnotecollection.rb, line 16</span>
+16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+17:     <span class="ruby-identifier">ret</span> = <span class="ruby-value str">&quot;&quot;</span>
+18:     
+19:     <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
+20:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;%0 Journal Article\n&quot;</span>
+21:       <span class="ruby-identifier">d</span>.<span class="ruby-identifier">formatted_author_list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+22:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%A #{a[:last]}, #{a[:first]}&quot;</span>
+23:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; #{a[:von]}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">:von</span>].<span class="ruby-identifier">blank?</span>
+24:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;, #{a[:suffix]}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">:suffix</span>].<span class="ruby-identifier">blank?</span>
+25:         <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+26:       <span class="ruby-keyword kw">end</span>
+27:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%T #{d.title}\n&quot;</span>
+28:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%D #{d.year}\n&quot;</span>
+29:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%J #{d.journal}\n&quot;</span>
+30:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%V #{d.volume}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">volume</span>.<span class="ruby-identifier">blank?</span>
+31:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%N #{d.number}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">number</span>.<span class="ruby-identifier">blank?</span>
+32:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%P #{d.pages}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">pages</span>.<span class="ruby-identifier">blank?</span>
+33:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%M #{d.doi}\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">doi</span>.<span class="ruby-identifier">blank?</span>
+34:       <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+35:     <span class="ruby-keyword kw">end</span>
+36:     
+37:     <span class="ruby-identifier">ret</span>
+38:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

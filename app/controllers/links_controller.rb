@@ -1,16 +1,24 @@
 # coding: UTF-8
 
+
+# Controller allowing the user to follow links to locate a document on other
+# online services.
+#
+# Since finding some of these links (such as Mendeley and citeulike) require
+# querying an external server for a piece of JSON, analyzing that JSON, and
+# responding to it, we want to separate this out into another controller that
+# only fetches those links when the user asks for them.
 class LinksController < ApplicationController
   
   # Show a list of all online and library link targets for this
-  # document
+  # document.
   def targets
-    @document = get_document
+    @document = Document.find(params[:document_id])[:document]
   end
   
-  # Redirect to the appropriate page on Mendeley for this document
+  # Redirect to the appropriate page on Mendeley for this document.
   def mendeley
-    @document = get_document
+    @document = Document.find(params[:document_id])[:document]
     
     begin
       res = Net::HTTP.start("api.mendeley.com") { |http| 
@@ -28,9 +36,9 @@ class LinksController < ApplicationController
     end
   end
   
-  # Redirect to the appropriate page on CiteULike for this document
+  # Redirect to the appropriate page on CiteULike for this document.
   def citeulike
-    @document = get_document
+    @document = Document.find(params[:document_id])[:document]
     
     begin
       res = Net::HTTP.start("www.citeulike.org") { |http| 
@@ -46,9 +54,4 @@ class LinksController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
   end
-  
-  def get_document
-    Document.find(params[:document_id])[:document]
-  end
-  private :get_document
 end

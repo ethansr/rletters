@@ -1,12 +1,18 @@
 # coding: UTF-8
 
 
-
+# Class which encapsulates the export of a collection of +Document+ instances
+# to MODS format.
 class MODSCollection
+  
+  # Create a new MODS collection.  +documents+ should be an array of 
+  # +Document+ objects.
   def initialize(documents)
     @documents = documents
   end
   
+  # Convert the array of documents to a string containing the MODS records
+  # for the entire collection.
   def to_s
     citekeys = []
     
@@ -86,7 +92,9 @@ class MODSCollection
     
     xml.target!.to_s
   end
-    
+  
+  # Convert to MODS and send to the client using the 
+  # <tt>controller.send_data</tt> method of an <tt>ActionController.</tt>
   def send(controller)
     controller.send_data to_s, :filename => "export_mods.xml", 
       :type => 'application/mods+xml', :disposition => 'attachment'

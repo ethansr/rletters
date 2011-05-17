@@ -31,10 +31,10 @@
     - rendered_facets = 0
     - unless params[:fq].blank?
       %li{ 'data-role' => 'list-divider' }= t :'filters.selected'
-      = render_selected_facets(params)
+      = render_selected_facets
       - rendered_facets += 1
     - get_facets.each do |facet|
-      - content = render_solr_facet(params, facet, @facets[facet[:key]])
+      - content = render_solr_facet(facet, @facets[facet[:key]])
       - next if content.blank?
       - rendered_facets += 1
       

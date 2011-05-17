@@ -158,7 +158,7 @@
 
 		<div id="description">
 			<p>
-coding: UTF-8
+Controller for displaying help messages to the user.
 </p>
 
 		</div>
@@ -188,17 +188,19 @@ coding: UTF-8
 
 				<div class="method-description">
 					
-					
+					<p>
+Display one help message as a jQuery Mobile dialog.
+</p>
 					
 
 					
 					<div class="method-source-code"
 						id="message-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/help_controller.rb, line 4</span>
-4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">message</span>
-5:     <span class="ruby-identifier">render</span> <span class="ruby-value">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'help/message'</span>, <span class="ruby-value">:locals</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:dialog</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span> }
-6:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/controllers/help_controller.rb, line 8</span>
+ 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">message</span>
+ 9:     <span class="ruby-identifier">render</span> <span class="ruby-value">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'help/message'</span>, <span class="ruby-value">:locals</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:dialog</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span> }
+10:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

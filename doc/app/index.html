@@ -24,14 +24,75 @@
 	
 	<div id="main">
 		
-<h2>Install Rails and the RLetters bundle</h2>
+<p>
+Welcome to RLetters, an open-source Rails web application designed for the
+maintenance of a large database of academic journal articles.  Journal
+article content is stored in a <a
+href="http://lucene.apache.org/solr/">Solr</a> backend, and tools are
+provided to perform various text-mining and digital humanities work on the
+journal article content.
+</p>
+<p>
+RLetters is developed by the Digital Humanities Working Group at the
+University of Notre Dame.  The lead developer is <a
+href="http://charlespence.net">Charles Pence.</a>  The source to RLetters
+is freely available under the MIT License, and is <a
+href="http://github.com/cpence/rletters">hosted at GitHub.</a>
+</p>
+<h2>Features</h2>
+<ul>
+<li><p>
+Maintain a large index of academic journal publications.
+</p>
+</li>
+<li><p>
+&#8220;Web-application&#8221; interface built with <a
+href="http://jquerymobile.com">jQuery Mobile</a>, accessible on the
+desktop, tablet devices, and smartphones.  Advanced integration available
+with Apple iOS devices.
+</p>
+</li>
+<li><p>
+Complex full-text searching of this index using the search facilities
+provided by <a href="http://lucene.apache.org/solr/">Solr</a> (and its
+underlying <a
+href="http://lucene.apache.org/java/docs/index.html">Lucene</a> engine).
+</p>
+</li>
+<li><p>
+Export your database in a variety of export formats (RIS, EndNote,
+RefWorks, BibTeX, MARC, MARCXML, MODS, etc.).
+</p>
+</li>
+<li><p>
+<a href="http://unapi.info/">unAPI</a> support for connecting with
+bibliography managers like <a href="http://www.zotero.org">Zotero.</a>
+</p>
+</li>
+<li><p>
+Advanced text-mining tools, including term frequency information, term
+concordances, etc. (This is the current active area of RLetters
+development, much more powerful text-mining tools will be added in the next
+several versions.)
+</p>
+</li>
+</ul>
+<h2>Get RLetters</h2>
+<p>
+Currently, the only way to retrieve the RLetters source is to <a
+href="http://github.com/cpence/rletters">check out a copy from our GitHub
+repository.</a>  RLetters is under active development &#8212; anything can
+(and will!) break at any time.
+</p>
+<h2>Installation and Setup</h2>
+<h3>Install Rails and the RLetters bundle</h3>
 <p>
 Configure Rails <a
 href="http://guides.rubyonrails.org/getting_started.html">in the usual
 manner,</a> and check out a copy of RLetters.  Install the required gems
 for RLetters using <tt>bundle install</tt>.
 </p>
-<h2>Set up a Solr server</h2>
+<h3>Set up a Solr server</h3>
 <p>
 Install Solr, using the schema provided at <tt>solr/schema.xml</tt>.  You
 may then populate the Solr database in the usual manner, sending documents
@@ -40,7 +101,7 @@ formatted like the sample document provided at
 <tt>fulltext</tt> attribute is merely the abstract of the given article;
 you will want to replace this with the proper full-text of the document.)
 </p>
-<h2>Customize application configuration</h2>
+<h3>Customize application configuration</h3>
 <p>
 Copy the default configuration file from <tt>config/config.yml.dist</tt> to
 <tt>config/config.yml</tt> and edit it.  Modify the various variables to
@@ -48,7 +109,7 @@ point to the URL of your Solr server, the various application name
 variables, and (optionally) a Google Analytics account and a <a
 href="http://dev.mendeley.com/">Mendeley Consumer API Key.</a>
 </p>
-<h2>Customize the static content</h2>
+<h3>Customize the static content</h3>
 <p>
 For each of the following files, copy them from
 <tt>&lt;filename&gt;.dist</tt> to <tt>&lt;filename&gt;</tt>, replacing
@@ -64,11 +125,11 @@ page, linked from a button at the top of the homepage.
 </p>
 </li>
 </ul>
-<h2>Ready to go!</h2>
+<h3>Ready to go!</h3>
 <p>
 Now you’re ready to roll!
 </p>
-<h1>License</h1>
+<h2>License</h2>
 <p>
 RLetters is released under the <a
 href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>:
@@ -161,23 +222,23 @@ href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>:
 		
 			<li><a href="Document.html#method-c-find">::find &mdash; Document</a></li>
 		
-			<li><a href="BIBCollection.html#method-c-new">::new &mdash; BIBCollection</a></li>
-		
-			<li><a href="Document.html#method-c-new">::new &mdash; Document</a></li>
-		
 			<li><a href="MARCCollection.html#method-c-new">::new &mdash; MARCCollection</a></li>
+		
+			<li><a href="RISCollection.html#method-c-new">::new &mdash; RISCollection</a></li>
 		
 			<li><a href="EndNoteCollection.html#method-c-new">::new &mdash; EndNoteCollection</a></li>
 		
+			<li><a href="TurtleCollection.html#method-c-new">::new &mdash; TurtleCollection</a></li>
+		
 			<li><a href="MARCXMLCollection.html#method-c-new">::new &mdash; MARCXMLCollection</a></li>
+		
+			<li><a href="BIBCollection.html#method-c-new">::new &mdash; BIBCollection</a></li>
 		
 			<li><a href="RDFCollection.html#method-c-new">::new &mdash; RDFCollection</a></li>
 		
-			<li><a href="TurtleCollection.html#method-c-new">::new &mdash; TurtleCollection</a></li>
-		
 			<li><a href="MODSCollection.html#method-c-new">::new &mdash; MODSCollection</a></li>
 		
-			<li><a href="RISCollection.html#method-c-new">::new &mdash; RISCollection</a></li>
+			<li><a href="Document.html#method-c-new">::new &mdash; Document</a></li>
 		
 			<li><a href="Document.html#method-c-search">::search &mdash; Document</a></li>
 		
@@ -187,21 +248,21 @@ href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>:
 		
 			<li><a href="LinksController.html#method-i-citeulike">#citeulike &mdash; LinksController</a></li>
 		
+			<li><a href="DocumentsController.html#method-i-concordance">#concordance &mdash; DocumentsController</a></li>
+		
 			<li><a href="DocumentsHelper.html#method-i-decade_link">#decade_link &mdash; DocumentsHelper</a></li>
 		
 			<li><a href="DocumentsController.html#method-i-default_attrs">#default_attrs &mdash; DocumentsController</a></li>
-		
-			<li><a href="Document.html#method-i-destroyed%3F">#destroyed? &mdash; Document</a></li>
 		
 			<li><a href="Document.html#method-i-doi_url">#doi_url &mdash; Document</a></li>
 		
 			<li><a href="Document.html#method-i-end_page">#end_page &mdash; Document</a></li>
 		
-			<li><a href="Document.html#method-i-errors">#errors &mdash; Document</a></li>
+			<li><a href="DocumentsHelper.html#method-i-facet_link">#facet_link &mdash; DocumentsHelper</a></li>
 		
 			<li><a href="ExportsController.html#method-i-formats">#formats &mdash; ExportsController</a></li>
 		
-			<li><a href="LinksController.html#method-i-get_document">#get_document &mdash; LinksController</a></li>
+			<li><a href="DocumentsController.html#method-i-get_document">#get_document &mdash; DocumentsController</a></li>
 		
 			<li><a href="ExportsController.html#method-i-get_documents">#get_documents &mdash; ExportsController</a></li>
 		
@@ -213,13 +274,13 @@ href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>:
 		
 			<li><a href="DocumentsController.html#method-i-index">#index &mdash; DocumentsController</a></li>
 		
+			<li><a href="AboutController.html#method-i-index">#index &mdash; AboutController</a></li>
+		
 			<li><a href="ApplicationHelper.html#method-i-locale_name">#locale_name &mdash; ApplicationHelper</a></li>
 		
 			<li><a href="LinksController.html#method-i-mendeley">#mendeley &mdash; LinksController</a></li>
 		
 			<li><a href="HelpController.html#method-i-message">#message &mdash; HelpController</a></li>
-		
-			<li><a href="Document.html#method-i-new_record%3F">#new_record? &mdash; Document</a></li>
 		
 			<li><a href="Document.html#method-i-openurl_query">#openurl_query &mdash; Document</a></li>
 		
@@ -229,49 +290,47 @@ href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>:
 		
 			<li><a href="DocumentsController.html#method-i-search">#search &mdash; DocumentsController</a></li>
 		
-			<li><a href="BIBCollection.html#method-i-send">#send &mdash; BIBCollection</a></li>
-		
 			<li><a href="TurtleCollection.html#method-i-send">#send &mdash; TurtleCollection</a></li>
-		
-			<li><a href="RISCollection.html#method-i-send">#send &mdash; RISCollection</a></li>
-		
-			<li><a href="EndNoteCollection.html#method-i-send">#send &mdash; EndNoteCollection</a></li>
-		
-			<li><a href="MARCCollection.html#method-i-send">#send &mdash; MARCCollection</a></li>
-		
-			<li><a href="MARCXMLCollection.html#method-i-send">#send &mdash; MARCXMLCollection</a></li>
 		
 			<li><a href="RDFCollection.html#method-i-send">#send &mdash; RDFCollection</a></li>
 		
 			<li><a href="MODSCollection.html#method-i-send">#send &mdash; MODSCollection</a></li>
 		
+			<li><a href="MARCXMLCollection.html#method-i-send">#send &mdash; MARCXMLCollection</a></li>
+		
+			<li><a href="MARCCollection.html#method-i-send">#send &mdash; MARCCollection</a></li>
+		
+			<li><a href="RISCollection.html#method-i-send">#send &mdash; RISCollection</a></li>
+		
+			<li><a href="EndNoteCollection.html#method-i-send">#send &mdash; EndNoteCollection</a></li>
+		
+			<li><a href="BIBCollection.html#method-i-send">#send &mdash; BIBCollection</a></li>
+		
+			<li><a href="DocumentsController.html#method-i-show">#show &mdash; DocumentsController</a></li>
+		
 			<li><a href="Document.html#method-i-start_page">#start_page &mdash; Document</a></li>
 		
 			<li><a href="LinksController.html#method-i-targets">#targets &mdash; LinksController</a></li>
 		
-			<li><a href="ApplicationHelper.html#method-i-title">#title &mdash; ApplicationHelper</a></li>
+			<li><a href="DocumentsController.html#method-i-terms">#terms &mdash; DocumentsController</a></li>
 		
-			<li><a href="Document.html#method-i-to_model">#to_model &mdash; Document</a></li>
+			<li><a href="ApplicationHelper.html#method-i-title">#title &mdash; ApplicationHelper</a></li>
 		
 			<li><a href="Document.html#method-i-to_param">#to_param &mdash; Document</a></li>
 		
 			<li><a href="RISCollection.html#method-i-to_s">#to_s &mdash; RISCollection</a></li>
 		
-			<li><a href="MARCXMLCollection.html#method-i-to_s">#to_s &mdash; MARCXMLCollection</a></li>
+			<li><a href="RDFCollection.html#method-i-to_s">#to_s &mdash; RDFCollection</a></li>
 		
-			<li><a href="MODSCollection.html#method-i-to_s">#to_s &mdash; MODSCollection</a></li>
+			<li><a href="MARCXMLCollection.html#method-i-to_s">#to_s &mdash; MARCXMLCollection</a></li>
 		
 			<li><a href="EndNoteCollection.html#method-i-to_s">#to_s &mdash; EndNoteCollection</a></li>
 		
-			<li><a href="RDFCollection.html#method-i-to_s">#to_s &mdash; RDFCollection</a></li>
+			<li><a href="TurtleCollection.html#method-i-to_s">#to_s &mdash; TurtleCollection</a></li>
 		
 			<li><a href="BIBCollection.html#method-i-to_s">#to_s &mdash; BIBCollection</a></li>
 		
-			<li><a href="TurtleCollection.html#method-i-to_s">#to_s &mdash; TurtleCollection</a></li>
-		
-			<li><a href="Document.html#method-i-valid%3F">#valid? &mdash; Document</a></li>
-		
-			<li><a href="DocumentsHelper.html#method-i-year_link">#year_link &mdash; DocumentsHelper</a></li>
+			<li><a href="MODSCollection.html#method-i-to_s">#to_s &mdash; MODSCollection</a></li>
 		
 	</ul>
 
