@@ -1,6 +1,8 @@
 TODO
 ----
 
+- We have the evoText icons and error pages in the public/
+  folder, can we do something about that?
 - Locale system
   - Implement a user settings page with a locale switcher
 - Come up with something intelligent to do with the flashes.
@@ -8,3 +10,4 @@ TODO
 - Figure out how to save/edit user definable parameters, such
   as locale, documents-per-page, etc. (are there more of these
   than that, or should there be?)
+
