@@ -3,7 +3,9 @@ app/views/about/index.*
 !app/views/about/index.html.markdown.dist
 config/config.yml
 log/*
-tmp/
+!log/.gitkeep
+tmp/*
+!tmp/.gitkeep
 *.lock
 *.tmproj
 .DS_Store
