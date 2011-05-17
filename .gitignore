@@ -6,3 +6,4 @@ log/*
 tmp/
 *.lock
 *.tmproj
+.DS_Store
