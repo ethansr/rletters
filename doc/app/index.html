@@ -6,7 +6,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-	<title>Rails Application Documentation</title>
+	<title>RLetters</title>
 
 	<link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
 
@@ -19,10 +19,82 @@
 <body class="indexpage">
 
 	
-	<h1>Rails Application Documentation</h1>
+	<h1>RLetters</h1>
 
 	
-	<p>This is the API documentation for 'Rails Application Documentation'.</p>
+	<div id="main">
+		
+<h2>Install Rails and the RLetters bundle</h2>
+<p>
+Configure Rails <a
+href="http://guides.rubyonrails.org/getting_started.html">in the usual
+manner,</a> and check out a copy of RLetters.  Install the required gems
+for RLetters using <tt>bundle install</tt>.
+</p>
+<h2>Set up a Solr server</h2>
+<p>
+Install Solr, using the schema provided at <tt>solr/schema.xml</tt>.  You
+may then populate the Solr database in the usual manner, sending documents
+formatted like the sample document provided at
+<tt>solr/sample-document.xml</tt>.  (In the sample document, the
+<tt>fulltext</tt> attribute is merely the abstract of the given article;
+you will want to replace this with the proper full-text of the document.)
+</p>
+<h2>Customize application configuration</h2>
+<p>
+Copy the default configuration file from <tt>config/config.yml.dist</tt> to
+<tt>config/config.yml</tt> and edit it.  Modify the various variables to
+point to the URL of your Solr server, the various application name
+variables, and (optionally) a Google Analytics account and a <a
+href="http://dev.mendeley.com/">Mendeley Consumer API Key.</a>
+</p>
+<h2>Customize the static content</h2>
+<p>
+For each of the following files, copy them from
+<tt>&lt;filename&gt;.dist</tt> to <tt>&lt;filename&gt;</tt>, replacing
+their content with content appropriate for your application.  You may also
+localize these static content files by making copies of, for example,
+<tt>index.html.markdown</tt> to <tt>index.es.html.markdown</tt>,
+<tt>index.de.html.markdown</tt>, and so on.
+</p>
+<ul>
+<li><p>
+<tt>views/about/index.html.markdown.dist</tt>: The &#8220;about us&#8221;
+page, linked from a button at the top of the homepage.
+</p>
+</li>
+</ul>
+<h2>Ready to go!</h2>
+<p>
+Now you’re ready to roll!
+</p>
+<h1>License</h1>
+<p>
+RLetters is released under the <a
+href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>:
+</p>
+<pre>
+  Copyright (c) 2011 Charles Pence and University of Notre Dame
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the &quot;Software&quot;), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.</pre>
+
+	</div>
 	
 
 	
@@ -30,7 +102,7 @@
 	<h2>Files</h2>
 	<ul>
 		
-			<li class="file"><a href="doc/README_FOR_APP.html">README_FOR_APP</a></li>
+			<li class="file"><a href="README_rdoc.html">README.rdoc</a></li>
 		
 	</ul>
 	
