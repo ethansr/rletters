@@ -17,7 +17,7 @@
     that avoids logging every request
 -->
 
-<schema name="evotext" version="1.2">
+<schema name="rletters" version="1.2">
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
 
