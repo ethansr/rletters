@@ -1,5 +1,4 @@
-Tue, 17 May 2011 09:15:09 -0400
-doc/README_FOR_APP	Tue, 17 May 2011 08:51:04 -0400
+Tue, 17 May 2011 09:38:46 -0400
 app/classes/bibcollection.rb	Mon, 16 May 2011 22:07:58 -0400
 app/classes/endnotecollection.rb	Mon, 16 May 2011 22:07:58 -0400
 app/classes/marccollection.rb	Mon, 16 May 2011 22:07:58 -0400
@@ -20,3 +19,4 @@ app/controllers/unapi_controller.rb	Mon, 16 May 2011 22:07:58 -0400
 app/helpers/application_helper.rb	Mon, 16 May 2011 22:07:58 -0400
 app/helpers/documents_helper.rb	Mon, 16 May 2011 22:07:58 -0400
 app/models/document.rb	Mon, 16 May 2011 22:07:58 -0400
+README.rdoc	Tue, 17 May 2011 08:51:04 -0400
