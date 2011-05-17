@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync -av doc/app/ $1
