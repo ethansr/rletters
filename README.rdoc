@@ -1,30 +1,50 @@
+= RLetters
 
-= Installation and Setup
+Welcome to RLetters, an open-source Rails web application designed for the maintenance of a large database of academic journal articles.  Journal article content is stored in a {Solr}[http://lucene.apache.org/solr/] backend, and tools are provided to perform various text-mining and digital humanities work on the journal article content.
 
-== Install Rails and the RLetters bundle
+RLetters is developed by the Digital Humanities Working Group at the University of Notre Dame.  The lead developer is {Charles Pence.}[http://charlespence.net]  The source to RLetters is freely available under the MIT License, and is {hosted at GitHub.}[http://github.com/cpence/rletters]
+
+
+== Features
+
+* Maintain a large index of academic journal publications.
+* Complex full-text searching of this index using the search facilities provided by {Solr}[http://lucene.apache.org/solr/] (and its underlying {Lucene}[http://lucene.apache.org/java/docs/index.html] engine).
+* Export your database in a variety of export formats (RIS, EndNote, RefWorks, BibTeX, MARC, MARCXML, MODS, etc.).
+* {unAPI}[http://unapi.info/] support for connecting with bibliography managers like {Zotero.}[http://www.zotero.org]
+* Advanced text-mining tools, including term frequency information, term concordances, etc. (This is the current active area of RLetters development, much more powerful text-mining tools will be added in the next several versions.)
+
+
+== Get RLetters
+
+Currently, the only way to retrieve the RLetters source is to [check out a copy from our GitHub repository.]{http://github.com/cpence/rletters}  RLetters is under active development -- anything can (and will!) break at any time.
+
+
+== Installation and Setup
+
+=== Install Rails and the RLetters bundle
 
 Configure Rails {in the usual manner,}[http://guides.rubyonrails.org/getting_started.html] and check out a copy of RLetters.  Install the required gems for RLetters using <tt>bundle install</tt>.
 
-== Set up a Solr server
+=== Set up a Solr server
 
 Install Solr, using the schema provided at <tt>solr/schema.xml</tt>.  You may then populate the Solr database in the usual manner, sending documents formatted like the sample document provided at <tt>solr/sample-document.xml</tt>.  (In the sample document, the <tt>fulltext</tt> attribute is merely the abstract of the given article; you will want to replace this with the proper full-text of the document.)
 
-== Customize application configuration
+=== Customize application configuration
 
 Copy the default configuration file from <tt>config/config.yml.dist</tt> to <tt>config/config.yml</tt> and edit it.  Modify the various variables to point to the URL of your Solr server, the various application name variables, and (optionally) a Google Analytics account and a {Mendeley Consumer API Key.}[http://dev.mendeley.com/]
 
-== Customize the static content
+=== Customize the static content
 
 For each of the following files, copy them from <tt><filename>.dist</tt> to <tt><filename></tt>, replacing their content with content appropriate for your application.  You may also localize these static content files by making copies of, for example, <tt>index.html.markdown</tt> to <tt>index.es.html.markdown</tt>, <tt>index.de.html.markdown</tt>, and so on.
 
 -   <tt>views/about/index.html.markdown.dist</tt>: The "about us" page, linked from a button at the top of the homepage.
 
-== Ready to go!
+=== Ready to go!
 
 Now you’re ready to roll!
 
 
-= License
+== License
 
 RLetters is released under the {MIT License}[http://www.opensource.org/licenses/mit-license.php]:
 
