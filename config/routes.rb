@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-Evotext::Application.routes.draw do
+RLetters::Application.routes.draw do
   # See how all your routes lay out with "rake routes"
   resources :documents, :only => [:index, :show] do
     member do

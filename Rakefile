@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Evotext::Application.load_tasks
+RLetters::Application.load_tasks

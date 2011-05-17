@@ -10,7 +10,7 @@ module MARCSupport
     record.append(MARC::ControlField.new('005', Time.now.strftime("%Y%m%d%H%M%S.0")))
     record.append(MARC::ControlField.new('008', "110501s#{sprintf '%04d', document.year}       ||||fo     ||0 0|eng d"))
     record.append(MARC::DataField.new('040', ' ', ' ',
-      ['a', 'evoText'], ['b', 'eng'], ['c', 'evoText']))
+      ['a', 'RLetters'], ['b', 'eng'], ['c', 'RLetters']))
     
     record.append(MARC::DataField.new('024', '7', ' ',
       ['2', 'doi'], ['a', document.doi]))

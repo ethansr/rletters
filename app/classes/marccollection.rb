@@ -14,7 +14,7 @@ class MARCCollection
   def send(controller)
     if @documents.length == 1
       controller.send_data MARCSupport.document_to_marc(@documents[0]).to_marc,
-        :filename => "evotext_export.marc", :type => 'application/marc',
+        :filename => "export.marc", :type => 'application/marc',
         :disposition => 'attachment'
     else
       t = Tempfile.new 'marc-collection-zip', "#{Rails.root}/tmp"
@@ -28,7 +28,7 @@ class MARCCollection
         
         t.rewind
         controller.send_data t.read, :type => 'application/zip', 
-          :disposition => 'attachment', :filename => 'evotext_export_marc.zip'        
+          :disposition => 'attachment', :filename => 'export_marc.zip'        
       ensure
         t.close
       end      

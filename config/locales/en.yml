@@ -42,7 +42,7 @@ en:
   search:
     title: Advanced Search
     intro_markdown: >
-      This page lets you perform an advanced search of the evoText database.
+      This page lets you perform an advanced search of the article database.
       You may choose either to utilize our guided search form, or to construct
       a query directly in
       [Solr's query syntax](http://wiki.apache.org/solr/SolrQuerySyntax), 
@@ -128,13 +128,13 @@ en:
       title: >
         Title of journal article.  If title search type is set to “Exact”, 
         this string will match the exact title.  If title search type is 
-        “Fuzzy”, it will match the stemmed title.  (The standard evoText 
-        search uses the stemmed search fields.)
+        “Fuzzy”, it will match the stemmed title.  (The homepage search bar 
+        uses the stemmed search fields.)
       journal: >
         Journal in which article was published. If journal search type is 
         set to “Exact”, this string will match the exact journal title.  If 
         journal search type is “Fuzzy”, it will match the stemmed journal 
-        title.  (The standard evoText search uses the stemmed search fields.)
+        title.  (The homepage search bar uses the stemmed search fields.)
       year_start: Beginning of allowable range for publication dates.
       year_end: End of allowable range for publication dates.
       volume: Volume number of journal.
@@ -147,8 +147,8 @@ en:
         Terms appearing in the full text of the article.  If full text 
         search type is set to “Exact”, this string will match the exact full 
         text of the document.  If full text search type is “Fuzzy”, it will 
-        match the stemmed full text of the document.  (The standard evoText 
-        search uses the stemmed search fields.)
+        match the stemmed full text of the document.  (The homepage search bar
+        uses the stemmed search fields.)
       solr_query_markdown: |
         The following fields are available in Solr for searching:
       

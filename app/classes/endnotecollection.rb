@@ -31,7 +31,7 @@ class EndNoteCollection
   end
   
   def send(controller)
-    controller.send_data to_s, :filename => "evotext_export.enw", 
+    controller.send_data to_s, :filename => "export.enw", 
       :type => 'application/x-endnote-refer', :disposition => 'attachment'
   end
 end

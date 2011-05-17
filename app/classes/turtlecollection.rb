@@ -16,7 +16,7 @@ class TurtleCollection
   end
 
   def send(controller)
-    controller.send_data to_s, :filename => "evotext_export.ttl", 
+    controller.send_data to_s, :filename => "export.ttl", 
       :type => 'text/turtle', :disposition => 'attachment'
   end
 end

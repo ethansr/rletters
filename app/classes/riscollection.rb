@@ -32,7 +32,7 @@ class RISCollection
   end
   
   def send(controller)
-    controller.send_data to_s, :filename => "evotext_export.ris", 
+    controller.send_data to_s, :filename => "export.ris", 
       :type => 'application/x-research-info-systems',
       :disposition => 'attachment'
   end

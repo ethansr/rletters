@@ -26,7 +26,7 @@ class MARCXMLCollection
   end
 
   def send(controller)
-    controller.send_data to_s, :filename => "evotext_export_marcxml.xml", 
+    controller.send_data to_s, :filename => "export_marcxml.xml", 
       :type => 'application/marcxml+xml', :disposition => 'attachment'
   end
 end

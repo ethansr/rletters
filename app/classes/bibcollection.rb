@@ -36,7 +36,7 @@ class BIBCollection
   end
   
   def send(controller)
-    controller.send_data to_s, :filename => "evotext_export.bib", 
+    controller.send_data to_s, :filename => "export.bib", 
       :type => 'application/x-bibtex', :disposition => 'attachment'
   end
 end

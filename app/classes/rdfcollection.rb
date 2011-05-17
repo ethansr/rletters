@@ -16,7 +16,7 @@ class RDFCollection
   end
 
   def send(controller)
-    controller.send_data to_s, :filename => "evotext_export.rdf", 
+    controller.send_data to_s, :filename => "export.rdf", 
       :type => 'application/rdf+xml', :disposition => 'attachment'
   end
 end

@@ -88,7 +88,7 @@ class MODSCollection
   end
     
   def send(controller)
-    controller.send_data to_s, :filename => "evotext_export_mods.xml", 
+    controller.send_data to_s, :filename => "export_mods.xml", 
       :type => 'application/mods+xml', :disposition => 'attachment'
   end
 end
