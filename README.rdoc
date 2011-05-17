@@ -17,7 +17,7 @@ RLetters is developed by the Digital Humanities Working Group at the University 
 
 == Get RLetters
 
-Currently, the only way to retrieve the RLetters source is to [check out a copy from our GitHub repository.]{http://github.com/cpence/rletters}  RLetters is under active development -- anything can (and will!) break at any time.
+Currently, the only way to retrieve the RLetters source is to {check out a copy from our GitHub repository.}[http://github.com/cpence/rletters]  RLetters is under active development -- anything can (and will!) break at any time.
 
 
 == Installation and Setup
