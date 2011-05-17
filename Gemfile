@@ -5,9 +5,6 @@ gem 'rails', '3.0.5'
 # Various i18n gems
 gem "translate_routes"
 
-# UUIDs
-gem "uuid"
-
 # JSON (much faster than the Rails default)
 gem "json"
 
