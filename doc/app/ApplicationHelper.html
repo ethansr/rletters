@@ -62,9 +62,15 @@
 				<h3 class="section-header">Methods</h3>
 				<ul class="link-list">
 					
-					<li><a href="#method-i-help_image">#help_image</a></li>
+					<li><a href="#method-i-add_class">#add_class</a></li>
 					
-					<li><a href="#method-i-tooltip">#tooltip</a></li>
+					<li><a href="#method-i-help_button">#help_button</a></li>
+					
+					<li><a href="#method-i-ie_html">#ie_html</a></li>
+					
+					<li><a href="#method-i-locale_name">#locale_name</a></li>
+					
+					<li><a href="#method-i-title">#title</a></li>
 					
 				</ul>
 			</div>
@@ -102,15 +108,43 @@
 
 				<ul class="link-list">
 				
+					<li><a href="./AboutController.html">AboutController</a></li>
+				
 					<li><a href="./ApplicationController.html">ApplicationController</a></li>
 				
 					<li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+				
+					<li><a href="./BIBCollection.html">BIBCollection</a></li>
 				
 					<li><a href="./Document.html">Document</a></li>
 				
 					<li><a href="./DocumentsController.html">DocumentsController</a></li>
 				
 					<li><a href="./DocumentsHelper.html">DocumentsHelper</a></li>
+				
+					<li><a href="./EndNoteCollection.html">EndNoteCollection</a></li>
+				
+					<li><a href="./ExportsController.html">ExportsController</a></li>
+				
+					<li><a href="./HelpController.html">HelpController</a></li>
+				
+					<li><a href="./LinksController.html">LinksController</a></li>
+				
+					<li><a href="./MARCCollection.html">MARCCollection</a></li>
+				
+					<li><a href="./MARCSupport.html">MARCSupport</a></li>
+				
+					<li><a href="./MARCXMLCollection.html">MARCXMLCollection</a></li>
+				
+					<li><a href="./MODSCollection.html">MODSCollection</a></li>
+				
+					<li><a href="./RDFCollection.html">RDFCollection</a></li>
+				
+					<li><a href="./RDFSupport.html">RDFSupport</a></li>
+				
+					<li><a href="./RISCollection.html">RISCollection</a></li>
+				
+					<li><a href="./TurtleCollection.html">TurtleCollection</a></li>
 				
 				</ul>
 				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -124,7 +158,10 @@
 		<h1 class="module">ApplicationHelper</h1>
 
 		<div id="description">
-			
+			<p>
+coding: UTF-8
+</p>
+
 		</div>
 
 		<!-- Constants -->
@@ -139,38 +176,36 @@
 			<h3 class="section-header">Public Instance Methods</h3>
 
 		
-			<div id="help-image-method" class="method-detail ">
-				<a name="method-i-help_image"></a>
+			<div id="add-class-method" class="method-detail ">
+				<a name="method-i-add_class"></a>
 
 				<div class="method-heading">
 				
-					<span class="method-name">help_image</span><span
-						class="method-args">(width = 200, &block)</span>
+					<span class="method-name">add_class</span><span
+						class="method-args">(name, attrs)</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
 
 				<div class="method-description">
 					
-					
+					<p>
+Thanks to Peter Gumeson&#8217;s HTML5 Boilerplate gem for this
+</p>
 					
 
 					
 					<div class="method-source-code"
-						id="help-image-source">
+						id="add-class-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 26</span>
-26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">help_image</span>(<span class="ruby-identifier">width</span> = <span class="ruby-value">200</span>, &amp;<span class="ruby-identifier">block</span>)
-27:     <span class="ruby-identifier">id</span> = <span class="ruby-constant">UUID</span>.<span class="ruby-identifier">generate</span>
-28:     
-29:     <span class="ruby-comment cmt"># Have to strip newlines for JS</span>
-30:     <span class="ruby-identifier">html</span> = <span class="ruby-identifier">capture</span>(&amp;<span class="ruby-identifier">block</span>)
-31:     <span class="ruby-identifier">html</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\r/</span>, <span class="ruby-value str">&quot; &quot;</span>)
-32:     <span class="ruby-identifier">html</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\n/</span>, <span class="ruby-value str">&quot; &quot;</span>)
-33:     
-34:     <span class="ruby-identifier">tooltip</span>(<span class="ruby-node">&quot;#&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{id}&quot;</span>, <span class="ruby-identifier">html</span>, <span class="ruby-identifier">width</span>)
-35:     <span class="ruby-identifier">image_tag</span> <span class="ruby-value str">&quot;/images/questionmark.jpg&quot;</span>, { <span class="ruby-value">:alt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Help?&quot;</span>, <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;16x16&quot;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>, <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;helptip&quot;</span> }
-36:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 6</span>
+ 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_class</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>)
+ 7:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-value">:class</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>
+ 8:     <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">strip!</span>
+ 9:     <span class="ruby-identifier">classes</span> = <span class="ruby-value str">' '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">classes</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">classes</span>.<span class="ruby-identifier">blank?</span>
+10:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">classes</span>
+11:     <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">classes</span>)
+12:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -181,13 +216,13 @@
 			</div>
 
 		
-			<div id="tooltip-method" class="method-detail ">
-				<a name="method-i-tooltip"></a>
+			<div id="help-button-method" class="method-detail ">
+				<a name="method-i-help_button"></a>
 
 				<div class="method-heading">
 				
-					<span class="method-name">tooltip</span><span
-						class="method-args">(id, string, width = 200)</span>
+					<span class="method-name">help_button</span><span
+						class="method-args">(id)</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
@@ -199,32 +234,128 @@
 
 					
 					<div class="method-source-code"
-						id="tooltip-source">
+						id="help-button-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 2</span>
- 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tooltip</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">width</span> = <span class="ruby-value">200</span>)
- 3:     <span class="ruby-identifier">content_for</span> <span class="ruby-value">:javascripts</span> <span class="ruby-keyword kw">do</span>
- 4:       <span class="ruby-identifier">javascript_tag</span> <span class="ruby-node">&quot;$(function() {$(\&quot;#{id}\&quot;).qtip({
- 5:         content: '#{string}',
- 6:         style: {
- 7:           name: 'light',
- 8:           tip: 'bottomLeft',
- 9:           border: {
-10:             width: 1,
-11:             radius: 8,
-12:             color: '#f5f5f5'
-13:           },
-14:           width: #{width}
-15:         },
-16:         position: {
-17:           corner: {
-18:             target: 'topRight',
-19:             tooltip: 'bottomLeft'
-20:           }
-21:         },
-22:       })});&quot;</span>
-23:     <span class="ruby-keyword kw">end</span>
-24:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 40</span>
+40:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">help_button</span>(<span class="ruby-identifier">id</span>)
+41:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">t</span>(<span class="ruby-value">:'help.button'</span>), <span class="ruby-identifier">help_path</span>(<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>), <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'helpbutton'</span>, <span class="ruby-value str">'data-rel'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'dialog'</span>, <span class="ruby-value str">'data-role'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'button'</span>, <span class="ruby-value str">'data-inline'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>, <span class="ruby-value str">'data-icon'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'info'</span>, <span class="ruby-value str">'data-iconpos'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'notext'</span>
+42:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="ie-html-method" class="method-detail ">
+				<a name="method-i-ie_html"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">ie_html</span><span
+						class="method-args">(attrs={}, &block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="ie-html-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 14</span>
+14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ie_html</span>(<span class="ruby-identifier">attrs</span>={}, &amp;<span class="ruby-identifier">block</span>)
+15:     <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">symbolize_keys!</span>
+16:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if lt IE 7]&gt; #{ tag(:html, add_class('ie6', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+17:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IEMobile 7]&gt;    #{ tag(:html, add_class('iem7', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+18:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IE 7]&gt;    #{ tag(:html, add_class('ie7', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+19:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-node">&quot;&lt;!--[if IE 8]&gt;    #{ tag(:html, add_class('ie8', attrs), true) } &lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+20:     <span class="ruby-identifier">haml_concat</span>(<span class="ruby-value str">&quot;&lt;!--[if (gte IE 9)|!(IE)]&gt;&lt;!--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+21:     <span class="ruby-identifier">haml_tag</span> <span class="ruby-value">:html</span>, <span class="ruby-identifier">attrs</span> <span class="ruby-keyword kw">do</span>
+22:       <span class="ruby-identifier">haml_concat</span>(<span class="ruby-value str">&quot;&lt;!--&lt;![endif]--&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+23:       <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>
+24:     <span class="ruby-keyword kw">end</span>
+25:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="locale-name-method" class="method-detail ">
+				<a name="method-i-locale_name"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">locale_name</span><span
+						class="method-args">(locale)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="locale-name-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 31</span>
+31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">locale_name</span>(<span class="ruby-identifier">locale</span>)
+32:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">locale</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'-'</span>).<span class="ruby-identifier">nil?</span>
+33:       <span class="ruby-identifier">str</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span> <span class="ruby-value">:&quot;languages.#{locale}&quot;</span>
+34:     <span class="ruby-keyword kw">else</span>
+35:       <span class="ruby-identifier">str</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span> <span class="ruby-value">:&quot;languages.#{locale}&quot;</span>, <span class="ruby-value">:default</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">:&quot;languages.#{locale.split('-')[0]}&quot;</span>, <span class="ruby-value str">&quot;Unknown Language&quot;</span>]
+36:     <span class="ruby-keyword kw">end</span>
+37:     <span class="ruby-identifier">str</span>
+38:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="title-method" class="method-detail ">
+				<a name="method-i-title"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">title</span><span
+						class="method-args">(page_title)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="title-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/application_helper.rb, line 27</span>
+27:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>(<span class="ruby-identifier">page_title</span>)
+28:     <span class="ruby-identifier">content_for</span>(<span class="ruby-value">:title</span>) { <span class="ruby-identifier">page_title</span> }
+29:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

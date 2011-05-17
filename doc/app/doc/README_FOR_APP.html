@@ -6,7 +6,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-	<title>File: README_FOR_APP [Rails Application Documentation]</title>
+	<title>File: README_FOR_APP [RLetters]</title>
 
 	<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
 
@@ -60,15 +60,43 @@
 
 				<ul class="link-list">
 				
+					<li><a href="../AboutController.html">AboutController</a></li>
+				
 					<li><a href="../ApplicationController.html">ApplicationController</a></li>
 				
 					<li><a href="../ApplicationHelper.html">ApplicationHelper</a></li>
+				
+					<li><a href="../BIBCollection.html">BIBCollection</a></li>
 				
 					<li><a href="../Document.html">Document</a></li>
 				
 					<li><a href="../DocumentsController.html">DocumentsController</a></li>
 				
 					<li><a href="../DocumentsHelper.html">DocumentsHelper</a></li>
+				
+					<li><a href="../EndNoteCollection.html">EndNoteCollection</a></li>
+				
+					<li><a href="../ExportsController.html">ExportsController</a></li>
+				
+					<li><a href="../HelpController.html">HelpController</a></li>
+				
+					<li><a href="../LinksController.html">LinksController</a></li>
+				
+					<li><a href="../MARCCollection.html">MARCCollection</a></li>
+				
+					<li><a href="../MARCSupport.html">MARCSupport</a></li>
+				
+					<li><a href="../MARCXMLCollection.html">MARCXMLCollection</a></li>
+				
+					<li><a href="../MODSCollection.html">MODSCollection</a></li>
+				
+					<li><a href="../RDFCollection.html">RDFCollection</a></li>
+				
+					<li><a href="../RDFSupport.html">RDFSupport</a></li>
+				
+					<li><a href="../RISCollection.html">RISCollection</a></li>
+				
+					<li><a href="../TurtleCollection.html">TurtleCollection</a></li>
 				
 				</ul>
 				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -80,10 +108,58 @@
 
 	<div id="documentation">
 		<p>
-Use this README file to introduce your application and point to useful
-places in the API for learning more. Run &#8220;rake doc:app&#8221; to
-generate API documentation for your models, controllers, helpers, and
-libraries.
+Installation and Setup
+</p>
+<h6>Install Rails and the RLetters bundle</h6>
+<hr style="height: 10px"></hr><p>
+Configure Rails [in the usual manner,](<a
+href="http://guides.rubyonrails.org/getting_started.html">guides.rubyonrails.org/getting_started.html</a>)
+and check out a copy of RLetters.  Install the required gems for RLetters
+using `bundle install`.
+</p>
+<p>
+Set up a Solr server
+</p>
+<hr style="height: 10px"></hr><p>
+Install Solr, using the schema provided at `solr/schema.xml`.  You may then
+populate the Solr database in the usual manner, sending documents formatted
+like the sample document provided at `solr/sample-document.xml`.  (In the
+sample document, the `fulltext` attribute is merely the abstract of the
+given article; you will want to replace this with the proper full-text of
+the document.)
+</p>
+<p>
+Customize application configuration
+</p>
+<hr style="height: 10px"></hr><p>
+Copy the default configuration file from `config/config.yml.dist` to
+`config/config.yml` and edit it.  Modify the various variables to point to
+the URL of your Solr server, the various application name variables, and
+(optionally) a Google Analytics account and a [Mendeley Consumer API
+Key.](<a href="http://dev.mendeley.com/">dev.mendeley.com/</a>)
+</p>
+<p>
+Customize the static content
+</p>
+<hr style="height: 10px"></hr><p>
+For each of the following files, copy them from `<filename>.dist` to
+`<filename>`, replacing their content with content appropriate for your
+application.  You may also localize these static content files by making
+copies of, for example, `index.html.markdown` to `index.es.html.markdown`,
+`index.de.html.markdown`, and so on.
+</p>
+<ul>
+<li><p>
+`views/about/index.html.markdown.dist`: The &#8220;about us&#8221; page,
+linked from a button at the top of the homepage.
+</p>
+</li>
+</ul>
+<p>
+Ready to go!
+</p>
+<hr style="height: 10px"></hr><p>
+Now you’re ready to roll!
 </p>
 
 	</div>

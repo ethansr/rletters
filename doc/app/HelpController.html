@@ -5,7 +5,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-	<title>Class: DocumentsController</title>
+	<title>Class: HelpController</title>
 
 	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
 
@@ -38,8 +38,8 @@
 				<div class="section-body">
 					<ul>
 					
-						<li><a href="./app/controllers/documents_controller_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-							class="thickbox" title="app/controllers/documents_controller.rb">app/controllers/documents_controller.rb</a></li>
+						<li><a href="./app/controllers/help_controller_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="app/controllers/help_controller.rb">app/controllers/help_controller.rb</a></li>
 					
 					</ul>
 				</div>
@@ -69,11 +69,7 @@
 				<h3 class="section-header">Methods</h3>
 				<ul class="link-list">
 					
-					<li><a href="#method-i-default_attrs">#default_attrs</a></li>
-					
-					<li><a href="#method-i-index">#index</a></li>
-					
-					<li><a href="#method-i-search">#search</a></li>
+					<li><a href="#method-i-message">#message</a></li>
 					
 				</ul>
 			</div>
@@ -158,7 +154,7 @@
 	</div>
 
 	<div id="documentation">
-		<h1 class="class">DocumentsController</h1>
+		<h1 class="class">HelpController</h1>
 
 		<div id="description">
 			<p>
@@ -179,12 +175,12 @@ coding: UTF-8
 			<h3 class="section-header">Public Instance Methods</h3>
 
 		
-			<div id="default-attrs-method" class="method-detail ">
-				<a name="method-i-default_attrs"></a>
+			<div id="message-method" class="method-detail ">
+				<a name="method-i-message"></a>
 
 				<div class="method-heading">
 				
-					<span class="method-name">default_attrs</span><span
+					<span class="method-name">message</span><span
 						class="method-args">()</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
@@ -197,89 +193,12 @@ coding: UTF-8
 
 					
 					<div class="method-source-code"
-						id="default-attrs-source">
+						id="message-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 5</span>
-5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_attrs</span>
-6:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">false</span>
-7:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="index-method" class="method-detail ">
-				<a name="method-i-index"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">index</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="index-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
-10:     <span class="ruby-comment cmt"># FIXME: configurable per_page, sitewide</span>
-11:     <span class="ruby-identifier">page</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:page</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">1</span>;
-12:     <span class="ruby-identifier">num</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:num</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:num</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">10</span>;
-13:     
-14:     <span class="ruby-comment cmt"># Set all the variables, but then paginate the documents</span>
-15:     <span class="ruby-identifier">hash_to_instance_variables</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>)
-16:     <span class="ruby-ivar">@documents</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">page</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>)
-17:     <span class="ruby-ivar">@document_ids</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">shasum</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">','</span>)
-18:     
-19:     <span class="ruby-identifier">render</span> <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'index'</span>
-20:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="search-method" class="method-detail ">
-				<a name="method-i-search"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">search</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="search-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search</span>
-23:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">true</span>
-24:   <span class="ruby-keyword kw">end</span></pre>
+   <span class="ruby-comment cmt"># File app/controllers/help_controller.rb, line 4</span>
+4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">message</span>
+5:     <span class="ruby-identifier">render</span> <span class="ruby-value">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'help/message'</span>, <span class="ruby-value">:locals</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:dialog</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span> }
+6:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

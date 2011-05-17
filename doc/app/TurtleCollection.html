@@ -5,7 +5,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-	<title>Class: DocumentsController</title>
+	<title>Class: TurtleCollection</title>
 
 	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
 
@@ -38,8 +38,8 @@
 				<div class="section-body">
 					<ul>
 					
-						<li><a href="./app/controllers/documents_controller_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-							class="thickbox" title="app/controllers/documents_controller.rb">app/controllers/documents_controller.rb</a></li>
+						<li><a href="./app/classes/turtlecollection_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="app/classes/turtlecollection.rb">app/classes/turtlecollection.rb</a></li>
 					
 					</ul>
 				</div>
@@ -55,7 +55,7 @@
 			<div id="parent-class-section" class="section">
 				<h3 class="section-header">Parent</h3>
 				
-				<p class="link"><a href="ApplicationController.html">ApplicationController</a></p>
+				<p class="link">Object</p>
 				
 			</div>
 			
@@ -69,11 +69,11 @@
 				<h3 class="section-header">Methods</h3>
 				<ul class="link-list">
 					
-					<li><a href="#method-i-default_attrs">#default_attrs</a></li>
+					<li><a href="#method-c-new">::new</a></li>
 					
-					<li><a href="#method-i-index">#index</a></li>
+					<li><a href="#method-i-send">#send</a></li>
 					
-					<li><a href="#method-i-search">#search</a></li>
+					<li><a href="#method-i-to_s">#to_s</a></li>
 					
 				</ul>
 			</div>
@@ -158,13 +158,10 @@
 	</div>
 
 	<div id="documentation">
-		<h1 class="class">DocumentsController</h1>
+		<h1 class="class">TurtleCollection</h1>
 
 		<div id="description">
-			<p>
-coding: UTF-8
-</p>
-
+			
 		</div>
 
 		<!-- Constants -->
@@ -175,17 +172,57 @@ coding: UTF-8
 
 		<!-- Methods -->
 		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="method-c-new"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(documents)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/classes/turtlecollection.rb, line 6</span>
+6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">documents</span>)
+7:     <span class="ruby-ivar">@documents</span> = <span class="ruby-identifier">documents</span>
+8:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
 		<div id="public-instance-method-details" class="method-section section">
 			<h3 class="section-header">Public Instance Methods</h3>
 
 		
-			<div id="default-attrs-method" class="method-detail ">
-				<a name="method-i-default_attrs"></a>
+			<div id="send-method" class="method-detail ">
+				<a name="method-i-send"></a>
 
 				<div class="method-heading">
 				
-					<span class="method-name">default_attrs</span><span
-						class="method-args">()</span>
+					<span class="method-name">send</span><span
+						class="method-args">(controller)</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
@@ -197,12 +234,13 @@ coding: UTF-8
 
 					
 					<div class="method-source-code"
-						id="default-attrs-source">
+						id="send-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 5</span>
-5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_attrs</span>
-6:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">false</span>
-7:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/classes/turtlecollection.rb, line 18</span>
+18:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">controller</span>)
+19:     <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">send_data</span> <span class="ruby-identifier">to_s</span>, <span class="ruby-value">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;export.ttl&quot;</span>, 
+20:       <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/turtle'</span>, <span class="ruby-value">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachment'</span>
+21:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -213,12 +251,12 @@ coding: UTF-8
 			</div>
 
 		
-			<div id="index-method" class="method-detail ">
-				<a name="method-i-index"></a>
+			<div id="to-s-method" class="method-detail ">
+				<a name="method-i-to_s"></a>
 
 				<div class="method-heading">
 				
-					<span class="method-name">index</span><span
+					<span class="method-name">to_s</span><span
 						class="method-args">()</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
@@ -231,55 +269,16 @@ coding: UTF-8
 
 					
 					<div class="method-source-code"
-						id="index-source">
+						id="to-s-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
-10:     <span class="ruby-comment cmt"># FIXME: configurable per_page, sitewide</span>
-11:     <span class="ruby-identifier">page</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:page</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">1</span>;
-12:     <span class="ruby-identifier">num</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:num</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:num</span>]) <span class="ruby-operator">:</span> <span class="ruby-value">10</span>;
-13:     
-14:     <span class="ruby-comment cmt"># Set all the variables, but then paginate the documents</span>
-15:     <span class="ruby-identifier">hash_to_instance_variables</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>)
-16:     <span class="ruby-ivar">@documents</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">page</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>)
-17:     <span class="ruby-ivar">@document_ids</span> = <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">shasum</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">','</span>)
-18:     
-19:     <span class="ruby-identifier">render</span> <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'index'</span>
-20:   <span class="ruby-keyword kw">end</span></pre>
-					</div>
-					
-				</div>
-
-				
-
-				
-			</div>
-
-		
-			<div id="search-method" class="method-detail ">
-				<a name="method-i-search"></a>
-
-				<div class="method-heading">
-				
-					<span class="method-name">search</span><span
-						class="method-args">()</span>
-					<span class="method-click-advice">click to toggle source</span>
-				
-				</div>
-
-				<div class="method-description">
-					
-					
-					
-
-					
-					<div class="method-source-code"
-						id="search-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/documents_controller.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search</span>
-23:     <span class="ruby-ivar">@no_searchbar</span> = <span class="ruby-keyword kw">true</span>
-24:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File app/classes/turtlecollection.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+11:     <span class="ruby-constant">RDF</span><span class="ruby-operator">::</span><span class="ruby-constant">Writer</span>.<span class="ruby-identifier">for</span>(<span class="ruby-value">:turtle</span>).<span class="ruby-identifier">buffer</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">writer</span><span class="ruby-operator">|</span>
+12:       <span class="ruby-ivar">@documents</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
+13:         <span class="ruby-identifier">writer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RDFSupport</span>.<span class="ruby-identifier">document_to_rdf</span>(<span class="ruby-identifier">d</span>)
+14:       <span class="ruby-keyword kw">end</span>
+15:     <span class="ruby-keyword kw">end</span>
+16:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
