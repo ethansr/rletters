@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>{{ page.title }}</title>
+  <meta name="author" content="Charles Pence" />
+  {% if page.microid %}<meta name="microid" content="{{ page.microid }}">{% endif %}
+
+  <link rel="stylesheet" href="/rletters/css/main.css" type="text/css" media="screen" charset="utf-8" />
+
+  <script type="text/javascript" src="/rletters/js/prototype.js"></script>
+  <script type="text/javascript" src="/rletters/js/scriptaculous.js?load=effects,builder"></script>
+  <script type="text/javascript" src="/rletters/js/lightbox.js"></script>
+  <link rel="stylesheet" href="/rletters/css/lightbox.css" type="text/css" media="screen" />
+<body>
+
+<div class="container">
+  
+  {{ content }}
+  
+  <div class="footer">
+  All content copyright &copy; 2010&ndash;2011 Charles Pence.  All web content
+  is released under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us">
+  CC-BY-NC-SA 3.0.</a>  Code is released under <a href="http://www.gnu.org/licenses/gpl.html">GPL
+  v3.</a>
+  </div>
+</body>
+</html>
+

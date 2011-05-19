@@ -1,0 +1,108 @@
+body
+{
+  font-family: "Helvetica Neue", Helvetica, "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 90%;
+}
+
+img
+{ border: 0; }
+
+tt, pre, code
+{ font-family: Inconsolata, Consolas, "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace; }
+pre
+{
+  font-size: 100%;
+
+  /* word-wrapping in <pre> tags */
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  width: 99%;
+}
+
+.container
+{
+  position: relative;
+  left: 50%;
+  width: 600px;
+  margin-left: -300px;
+}
+
+h1
+{
+  font-size: 2em;
+  font-weight: bold;
+  
+  color: #379cd6;
+}
+
+h2
+{
+  margin-top: 2em;
+
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.body h1
+{
+  /* style this as h3 */
+  font-size: 1.2em;
+  font-weight: bold;
+  color: black;
+  
+  margin: .83em 0;
+}
+
+.body h2
+{
+  /* style this as h4 */
+  font-size: 1.1em;
+  font-weight: bold;
+  color: black;
+  
+  margin: 1.12em 0;
+}
+
+h1 a:link, h2 a:link, h1 a:hover, h2 a:hover, h1 a:visited, h2 a:visited,
+h1 a:active, h2 a:active
+{ text-decoration: none; }
+
+h1 a:link, h1 a:hover, h1 a:visited, h1 a:active { color: #379cd6; }
+h2 a:link, h2 a:hover, h2 a:visited, h2 a:active { color: black; }
+
+.footer
+{
+  margin-top: 5em;
+
+  color: #aaa;
+  font-size: 80%;
+}
+
+
+a:link, a:visited, a:hover
+{
+  color: #379cd6;
+}
+
+
+p.sep
+{
+  margin: 1em 0;
+}
+
+img.icon
+{
+  vertical-align: middle;
+  margin: 0 1em 0 3em;
+}
+
+
+.docnav
+{
+  margin: 2em 0;
+  font-size: 0.8em;
+}
+
