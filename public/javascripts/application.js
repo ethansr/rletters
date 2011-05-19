@@ -1,5 +1,29 @@
 
 // ---------------------------------------------------------------------------
+// Google Bookmark Bubble
+
+window.addEventListener('load', function() {
+  window.setTimeout(function() {
+    var bubble = new google.bookmarkbubble.Bubble();
+
+    bubble.hasHashParameter = function() {
+      if (!window.localStorage.bookmarkBubble)
+        return false;
+      return window.localStorage.bookmarkBubble > 0;
+    };
+
+    bubble.setHashParameter = function() {
+      if (!this.hasHashParameter()) {
+        window.localStorage.bookmarkBubble = 1;
+      }
+    };
+    
+    bubble.showIfAllowed();
+  }, 1000);
+}, false);
+
+
+// ---------------------------------------------------------------------------
 // Collapsible list on iPhone for index page sidebar
 
 function createCollapsibleList() {
