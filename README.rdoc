@@ -1,6 +1,6 @@
 = RLetters
 
-Welcome to RLetters, an open-source Rails web application designed for the maintenance of a large database of academic journal articles.  Journal article content is stored in a {Solr}[http://lucene.apache.org/solr/] backend, and tools are provided to perform various text-mining and digital humanities work on the journal article content.
+Welcome to RLetters, an open-source Rails web application designed for the maintenance of a large database of academic journal articles.  Journal article content is stored in a {Solr}[http://lucene.apache.org/solr/] backend, and tools are provided to perform various text-mining and digital humanities work on the article text.
 
 RLetters is developed by the Digital Humanities Working Group at the University of Notre Dame.  The lead developer is {Charles Pence.}[http://charlespence.net]  The source to RLetters is freely available under the MIT License, and is {hosted at GitHub.}[http://github.com/cpence/rletters]
 
