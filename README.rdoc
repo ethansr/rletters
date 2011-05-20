@@ -51,6 +51,8 @@ Now you've got some images to customize.
     -   <tt>l/splash.png</tt>: 320x460 splash screen, displayed while loading the app on low-resolution iPhone and iPod Touch devices.
 - Finally, <tt>public/favicon.ico</tt>, the standard favorite icon.
 
+If you'd like, you can update the {humans.txt}[http://humanstxt.org] file at <tt>public/humans.txt</tt>.
+
 === Ready to go!
 
 Now you’re ready to roll!
