@@ -1,8 +1,9 @@
 - title t(:'help.header')
 
+- string = t params[:id], :app_name => APP_CONFIG['app_name']
 - if params[:id].to_s.end_with? '_markdown'
-  = raw(Maruku.new(t params[:id]).to_html)
+  = raw(Maruku.new(string).to_html)
 - else
-  %p= t params[:id]
+  %p= string
 
 %p= link_to t(:'help.close_button'), ':back', 'data-role' => 'button', 'data-rel' => 'back', 'data-theme' => 'b'
