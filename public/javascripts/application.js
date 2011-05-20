@@ -25,11 +25,14 @@ window.addEventListener('load', function() {
 // ---------------------------------------------------------------------------
 // Locale form on options page
 
-function localeRedirect() {
+function localeRedirect(def) {
   var select = $('div.ui-page-active').find('select.localeselect');
   if (select.length) {
     var idx = select[0].selectedIndex;
+    var lang = select[0].options[idx].value;
     var page = '/' + select[0].options[idx].value;
+    if (lang == def)
+      page = '/';
     $.mobile.changePage(page);
   }
 }
