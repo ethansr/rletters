@@ -1,11 +1,12 @@
+.DS_Store
 .bundle
 app/views/about/index.*
 !app/views/about/index.html.markdown.dist
 config/config.yml
 log/*
-!log/.gitkeep
 tmp/*
-!tmp/.gitkeep
 *.lock
 *.tmproj
-.DS_Store
+!*.gitkeep
+public/images/*
+
