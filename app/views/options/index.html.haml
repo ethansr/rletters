@@ -13,7 +13,7 @@
       = help_button :'help.options.languages_markdown'
     - locale = I18n.locale
     - locale ||= I18n.default_locale
-    = select_tag :locale, options_for_select(Hash[*APP_CONFIG['available_locales'].sort!{|a,b| locale_name(a)<=>locale_name(b)}.collect {|l| [locale_name(l), (l == I18n.default_locale? '' : l]}.flatten], locale), :'data-native-menu' => :false, :class => :localeselect
+    = select_tag :locale, options_for_select(Hash[*APP_CONFIG['available_locales'].sort!{|a,b| locale_name(a)<=>locale_name(b)}.collect {|l| [locale_name(l), (l == I18n.default_locale? '' : l)]}.flatten], locale), :'data-native-menu' => :false, :class => :localeselect
   = link_to t(:'options.locale_button'), 'javascript:localeRedirect();', :'data-role' => :button
 
 %div.verticalpad
