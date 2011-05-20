@@ -1,8 +1,6 @@
 TODO
 ----
 
-- We have the evoText icons and error pages in the public/
-  folder, can we do something about that?
 - Locale system
   - Implement a user settings page with a locale switcher
 - Come up with something intelligent to do with the flashes.
