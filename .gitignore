@@ -9,4 +9,4 @@ tmp/*
 *.tmproj
 !*.gitkeep
 public/images/*
-
+public/favicon.ico

@@ -49,6 +49,7 @@ Now you've got some images to customize.
     -   <tt>l/apple-touch-icon.png</tt> and <tt>l/apple-touch-icon-precomposed.png</tt>: 57x57 pixel iOS application icon.  This is used on low-resolution iPhone and iPod Touch devices.
     -   <tt>h/splash.png</tt>: 768x1004 splash screen, displayed while loading the app on retina-display iPhone devices.
     -   <tt>l/splash.png</tt>: 320x460 splash screen, displayed while loading the app on low-resolution iPhone and iPod Touch devices.
+- Finally, <tt>public/favicon.ico</tt>, the standard favorite icon.
 
 === Ready to go!
 
