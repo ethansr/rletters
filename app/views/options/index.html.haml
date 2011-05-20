@@ -23,12 +23,12 @@
 = form_tag options_path(:action => :setsession) do
   %div{ :'data-role' => :fieldcontain }
     = field_set_tag t(:'options.per_page_label'), 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
-      = radio_button_tag(:perpage, '10', true, :id => :perpage_ten)
+      = radio_button_tag(:perpage, '10', (session[:perpage].nil? || session[:perpage] == '10'), :id => :perpage_ten)
       = label_tag(:perpage_ten, '10')
-      = radio_button_tag(:perpage, '25', true, :id => :perpage_twofive)
+      = radio_button_tag(:perpage, '25', (session[:perpage] == '25'), :id => :perpage_twofive)
       = label_tag(:perpage_twofive, '25')
-      = radio_button_tag(:perpage, '50', true, :id => :perpage_fifty)
+      = radio_button_tag(:perpage, '50', (session[:perpage] == '50'), :id => :perpage_fifty)
       = label_tag(:perpage_fifty, '50')
-      = radio_button_tag(:perpage, '100', true, :id => :perpage_hund)
+      = radio_button_tag(:perpage, '100', (session[:perpage] == '100'), :id => :perpage_hund)
       = label_tag(:perpage_hund, '100')
   = submit_tag t :'options.save_button'
