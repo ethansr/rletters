@@ -38,7 +38,7 @@ RLetters::Application.routes.draw do
   match "about(/:action)", :controller => 'about', :as => 'about'
   match "help(/:id)", :controller => 'help', :action => 'message', :constraints => { :id => /[^\/]+/ }, :as => 'help'
   match "unapi(/:id)" => 'unapi#index', :as => 'unapi'
-  match "options" => 'options#index', :as => 'options'
+  match "options(/:action)", :controller => 'options', :as => 'options'
   
   root :to => "documents#index"
 end
