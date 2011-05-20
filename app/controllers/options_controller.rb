@@ -7,9 +7,13 @@ class OptionsController < ApplicationController
     redirect_to send("root_#{params[:locale]}_path")
   end
   
+  
+  SESSION_VARS = [ :perpage ]
+  
   def setsession
-    raise ActiveRecord::RecordNotFound if params[:key].blank?
-    raise ActiveRecord::RecordNotFound if params[:value].blank?
-    session[params[:key]] = params[:value]
+    SESSION_VARS.each { |v|
+      raise ActiveRecord::RecordNotFound if params[v].blank? }
+    SESSION_VARS.each { |v|
+      session[v] = params[v]}
   end
 end

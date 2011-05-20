@@ -20,10 +20,10 @@
 
 %h3= t :'options.session_header'
 
-= form_tag options_path(:action => :setsession, :key => :perpage) do
+= form_tag options_path(:action => :setsession) do
   %div{ :'data-role' => :fieldcontain }
-    = label_tag :value do
+    = label_tag :perpage do
       %span= t :'options.per_page_label'
       = help_button :'help.per_page'
-    = select_tag :value, options_for_select(['10', '25', '50', '100'])
+    = select_tag :perpage, options_for_select(['10', '25', '50', '100'])
   = submit_tag t :'options.save_button'
