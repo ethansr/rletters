@@ -15,5 +15,7 @@ class OptionsController < ApplicationController
       raise ActiveRecord::RecordNotFound if params[v].blank? }
     SESSION_VARS.each { |v|
       session[v] = params[v]}
+    
+    redirect_to root_path
   end
 end
