@@ -165,6 +165,8 @@ en:
         *   `title_search`: Article title, lowercased and stemmed  
         *   `journal_search`: Journal, lowercased and stemmed  
         *   `fulltext_search`: Full text of article, lowercased and stemmed
+    
+    options:
       languages_markdown: >
         The following languages are available in %{app_name}.  Not all of these
         languages will result in a completely translated user interface -- many,
