@@ -22,6 +22,17 @@ window.addEventListener('load', function() {
   }, 1000);
 }, false);
 
+// ---------------------------------------------------------------------------
+// Locale form on options page
+
+function localeRedirect() {
+  var form = $('#localeform');
+  if (form.length) {
+    var idx = form.locale.selectedIndex;
+    var page = '/' + form.locale.options[idx].value;
+    $.mobile.changePage(page);
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Collapsible list on iPhone for index page sidebar

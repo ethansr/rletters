@@ -6,7 +6,7 @@
 
 %h3= t :'options.locale_header'
 
-= form_tag options_path(:action => :locale) do
+= form_tag options_path(:action => :locale), :id => :localeform do
   %div{ :'data-role' => :fieldcontain }
     = label_tag :locale do
       %span= t :'options.locale_label'
@@ -14,7 +14,7 @@
     - locale = I18n.locale
     - locale ||= I18n.default_locale
     = select_tag :locale, options_for_select(Hash[*APP_CONFIG['available_locales'].sort!{|a,b| locale_name(a)<=>locale_name(b)}.collect {|l| [locale_name(l), l]}.flatten], locale), :'data-native-menu' => :false
-  = submit_tag t :'options.locale_button'
+  = link_to t(:'options.locale_button'), 'javascript:localeRedirect();', :'data-role' => :button
 
 %div.verticalpad
 
