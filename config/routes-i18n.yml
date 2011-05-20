@@ -1,7 +1,6 @@
 # Leave the default translation blank
 en:
   
-
 # Spanish (Charles Pence)
 es:
   documents: documentos
@@ -17,3 +16,66 @@ es:
   languages: lenguajes
   help: ayuda
   options: opci%C3%B3nes
+
+# There must be a block for every locale, even ones that are not yet finished,
+# as the redirects will fail otherwise
+ar:
+  
+cs:
+  
+cy:
+  
+da:
+  
+de:
+  
+eo:
+  
+et:
+  
+eu:
+  
+fa:
+  
+fi:
+  
+fr:
+  
+gsw:
+  
+he:
+  
+hi:
+  
+is:
+  
+it:
+  
+ja:
+  
+ko:
+  
+lv:
+  
+nb:
+  
+nl:
+  
+pl:
+  
+pt:
+  
+ru:
+  
+sk:
+  
+sv:
+  
+sw:
+  
+th:
+  
+uk:
+  
+zh:
+  
