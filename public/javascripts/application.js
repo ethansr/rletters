@@ -26,10 +26,10 @@ window.addEventListener('load', function() {
 // Locale form on options page
 
 function localeRedirect() {
-  var form = $('#localeform');
-  if (form.length) {
-    var idx = form.locale.selectedIndex;
-    var page = '/' + form.locale.options[idx].value;
+  var select = $('div.ui-page-active').find('select.localeselect');
+  if (select.length) {
+    var idx = select[0].selectedIndex;
+    var page = '/' + select[0].options[idx].value;
     $.mobile.changePage(page);
   }
 }
