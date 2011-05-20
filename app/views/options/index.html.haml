@@ -6,7 +6,7 @@
 
 %h3= t :'options.locale_header'
 
-= form_tag :controler => :options, :action => :locale do
+= form_tag options_path(:action => :locale) do
   %div{ :'data-role' => :fieldcontain }
     = label_tag :locale do
       %span= t :'options.locale_label'
@@ -18,7 +18,7 @@
 
 %h3= t :'options.session_header'
 
-= form_tag :controller => :options, :action => :setsession, :key => :perpage do
+= form_tag options_path(:action => :setsession, :key => :perpage) do
   %div{ :'data-role' => :fieldcontain }
     = label_tag :value do
       %span= t :'options.per_page_label'
