@@ -13,7 +13,7 @@
       = help_button :'help.languages_markdown'
     - locale = I18n.locale
     - locale ||= I18n.default_locale
-    = select_tag :locale, options_for_select(Hash[*APP_CONFIG['available_locales'].collect { |loc| [locale_name(loc), loc] }.flatten], locale)
+    = select_tag :locale, options_for_select(Hash[*APP_CONFIG['available_locales'].collect { |loc| [locale_name(loc), loc] }.flatten], locale), :'data-native-menu' => :false
   = submit_tag t :'options.locale_button'
 
 %div.verticalpad
@@ -25,5 +25,5 @@
     = label_tag :perpage do
       %span= t :'options.per_page_label'
       = help_button :'help.per_page'
-    = select_tag :perpage, options_for_select(['10', '25', '50', '100'])
+    = select_tag :perpage, options_for_select(['10', '25', '50', '100']), :'data-native-menu' => :false
   = submit_tag t :'options.save_button'
