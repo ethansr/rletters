@@ -16,12 +16,15 @@ class DocumentsController < ApplicationController
   # The primary document index, showing a list of documents, from a flat
   # query to the database, as a result of filtered browsing, or as a set
   # of search results.
-  #
-  # *FIXME* -- We need a configurable way to set the "per_page" parameter
-  # site-wide, so that users can configure the size of result sets.
   def index
     page = params.has_key?(:page) ? Integer(params[:page]) : 1;
-    num = params.has_key?(:num) ? Integer(params[:num]) : 10;
+    if session.has_key?(:perpage)
+      num = Integer(session[:perpage])
+    elsif params.has_key?(:num)
+      num = Integer(params[:num])
+    else
+      num = 10
+    end
     
     # Set all the variables, but then paginate the documents
     hash_to_instance_variables Document.search(params)

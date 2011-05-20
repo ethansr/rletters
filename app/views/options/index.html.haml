@@ -1,0 +1,27 @@
+- title t :'options.header'
+
+%h2= t :'options.header'
+
+%div.verticalpad
+
+%h3= t :'options.locale_header'
+
+= form_tag :controler => :options, :action => :locale do
+  %div{ :'data-role' => :fieldcontain }
+    = label_tag :locale do
+      %span= t :'options.locale_label'
+      = help_button :'help.languages_markdown'
+    = select_tag :locale, options_for_select(Hash[*APP_CONFIG['available_locales'].collect { |loc| [local_name(loc), loc] }])
+  = submit_tag t :'options.locale_button'
+
+%div.verticalpad
+
+%h3= t :'options.session_header'
+
+= form_tag :controller => :options, :action => :setsession, :key => :perpage do
+  %div{ :'data-role' => :fieldcontain }
+    = label_tag :value do
+      %span= t :'options.per_page_label'
+      = help_button :'help.per_page'
+    = select_tag :value, options_for_select(['10', '25', '50', '100'])
+  = submit_tag t :'options.save_button'

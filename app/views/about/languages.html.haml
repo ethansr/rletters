@@ -1,7 +1,0 @@
-= raw(Maruku.new(t(:'about.languages_markdown', :app_name => APP_CONFIG['app_name'])).to_html)
-
-%p= t(:'about.languages_list')
-
-%ul
-  - APP_CONFIG['available_locales'].each do |l|
-    %li= locale_name(l)
