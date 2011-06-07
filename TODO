@@ -1,11 +1,5 @@
 TODO
 ----
 
-- Locale system
-  - Implement a user settings page with a locale switcher
 - Come up with something intelligent to do with the flashes.
   Could I redirect them into a JQM dialog box somehow?
-- Figure out how to save/edit user definable parameters, such
-  as locale, documents-per-page, etc. (are there more of these
-  than that, or should there be?)
-
