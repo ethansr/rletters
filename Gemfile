@@ -25,6 +25,9 @@ gem "maruku"
 # JQuery
 gem "jquery-rails"
 
+# Citation processor for formatting
+gem "citeproc-ruby"
+
 # Various output formats: MARC, XML, etc.
 gem "marc"
 gem "builder"

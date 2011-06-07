@@ -5,7 +5,6 @@ app/views/about/index.*
 config/config.yml
 log/*
 tmp/*
-*.lock
 *.tmproj
 !*.gitkeep
 public/images/*
