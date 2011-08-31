@@ -4,6 +4,14 @@
 # Markup helper code for the documents controller.  Primarily extensive code
 # to help process Solr faceted browsing queries.
 module DocumentsHelper
+  
+  # Make a link to a page (where num is the *displayed* page number, 1-based).
+  def page_link(text, num)
+    new_params = params.dup
+    new_params[:page] = num - 1
+    
+    link_to text, documents_path(new_params), 'data-transition' => 'none'
+  end
 
   # Render the pagination links given 'page', 'per_page',
   # and 'num_results'.  We add the pagination to the current params.
@@ -16,31 +24,42 @@ module DocumentsHelper
     num_pages = num_results.to_f / per_page.to_f
     num_pages = Integer(num_pages.ceil)
     
-    ret = "previous "
+    # Previous-page link
+    if page != 0
+      ret = page_link("previous", page)
+    else
+      ret = "previous"
+    end
     
+    # Whatever number links are currently appropriate
     if num_pages < 15
       # Just draw all of the pages if it's this short
-      ret += (1..num_pages).to_a.join(' ')
+      ret += (1..num_pages).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
     elsif page < 8
       # Draw 1-10, dots, N-1, N
-      ret += (1..10).to_a.join(' ')
+      ret += (1..10).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
       ret += " ... "
-      ret += (num_pages-1..num_pages).to_a.join(' ')
+      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
     elsif page >= num_pages - 8
       # Draw 1-2, dots, N-9-N
-      ret += (1..2).to_a.join(' ')
+      ret += (1..2).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
       ret += " ... "
-      ret += (num_pages-9..num_pages).to_a.join(' ')
+      ret += (num_pages-9..num_pages).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
     else
       # Draw 1-2, dots, 3 around center, dots, N-1, N
-      ret += (1..2).to_a.join(' ')
+      ret += (1..2).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
       ret += " ... "
-      ret += (page-2..page+4).to_a.join(' ')
+      ret += (page-2..page+4).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
       ret += " ... "
-      ret += (num_pages-1..num_pages).to_a.join(' ')
+      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
     end
 
-    ret += " next"
+    # Next-page link
+    if page != num_pages - 1
+      ret = page_link("next", page + 2)
+    else
+      ret = "next"
+    end
     
     raw(ret)
   end
