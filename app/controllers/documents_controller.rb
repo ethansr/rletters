@@ -1,5 +1,8 @@
 # coding: UTF-8
 
+# You have to explicitly request pagination of arrays with will_paginate
+require 'will_paginate/array'
+
 
 # The primary controller, which serves all requests having to do with document
 # display and searching.
