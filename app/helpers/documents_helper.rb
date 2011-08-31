@@ -13,22 +13,17 @@ module DocumentsHelper
     new_params[:page] = num - 1
     
     if num == current
-      if button
-        style = { :'data-transition' => :none, :'data-role' => :button, :'data-inline' => :true }
-        style[:'data-icon'] = icon unless icon.empty?
-        
-        link_to text, "#", style
-      else
-        text
-      end
+      target = "#"
     else
-      style = { :'data-transition' => :none }
-      style[:'data-role'] = :button if button
-      style[:'data-inline'] = :true if button
-      style[:'data-icon'] = icon unless icon.empty?
-      
-      link_to text, documents_path(new_params), style
+      target = documents_path(new_params)
     end
+    
+    style = { :class => :paglink, :'data-transition' => :none }
+    style[:'data-role'] = :button if button
+    style[:'data-inline'] = :true if button
+    style[:'data-icon'] = icon unless icon.empty?
+
+    link_to text, target, style
   end
 
   # Render the pagination links given 'page', 'per_page',
@@ -46,29 +41,26 @@ module DocumentsHelper
     # Previous-page link
     ret = page_link(I18n.t(:'index.previous_button'), page, page + 1, true, 'arrow-l')
     
-    # Whatever number links are currently appropriate
+    # Figure out a set of ranges of numbers we need to draw
+    ranges = []
+    
     if num_pages < 15
-      # Just draw all of the pages if it's this short
-      ret += (1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
+      ranges << 1..num_pages
     elsif page < 8
-      # Draw 1-10, dots, N-1, N
-      ret += (1..10).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
-      ret += " ... "
-      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
+      ranges << 1..10
+      ranges << num_pages - 1..num_pages
     elsif page >= num_pages - 8
-      # Draw 1-2, dots, N-9-N
-      ret += (1..2).to_a.map { |i| page_link(i.to_s, i) }.join(' ').html_safe
-      ret += " ... "
-      ret += (num_pages-9..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
+      ranges << 1..2
+      ranges << num_pages - 9..num_pages
     else
-      # Draw 1-2, dots, 3 around center, dots, N-1, N
-      ret += (1..2).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
-      ret += " ... "
-      ret += (page-2..page+4).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
-      ret += " ... "
-      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
+      ranges << 1..2
+      ranges << page - 2..page + 4
+      ranges << num_pages - 1..num_pages
     end
-
+    
+    sep = '<span class="pagsep"> &hellip; </span>'.html_safe
+    ret += ranges.each { |r| r.to_a.map { |i| page_link(i.to_s, i, page + 1) }.join('') }.join(sep) 
+    
     # Next-page link
     ret += page_link(I18n.t(:'index.next_button'), page + 2, page + 1, true, 'arrow-r')
     
