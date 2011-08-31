@@ -23,9 +23,7 @@
   %div.verticalpad
           
   %p= render_pagination @page, @per_page, @num_results
-  %p= link_to t(:'index.export_download'), formats_document_export_path(@document_ids)
-  %p= link_to t(:'index.options'), options_path
-
+  
   %div.verticalpad
 
 %div.rightcolumn
@@ -49,3 +47,9 @@
 
     %li{ 'data-role' => 'list-divider', 'data-icon' => 'search', 'data-theme' => 'c' }
       = link_to t(:'index.advanced_search'), search_documents_path
+    
+    %li{ 'data-role' => 'list-divider', 'data-icon' => 'check', 'data-theme' => 'c' }
+      = link_to t(:'index.export_download'), formats_document_export_path(@document_ids)
+
+    %li{ 'data-role' => 'list-divider', 'data-icon' => 'check', 'data-theme' => 'c' }
+      = link_to t(:'index.options'), options_path
