@@ -14,7 +14,6 @@ gem "haml"
 
 # Solr
 gem "rsolr"
-gem "rsolr-ext"
 
 # Markdown
 gem "maruku"

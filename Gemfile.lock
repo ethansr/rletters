@@ -89,8 +89,6 @@ GEM
       rdf (~> 0.3.0)
     rsolr (1.0.2)
       builder (>= 2.1.2)
-    rsolr-ext (1.0.1)
-      rsolr (>= 1.0.1)
     rubyzip (0.9.4)
     sass (3.1.2)
     syntax (1.0.0)
@@ -116,6 +114,5 @@ DEPENDENCIES
   rdf
   rdf-raptor
   rsolr
-  rsolr-ext
   rubyzip
   translate_routes
