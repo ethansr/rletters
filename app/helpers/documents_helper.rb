@@ -13,7 +13,7 @@ module DocumentsHelper
     new_params[:page] = num - 1
     
     if num == current
-      if :button
+      if button
         style = {
           :'data-transition' => :none,
           :'data-role' => :button
