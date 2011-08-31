@@ -48,30 +48,30 @@ module DocumentsHelper
     # Whatever number links are currently appropriate
     if num_pages < 15
       # Just draw all of the pages if it's this short
-      ret += (1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ')
+      ret += (1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
     elsif page < 8
       # Draw 1-10, dots, N-1, N
-      ret += (1..10).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ')
+      ret += (1..10).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
       ret += " ... "
-      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ')
+      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
     elsif page >= num_pages - 8
       # Draw 1-2, dots, N-9-N
-      ret += (1..2).to_a.map { |i| page_link(i.to_s, i) }.join(' ')
+      ret += (1..2).to_a.map { |i| page_link(i.to_s, i) }.join(' ').html_safe
       ret += " ... "
-      ret += (num_pages-9..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ')
+      ret += (num_pages-9..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
     else
       # Draw 1-2, dots, 3 around center, dots, N-1, N
-      ret += (1..2).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ')
+      ret += (1..2).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
       ret += " ... "
-      ret += (page-2..page+4).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ')
+      ret += (page-2..page+4).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
       ret += " ... "
-      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ')
+      ret += (num_pages-1..num_pages).to_a.map { |i| page_link(i.to_s, i, page + 1) }.join(' ').html_safe
     end
 
     # Next-page link
     ret += page_link("next", page + 2, page + 1)
     
-    raw(ret)
+    ret.html_safe
   end
 
   
