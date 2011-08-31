@@ -41,19 +41,29 @@ module DocumentsHelper
     # Previous-page link
     ret = page_link(I18n.t(:'index.previous_button'), page, page + 1, true, 'arrow-l')
     
-    # Figure out a set of ranges of numbers we need to draw
+    # Figure out a set of ranges of numbers we need to draw.  The empty 0..0
+    # range encodes an ellipsis.
     if num_pages < 15
       ranges = [ (1..num_pages) ]
     elsif page < 8
-      ranges = [ (1..10), (num_pages - 1..num_pages) ]
+      ranges = [ (1..10), (0..0), (num_pages - 1..num_pages) ]
     elsif page >= num_pages - 8
-      ranges = [ (1..2), (num_pages - 9..num_pages) ]
+      ranges = [ (1..2), (0..0), (num_pages - 9..num_pages) ]
     else
-      ranges = [ (1..2), (page - 2..page + 4), (num_pages - 1..num_pages) ]
+      ranges = [ (1..2), (0..0), (page - 2..page + 4), (0..0), (num_pages - 1..num_pages) ]
     end
     
     sep = '<span class="pagsep"> &hellip; </span>'.html_safe
-    ranges.each { |r| r.each { |i| ret += page_link(i.to_s, i, page + 1).html_safe }; ret += sep }
+
+    ranges.each do |r|
+      r.each do |i|
+        if r.begin == 0
+          ret += sep
+        else
+          ret += page_link(i.to_s, i, page + 1).html_safe
+        end
+      end
+    end
     
     # Next-page link
     ret += page_link(I18n.t(:'index.next_button'), page + 2, page + 1, true, 'arrow-r')
