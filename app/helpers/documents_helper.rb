@@ -6,15 +6,30 @@
 module DocumentsHelper
   
   # Make a link to a page (where num is the *displayed* page number, 1-based).
-  # No link will be generated if num == current.
-  def page_link(text, num, current)
+  # No link will be generated if num == current.  Proper support as well for
+  # buttons with optional icons.
+  def page_link(text, num, current, button = false, icon = '')
     new_params = params.dup
     new_params[:page] = num - 1
     
     if num == current
-      text
+      if :button
+        style = {
+          :'data-transition' => :none,
+          :'data-role' => :button
+        }
+        style[:'data-icon'] => icon unless icon.empty?
+        
+        link_to text, "#", style
+      else
+        text
+      end
     else
-      link_to text, documents_path(new_params), 'data-transition' => 'none'
+      style = { :'data-transition' => :none }
+      style[:'data-role'] => :button if button
+      style[:'data-icon'] => icon unless icon.empty?
+      
+      link_to text, documents_path(new_params), style
     end
   end
 
@@ -32,8 +47,9 @@ module DocumentsHelper
     
     # Previous-page link
     if page != 0
-      ret = page_link("previous", page, page + 1)
+      ret = page_link("previous", page, page + 1, true, 'arrow-l')
     else
+      
       ret = "previous"
     end
     
