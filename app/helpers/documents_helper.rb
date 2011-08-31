@@ -42,20 +42,14 @@ module DocumentsHelper
     ret = page_link(I18n.t(:'index.previous_button'), page, page + 1, true, 'arrow-l')
     
     # Figure out a set of ranges of numbers we need to draw
-    ranges = []
-    
     if num_pages < 15
-      ranges << 1..num_pages
+      ranges = [ 1..num_pages ]
     elsif page < 8
-      ranges << 1..10
-      ranges << num_pages - 1..num_pages
+      ranges = [ 1..10, num_pages - 1..num_pages ]
     elsif page >= num_pages - 8
-      ranges << 1..2
-      ranges << num_pages - 9..num_pages
+      ranges = [ 1..2, num_pages - 9..num_pages ]
     else
-      ranges << 1..2
-      ranges << page - 2..page + 4
-      ranges << num_pages - 1..num_pages
+      ranges = [ 1..2, page - 2..page + 4, num_pages - 1..num_pages ]
     end
     
     sep = '<span class="pagsep"> &hellip; </span>'.html_safe
