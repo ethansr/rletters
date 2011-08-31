@@ -18,9 +18,10 @@ module DocumentsHelper
       target = documents_path(new_params)
     end
     
-    style = { :class => :paglink, :'data-transition' => :none }
+    style = { :'data-transition' => :none }
     style[:'data-role'] = :button if button
     style[:'data-inline'] = :true if button
+    style[:class] = :paglink unless button
     style[:'data-icon'] = icon unless icon.empty?
 
     link_to text, target, style
