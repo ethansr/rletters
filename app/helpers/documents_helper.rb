@@ -21,6 +21,7 @@ module DocumentsHelper
   #  For 9-(N-9): prev 1 2 ... C-3 C-2 C-1 C C+1 C+2 C+3 ... N-1 N next
   #  For (N-8)-end: prev 1 2 ... N-9 N-8 N-7 N-6 N-5 N-4 N-3 N-2 N-1 N next
   def render_pagination(page, per_page, num_results)
+    page = Integer(page)
     num_pages = num_results.to_f / per_page.to_f
     num_pages = Integer(num_pages.ceil)
     
