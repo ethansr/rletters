@@ -28,7 +28,6 @@ class DocumentsController < ApplicationController
     
     # Set all the variables, but then paginate the documents
     hash_to_instance_variables Document.search(params)
-    @num_results = @documents.length
     @documents = @documents.paginate(:page => page, :per_page => num)
     @document_ids = @documents.map { |d| d.shasum }.join(',')
     
@@ -46,7 +45,6 @@ class DocumentsController < ApplicationController
   # the document, including its full text, possibly with a highlighting query.
   def get_document # :doc:
     hash_to_instance_variables Document.find(params[:id], true, params[:hl_word])
-    @num_results = 1
   end
   private :get_document
   

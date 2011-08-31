@@ -329,6 +329,7 @@ class Document
     
     { :documents => solr_response["response"]["docs"].collect { |doc| Document.new doc },
       :query_time => Float(solr_response["responseHeader"]["QTime"]) / 1000.0,
+      :num_results => Integer(solr_response["response"]["numFound"]),
       :facets => facets }
   end
   
