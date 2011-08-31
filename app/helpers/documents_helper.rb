@@ -57,9 +57,9 @@ module DocumentsHelper
 
     # Next-page link
     if page != num_pages - 1
-      ret = page_link("next", page + 2)
+      ret += page_link("next", page + 2)
     else
-      ret = "next"
+      ret += "next"
     end
     
     raw(ret)
