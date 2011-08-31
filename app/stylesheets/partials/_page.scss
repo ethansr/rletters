@@ -58,6 +58,12 @@ div.header div.nosearchbar div.controls div.buttons {
 // Pagination links
 .pagination {
   text-align: center;
+  
+  .paglink, .pagsep {
+    text-decoration: none;
+    padding: 0.5em;
+  }
+  .paglink { border: 1px solid #444; }
 }
 
 
