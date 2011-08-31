@@ -1,8 +1,5 @@
 # coding: UTF-8
 
-# You have to explicitly request pagination of arrays with will_paginate
-require 'will_paginate/array'
-
 
 # The primary controller, which serves all requests having to do with document
 # display and searching.
@@ -20,19 +17,21 @@ class DocumentsController < ApplicationController
   # query to the database, as a result of filtered browsing, or as a set
   # of search results.
   def index
-    page = params.has_key?(:page) ? Integer(params[:page]) : 1;
-    if session.has_key?(:perpage)
-      num = Integer(session[:perpage])
-    elsif params.has_key?(:num)
-      num = Integer(params[:num])
+    page = params.has_key?(:page) ? params[:page] : 0;
+    if session.has_key?(:per_page)
+      per_page = session[:per_page]
     else
-      num = 10
+      per_page = 10
     end
     
-    # Set all the variables, but then paginate the documents
+    params[:page] = page
+    params[:per_page] = per_page
+    
+    # Set all the variables
     hash_to_instance_variables Document.search(params)
-    @documents = @documents.paginate(:page => page, :per_page => num)
     @document_ids = @documents.map { |d| d.shasum }.join(',')
+    @page = page
+    @per_page = per_page
     
     render :layout => 'index'
   end

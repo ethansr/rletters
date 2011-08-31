@@ -4,6 +4,47 @@
 # Markup helper code for the documents controller.  Primarily extensive code
 # to help process Solr faceted browsing queries.
 module DocumentsHelper
+
+  # Render the pagination links given 'page', 'per_page',
+  # and 'num_results'.  We add the pagination to the current params.
+  #
+  # The way we render (inspired by Flickr):
+  #  For 1-8: prev 1 2 3 4 5 6 7 8 9 10 ... N-1 N next
+  #  For 9-(N-9): prev 1 2 ... C-3 C-2 C-1 C C+1 C+2 C+3 ... N-1 N next
+  #  For (N-8)-end: prev 1 2 ... N-9 N-8 N-7 N-6 N-5 N-4 N-3 N-2 N-1 N next
+  def render_pagination(page, per_page, num_results)
+    num_pages = num_results.to_f / per_page.to_f
+    num_pages = Integer(num_pages.ceil)
+    
+    ret = "previous "
+    
+    if num_pages < 15
+      # Just draw all of the pages if it's this short
+      ret += (1..num_pages).to_a.join(' ')
+    elsif page < 8
+      # Draw 1-10, dots, N-1, N
+      ret += (1..10).to_a.join(' ')
+      ret += " ... "
+      ret += (num_pages-1..num_pages).to_a.join(' ')
+    elsif page >= num_pages - 8
+      # Draw 1-2, dots, N-9-N
+      ret += (1..2).to_a.join(' ')
+      ret += " ... "
+      ret += (num_pages-9..num_pages).to_a.join(' ')
+    else
+      # Draw 1-2, dots, 3 around center, dots, N-1, N
+      ret += (1..2).to_a.join(' ')
+      ret += " ... "
+      ret += (page-2..page+4).to_a.join(' ')
+      ret += " ... "
+      ret += (num_pages-1..num_pages).to_a.join(' ')
+    end
+
+    ret += " next"
+    
+    raw(ret)
+  end
+
   
   # A list of available facets.  We allow faceted browsing on authors,
   # journals, and decade of publication.

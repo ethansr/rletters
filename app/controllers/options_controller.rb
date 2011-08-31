@@ -1,7 +1,7 @@
 class OptionsController < ApplicationController
   def index; end
   
-  SESSION_VARS = [ :perpage ]
+  SESSION_VARS = [ :per_page ]
   def setsession
     SESSION_VARS.each { |v|
       raise ActiveRecord::RecordNotFound if params[v].blank? }

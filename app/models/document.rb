@@ -259,6 +259,15 @@ class Document
     params.delete_if { |k, v| v.blank? }
     query_params = { :fq => params[:fq] }
     
+    page = 0
+    page = Integer(params[:page]) if params.has_key? :page
+    
+    per_page = 10
+    per_page = Integer(params[:per_page]) if params.has_key? :per_page
+    
+    query_params[:start] = page * per_page
+    query_params[:rows] = per_page
+    
     if params.has_key? :precise
       query_params[:qt] = "precise"
       query_params[:q] = "#{params[:q]} "
