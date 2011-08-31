@@ -114,8 +114,10 @@ class Document
     params << "&rft.epage=#{CGI::escape(end_page)}" unless end_page.blank?
     params << "&rft.aufirst=#{CGI::escape(formatted_author_list[0][:first])}" unless formatted_author_list.empty?
     params << "&rft.aulast=#{CGI::escape(formatted_author_list[0][:last])}" unless formatted_author_list.empty?
-    author_list[1...author_list.size].each do |a|
-      params << "&rft.au=#{CGI::escape(a)}"
+    if author_list.size > 1
+      author_list[1...author_list.size].each do |a|
+        params << "&rft.au=#{CGI::escape(a)}"
+      end
     end
     params
   end
