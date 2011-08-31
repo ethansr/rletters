@@ -53,7 +53,7 @@ module DocumentsHelper
     end
     
     sep = '<span class="pagsep"> &hellip; </span>'.html_safe
-    ranges.each { |r| r.each { |i| ret += page_link(i.to_s, i, page + 1).html_safe } ret += sep }
+    ranges.each { |r| r.each { |i| ret += page_link(i.to_s, i, page + 1).html_safe }; ret += sep }
     
     # Next-page link
     ret += page_link(I18n.t(:'index.next_button'), page + 2, page + 1, true, 'arrow-r')
