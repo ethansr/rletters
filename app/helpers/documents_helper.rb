@@ -18,7 +18,7 @@ module DocumentsHelper
           :'data-transition' => :none,
           :'data-role' => :button
         }
-        style[:'data-icon'] => icon unless icon.empty?
+        style[:'data-icon'] = icon unless icon.empty?
         
         link_to text, "#", style
       else
@@ -26,8 +26,8 @@ module DocumentsHelper
       end
     else
       style = { :'data-transition' => :none }
-      style[:'data-role'] => :button if button
-      style[:'data-icon'] => icon unless icon.empty?
+      style[:'data-role'] = :button if button
+      style[:'data-icon'] = icon unless icon.empty?
       
       link_to text, documents_path(new_params), style
     end
