@@ -26,7 +26,7 @@ module DocumentsHelper
       style[:'data-role'] = :button if button
       style[:'data-icon'] = icon unless icon.empty?
       
-      link_to style.to_s, documents_path(new_params), style
+      link_to text, documents_path(new_params), style
     end
   end
 
@@ -43,12 +43,7 @@ module DocumentsHelper
     num_pages = Integer(num_pages.ceil)
     
     # Previous-page link
-    if page != 0
-      ret = page_link("previous", page, page + 1, true, 'arrow-l')
-    else
-      
-      ret = "previous"
-    end
+    ret = page_link("previous", page, page + 1, true, 'arrow-l')
     
     # Whatever number links are currently appropriate
     if num_pages < 15
@@ -74,11 +69,7 @@ module DocumentsHelper
     end
 
     # Next-page link
-    if page != num_pages - 1
-      ret += page_link("next", page + 2, page + 1)
-    else
-      ret += "next"
-    end
+    ret += page_link("next", page + 2, page + 1)
     
     raw(ret)
   end
