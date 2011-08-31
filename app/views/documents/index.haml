@@ -19,10 +19,13 @@
         %li{ 'data-icon' => 'info' }
           = link_to document_path(doc) do
             = render :partial => "cite", :locals => { :document => doc }
-      %li= render_pagination @page, @per_page, @num_results
-      %li{ :class => :'small-li', :'data-theme' => :c }= link_to t(:'index.export_download'), formats_document_export_path(@document_ids)
-      %li{ :class => :'small-li', :'data-theme' => :c, :'data-icon' => :gear }= link_to t(:'index.options'), options_path
   
+  %div.verticalpad
+          
+  %p= render_pagination @page, @per_page, @num_results
+  %p= link_to t(:'index.export_download'), formats_document_export_path(@document_ids)
+  %p= link_to t(:'index.options'), options_path
+
   %div.verticalpad
 
 %div.rightcolumn
