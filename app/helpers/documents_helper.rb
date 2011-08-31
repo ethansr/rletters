@@ -43,13 +43,13 @@ module DocumentsHelper
     
     # Figure out a set of ranges of numbers we need to draw
     if num_pages < 15
-      ranges = [ 1..num_pages ]
+      ranges = [ (1..num_pages) ]
     elsif page < 8
-      ranges = [ 1..10, num_pages - 1..num_pages ]
+      ranges = [ (1..10), (num_pages - 1..num_pages) ]
     elsif page >= num_pages - 8
-      ranges = [ 1..2, num_pages - 9..num_pages ]
+      ranges = [ (1..2), (num_pages - 9..num_pages) ]
     else
-      ranges = [ 1..2, page - 2..page + 4, num_pages - 1..num_pages ]
+      ranges = [ (1..2), (page - 2..page + 4), (num_pages - 1..num_pages) ]
     end
     
     sep = '<span class="pagsep"> &hellip; </span>'.html_safe
