@@ -62,9 +62,11 @@ div.header div.nosearchbar div.controls div.buttons {
   .paglink, .pagsep {
     text-decoration: none;
     padding: 0.3em;
+  }
+  .paglink {
+    border: 1px solid #444;
     margin: 0.3em;
   }
-  .paglink { border: 1px solid #444; }
 }
 
 
