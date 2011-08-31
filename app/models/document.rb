@@ -20,7 +20,7 @@ class Document
   attr_reader :authors
   
   # A list of document authors, for iteration
-  def author_list; authors.split(",").map!{ |a| a.strip! || a }; end
+  def author_list; authors.split(",").map!{ |a| a.strip! || a } || []; end
   
   # A list of formatted author names, passed through +Document.author_name_parts+
   attr_reader :formatted_author_list
