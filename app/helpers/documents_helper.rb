@@ -103,6 +103,8 @@ module DocumentsHelper
     link = decade unless link
     if decade == "1790"
       query = "[* TO 1799]"
+    elsif decade == "2010"
+      query = "[2010 TO *]"
     else
       last = Integer(decade) + 9
       query = "[#{decade} TO #{last}]"
@@ -137,7 +139,7 @@ module DocumentsHelper
       if facet[:field] == 'year'
         parts = value[1..-2].split(" ")
         if parts[0] == '*'
-          value = I18n.t(:'filters.pub_date_later')
+          value = I18n.t(:'filters.pub_date_earlier')
         elsif parts[2] == '*'
           value = I18n.t(:'filters.pub_date_later')
         else
@@ -203,9 +205,9 @@ module DocumentsHelper
         
         # Figure out the correct link text
         if year_start == '*'
-          link_text = I18n.t(:'pub_date_earlier')
+          link_text = I18n.t(:'filters.pub_date_earlier')
         elsif year_end == '*'
-          link_text = I18n.t(:'pub_date_later')
+          link_text = I18n.t(:'filters.pub_date_later')
         else
           link_text = "#{year_start}-#{year_end}"
         end
