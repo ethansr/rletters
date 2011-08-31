@@ -14,7 +14,7 @@ module DocumentsHelper
     
     if num == current
       if button
-        style = { :'data-transition' => :none, :'data-role' => :button }
+        style = { :'data-transition' => :none, :'data-role' => :button, :'data-inline' => :true }
         style[:'data-icon'] = icon unless icon.empty?
         
         link_to text, "#", style
@@ -24,6 +24,7 @@ module DocumentsHelper
     else
       style = { :'data-transition' => :none }
       style[:'data-role'] = :button if button
+      style[:'data-inline'] = :true if button
       style[:'data-icon'] = icon unless icon.empty?
       
       link_to text, documents_path(new_params), style
@@ -69,7 +70,7 @@ module DocumentsHelper
     end
 
     # Next-page link
-    ret += page_link("next", page + 2, page + 1)
+    ret += page_link("next", page + 2, page + 1, true, 'arrow-r')
     
     ret.html_safe
   end
