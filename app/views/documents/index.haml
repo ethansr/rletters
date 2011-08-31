@@ -5,16 +5,16 @@
   %ul.columnul{ 'data-role' => 'listview', 'data-theme' => 'd' }
     %li.list-searchbar{ 'data-theme' => 'c' }
       = render :partial => "layouts/searchbar"
-    - if @documents.length == 0
+    - if @num_results == 0
       %li{ 'data-icon' => 'warning', 'data-theme' => 'e' }
         %h3= t :'index.no_documents_header'
         %p= t :'index.no_documents_text'
     - else
       %li{ 'data-theme' => 'c' }
         - if params[:q] or params[:fq] or params[:precise]
-          = t :'index.documents_found', :count => @documents.length
+          = t :'index.documents_found', :count => @num_results
         - else
-          = t :'index.documents_in_database', :count => @documents.length
+          = t :'index.documents_in_database', :count => @num_results
       - for doc in @documents
         %li{ 'data-icon' => 'info' }
           = link_to document_path(doc) do
