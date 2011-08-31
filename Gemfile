@@ -17,7 +17,7 @@ gem "rsolr"
 gem "rsolr-ext"
 
 # Paginate
-gem "will_paginate"
+gem "will_paginate", "~> 3.0"
 
 # Markdown
 gem "maruku"
