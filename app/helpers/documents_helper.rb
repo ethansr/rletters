@@ -44,7 +44,7 @@ module DocumentsHelper
     num_pages = Integer(num_pages.ceil)
     
     # Previous-page link
-    ret = page_link("previous", page, page + 1, true, 'arrow-l')
+    ret = page_link(I18n.t(:'index.previous_button'), page, page + 1, true, 'arrow-l')
     
     # Whatever number links are currently appropriate
     if num_pages < 15
@@ -70,7 +70,7 @@ module DocumentsHelper
     end
 
     # Next-page link
-    ret += page_link("next", page + 2, page + 1, true, 'arrow-r')
+    ret += page_link(I18n.t(:'index.next_button'), page + 2, page + 1, true, 'arrow-r')
     
     ret.html_safe
   end
