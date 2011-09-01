@@ -1,15 +1,13 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
-
-# Various i18n gems
-gem "translate_routes"
+gem 'rails', '~> 3.1'
 
 # JSON (much faster than the Rails default)
 gem "json"
 
-# Compass and HAML
-gem "compass", ">= 0.10.6"
+# HAML
+gem "sass"
+gem "sass-rails"
 gem "haml"
 
 # Solr

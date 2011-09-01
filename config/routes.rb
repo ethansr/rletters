@@ -43,5 +43,3 @@ RLetters::Application.routes.draw do
   root :to => "documents#index"
 end
 
-ActionDispatch::Routing::Translator.translate_from_file('config', 'routes-i18n.yml')
-
