@@ -370,9 +370,11 @@ class Document
     author_list.each { |a| @formatted_author_list << Document.author_name_parts(a) }
     
     @term_vectors = term_vectors
-
-    @snippets = snippets
-    @snippets.map! { |s| s.force_encoding("UTF-8") }
+    
+    unless snippets.nil?
+      @snippets = snippets
+      @snippets.map! { |s| s.force_encoding("UTF-8") }
+    end
   end
   
   # Return the document's SHA-1 sum, which will function as the permanent
