@@ -25,4 +25,5 @@
         = t :'concordance.matches_list', :term => params[:hl_word].downcase
         %span.ui-li-count= t :'concordance.instances', :count => @document.term_vectors[params[:hl_word].downcase][:tf]
       - @document.snippets.each do |s|
-        %li= s
+        %li
+          = escape_once(s).gsub("&lt;em&gt;","<em>").gsub("&lt;/em&gt;","</em>")
