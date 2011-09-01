@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 # Remove the default Rails doc tasks
 Rake::Task["doc:app"].clear
 Rake::Task["doc:reapp"].clear

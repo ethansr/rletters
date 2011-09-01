@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 # lib/tasks/sass.rake
 
 namespace :sass do

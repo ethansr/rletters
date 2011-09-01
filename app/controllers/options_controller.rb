@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 class OptionsController < ApplicationController
   def index; end
   
