@@ -5,10 +5,17 @@ gem 'rails', '~> 3.1'
 # JSON (much faster than the Rails default)
 gem "json"
 
-# HAML
-gem "sass"
-gem "sass-rails"
+# Assets
 gem "haml"
+group :assets do
+  gem "sass"
+  gem "sass-rails"
+  
+  gem 'execjs'
+  gem 'therubyracer'
+  gem 'uglifier'
+  gem 'yui-compressor'
+end
 
 # Solr
 gem "rsolr"

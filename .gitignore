@@ -1,11 +1,12 @@
 .DS_Store
 .bundle
+.sass-cache
 app/views/about/index.*
 !app/views/about/index.html.markdown.dist
 config/config.yml
 log/*
 tmp/*
-*.tmproj
 !*.gitkeep
-public/images/*
+public/assets/
+public/images/
 public/favicon.ico

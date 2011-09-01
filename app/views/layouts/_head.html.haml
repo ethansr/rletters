@@ -25,24 +25,18 @@
   %link{ :href => "/images/l/apple-touch-icon.png", :rel => "apple-touch-icon-precomposed" }/
   %link{ :href => "/favicon.ico", :rel => "shortcut icon" }/
   
-  = render :partial => 'layouts/stylesheets'
+  -# Javascript: Rails + jQuery + jQM
+  = javascript_include_tag "application"
+  = javascript_include_tag "http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"
+  
+  -# CSS: Application + jQM
+  = stylesheet_link_tag 'application', :media => 'all'  
+  = stylesheet_link_tag "http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css"
   
   -# Link up the unAPI service
   %link{ :rel => 'unapi-server', :type => 'application/xml', :title => 'unAPI', :href => unapi_url }
   
-  -# HTML5 and CSS3
-  = javascript_include_tag 'modernizr.min'
-  = javascript_include_tag 'bookmark_bubble'
-  /[if lt IE 9]
-    = javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
-    = javascript_include_tag "http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"
-  
-  -# JQuery + Mobile and the stock Rails stuff
-  = javascript_include_tag "http://code.jquery.com/jquery-1.6.2.min.js"
-  = javascript_include_tag "http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"
-
-  = javascript_include_tag 'rails', 'plugins', 'application'
-  
+  -# Google Analytics for jQM
   :javascript
     var _gaq=[['_setAccount','#{APP_CONFIG['google_account_id']}'],['_trackPageview']];(function(d,t){
     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

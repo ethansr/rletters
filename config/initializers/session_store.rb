@@ -1,7 +1,8 @@
-# coding: UTF-8
+# Be sure to restart your server when you modify this file.
 
-RLetters::Application.config.session_store :cookie_store, :key => '_rletters_session'
-RLetters::Application.config.action_dispatch.session = {
-  :key => '_rletters_session',
-  :secret => 'jyslpr5zuk1gyzryk3sxpp415n49kwck8jwloh5v8hwza57uis75gfy3eqi7w5jc'
-}
+RLetters::Application.config.session_store :cookie_store, key: '_r_letters_session'
+
+# Use the database for sessions instead of the cookie-based default,
+# which shouldn't be used to store highly confidential information
+# (create the session table with "rails generate session_migration")
+# RLetters::Application.config.session_store :active_record_store

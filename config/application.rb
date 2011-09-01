@@ -1,15 +1,17 @@
-# coding: UTF-8
-
 require File.expand_path('../boot', __FILE__)
 
-# Pick the frameworks you want:
+# I do this manually to avoid both active_record and test_unit, which we
+# don't use here.
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
 
-# If you have a Gemfile, require the gems listed there, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  # Bundler.require *Rails.groups(:assets => %w(development test))
+  # If you want your assets lazily compiled in production, use this line
+  Bundler.require(:default, :assets, Rails.env)
+end
 
 module RLetters
   class Application < Rails::Application
@@ -19,8 +21,6 @@ module RLetters
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths << File.join(Rails.root, "app", "classes")
-    config.autoload_paths << File.join(Rails.root, "lib")
-    config.autoload_paths += Dir[File.join(Rails.root, "lib", "**")]
     config.eager_load_paths << File.join(Rails.root, "app", "classes")
 
     # Only load the plugins named here, in the order given (default is alphabetical).
@@ -38,16 +38,21 @@ module RLetters
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     # config.i18n.default_locale = :de
 
-    # JavaScript files you want as :defaults (application.js is always included).
-    # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
-    
     # Rotate the Rails log files
-    config.logger = Logger.new(config.paths.log.first, 10, 1024**2)
-    
+    config.logger = Logger.new(config.paths["log"].first, 10, 1024**2)
+
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
-    
+
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    # Enable the asset pipeline, and compressors
+    config.assets.enabled = true
+    config.assets.css_compressor = :yui
+    config.assets.js_compressor = :uglifier
+
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
   end
 end

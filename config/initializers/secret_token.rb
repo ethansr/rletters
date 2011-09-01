@@ -1,7 +1,7 @@
-# coding: UTF-8
+# Be sure to restart your server when you modify this file.
 
 # Your secret key for verifying the integrity of signed cookies.
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-RLetters::Application.config.secret_token = 'fc1e2e2d22b12122b8621421308cc5a6dab4bb6fb3c5825ad22d0dc49ed6ffa0b5f22dbf0d9de94b9a93e88b4bda39e0a27fded05c8134dd6568ec1559497a95'
+RLetters::Application.config.secret_token = '5aaba629b9f5b21c78bc436aa5dae5ed215fef70eb13f3b691f00ab3c4e8b4281bdb93a9e4e8faa911fa1523d2eac715367264e41bc0fb7eeb3b748962345821'
