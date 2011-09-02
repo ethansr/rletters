@@ -7,15 +7,13 @@ gem "json"
 
 # Assets
 gem "haml"
-group :assets do
-  gem "sass"
-  gem "sass-rails"
+gem "sass"
+gem "sass-rails"
   
-  gem 'execjs'
-  gem 'therubyracer'
-  gem 'uglifier'
-  gem 'yui-compressor'
-end
+gem 'execjs'
+gem 'therubyracer'
+gem 'uglifier'
+gem 'yui-compressor'
 
 # Solr
 gem "rsolr"
@@ -23,8 +21,9 @@ gem "rsolr"
 # Markdown
 gem "maruku"
 
-# JQuery
+# jQuery and jQuery Mobile
 gem "jquery-rails"
+gem "jquery_mobile-rails"
 
 # Citation processor for formatting
 gem "citeproc-ruby"

@@ -25,13 +25,9 @@
   %link{ :href => "/images/l/apple-touch-icon.png", :rel => "apple-touch-icon-precomposed" }/
   %link{ :href => "/favicon.ico", :rel => "shortcut icon" }/
   
-  -# Javascript: Rails + jQuery + jQM
-  = javascript_include_tag "application"
-  = javascript_include_tag "http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"
-  
-  -# CSS: Application + jQM
+  -# CSS/JS assets
   = stylesheet_link_tag 'application', :media => 'all'  
-  = stylesheet_link_tag "http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css"
+  = javascript_include_tag "application"
   
   -# Link up the unAPI service
   %link{ :rel => 'unapi-server', :type => 'application/xml', :title => 'unAPI', :href => unapi_url }

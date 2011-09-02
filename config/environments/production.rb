@@ -13,9 +13,11 @@ RLetters::Application.configure do
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
+  config.assets.css_compressor = :yui
+  config.assets.js_compressor = :uglifier
 
-  # We're lazy-compiling assets, so do compilation even in production
-  config.assets.compile = true
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
