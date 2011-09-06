@@ -1,39 +1,33 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.1'
+gem 'rails', '3.1.0'
 
-# JSON (much faster than the Rails default)
-gem "json"
+# Bundle edge Rails instead:
+# gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-# Assets
-gem "haml"
-gem "sass"
-gem "sass-rails"
-  
-gem 'execjs'
-gem 'therubyracer'
-gem 'uglifier'
-gem 'yui-compressor'
+gem 'mysql2'
 
-# Solr
-gem "rsolr"
 
-# Markdown
-gem "maruku"
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails', "  ~> 3.1.0"
+  gem 'coffee-rails', "~> 3.1.0"
+  gem 'uglifier'
+end
 
-# jQuery and jQuery Mobile
-gem "jquery-rails"
-gem "jquery_mobile-rails"
+gem 'jquery-rails'
 
-# Citation processor for formatting
-gem "citeproc-ruby"
+# Use unicorn as the web server
+# gem 'unicorn'
 
-# Various output formats: MARC, XML, etc.
-gem "marc"
-gem "builder"
-gem "rdf"
-gem "rdf-raptor"
+# Deploy with Capistrano
+# gem 'capistrano'
 
-# Rubyzip for creating export ZIP files
-gem "rubyzip"
+# To use debugger
+# gem 'ruby-debug19', :require => 'ruby-debug'
 
+group :test do
+  # Pretty printed test output
+  gem 'turn', :require => false
+end

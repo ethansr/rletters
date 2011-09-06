@@ -1,9 +1,0 @@
-%h2
-  = title
-
-%ul.details{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-theme' => 'd' }
-  %li{ 'data-icon' => 'back' }
-    = link_to document_path(document), 'data-transition' => 'flip', 'data-direction' => 'reverse' do
-      = render :partial => "cite", :locals => { :document => document }
-
-%div.verticalpad

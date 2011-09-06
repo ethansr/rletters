@@ -1,34 +1,5 @@
-User-agent: *
-Disallow: /documents/
-Disallow: /unapi/
-Disallow: /ar/
-Disallow: /cs/
-Disallow: /cy/
-Disallow: /da/
-Disallow: /de/
-Disallow: /eo/
-Disallow: /es/
-Disallow: /et/
-Disallow: /eu/
-Disallow: /fa/
-Disallow: /fi/
-Disallow: /fr/
-Disallow: /gsw/
-Disallow: /he/
-Disallow: /hi/
-Disallow: /is/
-Disallow: /it/
-Disallow: /ja/
-Disallow: /ko/
-Disallow: /lv/
-Disallow: /nb/
-Disallow: /nl/
-Disallow: /pl/
-Disallow: /pt/
-Disallow: /ru/
-Disallow: /sk/
-Disallow: /sv/
-Disallow: /sw/
-Disallow: /th/
-Disallow: /uk/
-Disallow: /zh/
+# See http://www.robotstxt.org/wc/norobots.html for documentation on how to use the robots.txt file
+#
+# To ban all spiders from the entire site uncomment the next two lines:
+# User-Agent: *
+# Disallow: /

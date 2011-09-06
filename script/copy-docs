@@ -1,2 +1,0 @@
-#!/bin/sh
-rsync --exclude=.git --delete -av doc/app/ $1

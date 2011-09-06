@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Well, that isn't good.</title>
+  <title>We're sorry, but something went wrong (500)</title>
   <style type="text/css">
-    body { background-color: #fff; color: #333; text-align: center; font-family: arial, sans-serif; }
-    img { position: absolute; left: 0; bottom: 0; }
-    div { text-align: right; width: 40%; position: absolute; right: 2em; top: 2em; }
-    a, a:link, a:visited, a:active { color: #333; }
+    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+    div.dialog {
+      width: 25em;
+      padding: 0 4em;
+      margin: 4em auto 0 auto;
+      border: 1px solid #ccc;
+      border-right-color: #999;
+      border-bottom-color: #999;
+    }
+    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
   </style>
 </head>
 
 <body>
-  <img src="/images/error-watermark.png">
-
-  <div>
-    <h1>Server Error</h1>
-    <p>As you can see, things seem to be falling apart over here.  We've got this error registered in our logs, and we'll see what we can do.  Head back to <a href="/">the front page,</a> and if you see this error message again, let us know and we'll try to fix it.</p>
+  <!-- This file lives in public/500.html -->
+  <div class="dialog">
+    <h1>We're sorry, but something went wrong.</h1>
+    <p>We've been notified about this issue and we'll take a look at it shortly.</p>
   </div>
 </body>
 </html>

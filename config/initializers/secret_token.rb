@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-RLetters::Application.config.secret_token = '5aaba629b9f5b21c78bc436aa5dae5ed215fef70eb13f3b691f00ab3c4e8b4281bdb93a9e4e8faa911fa1523d2eac715367264e41bc0fb7eeb3b748962345821'
+Rletters::Application.config.secret_token = '944a502d8f4a8af313e40a102c916c9424cb97f2689e323a8674a41d73a8f6f2ccc94f35362da4e8ffe9d41ccb4f90d4a74fbfa4cfbdcaf234d125904ea0b563'
