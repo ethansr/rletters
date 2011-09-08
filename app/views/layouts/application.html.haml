@@ -16,13 +16,10 @@
     %div{ 'data-role' => 'page', 'data-add-back-btn' => 'true' }
       %div{ 'data-role' => 'header' }
         %h1 evoText
-        %a.rlheaderlogin.ui-btn-right{ :href => '#', 'data-icon' => :home } Account
+        %a.ui-btn-right{ :href => '#', 'data-icon' => :info } Help
       
       %div{ 'data-role' => 'content' }
         = yield
       
-      %div{ 'class' => 'rlfooter', 'data-id' => 'rlfooter', 'data-position' => 'fixed', 'data-role' => 'footer' }
-        %div{ 'data-role' => 'controlgroup', 'data-type' => 'horizontal' }
-          %a{ :href => '#', 'data-role' => :button, 'data-icon' => :search } Search
-          %a{ :href => '#', 'data-role' => :button, 'data-icon' => :grid } Datasets
-          %a{ :href => '#', 'data-role' => :button, 'data-icon' => :home } Account
+      = render :partial => 'layouts/footer'
+

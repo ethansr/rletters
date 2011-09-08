@@ -1,0 +1,24 @@
+%div.leftcolumn
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd' }
+    %li{ 'data-theme' => 'b', 'data-role' => 'list-divider' } 3 documents in database
+    %li.search
+      = form_tag('#', :method => :get, 'data-transition' => 'none') do
+        = search_field_tag :q, (params[:precise] ? "(advanced search)" : params[:q]), :placeholder => "Search for articles..."
+    %li
+      %h3 Search results go here
+      %p Like the old search mode
+    %li
+      %h3 More search results
+      %p in a list
+    %li
+      %h3 More search results
+      %p in a list
+%div.rightcolumn
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd' }
+    %li{ 'data-theme' => 'b', 'data-role' => 'list-divider' } Filter Search
+    %li
+      %a{ :href => '#' } Faceted Browsing
+    %li
+      %a{ :href => '#' } links will go
+    %li
+      %a{ :href => '#' } right here

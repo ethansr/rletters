@@ -2,8 +2,3 @@
   text-align: center;
 }
 
-// Hide the footer in landscape / desktop mode
-@media screen and (min-width: 769px) {
-  .rlfooter { display: none !important; }
-}
-

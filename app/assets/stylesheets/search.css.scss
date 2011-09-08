@@ -1,0 +1,57 @@
+.leftcolumn, .rightcolumn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: left;
+  min-height: 1px;
+}
+
+.leftcolumn {
+  clear: left;
+  width: 72%;
+}
+.rightcolumn {
+  width: 28%;
+  font-size: 85% !important;
+}
+
+// jQuery Mobile does some funny business regarding the margins on
+// ULs, which makes them not work as full-width elements.  Fix that
+// here.  HACK ALERT: This is tied to internal jQM styles.
+.leftcolumn ul:first-child {
+  margin-right: 0 !important;
+}
+.rightcolumn ul:first-child {
+  margin-left: 0 !important;
+
+  // Also put a border for separation between the elements
+  border-left: 1px solid #ccc;
+}
+
+
+// Portrait mode: collapse the columns into one row
+@media screen and (max-width: 768px) {
+  .leftcolumn { width: 100% !important; }
+  .rightcolumn { width: 100% !important; }
+
+  // Also undo the UL margin hacks.  HACK ALERT: This is tied to
+  // internal jQM styles.
+  .leftcolumn ul:first-child {
+    margin-right: -15px !important;
+  }
+  .rightcolumn ul:first-child {
+    margin-left: -15px !important;
+  }
+}
+
+
+// Make the search bar 100% width.  HACK ALERT: This is tied to
+// internal jQM styles.
+.search { padding: 0 !important; }
+.search form { position: relative; padding: 3px; }
+.search form .ui-input-search {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  width: 100% !important;
+}
