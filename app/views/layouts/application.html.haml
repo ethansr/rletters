@@ -1,7 +1,7 @@
 !!! 5
 %html
   %head
-    %title RLetters
+    %title= APP_CONFIG['app_name']
     
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
@@ -15,7 +15,7 @@
   %body
     %div{ 'data-role' => 'page', 'data-add-back-btn' => 'true' }
       %div{ 'data-role' => 'header' }
-        %h1 evoText
+        %h1= APP_CONFIG['app_name']
         %a.ui-btn-right{ :href => '#', 'data-icon' => :info } Help
       
       %div{ 'data-role' => 'content' }
