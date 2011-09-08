@@ -6,5 +6,6 @@ db/*.sqlite3
 log/*.log
 public/assets/
 public/favicon.ico
+public/images/
 tmp/
 .sass-cache/
