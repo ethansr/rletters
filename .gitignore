@@ -1,7 +1,10 @@
 .bundle
+app/assets/images/
+config/app_config.yml
 config/database.yml
 db/*.sqlite3
 log/*.log
 public/assets/
+public/favicon.ico
 tmp/
 .sass-cache/

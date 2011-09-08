@@ -1,0 +1,14 @@
+
+all_environments: &all_environments
+  app_name: RLetters
+  app_email: your@email.com
+
+
+development:
+  <<: *all_environments  
+
+test:
+  <<: *all_environments  
+
+production:
+  <<: *all_environments  

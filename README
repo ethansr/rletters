@@ -1,3 +1,22 @@
+copy config/database.yml.dist to config/database.yml, edit
+copy config/app_config.yml.dist to config/app_config.yml, edit
+
+
+Now you've got some images to customize.
+
+-   First, <tt>app/assets/images/error-watermark.png</tt>.  This is an image shown in the bottom-left corner of the site's error pages (as well as the page shown to web-app users when they attempt to access RLetters without an internet connection).  Something like 500x300 pixels is a good size for this image.
+-   Now, the iOS splash images and icons:
+    -   <tt>images/h/apple-touch-icon.png</tt>: 114x114 pixel iOS application icon.  This is used on Retina Display-capable iPhones.
+    -   <tt>images/m/apple-touch-icon.png</tt>: 72x72 pixel iOS application icon.  This is used on the iPad.
+    -   <tt>images/l/apple-touch-icon.png</tt> and <tt>l/apple-touch-icon-precomposed.png</tt>: 57x57 pixel iOS application icon.  This is used on low-resolution iPhone and iPod Touch devices.
+    -   <tt>images/h/splash.png</tt>: 768x1004 splash screen, displayed while loading the app on retina-display iPhone devices.
+    -   <tt>images/l/splash.png</tt>: 320x460 splash screen, displayed while loading the app on low-resolution iPhone and iPod Touch devices.
+- Finally, <tt>public/favicon.ico</tt>, the standard favorite icon.
+
+If you'd like, you can update the {humans.txt}[http://humanstxt.org] file at <tt>public/humans.txt</tt>.
+
+
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create

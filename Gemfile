@@ -7,6 +7,7 @@ gem 'mysql2'
 gem 'rsolr'
 
 gem 'haml'
+gem 'maruku'
 
 group :assets do
   gem 'sass-rails', "~> 3.1.0"
