@@ -1,1 +1,17 @@
-This is a test
+%div.leftcolumn
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-dividertheme' => 'c' }
+    %li{ 'data-theme' => 'c' } Search / Browse
+    %li Faceted browsing goes here
+    %li{ 'data-theme' => 'c' } My Datasets
+    %li Dataset tools go here
+%div.rightcolumn
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd' }
+    %li
+      %h3 Search results go here
+      %p If you're in the Browse/search mode
+    %li
+      %h3 Or a list of your datasets
+      %p If that's the mode you're in
+    %li
+      %h3 And that sort of thing
+      %p Depending on what you're up to

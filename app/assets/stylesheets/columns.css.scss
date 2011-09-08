@@ -1,0 +1,40 @@
+.leftcolumn, .rightcolumn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: left;
+  min-height: 1px;
+}
+
+.leftcolumn {
+  clear: left;
+  width: 28%;
+  font-size: 85% !important;
+}
+.rightcolumn {
+  width: 72%;
+}
+
+// jQuery Mobile does some funny business regarding the margins on
+// ULs, which makes them not work as full-width elements.  Fix that
+// here.
+.leftcolumn ul:first-child {
+  margin-right: 0 !important;
+}
+.rightcolumn ul:first-child {
+  margin-left: 0 !important;
+}
+
+
+// Portrait mode: hide the left column entirely, its content is in
+// the footer bar
+@media screen and (max-width: 768px) {
+  .leftcolumn { display: none !important; }
+  .rightcolumn { width: 100% !important; }
+
+  // Also undo the UL margin hack on the right column
+  .rightcolumn ul:first-child {
+    margin-left: -15px !important;
+  }
+}
+
