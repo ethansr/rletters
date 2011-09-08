@@ -19,6 +19,10 @@
         %a.ui-btn-right{ :href => '#', 'data-icon' => :info } Help
       
       %div{ 'data-role' => 'content' }
+        -# This is a hack, and will break!  FIXME!
+        %p.notice= notice
+        %p.alert= alert
+        
         = yield
       
       = render :partial => 'layouts/footer'

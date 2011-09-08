@@ -2,6 +2,7 @@
 all_environments: &all_environments
   app_name: RLetters
   app_email: your@email.com
+  app_domain: your.domain
   
   janrain_appid: asdfasdf
   janrain_secret: 12341234

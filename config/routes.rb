@@ -1,4 +1,6 @@
 RLetters::Application.routes.draw do
+  devise_for :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -51,6 +53,9 @@ RLetters::Application.routes.draw do
   # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
+
+  # TEMPORARY
+  root :to => 'mockup#index'
 
   match ':controller(/:action(/:id(.:format)))'
 end

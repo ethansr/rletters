@@ -6,6 +6,9 @@ gem 'mysql2'
 
 gem 'rsolr'
 
+gem 'devise'
+gem 'devise_rpx_connectable'
+
 gem 'haml'
 gem 'maruku'
 
