@@ -4,7 +4,7 @@ module ApplicationHelper
     footer_buttons = [
       { :controller => 'mockup', :action => 'index', :text => 'Datasets', :icon => 'grid' },
       { :controller => 'mockup', :action => 'search', :text => 'Search/Browse', :icon => 'search' },
-      { :controller => 'mockup', :action => 'account', :text => 'Account', :icon => 'home' }
+      { :controller => 'users', :action => 'index', :text => 'Account', :icon => 'home' }
     ]
     
     ret = ''.html_safe

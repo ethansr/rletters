@@ -1,0 +1,24 @@
+%h1 Welcome!
+
+%p
+  Thanks for signing up for #{APP_CONFIG['app_name']}!  Please double-check 
+  your information before continuing.
+
+= form_for(@user) do |f|
+  - if @user.errors.any?
+    %ul{ 'data-theme' => 'e' }
+      %li #{pluralize(@user.errors.count, "error")} prohibited this user from being saved:
+      - @user.errors.full_messages.each do |msg|
+        %li= msg
+  
+  = f.hidden_field :identifier
+
+  %div{ 'data-role' => 'fieldcontain' }
+    = f.label :email
+    = f.text_field :email
+  
+  %div{ 'data-role' => 'fieldcontain' }
+    = f.label :name
+    = f.text_field :name
+  
+  = f.submit

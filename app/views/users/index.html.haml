@@ -1,0 +1,31 @@
+- if session[:user].nil?
+  %h1 Log In
+
+  %p
+    You can log in to #{APP_CONFIG['app_name']} using your account with any one
+    of the following sites.  This login process, using the OpenID standard,
+    improves your security, and means that we never have access to your password.
+  
+  %p{ 'style' => 'text-align: center' }
+    != RPXNow.embed_code(APP_CONFIG['janrain_appname'], url_for(:controller => :users, :action => :rpx, :only_path => false))
+  
+  %p= link_to "Privacy Policy...", :controller => 'info', :action => 'privacy'
+
+- else
+
+  %h1 Your Account
+  
+  %p
+    You are logged in as #{session[:user].name} (#{session[:user].email}).  Not
+    you?
+    = link_to 'Log in as a different user.', :controller => 'users', :action => 'logout'
+
+  %h2 User Options
+
+  %p There will be some options here, eventually.
+
+  %p
+    %small 
+      If you are asked to provide your "user identifier" for debugging
+      purposes, it is [#{session[:user].identifier}].
+

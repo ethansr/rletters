@@ -3,6 +3,4 @@ class MockupController < ApplicationController
   end
   def search
   end
-  def account
-  end
 end
