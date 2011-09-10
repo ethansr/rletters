@@ -1,9 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+john:
+  name: John Doe
+  email: jdoe@gmail.com
+  identifier: https://google.com/profiles/johndoe
 
-one:
-  email: MyString
-  name: MyString
-
-two:
-  email: MyString
-  name: MyString
+alice:
+  name: Alice Cooper
+  email: acooper@aol.com
+  identifier: https://google.com/profiles/alicecooper

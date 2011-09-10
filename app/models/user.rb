@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  validates :name, :email, :identifier, :presence => true
+  validates :email, :uniqueness => true
+  validates :email, :email => true
+
   def self.find_or_initialize_with_rpx(data)
     identifier = data['identifier']
     
