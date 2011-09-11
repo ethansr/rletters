@@ -43,7 +43,8 @@ RLetters::Application.routes.draw do
   # Custom login built around Janrain Engage
   get '/users' => 'users#index'
   post '/users' => 'users#create'
-  match '/users/:action', :controller => 'users'
+  get '/users/rpx', :controller => 'users', :action => 'rpx'
+  get '/users/logout', :controller => 'users', :action => 'logout'
 
   # Static information pages
   match '/info/:action', :controller => 'info'
