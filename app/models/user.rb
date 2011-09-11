@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   validates :name, :email, :identifier, :presence => true
   validates :email, :uniqueness => true
   validates :email, :email => true
+  validates :identifier, :uniqueness => true
+  validates_format_of :identifier, :with => /^(#{URI::regexp(%w(http https))})$/
 
   def self.find_or_initialize_with_rpx(data)
     identifier = data['identifier']

@@ -46,4 +46,21 @@ class UserTest < ActiveSupport::TestCase
     assert !user.save, 'Saved a user with a clearly invalid email'
   end
 
+  # Validations on identifier: unique, needs to be a URL
+  test "should not save duplicate identifier" do
+    user = User.new
+    user.name = 'ID test user'
+    user.identifier = 'https://google.com/profiles/johndoe'
+    user.email = 'notduplicate@gmail.com'
+    assert !user.save, 'Saved a user with a duplicate identifier'
+  end
+
+  test "should not save non-URL identifier" do
+    user = User.new
+    user.name = 'ID test user'
+    user.identifier = 'thisisnotaurl'
+    user.email = 'notduplicate@gmail.com'
+    assert !user.save, 'Saved a user with a non-URL identifier'
+  end
+
 end
