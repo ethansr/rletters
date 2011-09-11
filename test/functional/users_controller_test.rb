@@ -49,4 +49,7 @@ class UsersControllerTest < ActionController::TestCase
     get :logout
     assert_nil session[:user]
   end
+
+  # We explicitly can't get a functional test for users#rpx, because
+  # there's no way to mock the interaction with the Janrain server.
 end

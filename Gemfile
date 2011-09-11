@@ -25,4 +25,6 @@ gem 'jquery_mobile-rails', '1.0b2'
 
 group :test do
   gem 'turn', :require => false
+  gem 'simplecov', '>= 0.4.0', :require => false
 end
+
