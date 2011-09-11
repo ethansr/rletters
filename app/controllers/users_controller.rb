@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.find_or_initialize_with_rpx(data)
     if @user.new_record?
       logger.debug "First time we've seen this user, render the form"
-      render :template => 'form'
+      render :template => 'users/form'
     else
       logger.debug "We've seen this user before, redirect to index"
       session[:user] = @user
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       session[:user] = @user
       redirect_to :action => 'index'
     else
-      render :template => 'form'
+      render :template => 'users/form'
     end
   end
 end
