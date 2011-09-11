@@ -6,6 +6,9 @@ class UsersController < ApplicationController
     redirect_to :action => 'index'
   end
 
+  #:nocov:
+  # We can't run tests on this method, as there's no way to mock the API
+  # interaction with the Janrain server.
   def rpx
     data = {}
     RPXNow.user_data(params[:token], :additional => [:name, :email, :verifiedEmail]) { |raw| data = raw['profile'] }
@@ -19,6 +22,7 @@ class UsersController < ApplicationController
       redirect_to :action => 'index'
     end
   end
+  #:nocov:
 
   def create
     @user = User.new(params[:user])

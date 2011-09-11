@@ -59,6 +59,9 @@
         0,
         null,
         null,
+        null,
+        null,
+        null,
         1,
         0,
         0,
@@ -70,6 +73,7 @@
         0,
         0,
         0,
+        null,
         null,
         null,
         null,
@@ -130,7 +134,7 @@
         null
       ]
     },
-    "timestamp": 1315770426
+    "timestamp": 1315770809
   },
   "Functional Tests": {
     "coverage": {
@@ -192,6 +196,9 @@
         1,
         null,
         null,
+        null,
+        null,
+        null,
         1,
         1,
         1,
@@ -203,6 +210,7 @@
         0,
         0,
         0,
+        null,
         null,
         null,
         null,
@@ -263,6 +271,6 @@
         null
       ]
     },
-    "timestamp": 1315770434
+    "timestamp": 1315770817
   }
 }
