@@ -63,4 +63,24 @@ class UserTest < ActiveSupport::TestCase
     assert !user.save, 'Saved a user with a non-URL identifier'
   end
 
+  # Parsing of the response from RPX: should return a non-new
+  # record for a user we already have
+  test "should return existing user from RPX" do
+    hash = {
+      'name' => 'John Doe',
+      'email' => 'jdoe@gmail.com',
+      'identifier' => 'https://google.com/profiles/johndoe' }
+    user = User.find_or_initialize_with_rpx(hash)
+    assert !user.new_record?
+  end
+
+  # Should return a new record for a new user
+  test "should return new user from RPX" do
+    hash = {
+      'name' => 'New Guy',
+      'email' => 'new@guy.com',
+      'identifier' => 'https://newguy.com' }
+    user = User.find_or_initialize_with_rpx(hash)
+    assert user.new_record?
+  end
 end
