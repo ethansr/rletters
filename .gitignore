@@ -1,11 +1,12 @@
 .bundle
+.DS_Store
+.sass-cache/
+
 app/assets/images/
 config/app_config.yml
 config/database.yml
-db/*.sqlite3
 log/*.log
 public/assets/
 public/favicon.ico
 public/images/
 tmp/
-.sass-cache/
