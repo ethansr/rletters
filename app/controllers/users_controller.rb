@@ -25,7 +25,11 @@ class UsersController < ApplicationController
   #:nocov:
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    @user.identifier = params[:user][:identifier]
+
     logger.debug "Created new user: #{@user.attributes.inspect}"
     logger.debug "User should be valid: #{@user.valid?}"
     
