@@ -23,7 +23,7 @@
       <img src="./assets/0.5.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2011-09-12T15:19:39-04:00">2011-09-12T15:19:39-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2011-09-13T23:02:18-04:00">2011-09-13T23:02:18-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -34,15 +34,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.91
+         3.83
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
-    <b>7</b> files in total.
-    <b>55</b> relevant lines. 
-    <span class="green"><b>55</b> lines covered</span> and
+    <b>8</b> files in total.
+    <b>60</b> relevant lines. 
+    <span class="green"><b>60</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -107,6 +107,16 @@
         <td>12</td>
         <td>0</td>
         <td>8.1</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#4b29d614901d784ef35d4fa5fc6a663e18081218" class="src_link" title="app/models/document.rb">app/models/document.rb</a></td>
+        <td class="green strong">100.0 %</td>
+        <td>9</td>
+        <td>5</td>
+        <td>5</td>
+        <td>0</td>
+        <td>3.2</td>
       </tr>
       
       <tr>
@@ -219,15 +229,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.2
+         2.7
        </span>
     </span> hits/line)
   </h2>
   <a name="Models"></a>
   <div>
-    <b>1</b> files in total.
-    <b>18</b> relevant lines. 
-    <span class="green"><b>18</b> lines covered</span> and
+    <b>2</b> files in total.
+    <b>23</b> relevant lines. 
+    <span class="green"><b>23</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -243,6 +253,16 @@
       </tr>
     </thead>
     <tbody>
+      
+      <tr>
+        <td class="strong"><a href="#4b29d614901d784ef35d4fa5fc6a663e18081218" class="src_link" title="app/models/document.rb">app/models/document.rb</a></td>
+        <td class="green strong">100.0 %</td>
+        <td>9</td>
+        <td>5</td>
+        <td>5</td>
+        <td>0</td>
+        <td>3.2</td>
+      </tr>
       
       <tr>
         <td class="strong"><a href="#1948e103574a7dd3a8efaca68ebefa948fb3e0b8" class="src_link" title="app/models/user.rb">app/models/user.rb</a></td>
@@ -999,6 +1019,78 @@
       
         
         <li class="never" data-hits="" data-linenumber="27">
+          
+          <code class="ruby">end</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+      
+        <div class="source_table" id="4b29d614901d784ef35d4fa5fc6a663e18081218">
+  <div class="header">
+    <h3>app/models/document.rb</h3>
+    <h4><span class="green">100.0 %</span> covered</h4>
+    <div>
+      <b>5</b> relevant lines. 
+      <span class="green"><b>5</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="1">
+          <span class="hits">3</span>
+          <code class="ruby">class Document</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="2">
+          
+          <code class="ruby">  # Make this class act like an ActiveRecord model, though it's</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="3">
+          
+          <code class="ruby">  # not backed by the database (it's in Solr)</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="4">
+          <span class="hits">3</span>
+          <code class="ruby">  include ActiveModel::Validations</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="5">
+          <span class="hits">3</span>
+          <code class="ruby">  include ActiveModel::Conversion</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="6">
+          <span class="hits">3</span>
+          <code class="ruby">  extend ActiveModel::Naming</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="7">
+          
+          <code class="ruby"></code>
+        </li>
+      
+        
+        <li class="hit" data-hits="4" data-linenumber="8">
+          <span class="hits">4</span>
+          <code class="ruby">  def persisted?; false; end</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="9">
           
           <code class="ruby">end</code>
         </li>

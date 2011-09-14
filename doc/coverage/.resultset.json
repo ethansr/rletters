@@ -132,9 +132,20 @@
         null,
         null,
         null
+      ],
+      "/var/webapps/evotext/app/models/document.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        2,
+        null
       ]
     },
-    "timestamp": 1315855161
+    "timestamp": 1315969322
   },
   "Functional Tests": {
     "coverage": {
@@ -269,9 +280,20 @@
         null,
         null,
         null
+      ],
+      "/var/webapps/evotext/app/models/document.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        null
       ]
     },
-    "timestamp": 1315855172
+    "timestamp": 1315969330
   },
   "Integration Tests": {
     "coverage": {
@@ -406,8 +428,19 @@
         null,
         null,
         null
+      ],
+      "/var/webapps/evotext/app/models/document.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        null
       ]
     },
-    "timestamp": 1315855179
+    "timestamp": 1315969338
   }
 }
