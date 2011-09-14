@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   validates :identifier, :uniqueness => true
   validates_format_of :identifier, :with => /^(#{URI::regexp(%w(http https))})$/
 
+  attr_accessible :name, :email, :identifier
+
   def self.find_or_initialize_with_rpx(data)
     identifier = data['identifier']
     

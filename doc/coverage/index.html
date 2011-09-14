@@ -23,14 +23,14 @@
       <img src="./assets/0.5.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2011-09-13T23:41:34-04:00">2011-09-13T23:41:34-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2011-09-13T23:49:15-04:00">2011-09-13T23:49:15-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">98.61%</span></span>
+    (<span class="covered_percent"><span class="green">98.63%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
@@ -41,8 +41,8 @@
   <a name="AllFiles"></a>
   <div>
     <b>8</b> files in total.
-    <b>72</b> relevant lines. 
-    <span class="green"><b>71</b> lines covered</span> and
+    <b>73</b> relevant lines. 
+    <span class="green"><b>72</b> lines covered</span> and
     <span class="red"><b>1</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -122,9 +122,9 @@
       <tr>
         <td class="strong"><a href="#1948e103574a7dd3a8efaca68ebefa948fb3e0b8" class="src_link" title="app/models/user.rb">app/models/user.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>29</td>
-        <td>18</td>
-        <td>18</td>
+        <td>31</td>
+        <td>19</td>
+        <td>19</td>
         <td>0</td>
         <td>2.2</td>
       </tr>
@@ -225,7 +225,7 @@
           <div class="file_list_container" id="Models">
   <h2>
     <span class="group_name">Models</span>
-    (<span class="covered_percent"><span class="green">96.88%</span></span>
+    (<span class="covered_percent"><span class="green">96.97%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
@@ -236,8 +236,8 @@
   <a name="Models"></a>
   <div>
     <b>2</b> files in total.
-    <b>32</b> relevant lines. 
-    <span class="green"><b>31</b> lines covered</span> and
+    <b>33</b> relevant lines. 
+    <span class="green"><b>32</b> lines covered</span> and
     <span class="red"><b>1</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -267,9 +267,9 @@
       <tr>
         <td class="strong"><a href="#1948e103574a7dd3a8efaca68ebefa948fb3e0b8" class="src_link" title="app/models/user.rb">app/models/user.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>29</td>
-        <td>18</td>
-        <td>18</td>
+        <td>31</td>
+        <td>19</td>
+        <td>19</td>
         <td>0</td>
         <td>2.2</td>
       </tr>
@@ -1272,8 +1272,8 @@
     <h3>app/models/user.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>18</b> relevant lines. 
-      <span class="green"><b>18</b> lines covered</span> and
+      <b>19</b> relevant lines. 
+      <span class="green"><b>19</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -1326,131 +1326,143 @@
         
         <li class="hit" data-hits="3" data-linenumber="8">
           <span class="hits">3</span>
+          <code class="ruby">  attr_accessible :name, :email, :identifier</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="9">
+          
+          <code class="ruby"></code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="10">
+          <span class="hits">3</span>
           <code class="ruby">  def self.find_or_initialize_with_rpx(data)</code>
         </li>
       
         
-        <li class="hit" data-hits="2" data-linenumber="9">
+        <li class="hit" data-hits="2" data-linenumber="11">
           <span class="hits">2</span>
           <code class="ruby">    identifier = data['identifier']</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="10">
+        <li class="never" data-hits="" data-linenumber="12">
           
           <code class="ruby">    </code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="11">
+        <li class="never" data-hits="" data-linenumber="13">
           
           <code class="ruby">    # Make sure that we don't return the first user (reserve for admin)</code>
         </li>
       
         
-        <li class="hit" data-hits="2" data-linenumber="12">
+        <li class="hit" data-hits="2" data-linenumber="14">
           <span class="hits">2</span>
           <code class="ruby">    unless identifier.nil? || identifier.blank?</code>
         </li>
       
         
-        <li class="hit" data-hits="2" data-linenumber="13">
+        <li class="hit" data-hits="2" data-linenumber="15">
           <span class="hits">2</span>
           <code class="ruby">      u = self.find_by_identifier(identifier)</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="14">
+        <li class="never" data-hits="" data-linenumber="16">
           
           <code class="ruby">      </code>
         </li>
       
         
-        <li class="hit" data-hits="2" data-linenumber="15">
+        <li class="hit" data-hits="2" data-linenumber="17">
           <span class="hits">2</span>
           <code class="ruby">      if u.nil?</code>
         </li>
       
         
-        <li class="hit" data-hits="1" data-linenumber="16">
+        <li class="hit" data-hits="1" data-linenumber="18">
           <span class="hits">1</span>
           <code class="ruby">        u = self.new</code>
         </li>
       
         
-        <li class="hit" data-hits="1" data-linenumber="17">
+        <li class="hit" data-hits="1" data-linenumber="19">
           <span class="hits">1</span>
           <code class="ruby">        u.read_rpx_response(data)</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="18">
+        <li class="never" data-hits="" data-linenumber="20">
           
           <code class="ruby">      end</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="19">
+        <li class="never" data-hits="" data-linenumber="21">
           
           <code class="ruby">    end</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="20">
+        <li class="never" data-hits="" data-linenumber="22">
           
           <code class="ruby"></code>
         </li>
       
         
-        <li class="hit" data-hits="2" data-linenumber="21">
+        <li class="hit" data-hits="2" data-linenumber="23">
           <span class="hits">2</span>
           <code class="ruby">    u</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="22">
+        <li class="never" data-hits="" data-linenumber="24">
           
           <code class="ruby">  end</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="23">
+        <li class="never" data-hits="" data-linenumber="25">
           
           <code class="ruby"></code>
         </li>
       
         
-        <li class="hit" data-hits="3" data-linenumber="24">
+        <li class="hit" data-hits="3" data-linenumber="26">
           <span class="hits">3</span>
           <code class="ruby">  def read_rpx_response(user_data)</code>
         </li>
       
         
-        <li class="hit" data-hits="1" data-linenumber="25">
+        <li class="hit" data-hits="1" data-linenumber="27">
           <span class="hits">1</span>
           <code class="ruby">    self.identifier = user_data['identifier']</code>
         </li>
       
         
-        <li class="hit" data-hits="1" data-linenumber="26">
+        <li class="hit" data-hits="1" data-linenumber="28">
           <span class="hits">1</span>
           <code class="ruby">    self.email = user_data['verifiedEmail'] || user_data['email']</code>
         </li>
       
         
-        <li class="hit" data-hits="1" data-linenumber="27">
+        <li class="hit" data-hits="1" data-linenumber="29">
           <span class="hits">1</span>
           <code class="ruby">    self.name = user_data['displayName']</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="28">
+        <li class="never" data-hits="" data-linenumber="30">
           
           <code class="ruby">  end</code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="29">
+        <li class="never" data-hits="" data-linenumber="31">
           
           <code class="ruby">end</code>
         </li>
