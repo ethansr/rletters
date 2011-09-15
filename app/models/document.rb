@@ -24,9 +24,19 @@ class Document
   # - To do serialization, integrate it into the ActiveModel::Serializers
   # so it acts right.
 
+  # These are all the attributes that come directly out of the
+  # Solr schema
+  attr_reader :shasum, :doi, :authors, :title, :journal, :year,
+              :volume, :number, :pages, :fulltext
+
+  # The shasum attribute is the only required one
+  validates :shasum, :presence => true
+  validates :shasum, :length => { :is => 20 }
+  validates :shasum, :format => { :with => /\A[a-fA-F\d]+\z/, :message => "Invalid SHA1 checksum" }
+
   def initialize(attributes = {})
     attributes.each do |name, value|
-      send("#{name}=", value)
+      instance_variable_set("@#{name}".to_sym, value)
     end
   end
 

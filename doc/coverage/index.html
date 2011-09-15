@@ -23,27 +23,27 @@
       <img src="./assets/0.5.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2011-09-13T23:49:15-04:00">2011-09-13T23:49:15-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2011-09-15T15:24:44-04:00">2011-09-15T15:24:44-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">98.63%</span></span>
+    (<span class="covered_percent"><span class="green">100.0%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.81
+         3.89
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>8</b> files in total.
-    <b>73</b> relevant lines. 
-    <span class="green"><b>72</b> lines covered</span> and
-    <span class="red"><b>1</b> lines missed </span>
+    <b>77</b> relevant lines. 
+    <span class="green"><b>77</b> lines covered</span> and
+    <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -111,12 +111,12 @@
       
       <tr>
         <td class="strong"><a href="#4b29d614901d784ef35d4fa5fc6a663e18081218" class="src_link" title="app/models/document.rb">app/models/document.rb</a></td>
-        <td class="green strong">92.86 %</td>
-        <td>33</td>
-        <td>14</td>
-        <td>13</td>
-        <td>1</td>
-        <td>3.1</td>
+        <td class="green strong">100.0 %</td>
+        <td>43</td>
+        <td>18</td>
+        <td>18</td>
+        <td>0</td>
+        <td>3.7</td>
       </tr>
       
       <tr>
@@ -225,20 +225,20 @@
           <div class="file_list_container" id="Models">
   <h2>
     <span class="group_name">Models</span>
-    (<span class="covered_percent"><span class="green">96.97%</span></span>
+    (<span class="covered_percent"><span class="green">100.0%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.65
+         2.95
        </span>
     </span> hits/line)
   </h2>
   <a name="Models"></a>
   <div>
     <b>2</b> files in total.
-    <b>33</b> relevant lines. 
-    <span class="green"><b>32</b> lines covered</span> and
-    <span class="red"><b>1</b> lines missed </span>
+    <b>37</b> relevant lines. 
+    <span class="green"><b>37</b> lines covered</span> and
+    <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -256,12 +256,12 @@
       
       <tr>
         <td class="strong"><a href="#4b29d614901d784ef35d4fa5fc6a663e18081218" class="src_link" title="app/models/document.rb">app/models/document.rb</a></td>
-        <td class="green strong">92.86 %</td>
-        <td>33</td>
-        <td>14</td>
-        <td>13</td>
-        <td>1</td>
-        <td>3.1</td>
+        <td class="green strong">100.0 %</td>
+        <td>43</td>
+        <td>18</td>
+        <td>18</td>
+        <td>0</td>
+        <td>3.7</td>
       </tr>
       
       <tr>
@@ -1054,11 +1054,11 @@
         <div class="source_table" id="4b29d614901d784ef35d4fa5fc6a663e18081218">
   <div class="header">
     <h3>app/models/document.rb</h3>
-    <h4><span class="green">92.86 %</span> covered</h4>
+    <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>14</b> relevant lines. 
-      <span class="green"><b>13</b> lines covered</span> and
-      <span class="red"><b>1</b> lines missed.</span>
+      <b>18</b> relevant lines. 
+      <span class="green"><b>18</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
   
@@ -1222,43 +1222,103 @@
         </li>
       
         
-        <li class="hit" data-hits="3" data-linenumber="27">
-          <span class="hits">3</span>
-          <code class="ruby">  def initialize(attributes = {})</code>
-        </li>
-      
-        
-        <li class="hit" data-hits="7" data-linenumber="28">
-          <span class="hits">7</span>
-          <code class="ruby">    attributes.each do |name, value|</code>
-        </li>
-      
-        
-        <li class="miss" data-hits="0" data-linenumber="29">
+        <li class="never" data-hits="" data-linenumber="27">
           
-          <code class="ruby">      send(&quot;#{name}=&quot;, value)</code>
+          <code class="ruby">  # These are all the attributes that come directly out of the</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="28">
+          
+          <code class="ruby">  # Solr schema</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="29">
+          <span class="hits">3</span>
+          <code class="ruby">  attr_reader :shasum, :doi, :authors, :title, :journal, :year,</code>
         </li>
       
         
         <li class="never" data-hits="" data-linenumber="30">
           
-          <code class="ruby">    end</code>
+          <code class="ruby">              :volume, :number, :pages, :fulltext</code>
         </li>
       
         
         <li class="never" data-hits="" data-linenumber="31">
           
-          <code class="ruby">  end</code>
+          <code class="ruby"></code>
         </li>
       
         
         <li class="never" data-hits="" data-linenumber="32">
           
+          <code class="ruby">  # The shasum attribute is the only required one</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="33">
+          <span class="hits">3</span>
+          <code class="ruby">  validates :shasum, :presence =&gt; true</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="34">
+          <span class="hits">3</span>
+          <code class="ruby">  validates :shasum, :length =&gt; { :is =&gt; 20 }</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="35">
+          <span class="hits">3</span>
+          <code class="ruby">  validates :shasum, :format =&gt; { :with =&gt; /\A[a-fA-F\d]+\z/, :message =&gt; &quot;Invalid SHA1 checksum&quot; }</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="36">
+          
           <code class="ruby"></code>
         </li>
       
         
-        <li class="never" data-hits="" data-linenumber="33">
+        <li class="hit" data-hits="3" data-linenumber="37">
+          <span class="hits">3</span>
+          <code class="ruby">  def initialize(attributes = {})</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="15" data-linenumber="38">
+          <span class="hits">15</span>
+          <code class="ruby">    attributes.each do |name, value|</code>
+        </li>
+      
+        
+        <li class="hit" data-hits="3" data-linenumber="39">
+          <span class="hits">3</span>
+          <code class="ruby">      instance_variable_set(&quot;@#{name}&quot;.to_sym, value)</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="40">
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="42">
+          
+          <code class="ruby"></code>
+        </li>
+      
+        
+        <li class="never" data-hits="" data-linenumber="43">
           
           <code class="ruby">end</code>
         </li>
