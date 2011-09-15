@@ -1,7 +1,3 @@
 rvm: 1.9.2
 before_script:
- - echo "test:" > config/database.yml
- - echo "  adapter: sqlite3" >> config/database.yml
- - echo "  database: \":memory:\"" >> config/database.yml
- - echo "  timeout: 500" >> config/database.yml
-
+  - "cp config/database.yml.travis config/database.yml"
