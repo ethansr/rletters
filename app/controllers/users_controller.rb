@@ -18,6 +18,7 @@ class UsersController < ApplicationController
       render :template => 'users/form'
     else
       logger.debug "We've seen this user before, redirect to index"
+      reset_session
       session[:user] = @user
       redirect_to :action => 'index'
     end
@@ -34,6 +35,7 @@ class UsersController < ApplicationController
     logger.debug "User should be valid: #{@user.valid?}"
     
     if @user.save
+      reset_session
       session[:user] = @user
       redirect_to :action => 'index'
     else
