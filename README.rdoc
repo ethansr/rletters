@@ -1,3 +1,6 @@
+= RLetters {<img src="http://travis-ci.org/cpence/rletters.png" />}[http://travis-ci.org/cpence/rletters]
+
+
 copy config/database.yml.dist to config/database.yml, edit
 copy config/app_config.yml.dist to config/app_config.yml, edit
 
