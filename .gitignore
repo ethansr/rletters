@@ -5,6 +5,7 @@
 app/assets/images/
 config/app_config.yml
 config/database.yml
+doc/coverage/
 log/*.log
 public/assets/
 public/favicon.ico
