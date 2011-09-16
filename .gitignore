@@ -1,6 +1,7 @@
 .bundle
 .DS_Store
 .sass-cache/
+.yardoc/
 
 app/assets/images/
 config/app_config.yml
