@@ -14,6 +14,7 @@ namespace :doc do
     t.options << '-o' << 'doc/app'
     t.options << '--protected' << '--private'
     t.options << '-r' << 'README.rdoc'
+    t.options << '--no-cache' << '--no-save'
   end
 end
 

@@ -129,6 +129,8 @@ GEM
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
     yard (0.7.2)
+    yardstick (0.4.0)
+      yard (~> 0.7.0)
 
 PLATFORMS
   ruby
@@ -152,3 +154,4 @@ DEPENDENCIES
   turn
   uglifier
   yard
+  yardstick

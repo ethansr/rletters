@@ -1,0 +1,24 @@
+app/controllers/application_controller.rb:8: ApplicationController#login_required: The method summary should be specified
+app/controllers/application_controller.rb:8: ApplicationController#login_required: The public/semipublic method should have an example specified
+app/controllers/application_controller.rb:8: ApplicationController#login_required: The @api tag should be specified
+app/controllers/application_controller.rb:8: ApplicationController#login_required: The @api tag must be either public, semipublic or private
+app/controllers/application_controller.rb:8: ApplicationController#login_required: A method with private visibility must have an @api tag of private
+app/controllers/application_controller.rb:8: ApplicationController#login_required: The @return tag should be specified
+app/controllers/users_controller.rb:14: UsersController#rpx: The method summary should be less than 80 characters in length
+app/controllers/users_controller.rb:14: UsersController#rpx: The method summary should not end in a period
+app/controllers/users_controller.rb:14: UsersController#rpx: The method summary should be a single line
+app/controllers/users_controller.rb:14: UsersController#rpx: The public/semipublic method should have an example specified
+app/controllers/users_controller.rb:14: UsersController#rpx: The @api tag should be specified
+app/controllers/users_controller.rb:14: UsersController#rpx: The @api tag must be either public, semipublic or private
+app/controllers/users_controller.rb:14: UsersController#rpx: The @return tag should be specified
+app/controllers/users_controller.rb:30: UsersController#create: The public/semipublic method should have an example specified
+app/controllers/users_controller.rb:30: UsersController#create: The @api tag should be specified
+app/controllers/users_controller.rb:30: UsersController#create: The @api tag must be either public, semipublic or private
+app/controllers/users_controller.rb:30: UsersController#create: The @return tag should be specified
+app/models/document.rb:29: Document#pages: The method summary should be a single line
+app/models/document.rb:29: Document#pages: The public/semipublic method should have an example specified
+app/models/document.rb:29: Document#pages: The @api tag should be specified
+app/models/document.rb:29: Document#pages: The @api tag must be either public, semipublic or private
+app/models/document.rb:29: Document#pages: The @return tag should be specified
+
+Coverage: 45.0%  Success: 18  Failed: 22  Total: 40
