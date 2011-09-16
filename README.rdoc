@@ -19,9 +19,14 @@ User login for RLetters uses the external {Janrain Engage}[http://www.janrain.co
 
 === Customize some static content
 
+Several files have some long-format text about your application that you'll want to customize.
+
+-   <tt>app/views/info/privacy.html.haml</tt>:  We've filled this in with a pretty good default privacy policy for the default settings of RLetters.  If you change the way that you interact with your users, you should update this privacy policy.
+-   <tt>app/views/datasets/_no_datasets.html.haml</tt>: This message is displayed to users when they log in for the first time (and don't have any datasets).  You'll want to customize it to tell users a little more about your application.
+
 Now you've got some images to customize.
 
--   First, <tt>app/assets/images/error-watermark.png</tt>.  This is an image shown in the bottom-left corner of the site's error pages (as well as the page shown to web-app users when they attempt to access RLetters without an internet connection).  Something like 500x300 pixels is a good size for this image.
+-   <tt>app/assets/images/error-watermark.png</tt>: This is an image shown in the bottom-left corner of the site's error pages (as well as the page shown to web-app users when they attempt to access RLetters without an internet connection).  Something like 500x300 pixels is a good size for this image.
 -   Now, the iOS splash images and icons:
     -   <tt>images/h/apple-touch-icon.png</tt>: 114x114 pixel iOS application icon.  This is used on Retina Display-capable iPhones.
     -   <tt>images/m/apple-touch-icon.png</tt>: 72x72 pixel iOS application icon.  This is used on the iPad.

@@ -14,3 +14,6 @@ public/assets/
 public/favicon.ico
 public/images/
 tmp/
+
+app/views/datasets/_no_datasets.html.haml
+
