@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_filter :login_required, :except => :logout
+
   def index; end
 
   def logout
