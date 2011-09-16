@@ -15,9 +15,7 @@ RLetters::Application.routes.draw do
   get 'info' => 'info#index'
   get 'info/privacy'
 
-  # FIXME
-  root :to => 'mockup#index'
-
-  # FIXME
-  match ':controller(/:action(/:id(.:format)))'
+  # Start off on the search page (it's the part you can
+  # do without being logged in)
+  root :to => 'search#index'
 end
