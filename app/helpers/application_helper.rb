@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def render_footer_list
     footer_buttons = [
-      { :controller => 'mockup', :text => 'Datasets', :icon => 'grid' },
+      { :controller => 'datasets', :text => 'Datasets', :icon => 'grid' },
       { :controller => 'search', :text => 'Search/Browse', :icon => 'search' },
       { :controller => 'users', :text => 'Account', :icon => 'home' }
     ]
