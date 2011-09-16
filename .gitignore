@@ -1,5 +1,6 @@
 .bundle
 .DS_Store
+.gh_pages/
 .sass-cache/
 .yardoc/
 
@@ -7,6 +8,7 @@ app/assets/images/
 config/app_config.yml
 config/database.yml
 doc/coverage/
+doc/gh-pages/
 log/*.log
 public/assets/
 public/favicon.ico

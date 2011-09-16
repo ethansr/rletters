@@ -30,4 +30,5 @@ group :test do
 end
 
 gem 'yard'
+gem 'grit'
 
