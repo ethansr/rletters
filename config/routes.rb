@@ -40,15 +40,18 @@ RLetters::Application.routes.draw do
 
   # See how all your routes lay out with "rake routes"
 
+  # Search/Browse page
+  get "search" => 'search#index'
+
   # Custom login built around Janrain Engage
-  get '/users' => 'users#index'
-  post '/users' => 'users#create'
-  get '/users/rpx' => 'users#rpx'
-  get '/users/logout' => 'users#logout'
+  get 'users' => 'users#index'
+  post 'users' => 'users#create'
+  get 'users/rpx'
+  get 'users/logout'
 
   # Static information pages
-  get '/info' => 'info#index'
-  get '/info/privacy' => 'info#privacy'
+  get 'info' => 'info#index'
+  get 'info/privacy'
 
   # FIXME
   root :to => 'mockup#index'
