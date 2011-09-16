@@ -7,8 +7,8 @@
 app/assets/images/
 config/app_config.yml
 config/database.yml
+db/*.sqlite3
 doc/coverage/
-doc/gh-pages/
 log/*.log
 public/assets/
 public/favicon.ico
