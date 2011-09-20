@@ -7,7 +7,7 @@
       %p
         You can use your account with Google, Facebook, Yahoo, Flickr, myOpenID,
         or any other OpenID.
-    %li.janrain= RPXNow.embed_code('evotext', url_for(:controller => :users, :action => :rpx, :only_path => false)).html_safe
+    %li.janrain= RPXNow.embed_code(APP_CONFIG['janrain_appname'], url_for(:controller => :users, :action => :rpx, :only_path => false)).html_safe
     %li= link_to "Concerned about your security?", :controller => :info, :action => :privacy
   - else
     %li= link_to "You are logged in as #{session[:user].name} (#{session[:user].email})", root_path
