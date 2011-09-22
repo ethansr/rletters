@@ -3,3 +3,6 @@
  *= require_self
  *= require_tree . 
 */
+
+.verticalpad { margin-top: 15px; margin-bottom: 15px; }
+

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def login_required
     if session[:user].nil?
-      redirect_to users_path
+      redirect_to users_path, :rel => :external, :notice => "You must be logged in to view this page."
     end
   end
 end

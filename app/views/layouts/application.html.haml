@@ -21,6 +21,7 @@
         %a.ui-btn-right{ :href => info_path, 'data-icon' => :info } Help
       
       %div{ 'data-role' => 'content' }
+        = render :partial => 'layouts/flashes'
         = yield
       
       %div.rlfooter{ 'data-id' => 'rlfooter', 'data-position' => 'fixed', 'data-role' => 'footer' }
