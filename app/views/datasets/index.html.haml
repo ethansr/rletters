@@ -1,7 +1,10 @@
-%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-  %li{ 'data-role' => 'list-divider' }== #{@datasets.count} datasets found
-  - @datasets.each do |dataset|
-    %li
-      %a{ :href => dataset_path(dataset) }
-        %h3= dataset.name
-        %p Created on WHENEVER goes here
+- if @datasets.empty?
+  = render :partial => 'no_datasets'
+- else
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+    %li{ 'data-role' => 'list-divider' }== #{@datasets.count} datasets found
+    - @datasets.each do |dataset|
+      %li
+        %a{ :href => dataset_path(dataset) }
+          %h3= dataset.name
+          %p Created on WHENEVER goes here
