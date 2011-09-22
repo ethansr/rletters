@@ -4,6 +4,10 @@
 
 == Installation
 
+=== Install and configure Solr
+
+You will need to install and set up Solr yourself before you begin.  RLetters provides snippets from both <tt>schema.xml</tt> and <tt>solrconfig.xml</tt>, which define the document schema and the request handlers that are used by RLetters.  Of course, you are welcome to add, edit, or change these as necessary.
+
 === Install Rails and some gems
 
 We'll assume for these instructions that you know how to {install Ruby on Rails}[http://guides.rubyonrails.org/getting_started.html] and get a Rails application up and running on your local web server.  Install the various gems required for RLetters by executing <tt>bundle install</tt>.
