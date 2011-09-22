@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   validates :identifier, :uniqueness => true
   validates_format_of :identifier, :with => /^(#{URI::regexp(%w(http https))})$/
 
-  has_many :datasets
+  has_many :datasets, :dependent => :delete_all
 
   attr_accessible :name, :email, :identifier
 

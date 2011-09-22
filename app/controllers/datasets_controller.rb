@@ -2,17 +2,16 @@ class DatasetsController < ApplicationController
   before_filter :login_required
 
   def index
-    # FIXME: only this user's datasets
-    @datasets = Dataset.all
+    @datasets = session[:user].datasets
   end
 
   def show
-    # FIXME: check the user has access to this dataset
-    @dataset = Dataset.find(params[:id])
+    @dataset = session[:user].datasets.find(params[:id])
+    throw ActiveRecord::RecordNotFound unless @datset
   end
 
   def create
-    @dataset = Dataset.new(params[:dataset])
+    @dataset = session[:user].datasets.build(params[:dataset])
 
     respond_to do |format|
       if @dataset.save
@@ -24,8 +23,9 @@ class DatasetsController < ApplicationController
   end
 
   def destroy
-    # FIXME: check the user has access to this dataset
-    @dataset = Dataset.find(params[:id])
+    @dataset = session[:user].datasets.find(params[:id])
+    throw ActiveRecord::RecordNotFound unless @dataset
+
     @dataset.destroy
 
     redirect_to datasets_url
