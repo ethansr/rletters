@@ -7,7 +7,8 @@ all_environments: &all_environments
   janrain_appname: appname
   janrain_appid: asdfasdf
   janrain_secret: 12341234
-
+  
+  solr_server_url: http://localhost:8080/solr
 
 development:
   <<: *all_environments  
