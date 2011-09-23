@@ -50,7 +50,7 @@ module SolrHelpers
     if solr_facets["facet_queries"]
       facets[:year] = {}
       solr_facets["facet_queries"].each do |k, v|
-        decade = k.slice(6, -1).split[0]
+        decade = k.slice(6..-1).split[0]
         decade = "1790" if decade == "*"
         facets[:year][decade] = v
       end
