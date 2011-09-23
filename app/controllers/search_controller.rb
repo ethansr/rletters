@@ -3,6 +3,11 @@ class SearchController < ApplicationController
     @documents = Document.find_all_by_solr_query(search_params_to_solr_query, :offset => 0, :limit => 10)
   end
 
+  def results
+    @documents = Document.find_all_by_solr_query(search_params_to_solr_query, :offset => 0, :limit => 10)
+    render :template => 'search/results', :layout => false
+  end
+
   # Convert from web-query params (one per field) to a set of Solr 
   # query parameters to be passed to <tt>Document.find_all_by_solr_query</tt>.
   def search_params_to_solr_query

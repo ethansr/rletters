@@ -4,10 +4,7 @@
     %li.search
       = form_tag(search_path, :method => :get, 'data-transition' => 'none') do
         = search_field_tag :q, (params[:precise] ? "(advanced search)" : params[:q]), :placeholder => "Search for articles..."
-    - @documents.each do |d|
-      %li
-        %h3= d.title
-        %p= d.journal
+    = render :template => 'search/results'
 %div.rightcolumn
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
     %li{ 'data-role' => 'list-divider' } Filter Search

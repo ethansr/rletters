@@ -1,6 +1,7 @@
 RLetters::Application.routes.draw do
   # Search/Browse page
   get "search" => 'search#index'
+  get 'search/results'
 
   # Datasets (per-user)
   resources :datasets, :except => [:edit, :update, :new]
