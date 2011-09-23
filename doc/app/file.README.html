@@ -59,6 +59,14 @@
 
 <h2>Installation</h2>
 
+<h3>Install and configure Solr</h3>
+
+<p>You will need to install and set up Solr yourself before you begin. 
+RLetters provides snippets from both <tt>schema.xml</tt> and
+<tt>solrconfig.xml</tt>, which define the document schema and the request
+handlers that are used by RLetters.  Of course, you are welcome to add,
+edit, or change these as necessary.</p>
+
 <h3>Install Rails and some gems</h3>
 
 <p>We’ll assume for these instructions that you know how to <a
@@ -78,17 +86,46 @@ edit it to point to your database.</p>
 and edit it to include your application’s details.</p>
 </li></ul>
 
-<p>(instructions here about Janrain account, its secret API key</p>
+<p>User login for RLetters uses the external <a
+href="http://www.janrain.com/products/engage">Janrain Engage</a> service,
+which allows users to log in through Google, Facebook, LinkedIn, and a
+number of other third-party services.  For user login to work properly, you
+will need to create a Janrain Engage account at their website (free for
+less than 2,500 users per year, which should be more than enough for an
+academic resource like RLetters).  Once you’ve created an account, click
+“Sign-In for Websites” on the right-hand side, and configure your login
+widget.  Under “Application Settings,” make sure to add your deployment URL
+to the Domain Whitelist.  Add a link to your privacy policy ((YOUR
+URL)/info/privacy), and your favicon.  Now open
+<tt>config/app_config.yml.dist</tt>.  The value for
+<tt>janrain_appname</tt> is the subdomain under Application Domain (e.g.,
+for rletters.rpxnow.com, the <tt>janrain_appname</tt> is
+<tt>rletters</tt>).  Copy the value for “App ID” as <tt>janrain_appid</tt>,
+and the value for “API Key (Secret)” as <tt>janrain_secret</tt>. 
+Obviously, make sure to secure your <tt>config/app_config.yml</tt> file.</p>
 
 <h3>Customize some static content</h3>
 
+<p>Several files have some long-format text about your application that you’ll
+want to customize.</p>
+<ul><li>
+<p><tt>app/views/info/privacy.html.haml</tt>:  We've filled this in with a
+pretty good default privacy policy for the default settings of RLetters. 
+If you change the way that you interact with your users, you should update
+this privacy policy.</p>
+</li><li>
+<p><tt>app/views/datasets/_no_datasets.html.haml</tt>: This message is
+displayed to users when they log in for the first time (and don't have any
+datasets).  You'll want to customize it to tell users a little more about
+your application.</p>
+</li></ul>
+
 <p>Now you’ve got some images to customize.</p>
 <ul><li>
-<p>First, <tt>app/assets/images/error-watermark.png</tt>.  This is an image
-shown in the bottom-left corner of the site’s error pages (as well as the
-page shown to web-app users when they attempt to access RLetters without an
-internet connection).  Something like 500x300 pixels is a good size for
-this image.</p>
+<p><tt>app/assets/images/error-watermark.png</tt>: This is an image shown in
+the bottom-left corner of the site's error pages (as well as the page shown
+to web-app users when they attempt to access RLetters without an internet
+connection).  Something like 500x300 pixels is a good size for this image.</p>
 </li><li>
 <p>Now, the iOS splash images and icons:</p>
 <ul><li>
@@ -118,7 +155,7 @@ href="http://humanstxt.org">humans.txt</a> file at
 </div></div>
     
     <div id="footer">
-  Generated on Fri Sep 16 12:23:04 2011 by 
+  Generated on Thu Sep 22 20:46:51 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

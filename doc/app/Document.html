@@ -82,7 +82,7 @@
   
     
       <dt class="r2">Extended by:</dt>
-      <dd class="r2">ActiveModel::Naming, ActiveModel::Translation</dd>
+      <dd class="r2">ActiveModel::Naming, ActiveModel::Translation, <span class='object_link'><a href="SolrHelpers.html" title="SolrHelpers (module)">SolrHelpers</a></span></dd>
       
     
   
@@ -101,7 +101,42 @@
 <div class="clear"></div>
 
 
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="facets-classvariable" class="">@@facets =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Facets that were returned by the last search.  These are provided in the
+following format (year facets are by decade, from XXX0-XXX9):</p>
 
+<pre class="code"><span class='const'>Document</span><span class='period'>.</span><span class='id facets'>facets</span> <span class='op'>=</span> <span class='const'>Hash</span>
+  <span class='const'>Document</span><span class='period'>.</span><span class='id facets'>facets</span><span class='lbracket'>[</span><span class='symbol'>:author</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Particular Author</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Integer</span>
+  <span class='const'>Document</span><span class='period'>.</span><span class='id facets'>facets</span><span class='lbracket'>[</span><span class='symbol'>:journal</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Particular Journal</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Integer</span>
+  <span class='const'>Document</span><span class='period'>.</span><span class='id facets'>facets</span><span class='lbracket'>[</span><span class='symbol'>:year</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1980</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Integer</span></pre>
+
+<p>If the last search did not return any facet data, <tt>facets</tt> will be
+<tt>nil</tt>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='kw'>nil</span></pre></dd>
+      
+    </dl>
+  
+
+
+  
+  
+  
+  
   
   
   
@@ -295,6 +330,32 @@
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#term_vectors-instance_method" title="#term_vectors (instance method)">- (Object) <strong>term_vectors</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Term vectors for this document.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#title-instance_method" title="#title (instance method)">- (Object) <strong>title</strong> </a>
     
 
@@ -379,6 +440,9 @@
   
   
   
+  
+  
+  
 
   
     <h2>
@@ -405,6 +469,97 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#facets-class_method" title="facets (class method)">+ (Object) <strong>facets</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find-class_method" title="find (class method)">+ (Object) <strong>find</strong>(shasum, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return a single document (just bibliographic data) by SHA-1 checksum.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_all_by_solr_query-class_method" title="find_all_by_solr_query (class method)">+ (Object) <strong>find_all_by_solr_query</strong>(params, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Find a set of documents using a direct Solr query.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_with_fulltext-class_method" title="find_with_fulltext (class method)">+ (Object) <strong>find_with_fulltext</strong>(shasum, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return a single document (bibliographic data and full text) by SHA-1
+checksum.</p>
+</div></span>
   
 </li>
 
@@ -535,6 +690,16 @@
   
   
   
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="SolrHelpers.html" title="SolrHelpers (module)">SolrHelpers</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SolrHelpers.html#parse_facet_counts-instance_method" title="SolrHelpers#parse_facet_counts (method)">parse_facet_counts</a></span>, <span class='object_link'><a href="SolrHelpers.html#parse_term_vectors-instance_method" title="SolrHelpers#parse_term_vectors (method)">parse_term_vectors</a></span></p>
+
+  
+  
+  
+  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -561,14 +726,14 @@
       <pre class="lines">
 
 
-37
-38
-39
-40
-41</pre>
+145
+146
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id attributes'>attributes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id attributes'>attributes</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id name'>name</span><span class='comma'>,</span> <span class='id value'>value</span><span class='op'>|</span>
@@ -611,12 +776,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id authors'>authors</span>
   <span class='ivar'>@authors</span>
@@ -652,12 +817,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id doi'>doi</span>
   <span class='ivar'>@doi</span>
@@ -693,12 +858,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id fulltext'>fulltext</span>
   <span class='ivar'>@fulltext</span>
@@ -734,12 +899,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id journal'>journal</span>
   <span class='ivar'>@journal</span>
@@ -775,12 +940,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id number'>number</span>
   <span class='ivar'>@number</span>
@@ -816,12 +981,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id pages'>pages</span>
   <span class='ivar'>@pages</span>
@@ -857,15 +1022,73 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id shasum'>shasum</span>
   <span class='ivar'>@shasum</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="term_vectors-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="term_vectors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>term_vectors</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>Term vectors for this document.  This is provided in the following format:</p>
+
+<p><a href="http://"word"">doc.term_vectors</a> # Term frequency (number of
+times this term appears in doc) <a
+href="http://"word"">doc.term_vectors</a>[:tf] = Integer # Term offsets <a
+href="http://"word"">doc.term_vectors</a>[:offsets] = Array # The start and
+end character offsets for "word" within # doc.fulltext <a
+href="http://"word"">doc.term_vectors</a>[:<a href="http://0">offsets]</a>
+= Range ... # Term positions <a
+href="http://"word"">doc.term_vectors</a>[:positions] = Array # The
+word-index of this word in doc.fulltext <a
+href="http://"word"">doc.term_vectors</a>[:<a
+href="http://0">positions]</a> = Integer ... # Number of documents in
+collection that contain "word" <a
+href="http://"word"">doc.term_vectors</a>[:df] = Float # Term
+frequency-inverse document frequency for "word" <a
+href="http://"word"">doc.term_vectors</a>[:tfidf] = Float <a
+href="http://"otherword"">doc.term_vectors</a> ...</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126
+127
+128</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 126</span>
+
+<span class='kw'>def</span> <span class='id term_vectors'>term_vectors</span>
+  <span class='ivar'>@term_vectors</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -898,12 +1121,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id title'>title</span>
   <span class='ivar'>@title</span>
@@ -939,12 +1162,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id volume'>volume</span>
   <span class='ivar'>@volume</span>
@@ -980,12 +1203,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id year'>year</span>
   <span class='ivar'>@year</span>
@@ -1042,6 +1265,246 @@
       <pre class="code"><span class="info file"># File 'app/models/document.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id delete_all'>delete_all</span><span class='semicolon'>;</span> <span class='id raise'>raise</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>ReadOnlyRecord</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="facets-class_method">
+  
+    + (<tt>Object</tt>) <strong>facets</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id facets'>facets</span><span class='semicolon'>;</span> <span class='cvar'>@@facets</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="find-class_method">
+  
+    + (<tt>Object</tt>) <strong>find</strong>(shasum, options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>Return a single document (just bibliographic data) by SHA-1 checksum. The
+return value and options are documented in find_all_by_solr_query.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id find'>find</span><span class='lparen'>(</span><span class='id shasum'>shasum</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id set'>set</span> <span class='op'>=</span> <span class='id find_all_by_solr_query'>find_all_by_solr_query</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='symbol'>:q</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shasum: </span><span class='embexpr_beg'>#{</span><span class='id shasum'>shasum</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:qt</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
+  <span class='id throw'>throw</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>RecordNotFound</span> <span class='kw'>if</span> <span class='id set'>set</span><span class='period'>.</span><span class='id empty?'>empty?</span>
+  <span class='id set'>set</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="find_all_by_solr_query-class_method">
+  
+    + (<tt>Object</tt>) <strong>find_all_by_solr_query</strong>(params, options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>Find a set of documents using a direct Solr query.  <tt>params</tt> is an
+array that will be passed directly to Solr.  It can have (at least) the
+following keys:</p>
+
+<pre class="code">- &lt;tt&gt;params[:q]&lt;/tt&gt; is a Solr query string &quot;field:val field:val ...&quot;
+- &lt;tt&gt;params[:qt]&lt;/tt&gt; is the Solr query type.  The default query language
+  includes the types &lt;tt&gt;standard&lt;/tt&gt; (for stemmed, Google-like searching),
+  &lt;tt&gt;precise&lt;/tt&gt; (bibliographic data only), and &lt;tt&gt;fulltext&lt;/tt&gt; (bibliographic
+  data plus full document text)</pre>
+
+<p>You can return a limited set of results either by setting +<a
+href="http://:start">params</a>+ and <tt>&lt;a href=&quot;http://:rows&quot;&gt;params&lt;/a&gt;</tt>,
+or by using the standard Rails options <tt>:offset:</tt> and
+<tt>:limit</tt> as usually passed to <tt>ActiveRecord::find</tt>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id find_all_by_solr_query'>find_all_by_solr_query</span><span class='lparen'>(</span><span class='id params'>params</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Map from common Rails options to Solr options
+</span>  <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:start</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span>
+  <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:rows</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:limit</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:limit</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Connect to Solr and execute the query
+</span>  <span class='id solr'>solr</span> <span class='op'>=</span> <span class='const'>RSolr</span><span class='period'>.</span><span class='id connect'>connect</span> <span class='symbol'>:url</span> <span class='op'>=&gt;</span> <span class='const'>APP_CONFIG</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>solr_server_url</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id solr_response'>solr_response</span> <span class='op'>=</span> <span class='id solr'>solr</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>select</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:params</span> <span class='op'>=&gt;</span> <span class='id params'>params</span><span class='rparen'>)</span>
+  
+  <span class='id throw'>throw</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>StatementInvalid</span> <span class='kw'>unless</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id throw'>throw</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>StatementInvalid</span> <span class='kw'>unless</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>numFound</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>numFound</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
+  <span class='id throw'>throw</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>StatementInvalid</span> <span class='kw'>unless</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>docs</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  
+  <span class='comment'># Grab all of the document-attributes that Solr returned, forcing
+</span>  <span class='comment'># everything into UTF-8 encoding, which is how all Solr's data
+</span>  <span class='comment'># comes back
+</span>  <span class='id documents'>documents</span> <span class='op'>=</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>docs</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id documents'>documents</span><span class='period'>.</span><span class='id map!'>map!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id doc'>doc</span><span class='op'>|</span> <span class='id doc'>doc</span><span class='period'>.</span><span class='id each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span> <span class='id v'>v</span><span class='op'>|</span> <span class='id doc'>doc</span><span class='lbracket'>[</span><span class='id k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id v'>v</span><span class='period'>.</span><span class='id force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UTF-8</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='rbrace'>}</span>
+
+  <span class='comment'># See if the term vectors are available, and add them to the documents
+</span>  <span class='kw'>if</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>termVectors</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='lparen'>(</span><span class='int'>0</span><span class='op'>...</span><span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>termVectors</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id length'>length</span><span class='rparen'>)</span><span class='period'>.</span><span class='id step'>step</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id i'>i</span><span class='op'>|</span>
+      <span class='id doc_shasum'>doc_shasum</span> <span class='op'>=</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>termVectors</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id i'>i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+      <span class='id doc_tvec_array'>doc_tvec_array</span> <span class='op'>=</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>termVectors</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id i'>i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>3</span><span class='rbracket'>]</span>
+      
+      <span class='id idx'>idx</span> <span class='op'>=</span> <span class='id documents'>documents</span><span class='period'>.</span><span class='id find_index'>find_index</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id doc'>doc</span><span class='op'>|</span> <span class='id doc'>doc</span><span class='period'>.</span><span class='id shasum'>shasum</span> <span class='op'>==</span> <span class='id doc_shasum'>doc_shasum</span> <span class='rbrace'>}</span>
+      <span class='kw'>unless</span> <span class='id idx'>idx</span><span class='period'>.</span><span class='id nil?'>nil?</span>
+        <span class='id documents'>documents</span><span class='lbracket'>[</span><span class='id idx'>idx</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>term_vectors</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id parse_term_vectors'>parse_term_vectors</span><span class='lparen'>(</span><span class='id doc_tvec_array'>doc_tvec_array</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># See if the facets are available, and set the class variable if so
+</span>  <span class='cvar'>@@facets</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>if</span> <span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>facet_counts</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='cvar'>@@facets</span> <span class='op'>=</span> <span class='id parse_facet_counts'>parse_facet_counts</span><span class='lparen'>(</span><span class='id solr_response'>solr_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>facet_counts</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Initialize all the documents and get out of here
+</span>  <span class='id documents'>documents</span><span class='period'>.</span><span class='id map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id attrs'>attrs</span><span class='op'>|</span> <span class='const'>Document</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id attrs'>attrs</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="find_with_fulltext-class_method">
+  
+    + (<tt>Object</tt>) <strong>find_with_fulltext</strong>(shasum, options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>Return a single document (bibliographic data and full text) by SHA-1
+checksum.  The return value and options are documented in 
+find_all_by_solr_query.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/document.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id find_with_fulltext'>find_with_fulltext</span><span class='lparen'>(</span><span class='id shasum'>shasum</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id set'>set</span> <span class='op'>=</span> <span class='id find_all_by_solr_query'>find_all_by_solr_query</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='symbol'>:q</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shasum: </span><span class='embexpr_beg'>#{</span><span class='id shasum'>shasum</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:qt</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fulltext</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
+  <span class='id throw'>throw</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>RecordNotFound</span> <span class='kw'>if</span> <span class='id set'>set</span><span class='period'>.</span><span class='id empty?'>empty?</span>
+  <span class='id set'>set</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1238,7 +1701,7 @@
 </div>
     
     <div id="footer">
-  Generated on Fri Sep 16 12:23:04 2011 by 
+  Generated on Thu Sep 22 20:46:51 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

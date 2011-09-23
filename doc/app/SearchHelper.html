@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: SearchHelper
+  
+    &mdash; Documentation by YARD 0.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (S)</a> &raquo; 
+    
+    
+    <span class="title">SearchHelper</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Module: SearchHelper
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/helpers/search_helper.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#search_params_to_solr_query-instance_method" title="#search_params_to_solr_query (instance method)">- (Object) <strong>search_params_to_solr_query</strong>(params) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Convert from web-query params (one per field) to a set of Solr  query
+parameters to be passed to <tt>Document.find_all_by_solr_query</tt>.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="search_params_to_solr_query-instance_method">
+  
+    - (<tt>Object</tt>) <strong>search_params_to_solr_query</strong>(params) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>Convert from web-query params (one per field) to a set of Solr  query
+parameters to be passed to <tt>Document.find_all_by_solr_query</tt>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/search_helper.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id search_params_to_solr_query'>search_params_to_solr_query</span><span class='lparen'>(</span><span class='id params'>params</span><span class='rparen'>)</span>
+  <span class='comment'># Treat 'page' and 'per_page' separately
+</span>  <span class='id page'>page</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='id page'>page</span> <span class='op'>=</span> <span class='const'>Integer</span><span class='lparen'>(</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id params'>params</span><span class='period'>.</span><span class='id has_key?'>has_key?</span> <span class='symbol'>:page</span>
+
+  <span class='comment'># FIXME: move to user settings if logged in
+</span>  <span class='id per_page'>per_page</span> <span class='op'>=</span> <span class='int'>10</span>
+  <span class='id per_page'>per_page</span> <span class='op'>=</span> <span class='const'>Integer</span><span class='lparen'>(</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:per_page</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id params'>params</span><span class='period'>.</span><span class='id has_key?'>has_key?</span> <span class='symbol'>:per_page</span>
+
+  <span class='id offset'>offset</span> <span class='op'>=</span> <span class='id page'>page</span> <span class='op'>*</span> <span class='id per_page'>per_page</span>
+  <span class='id limit'>limit</span> <span class='op'>=</span> <span class='id per_page'>per_page</span>
+
+  <span class='comment'># Remove any blank values (you get these on form submissions, for
+</span>  <span class='comment'># example)
+</span>  <span class='id params'>params</span><span class='period'>.</span><span class='id delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span> <span class='id v'>v</span><span class='op'>|</span> <span class='id v'>v</span><span class='period'>.</span><span class='id blank?'>blank?</span> <span class='rbrace'>}</span>
+
+  <span class='comment'># Initialize by copying over the faceted-browsing query
+</span>  <span class='id query_params'>query_params</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:fq</span> <span class='op'>=&gt;</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:fq</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  
+  <span class='kw'>if</span> <span class='id params'>params</span><span class='period'>.</span><span class='id has_key?'>has_key?</span> <span class='symbol'>:precise</span>
+    <span class='comment'># Advanced search, step through the fields
+</span>    <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:qt</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>precise</span><span class='tstring_end'>'</span></span>
+    <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    
+    <span class='comment'># Verbatim search fields
+</span>    <span class='words_beg'>%W(</span><span class='tstring_content'>authors</span><span class='words_sep'> </span><span class='tstring_content'>volume</span><span class='words_sep'> </span><span class='tstring_content'>number</span><span class='words_sep'> </span><span class='tstring_content'>pages</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span>
+      <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id f'>f</span><span class='rbrace'>}</span><span class='tstring_content'>:(</span><span class='embexpr_beg'>#{</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='id f'>f</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='id f'>f</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+
+    <span class='comment'># Verbatim or fuzzy search fields
+</span>    <span class='words_beg'>%W(</span><span class='tstring_content'>title</span><span class='words_sep'> </span><span class='tstring_content'>journal</span><span class='words_sep'> </span><span class='tstring_content'>fulltext</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span>
+      <span class='id field'>field</span> <span class='op'>=</span> <span class='id f'>f</span>
+      <span class='id field'>field</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_search</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='lparen'>(</span><span class='id f'>f</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_type</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='kw'>and</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='lparen'>(</span><span class='id f'>f</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_type</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fuzzy</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id field'>field</span><span class='rbrace'>}</span><span class='tstring_content'>:(</span><span class='embexpr_beg'>#{</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='id f'>f</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='id f'>f</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+
+    <span class='comment'># Handle the year separately, for range support
+</span>    <span class='kw'>if</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_start</span><span class='rbracket'>]</span> <span class='kw'>or</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_end</span><span class='rbracket'>]</span>
+      <span class='id year'>year</span> <span class='op'>=</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_start</span><span class='rbracket'>]</span>
+      <span class='id year'>year</span> <span class='op'>||=</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_end</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_start</span><span class='rbracket'>]</span> <span class='kw'>and</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_end</span><span class='rbracket'>]</span>
+        <span class='id year'>year</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_start</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> TO </span><span class='embexpr_beg'>#{</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:year_end</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      
+      <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> year:(</span><span class='embexpr_beg'>#{</span><span class='id year'>year</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='comment'># If there's no query after that, add the all-documents operator
+</span>    <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id strip!'>strip!</span>
+    <span class='kw'>if</span> <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id empty?'>empty?</span>
+      <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*:*</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Simple search
+</span>    <span class='kw'>if</span> <span class='kw'>not</span> <span class='id params'>params</span><span class='period'>.</span><span class='id has_key?'>has_key?</span> <span class='symbol'>:q</span>
+      <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*:*</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:qt</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='id query_params'>query_params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:q</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  
+  <span class='id query_params'>query_params</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Thu Sep 22 20:46:51 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.2 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>
