@@ -152,7 +152,7 @@ class Document
         doc_shasum = solr_response["termVectors"][i + 1][1]
         doc_tvec_array = solr_response["termVectors"][i + 1][3]
         
-        idx = documents.find_index { |doc| doc.shasum == doc_shasum }
+        idx = documents.find_index { |doc| doc['shasum'] == doc_shasum }
         unless idx.nil?
           documents[idx]["term_vectors"] = parse_term_vectors(doc_tvec_array)
         end

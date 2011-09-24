@@ -37,13 +37,13 @@ class DocumentTest < ActiveSupport::TestCase
 
   test "find_all_by_solr_query should return empty array for no docs" do
     stub_solr_response(SOLR_RESPONSE_EMPTY)
-    assert_equal(Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" }), [])
+    assert_equal([], Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" }))
   end
 
   test "find_all_by_solr_query should work for good response" do
     stub_solr_response(SOLR_RESPONSE_VALID)
     docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
-    assert_equal(docs.count, 5)
+    assert_equal(5, docs.count)
   end
 
   test "find_all_by_solr_query should load all document attributes" do
@@ -51,15 +51,15 @@ class DocumentTest < ActiveSupport::TestCase
     docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
 
     # Check one of each attribute
-    assert_equal(docs[0].shasum, '8e740d30df3f9941e2ca059ef6896830c8a8e226')
-    assert_equal(docs[3].doi, '10.1111/j.1601-183X.2009.00489.x')
-    assert_equal(docs[1].authors, 'T. M. Freeberg')
-    assert_equal(docs[2].title, 'David C. Geary: The origin of mind: evolution of brain, cognition and general intelligence')
-    assert_equal(docs[0].journal, 'Genes, Brain and Behavior')
-    assert_equal(docs[2].year, '2006')
-    assert_equal(docs[3].volume, '8')
+    assert_equal('8e740d30df3f9941e2ca059ef6896830c8a8e226', docs[0].shasum)
+    assert_equal('10.1111/j.1601-183X.2009.00489.x', docs[3].doi)
+    assert_equal('T. M. Freeberg', docs[1].authors)
+    assert_equal('David C. Geary: The origin of mind: evolution of brain, cognition and general intelligence', docs[2].title)
+    assert_equal('Genes, Brain and Behavior', docs[0].journal)
+    assert_equal('2006', docs[2].year)
+    assert_equal('8', docs[3].volume)
     assert_nil(docs[4].number)
-    assert_equal(docs[4].pages, '17-27')
+    assert_equal('17-27', docs[4].pages)
     assert(docs[1].fulltext.start_with?('Oyama, S. 2000: The Ontogeny of Information:'))
   end
 
@@ -70,16 +70,48 @@ class DocumentTest < ActiveSupport::TestCase
     # Check some of each of the facets
     assert_not_nil(Document.facets)
     assert_not_nil(Document.facets[:author])
-    assert_equal(Document.facets[:author]['Augusto Vitale'], 2)
-    assert_equal(Document.facets[:author]['Bert Hölldobler'], 1)
+    assert_equal(2, Document.facets[:author]['Augusto Vitale'])
+    assert_equal(1, Document.facets[:author]['Bert Hölldobler'])
     assert_nil(Document.facets[:author]['W. Shatner'])
 
     assert_not_nil(Document.facets[:journal])
-    assert_equal(Document.facets[:journal]['Genes, Brain and Behavior'], 5)
+    assert_equal(5, Document.facets[:journal]['Genes, Brain and Behavior'])
     assert_nil(Document.facets[:journal]['Journal of Nothing'])
 
     assert_not_nil(Document.facets[:year])
-    assert_equal(Document.facets[:year]['1940'], 0)
-    assert_equal(Document.facets[:year]['2000'], 25)
+    assert_equal(0, Document.facets[:year]['1940'])
+    assert_equal(25, Document.facets[:year]['2000'])
+  end
+
+  test "find_all_by_solr_query should not set TV if not found" do
+    stub_solr_response(SOLR_RESPONSE_VALID)
+    docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
+    assert_nil(docs[0].term_vectors)
+  end
+
+  test "find_all_by_solr_query should parse response with term vectors" do
+    stub_solr_response(SOLR_RESPONSE_TV)
+    docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "fulltext" })
+    assert_equal(1, docs.count)
+  end
+
+  test "find_all_by_solr_query should not set facets if not found" do
+    stub_solr_response(SOLR_RESPONSE_TV)
+    docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "fulltext" })
+    assert_nil(Document.facets)
+  end
+
+  test "find_all_by_solr_query should set term vectors correctly" do
+    stub_solr_response(SOLR_RESPONSE_TV)
+    docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "fulltext" })
+    
+    # Check a couple of these to make sure the parsing is good
+    assert_not_nil(docs[0].term_vectors)
+    assert_equal(9, docs[0].term_vectors["chapter"][:tf])
+    assert_equal((542...545), docs[0].term_vectors["can"][:offsets][2])
+    assert_equal(552, docs[0].term_vectors["can"][:positions][3])
+    assert_equal(564, docs[0].term_vectors["cell"][:df])
+    assert_equal(0.01, docs[0].term_vectors["capabilities"][:tfidf])
+    assert_nil(docs[0].term_vectors["zuzax"])
   end
 end

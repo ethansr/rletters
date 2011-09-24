@@ -17,7 +17,9 @@ class ActiveSupport::TestCase
 
   # Stub out the Solr connection
   def stub_solr_response(solr_response)
-    Document.stubs(:get_solr_response).returns(solr_response)
+    # Make sure to work with a new deep-copy of this hash, or we'll foul our constant
+    # "fixures" for Solr stuff
+    Document.stubs(:get_solr_response).returns(Marshal::load(Marshal::dump(solr_response)))
   end
 end
 
@@ -112,5 +114,89 @@ J. Fischer*-1-* and K. Hammerschmidt*' } ] },
                           'Ethology', 28,
                           'Genes, Brain and Behavior', 5]},
     'facet_dates' => {}}}
-
-
+SOLR_RESPONSE_TV = { 'response' => { 
+    'numFound' => 1, 'start' => 0, 'docs' => 
+    [ { 'shasum' => '8e740d30df3f9941e2ca059ef6896830c8a8e226', 'doi' => '10.1111/j.1601-183X.2005.00114.x',
+        'authors' => 'Nadia Francia, Augusto Vitale, Enrico Alleva',
+        'title' => 'Handbook of Evolution: The Evolution of Human Societies and Cultures',
+        'journal' => 'Genes, Brain and Behavior',
+        'year' => '2005',
+        'volume' => '4',
+        'pages' => '127-128',
+        'fulltext' => 'Handbook of Evolution: The Evolution of Human Societies and Cultures
+F. M. Wuketits and C. Antweiler (eds)
+Wiley-VCH Verlag GmbH & Co. KGaA, Weinheim, 2004. $ 240 (hardcover), 341 pp. ISBN 3-527-30839-3' } ] },
+  'termVectors' => [ 'doc-389', [	'uniqueKey','8e740d30df3f9941e2ca059ef6896830c8a8e226',
+                                  'fulltext', [
+                                               'can',[
+                                                      'tf',5,
+                                                      'offsets',[
+                                                                 'start',461,
+                                                                 'end',464,
+                                                                 'start',512,
+                                                                 'end',515,
+                                                                 'start',542,
+                                                                 'end',545,
+                                                                 'start',3754,
+                                                                 'end',3757,
+                                                                 'start',4227,
+                                                                 'end',4230],
+                                                      'positions',[
+                                                                   'position',70,
+                                                                   'position',77,
+                                                                   'position',82,
+                                                                   'position',552,
+                                                                   'position',625],
+                                                      'df',2123,
+                                                      'tf-idf',0.0023551577955723034],
+                                               'capabilities',[
+                                                               'tf',1,
+                                                               'offsets',[
+                                                                          'start',1214,
+                                                                          'end',1226],
+                                                               'positions',[
+                                                                            'position',184],
+                                                               'df',100,
+                                                               'tf-idf',0.01],
+                                               'cell',[
+                                                       'tf',1,
+                                                       'offsets',[
+                                                                  'start',5626,
+                                                                  'end',5630],
+                                                       'positions',[
+                                                                    'position',833],
+                                                       'df',564,
+                                                       'tf-idf',0.0017730496453900709],
+                                               'chapter',[
+                                                          'tf',9,
+                                                          'offsets',[
+                                                                     'start',1361,
+                                                                     'end',1368,
+                                                                     'start',1849,
+                                                                     'end',1856,
+                                                                     'start',1985,
+                                                                     'end',1992,
+                                                                     'start',2378,
+                                                                     'end',2385,
+                                                                     'start',2658,
+                                                                     'end',2665,
+                                                                     'start',2948,
+                                                                     'end',2955,
+                                                                     'start',3717,
+                                                                     'end',3724,
+                                                                     'start',4026,
+                                                                     'end',4033,
+                                                                     'start',4190,
+                                                                     'end',4197],
+                                                          'positions',[
+                                                                       'position',203,
+                                                                       'position',268,
+                                                                       'position',285,
+                                                                       'position',342,
+                                                                       'position',391,
+                                                                       'position',432,
+                                                                       'position',546,
+                                                                       'position',596,
+                                                                       'position',620],
+                                                          'df',158,
+                                                          'tf-idf',0.056962025316455694]]]]}
