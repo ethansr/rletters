@@ -1,0 +1,8 @@
+--protected
+--private
+-r README.rdoc
+app/**/*.rb
+lib/**/*.rb
+-
+README.rdoc
+COPYING

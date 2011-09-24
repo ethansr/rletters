@@ -1,6 +1,5 @@
 .bundle
 .DS_Store
-.gh_pages/
 .sass-cache/
 .yardoc/
 
