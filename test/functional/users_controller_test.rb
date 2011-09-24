@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 require 'test_helper'
 
+SimpleCov.command_name 'test:functionals'
+
 class UsersControllerTest < ActionController::TestCase
   setup do
     @user = users(:john)

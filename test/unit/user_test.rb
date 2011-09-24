@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 require 'test_helper'
 
+SimpleCov.command_name 'test:units'
+
 class UserTest < ActiveSupport::TestCase
 
   # Test validation: require identifier, name and e-mail
