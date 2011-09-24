@@ -2,3 +2,4 @@ rvm: 1.9.2
 before_script:
   - "cp config/database.yml.travis config/database.yml"
   - "cp config/app_config.yml.dist config/app_config.yml"
+  - "cp app/views/datasets/_no_datasets.html.haml.dist app/views/datasets/_no_datasets.html.haml"
