@@ -1,6 +1,8 @@
 --protected
 --private
 -r README.rdoc
+--charset utf-8
+--title 'RLetters API Documentation'
 app/**/*.rb
 lib/**/*.rb
 -
