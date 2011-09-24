@@ -7,7 +7,7 @@ def in_memory_database?
 end
 
 if in_memory_database?
-  puts "creating sqlite in memory database"
-  load "#{Rails.root}/db/schema.rb"
+  load_schema = lambda { load "#{Rails.root}/db/schema.rb" }
+  silence_stream(STDOUT, &load_schema)
 end
 

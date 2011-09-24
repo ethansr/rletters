@@ -77,14 +77,32 @@ class Document
     set[0]
   end
 
+  # Return the Solr response for the given query
+  #
+  # This function makes sure that any exceptions that may be raised by RSolr
+  # are caught and handled.
+  #
+  # @api private
+  # @param [Hash] params Solr query parameters
+  def self.get_solr_response(query)
+    begin
+      solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
+      ret = solr.get('select', :params => params)
+    rescue Exception
+      ret = {}
+    end
+
+    ret
+  end
+
   # Find a set of documents using a direct Solr query
   #
   # With the exception of processing the +:offset+ and +:limit+ options, 
   # the +params+ array will be passed directly to Solr.
   #
   # @api public
-  # @param [Hash] params Solr query parameters  This is a hash that can have
-  #   (at least) the following keys:
+  # @param [Hash] params Solr query parameters
+  #   This is a hash that can have (at least) the following keys:
   #   - +params[:q]+: a Solr query string, typically of the format "field:val 
   #     field:val ..."
   #   - +params[:qt]+: the Solr query type.  In the default Solr configuration
@@ -113,14 +131,13 @@ class Document
     params[:start] = options[:offset] if options[:offset]
     params[:rows] = options[:limit] if options[:limit]
 
-    # Connect to Solr and execute the query
-    solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
-    solr_response = solr.get('select', :params => params)
-    
-    throw ActiveRecord::StatementInvalid unless solr_response["response"]
-    throw ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
+    # Do the Solr query
+    solr_response = get_solr_response(params)
+
+    raise ActiveRecord::StatementInvalid unless solr_response["response"]
+    raise ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
     return [] if solr_response["response"]["numFound"] == 0
-    throw ActiveRecord::StatementInvalid unless solr_response["response"]["docs"]
+    raise ActiveRecord::StatementInvalid unless solr_response["response"]["docs"]
     
     # Grab all of the document-attributes that Solr returned, forcing
     # everything into UTF-8 encoding, which is how all Solr's data
