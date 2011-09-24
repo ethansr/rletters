@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 def in_memory_database?
   Rails.env == "test" and

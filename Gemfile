@@ -34,3 +34,5 @@ gem 'yard'
 gem 'yardstick'
 gem 'grit'
 
+gem 'magic_encoding'
+

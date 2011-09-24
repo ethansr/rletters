@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SearchController < ApplicationController
   def index
     @documents = Document.find_all_by_solr_query(search_params_to_solr_query, :offset => 0, :limit => 10)

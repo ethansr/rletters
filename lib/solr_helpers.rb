@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module SolrHelpers
   # Parse the strange format in which Solr's term vector arrays show up

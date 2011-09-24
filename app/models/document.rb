@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 # Representation of a document in the Solr database.
 #
