@@ -239,9 +239,6 @@ class Document
   #   doc.term_vectors["general"][:tf]
   attr_reader :term_vectors
 
-  # Content for facets defaults to +nil+.
-  @@facets = nil
-
   # Faceted browsing information that was returned by the last search
   #
   # For the purposes of faceted browsing, the Solr server (as configured by 
@@ -259,7 +256,7 @@ class Document
   #
   # @example Get the number of documents in the last search published by W. Shatner
   #   shatner_docs = Document.facets[:author]["W. Shatner"]
-  def self.facets; @@facets; end
+  cattr_reader :facets
 
   # The shasum attribute is the only required one
   validates :shasum, :presence => true
