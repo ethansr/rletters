@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+
 RLetters::Application.routes.draw do
   # Search/Browse page
   get "search" => 'search#index'

@@ -46,11 +46,16 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
-  # Test that logout nulls out session[:user]
   test "should blank user on logout" do
     session[:user] = users(:john)
     get :logout
     assert_nil session[:user]
+  end
+
+  test "should redirect from logout if not logged in" do
+    session[:user] = nil
+    get :logout
+    assert_redirected_to :controller => 'users', :action => 'index'
   end
 
   # We explicitly can't get a functional test for users#rpx, because

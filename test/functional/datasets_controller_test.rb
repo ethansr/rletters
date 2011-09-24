@@ -2,15 +2,22 @@
 require 'test_helper'
 
 class DatasetsControllerTest < ActionController::TestCase
-  # setup do
-  #   @dataset = datasets(:one)
-  # end
+  setup do
+    @user = users(:john)
+  end
 
-  # test "should get index" do
-  #   get :index
-  #   assert_response :success
-  #   assert_not_nil assigns(:datasets)
-  # end
+  test "should redirect to users if not logged in" do
+    session[:user] = nil
+    get :index
+    assert_redirected_to :controller => 'users', :action => 'index'
+  end
+
+  test "should get index" do
+    session[:user] = @user
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:datasets)
+  end
 
   # test "should create dataset" do
   #   assert_difference('Dataset.count') do
