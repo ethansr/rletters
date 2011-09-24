@@ -57,7 +57,7 @@ class Document
   #   doc = Document.find("1234567890abcdef1234")
   def self.find(shasum, options = {})
     set = find_all_by_solr_query({ :q => "shasum: #{shasum}", :qt => "precise" }, options)
-    throw ActiveRecord::RecordNotFound if set.empty?
+    raise ActiveRecord::RecordNotFound if set.empty?
     set[0]
   end
 
@@ -74,14 +74,16 @@ class Document
   #   text = Document.find_with_fulltext("1234567890abcdef1234").fulltext
   def self.find_with_fulltext(shasum, options = {})
     set = find_all_by_solr_query({ :q => "shasum: #{shasum}", :qt => "fulltext" }, options)
-    throw ActiveRecord::RecordNotFound if set.empty?
+    raise ActiveRecord::RecordNotFound if set.empty?
     set[0]
   end
 
+  #:nocov:
   # Return the Solr response for the given query
   #
   # This function makes sure that any exceptions that may be raised by RSolr
-  # are caught and handled.
+  # are caught and handled.  This method cannot be tested, we stub it out
+  # to deal with the absence of a Solr server.
   #
   # @api private
   # @param [Hash] params Solr query parameters
@@ -95,6 +97,7 @@ class Document
 
     ret
   end
+  #:nocov:
 
   # Find a set of documents using a direct Solr query
   #

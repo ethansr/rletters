@@ -30,6 +30,40 @@ class DocumentTest < ActiveSupport::TestCase
     assert doc.valid?
   end
 
+  test "find should throw on Solr error" do
+    stub_solr_response(SOLR_RESPONSE_ERROR)
+    assert_raise(ActiveRecord::StatementInvalid) { Document.find('wut') }
+  end
+
+  test "find should throw on no documents" do
+    stub_solr_response(SOLR_RESPONSE_EMPTY)
+    assert_raise(ActiveRecord::RecordNotFound) { Document.find('wut') }
+  end
+
+  test "find should succeed for valid doc" do
+    stub_solr_response(SOLR_RESPONSE_VALID)
+    doc = Document.find('8e740d30df3f9941e2ca059ef6896830c8a8e226')
+    assert_not_nil(doc)
+    assert_equal('8e740d30df3f9941e2ca059ef6896830c8a8e226', doc.shasum)
+  end
+
+  test "find_with_fulltext should throw on Solr error" do
+    stub_solr_response(SOLR_RESPONSE_ERROR)
+    assert_raise(ActiveRecord::StatementInvalid) { Document.find_with_fulltext('wut') }
+  end
+
+  test "find_with_fulltext should throw on no documents" do
+    stub_solr_response(SOLR_RESPONSE_EMPTY)
+    assert_raise(ActiveRecord::RecordNotFound) { Document.find_with_fulltext('wut') }
+  end
+
+  test "find_with_fulltext should succeed for valid doc" do
+    stub_solr_response(SOLR_RESPONSE_VALID)
+    doc = Document.find_with_fulltext('8e740d30df3f9941e2ca059ef6896830c8a8e226')
+    assert_not_nil(doc)
+    assert_equal('8e740d30df3f9941e2ca059ef6896830c8a8e226', doc.shasum)
+  end
+
   test "find_all_by_solr_query should throw on Solr error" do
     stub_solr_response(SOLR_RESPONSE_ERROR)
     assert_raise(ActiveRecord::StatementInvalid) { Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" }) }
