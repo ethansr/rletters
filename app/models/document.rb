@@ -168,6 +168,12 @@ class Document
       @@facets = parse_facet_counts(solr_response["facet_counts"])
     end
 
+    # Set the num_results count
+    @@num_results = 0
+    if solr_response["response"]["numFound"]
+      @@num_results = Integer(solr_response["response"]["numFound"])
+    end
+
     # Initialize all the documents and get out of here
     documents.map { |attrs| Document.new(attrs) }
   end
@@ -261,6 +267,15 @@ class Document
   # @example Get the number of documents in the last search published by W. Shatner
   #   shatner_docs = Document.facets[:author]["W. Shatner"]
   cattr_reader :facets
+
+  # Number of documents returned by the last search
+  #
+  # Since the search results are almost always limited by the per-page count,
+  # this variable returns the full number of documents that were returned by
+  # the last search.
+  #
+  # @return [Integer] number of documents in the last search
+  cattr_reader :num_results
 
   # The shasum attribute is the only required one
   validates :shasum, :presence => true

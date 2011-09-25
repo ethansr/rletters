@@ -1,6 +1,6 @@
 %div.leftcolumn
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' } FIXME documents in database
+    %li{ 'data-role' => 'list-divider' }= num_results_string
     %li.search
       = form_tag(search_path, :method => :get, 'data-transition' => 'none') do
         = search_field_tag :q, (params[:precise] ? "(advanced search)" : params[:q]), :placeholder => "Search for articles..."
