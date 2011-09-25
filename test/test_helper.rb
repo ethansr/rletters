@@ -1,10 +1,11 @@
 # -*- encoding : utf-8 -*-
-# -*- coding: utf-8 -*-
 ENV["RAILS_ENV"] = "test"
 
-require 'simplecov'
-SimpleCov.start 'rails' do
-  coverage_dir('doc/coverage')
+if ENV["COVERAGE"]
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    coverage_dir('test/coverage')
+  end
 end
 
 require File.expand_path('../../config/environment', __FILE__)

@@ -1,5 +1,4 @@
 # -*- encoding : utf-8 -*-
-# -*- coding: undecided -*-
 require 'test_helper'
 
 class DocumentTest < ActiveSupport::TestCase
