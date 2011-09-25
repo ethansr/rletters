@@ -21,7 +21,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'jquery_mobile-rails', '1.0b2'
+gem 'jquery_mobile-rails', '1.0b3'
 
 group :test do
   gem 'test-unit', :require => false
