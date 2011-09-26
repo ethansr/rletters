@@ -1,5 +1,7 @@
 - if @datasets.empty?
-  = render :partial => 'no_datasets'
+  %ul.longlist{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+    %li
+      = render :partial => 'no_datasets'
 - else
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
     %li{ 'data-role' => 'list-divider' }== #{@datasets.count} datasets found
