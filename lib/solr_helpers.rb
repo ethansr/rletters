@@ -52,13 +52,17 @@ module SolrHelpers
       facets[:year] = {}
       solr_facets["facet_queries"].each do |k, v|
         decade = k.slice(6..-1).split[0]
-        decade = "1790" if decade == "*"
+        if decade == '*'
+          decade = "1790s"
+        else
+          decade << 's'
+        end
         facets[:year][decade] = v
       end
     end
     
     if solr_facets["facet_fields"]
-      { "authors_facet" => :author, "journal_facet" => :journal }.each do |s, f|
+      { "authors_facet" => :authors, "journal_facet" => :journal }.each do |s, f|
         facets[f] = Hash[*solr_facets["facet_fields"][s].flatten]
       end
     end

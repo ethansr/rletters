@@ -11,9 +11,6 @@
 %div.rightcolumn
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
     %li{ 'data-role' => 'list-divider' } Filter Search
-    %li
-      %a{ :href => '#' } Faceted Browsing
-    %li
-      %a{ :href => '#' } links will go
-    %li
-      %a{ :href => '#' } right here
+  %div.verticalpad
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
+    = facet_link_list

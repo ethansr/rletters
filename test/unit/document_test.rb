@@ -102,18 +102,18 @@ class DocumentTest < ActiveSupport::TestCase
 
     # Check some of each of the facets
     assert_not_nil(Document.facets)
-    assert_not_nil(Document.facets[:author])
-    assert_equal(2, Document.facets[:author]['Augusto Vitale'])
-    assert_equal(1, Document.facets[:author]['Bert Hölldobler'])
-    assert_nil(Document.facets[:author]['W. Shatner'])
+    assert_not_nil(Document.facets[:authors])
+    assert_equal(2, Document.facets[:authors]['Augusto Vitale'])
+    assert_equal(1, Document.facets[:authors]['Bert Hölldobler'])
+    assert_nil(Document.facets[:authors]['W. Shatner'])
 
     assert_not_nil(Document.facets[:journal])
     assert_equal(5, Document.facets[:journal]['Genes, Brain and Behavior'])
     assert_nil(Document.facets[:journal]['Journal of Nothing'])
 
     assert_not_nil(Document.facets[:year])
-    assert_equal(0, Document.facets[:year]['1940'])
-    assert_equal(25, Document.facets[:year]['2000'])
+    assert_equal(0, Document.facets[:year]['1940s'])
+    assert_equal(25, Document.facets[:year]['2000s'])
   end
 
   test "find_all_by_solr_query should not set TV if not found" do
