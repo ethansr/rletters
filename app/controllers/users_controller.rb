@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def logout
     session[:user] = nil
-    redirect_to :action => 'index'
+    redirect_to search_path
   end
 
   #:nocov:
@@ -20,10 +20,10 @@ class UsersController < ApplicationController
       logger.debug "First time we've seen this user, render the form"
       render :template => 'users/form'
     else
-      logger.debug "We've seen this user before, redirect to index"
+      logger.debug "We've seen this user before, redirect to the datasets page"
       reset_session
       session[:user] = @user
-      redirect_to :action => 'index'
+      redirect_to datasets_path
     end
   end
   #:nocov:
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     if @user.save
       reset_session
       session[:user] = @user
-      redirect_to :action => 'index'
+      redirect_to datasets_path
     else
       render :template => 'users/form'
     end

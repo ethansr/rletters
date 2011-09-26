@@ -20,7 +20,7 @@ class UsersControllerTest < ActionController::TestCase
       post :create, :user => { :name => 'New User Test', :email => 'new@user.com', :identifier => 'https://newuser.com' }
     end
 
-    assert_redirected_to users_path
+    assert_redirected_to datasets_path
     assert_not_nil session[:user]
   end
 
@@ -50,6 +50,12 @@ class UsersControllerTest < ActionController::TestCase
     session[:user] = users(:john)
     get :logout
     assert_nil session[:user]
+  end
+
+  test "should redirect to search on logout" do
+    session[:user] = users(:john)
+    get :logout
+    assert_redirected_to :controller => 'search', :action => 'index'
   end
 
   test "should redirect from logout if not logged in" do
