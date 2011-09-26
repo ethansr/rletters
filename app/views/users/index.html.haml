@@ -11,7 +11,7 @@
     %li= link_to "Concerned about your security?", :controller => :info, :action => :privacy
   - else
     %li= link_to "You are logged in as #{session[:user].name} (#{session[:user].email})", root_path
-    %li= link_to 'Not you? Log in as a different user.', :controller => 'users', :action => 'logout'
+    %li= link_to 'Not you? Log in as a different user.', :controller => 'users', :action => 'logout', :rel => 'external'
     %li{ 'data-role' => 'list-divider' } User options
     %li There will be some options here, eventually.
     %li
