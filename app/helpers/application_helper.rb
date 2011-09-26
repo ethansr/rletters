@@ -5,7 +5,6 @@ module ApplicationHelper
     footer_buttons = [
       { :controller => 'search', :text => 'Search/Browse', :icon => 'search' },
       { :controller => 'datasets', :text => 'Datasets', :icon => 'grid' },
-      { :controller => 'users', :text => 'Account', :icon => 'home' }
     ]
     
     ret = ''.html_safe
