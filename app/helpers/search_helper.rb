@@ -110,7 +110,7 @@ module SearchHelper
   # against +active_facets+, and creates a set of list items.  It is used
   # by +facet_link_list+.
   #
-  # @param [Symbol] sym symbol for facet (e.g., +:authors+)
+  # @param [Symbol] sym symbol for facet (e.g., +:authors_facet+)
   # @param [String] header content of list item header
   # @param [Array] active_facets array of 3-tuples for all active facets
   def list_links_for_facet(sym, header, active_facets)
@@ -164,19 +164,22 @@ module SearchHelper
     ret = ''.html_safe
     unless active_facets.empty?
       ret << content_tag(:li, 'Active Filters', 'data-role' => 'list-divider')
+      ret << content_tag(:li, 'data-icon' => 'delete') do
+        facet_link "Remove All", []
+      end
       active_facets.each do |a|
         ret << content_tag(:li, 'data-icon' => 'delete') do
           new_facets = active_facets.dup
           new_facets.delete(a)
 
-          facet_link "#{a[0].capitalize}: #{a[1]}", new_facets
+          facet_link "#{a[0].to_s.split('_')[0].capitalize}: #{a[1]}", new_facets
         end
       end
     end
 
     # Run the facet-getting code for all three facet types
-    ret << list_links_for_facet(:authors, 'Author', active_facets)
-    ret << list_links_for_facet(:journal, 'Journal', active_facets)
+    ret << list_links_for_facet(:authors_facet, 'Author', active_facets)
+    ret << list_links_for_facet(:journal_facet, 'Journal', active_facets)
     ret << list_links_for_facet(:year, 'Publication Date', active_facets)
     ret
   end

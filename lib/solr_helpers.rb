@@ -62,7 +62,7 @@ module SolrHelpers
     end
     
     if solr_facets["facet_fields"]
-      { "authors_facet" => :authors, "journal_facet" => :journal }.each do |s, f|
+      { "authors_facet" => :authors_facet, "journal_facet" => :journal_facet }.each do |s, f|
         facets[f] = Hash[*solr_facets["facet_fields"][s].flatten]
       end
     end
