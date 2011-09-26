@@ -4,11 +4,32 @@
     %li.search
       = form_tag(search_path, :method => :get, 'data-transition' => 'none') do
         = search_field_tag :q, (params[:precise] ? "(advanced search)" : params[:q]), :placeholder => "Search for articles..."
+  %div.verticalpad
+
+  - if session[:user].nil?
+    %ul{ 'data-role' => 'listview', 'data-theme' => 'e', 'data-divider-theme' => 'e' }
+      %li= link_to 'Log in to save and manipulate your search as a dataset!', :controller => 'users', :action => 'index'
+    %div.verticalpad
+
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
     - @documents.each do |d|
       %li
         %h3= d.title
         %p= d.journal
 %div.rightcolumn
+  - unless session[:user].nil?
+    %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+      -# If the user doesn't have any datasets yet, color the "Create Dataset" button
+      -# yellow, otherwise make it standard white
+      %li{ 'data-role' => 'list-divider' } Create Dataset
+      - if session[:user].datasets.count == 0
+        - theme = 'e'
+      - else
+        - theme = 'd'
+      %li{ 'data-theme' => "#{theme}" }
+        %a{ :href=> '#' } Save search as dataset
+    %div.verticalpad
+
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
     %li{ 'data-role' => 'list-divider' } Filter Search
   %div.verticalpad
