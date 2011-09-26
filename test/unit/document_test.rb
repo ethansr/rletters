@@ -102,14 +102,14 @@ class DocumentTest < ActiveSupport::TestCase
 
     # Check some of each of the facets
     assert_not_nil(Document.facets)
-    assert_not_nil(Document.facets[:authors])
-    assert_equal(2, Document.facets[:authors]['Augusto Vitale'])
-    assert_equal(1, Document.facets[:authors]['Bert Hölldobler'])
-    assert_nil(Document.facets[:authors]['W. Shatner'])
+    assert_not_nil(Document.facets[:authors_facet])
+    assert_equal(2, Document.facets[:authors_facet]['Augusto Vitale'])
+    assert_equal(1, Document.facets[:authors_facet]['Bert Hölldobler'])
+    assert_nil(Document.facets[:authors_facet]['W. Shatner'])
 
-    assert_not_nil(Document.facets[:journal])
-    assert_equal(5, Document.facets[:journal]['Genes, Brain and Behavior'])
-    assert_nil(Document.facets[:journal]['Journal of Nothing'])
+    assert_not_nil(Document.facets[:journal_facet])
+    assert_equal(5, Document.facets[:journal_facet]['Genes, Brain and Behavior'])
+    assert_nil(Document.facets[:journal_facet]['Journal of Nothing'])
 
     assert_not_nil(Document.facets[:year])
     assert_equal(0, Document.facets[:year]['1940s'])
