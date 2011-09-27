@@ -1,5 +1,5 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-  %li{ 'data-role' => 'list-divider' } Your user account and settings
+  %li{ 'data-role' => 'list-divider' } Your user account
   
   - if session[:user].nil?
     %li.longlist
@@ -24,10 +24,12 @@
   - else
     %li= link_to "You are logged in as #{session[:user].name} (#{session[:user].email})", root_path
     %li= link_to 'Not you? Log in as a different user.', :controller => 'users', :action => 'logout', :rel => 'external'
-    %li{ 'data-role' => 'list-divider' } User options
-    %li There will be some options here, eventually.
-    %li
-      %small
-        If you are asked to provide your "user identifier" for debugging
-        purposes, it is [#{session[:user].identifier}].
 
+    %li{ 'data-role' => 'list-divider' } User options
+    = form_for(session[:user], :url => users_update_path) do |f|
+      - if session[:user].errors.any?
+        %li{ 'data-theme' => 'e' } #{pluralize(session[:user].errors.count, "error")} prohibited these options from being saved:
+        - session[:user].errors.full_messages.each do |msg|
+          %li{ 'data-theme' => 'e' }= msg
+      
+      %li= f.submit

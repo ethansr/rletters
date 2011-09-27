@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class UsersController < ApplicationController
-  before_filter :login_required, :only => :logout
+  before_filter :login_required, :only => [ :logout, :update ]
 
   def index; end
 
@@ -43,6 +43,15 @@ class UsersController < ApplicationController
       redirect_to datasets_path
     else
       render :template => 'users/form'
+    end
+  end
+
+  def update
+    user = session[:user]
+    if user.update_attributes(params[:user])
+      redirect_to users_path, :rel => 'external'
+    else
+      render "index"
     end
   end
 end

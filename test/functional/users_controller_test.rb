@@ -14,7 +14,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_select 'h3', "Log in to #{APP_CONFIG['app_name']}"
   end
 
-  # The actual POST action which creates a new user
   test "should create user" do
     assert_difference('User.count') do
       post :create, :user => { :name => 'New User Test', :email => 'new@user.com', :identifier => 'https://newuser.com' }
@@ -33,8 +32,23 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_select 'form' do
-      # This is the list of errors
-      assert_select 'ul'
+      assert_select 'ul[data-theme=e]'
+    end
+  end
+
+  test "should update user" do
+    session[:user] = users(:john)
+    post :update, :id => users(:john), :user => { :name => 'Not Johns Name', :email => 'jdoe@gmail.com', :identifier => 'https://google.com/profiles/johndoe' }
+    assert_equal "Not Johns Name", User.find(users(:john).id).name
+  end
+
+  test "should fail to invalidly update user" do
+    session[:user] = users(:john)
+    post :update, :id => users(:john), :user => { :name => 'John Doe', :email => 'thisisnotan.email', :identifier => 'https://google.com/profiles/johndoe' }
+
+    assert_response :success
+    assert_select 'form' do
+      assert_select 'li[data-theme=e]'
     end
   end
 
@@ -61,6 +75,12 @@ class UsersControllerTest < ActionController::TestCase
   test "should redirect from logout if not logged in" do
     session[:user] = nil
     get :logout
+    assert_redirected_to :controller => 'users', :action => 'index'
+  end
+
+  test "should redirect from update if not logged in" do
+    session[:user] = nil
+    get :update
     assert_redirected_to :controller => 'users', :action => 'index'
   end
 
