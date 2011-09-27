@@ -1,17 +1,6 @@
 # -*- encoding : utf-8 -*-
 class SearchController < ApplicationController
   def index
-    @documents = Document.find_all_by_solr_query(search_params_to_solr_query, :offset => 0, :limit => 10)
-  end
-
-  def results
-    @documents = Document.find_all_by_solr_query(search_params_to_solr_query, :offset => 0, :limit => 10)
-    render :template => 'search/results', :layout => false
-  end
-
-  # Convert from web-query params (one per field) to a set of Solr 
-  # query parameters to be passed to <tt>Document.find_all_by_solr_query</tt>.
-  def search_params_to_solr_query
     # Treat 'page' and 'per_page' separately
     page = 0
     page = Integer(params[:page]) if params.has_key? :page
@@ -23,12 +12,19 @@ class SearchController < ApplicationController
     offset = page * per_page
     limit = per_page
 
+    @documents = Document.find_all_by_solr_query(search_params_to_solr_query(params), :offset => offset, :limit => limit)
+  end
+
+  # Convert from web-query params (one per field) to a set of Solr 
+  # query parameters to be passed to <tt>Document.find_all_by_solr_query</tt>.
+  def search_params_to_solr_query(params)
     # Remove any blank values (you get these on form submissions, for
     # example)
     params.delete_if { |k, v| v.blank? }
 
     # Initialize by copying over the faceted-browsing query
-    query_params = { :fq => params[:fq] }
+    query_params = {}
+    query_params[:fq] = params[:fq] unless params[:fq].nil?
     
     if params.has_key? :precise
       # Advanced search, step through the fields

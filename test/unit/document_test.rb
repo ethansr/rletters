@@ -79,6 +79,12 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal(5, docs.count)
   end
 
+  test "find_all_by_solr_query should set num_results" do
+    stub_solr_response(SOLR_RESPONSE_VALID)
+    docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
+    assert_equal(5, Document.num_results)
+  end
+
   test "find_all_by_solr_query should load all document attributes" do
     stub_solr_response(SOLR_RESPONSE_VALID)
     docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
