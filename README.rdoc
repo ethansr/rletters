@@ -1,6 +1,4 @@
-
-= RLetters {<img src="http://travis-ci.org/cpence/rletters.png" />}[http://travis-ci.org/cpence/rletters]
-
+= RLetters {<img src="http://stillmaintained.com/cpence/rletters.png" />}[http://stillmaintained.com/cpence/rletters] {<img src="http://travis-ci.org/cpence/rletters.png" />}[http://travis-ci.org/cpence/rletters] 
 
 == Installation
 
