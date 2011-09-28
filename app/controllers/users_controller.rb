@@ -2,7 +2,13 @@
 class UsersController < ApplicationController
   before_filter :login_required, :only => [ :logout, :update ]
 
-  def index; end
+  def index
+    if session[:user].nil?
+      render :template => 'users/login'
+    else
+      render :template => 'users/index'
+    end
+  end
 
   def logout
     session[:user] = nil

@@ -1,35 +1,26 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li{ 'data-role' => 'list-divider' } Your user account
-  
-  - if session[:user].nil?
-    %li.longlist
-      %h3 Log in to #{APP_CONFIG['app_name']}
-      %p
-        If you want to perform any analysis on a set of search results, you'll have
-        to register for a user account.  This lets us save your search results as a
-        dataset, perform analysis on them in the background, and send you an e-mail
-        when the analysis is complete.
-      %p
-        You can use your account with Google, Facebook, Yahoo, Flickr, myOpenID,
-        or any other OpenID.
-    %li.longlist
-      = link_to :controller => :info, :action => :privacy do
-        %h3 Concerned about your privacy?
-        %p
-          If you're concerned about logging in with your third-party account, don't be!
-          There's no way for #{APP_CONFIG['app_name']} to leak your account details:
-          we never see your third-party password.  For more information, click to read
-          our privacy policy.
-    %li.janrain= RPXNow.embed_code(APP_CONFIG['janrain_appname'], url_for(:controller => :users, :action => :rpx, :only_path => false)).html_safe
-  - else
-    %li= link_to "You are logged in as #{session[:user].name} (#{session[:user].email})", root_path
-    %li= link_to 'Not you? Log in as a different user.', :controller => 'users', :action => 'logout', :rel => 'external'
+  %li= link_to "You are logged in as #{session[:user].name} (#{session[:user].email})", root_path
+  %li= link_to 'Not you? Log in as a different user.', :controller => 'users', :action => 'logout', :rel => 'external'
 
-    %li{ 'data-role' => 'list-divider' } User options
-    = form_for(session[:user], :url => users_update_path) do |f|
-      - if session[:user].errors.any?
-        %li{ 'data-theme' => 'e' } #{pluralize(session[:user].errors.count, "error")} prohibited these options from being saved:
-        - session[:user].errors.full_messages.each do |msg|
-          %li{ 'data-theme' => 'e' }= msg
+  %li{ 'data-role' => 'list-divider' } User options
+  = form_for(session[:user], :url => users_update_path) do |f|
+    - if session[:user].errors.any?
+      %li{ 'data-theme' => 'e' } #{pluralize(session[:user].errors.count, "error")} prohibited these options from being saved:
+      - session[:user].errors.full_messages.each do |msg|
+        %li{ 'data-theme' => 'e' }= msg
+
+    %li
+      %div{ 'data-role' => 'fieldcontain' }
+        = f.label :email
+        = f.text_field :email
+    %li
+      %div{ 'data-role' => 'fieldcontain' }
+        = f.label :name
+        = f.text_field :name
+    %li
+      %div{ 'data-role' => 'fieldcontain' }
+        = f.label :per_page, 'Number of search results per page:'
+        = f.text_field :per_page
       
-      %li= f.submit
+    %li= f.submit
