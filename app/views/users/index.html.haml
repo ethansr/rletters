@@ -4,7 +4,11 @@
   %li= link_to 'Not you? Log in as a different user.', :controller => 'users', :action => 'logout', :rel => 'external'
 
   %li{ 'data-role' => 'list-divider' } User options
-  = form_for(session[:user], :url => users_update_path) do |f|
+
+%div.verticalpad
+
+= form_for(session[:user], :url => users_update_path) do |f|
+  %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }  
     - if session[:user].errors.any?
       %li{ 'data-theme' => 'e' } #{pluralize(session[:user].errors.count, "error")} prohibited these options from being saved:
       - session[:user].errors.full_messages.each do |msg|
@@ -14,11 +18,9 @@
       %div{ 'data-role' => 'fieldcontain' }
         = f.label :email
         = f.text_field :email
-    %li
       %div{ 'data-role' => 'fieldcontain' }
         = f.label :name
         = f.text_field :name
-    %li
       %div{ 'data-role' => 'fieldcontain' }
         = f.label :per_page, 'Number of search results per page:'
         = f.text_field :per_page

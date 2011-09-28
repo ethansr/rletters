@@ -5,8 +5,8 @@ class SearchController < ApplicationController
     page = 0
     page = Integer(params[:page]) if params.has_key? :page
 
-    # FIXME: move to user settings if logged in
     per_page = 10
+    per_page = session[:user].per_page if session[:user]
     per_page = Integer(params[:per_page]) if params.has_key? :per_page
 
     offset = page * per_page

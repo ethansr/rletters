@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   validates :email, :email => true
   validates :identifier, :uniqueness => true
   validates_format_of :identifier, :with => /^(#{URI::regexp(%w(http https))})$/
+  validates :per_page, :presence => true
+  validates :per_page, :numericality => { :only_integer => true }
+  validates :per_page, :inclusion => { :in => 1..9999999999 }
 
   has_many :datasets, :dependent => :delete_all
 
