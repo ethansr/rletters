@@ -16,13 +16,20 @@
 
     %li
       %div{ 'data-role' => 'fieldcontain' }
-        = f.label :email
+        = f.label :email, 'Email:'
         = f.text_field :email
       %div{ 'data-role' => 'fieldcontain' }
-        = f.label :name
+        = f.label :name, 'Name:'
         = f.text_field :name
       %div{ 'data-role' => 'fieldcontain' }
-        = f.label :per_page, 'Number of search results per page:'
-        = f.text_field :per_page
+        = field_set_tag 'Number of search results per page:', 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
+          = f.radio_button :per_page, '10'
+          = f.label :per_page_10, '10'
+          = f.radio_button :per_page, '25'
+          = f.label :per_page_25, '25'
+          = f.radio_button :per_page, '50'
+          = f.label :per_page_50, '50'
+          = f.radio_button :per_page, '100'
+          = f.label :per_page_100, '100'
       
     %li= f.submit
