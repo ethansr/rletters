@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :datasets, :dependent => :delete_all
 
-  attr_accessible :name, :email, :identifier
+  # Only attributes that can be edited by the user should be whitelisted here
+  attr_accessible :name, :email, :per_page
 
   def self.find_or_initialize_with_rpx(data)
     identifier = data['identifier']

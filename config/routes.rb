@@ -11,7 +11,7 @@ RLetters::Application.routes.draw do
   get 'users' => 'users#index'
   post 'users' => 'users#create'
   post 'users/rpx'
-  post 'users/update'
+  put 'users/update'
   get 'users/logout'
 
   # Static information pages
