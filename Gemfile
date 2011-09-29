@@ -4,6 +4,8 @@ source 'http://gemcutter.org'
 gem 'rails', '~> 3.1.0'
 gem 'mysql2'
 
+gem 'rails-i18n'
+
 gem 'rpx_now'
 
 gem 'rsolr'
