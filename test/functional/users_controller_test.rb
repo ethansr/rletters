@@ -8,15 +8,20 @@ class UsersControllerTest < ActionController::TestCase
     @user = users(:john)
   end
 
-  test "should get index" do
+  test "should get index (to login)" do
     get :index
+    assert_redirected_to users_login_path
+  end
+
+  test "should get login" do
+    get :login
     assert_response :success
     assert_select 'h3', "Log in to #{APP_CONFIG['app_name']}"
   end
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, :user => { :name => 'New User Test', :email => 'new@user.com', :identifier => 'https://newuser.com' }
+      post :create, :user => { :name => 'New User Test', :email => 'new@user.com', :identifier => 'https://newuser.com', :per_page => 10, :language => 'es-MX' }
     end
 
     assert_redirected_to datasets_path
@@ -69,7 +74,7 @@ class UsersControllerTest < ActionController::TestCase
   test "should redirect to search on logout" do
     session[:user] = users(:john)
     get :logout
-    assert_redirected_to :controller => 'search', :action => 'index'
+    assert_redirected_to root_url
   end
 
   test "should redirect from logout if not logged in" do

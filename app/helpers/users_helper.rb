@@ -29,7 +29,12 @@ module UsersHelper
 
   # Get the user's preferred language from the Accept-Language header
   def get_user_language
-    request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2,3}(-[A-Z]{2})?/).first
+    acc_language = request.env['HTTP_ACCEPT_LANGUAGE']
+    if acc_language
+      acc_language.scan(/^[a-z]{2,3}(-[A-Z]{2})?/).first
+    else
+      I18n.default_locale.to_s
+    end
   end
 end
 
