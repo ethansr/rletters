@@ -1,28 +1,23 @@
 # -*- encoding : utf-8 -*-
 
 RLetters::Application.routes.draw do
+  # Search/Browse page
+  match 'search' => 'search#index', :via => :get
 
-  scope "(:locale)", :locale => /[a-z]{2,3}(-[A-Z]{2})?/ do
-    # Search/Browse page
-    match "search" => 'search#index'
+  # Datasets (per-user)
+  resources :datasets, :except => [:edit, :update, :new]
 
-    # Datasets (per-user)
-    resources :datasets, :except => [:edit, :update, :new]
+  # Custom login built around Janrain Engage
+  match 'users' => 'users#index', :via => :get
+  match 'users' => 'users#create', :via => :post
+  match 'users/rpx' => 'users#rpx', :via => :post
+  match 'users/update' => 'users#update', :via => :put
+  match 'users/login' => 'users#login', :via => :get
+  match 'users/logout' => 'users#logout', :via => :get
 
-    # Custom login built around Janrain Engage
-    match 'users' => 'users#index', :via => :get
-    match 'users' => 'users#create', :via => :post
-    match 'users/rpx' => 'users#rpx'
-    match 'users/update' => 'users#update'
-    match 'users/logout' => 'users#logout'
-
-    # Static information pages
-    match 'info' => 'info#index'
-    match 'info/privacy' => 'info#privacy'
-  end
-
-  # Localized root routes (root/es)
-  match '/:locale' => 'search#index', :constraints => { :locale => /[a-z]{2,3}(-[A-Z]{2})?/ }
+  # Static information pages
+  match 'info' => 'info#index', :via => :get
+  match 'info/privacy' => 'info#privacy', :via => :get
 
   # Start off on the search page (it's the part you can
   # do without being logged in)

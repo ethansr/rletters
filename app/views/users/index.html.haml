@@ -1,13 +1,13 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li{ 'data-role' => 'list-divider' } Your user account
   %li= link_to "You are logged in as #{session[:user].name} (#{session[:user].email})", root_path
-  %li= link_to 'Not you? Log in as a different user.', :controller => 'users', :action => 'logout', :rel => 'external'
+  %li= link_to 'Not you? Log in as a different user.', { :controller => 'users', :action => 'logout' }, :rel => 'external'
 
   %li{ 'data-role' => 'list-divider' } User options
 
 %div.verticalpad
 
-= form_for(session[:user], :url => users_update_path) do |f|
+= form_for(session[:user], :url => users_update_path, :html => { 'data-ajax' => 'false' }) do |f|
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }  
     - if session[:user].errors.any?
       %li{ 'data-theme' => 'e' } #{pluralize(session[:user].errors.count, "error")} prohibited these options from being saved:

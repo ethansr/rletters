@@ -3,16 +3,13 @@ class UsersController < ApplicationController
   before_filter :login_required, :only => [ :logout, :update ]
 
   def index
-    if session[:user].nil?
-      render :template => 'users/login'
-    else
-      render :template => 'users/index'
-    end
+    redirect_to users_login_path if session[:user].nil?
   end
+  def login; end
 
   def logout
     session[:user] = nil
-    redirect_to search_path
+    redirect_to root_path
   end
 
   #:nocov:
@@ -29,7 +26,7 @@ class UsersController < ApplicationController
       logger.debug "We've seen this user before, redirect to the datasets page"
       reset_session
       session[:user] = @user
-      redirect_to datasets_path(:locale => @user.language)
+      redirect_to datasets_path
     end
   end
   #:nocov:
@@ -47,7 +44,7 @@ class UsersController < ApplicationController
     if @user.save
       reset_session
       session[:user] = @user
-      redirect_to datasets_path(:locale => @user.language)
+      redirect_to datasets_path
     else
       render :template => 'users/form'
     end
@@ -56,7 +53,7 @@ class UsersController < ApplicationController
   def update
     user = session[:user]
     if user.update_attributes(params[:user])
-      redirect_to users_path(:locale => user.language), :rel => 'external'
+      redirect_to users_path
     else
       render "index"
     end
