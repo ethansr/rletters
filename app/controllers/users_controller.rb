@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       logger.debug "We've seen this user before, redirect to the datasets page"
       reset_session
       session[:user] = @user
-      redirect_to datasets_path
+      redirect_to datasets_path(:locale => @user.language)
     end
   end
   #:nocov:
@@ -39,6 +39,7 @@ class UsersController < ApplicationController
     @user.name = params[:user][:name]
     @user.email = params[:user][:email]
     @user.identifier = params[:user][:identifier]
+    @user.language = params[:user][:language]
 
     logger.debug "Created new user: #{@user.attributes.inspect}"
     logger.debug "User should be valid: #{@user.valid?}"
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
     if @user.save
       reset_session
       session[:user] = @user
-      redirect_to datasets_path
+      redirect_to datasets_path(:locale => @user.language)
     else
       render :template => 'users/form'
     end
@@ -55,7 +56,7 @@ class UsersController < ApplicationController
   def update
     user = session[:user]
     if user.update_attributes(params[:user])
-      redirect_to users_path, :rel => 'external'
+      redirect_to users_path(:locale => user.language), :rel => 'external'
     else
       render "index"
     end

@@ -4,15 +4,17 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
   validates :email, :email => true
   validates :identifier, :uniqueness => true
-  validates_format_of :identifier, :with => /^(#{URI::regexp(%w(http https))})$/
+  validates :identifier, :format => { :with => /^(#{URI::regexp(%w(http https))})$/, :message => "Identifier must be a URL" }
   validates :per_page, :presence => true
   validates :per_page, :numericality => { :only_integer => true }
   validates :per_page, :inclusion => { :in => 1..9999999999 }
+  validates :language, :presence => true
+  validates :language, :format => { :with => /[a-z]{2,3}(-[A-Z]{2})?/, :message => "Language must be a valid locale" }
 
   has_many :datasets, :dependent => :delete_all
 
   # Only attributes that can be edited by the user should be whitelisted here
-  attr_accessible :name, :email, :per_page
+  attr_accessible :name, :email, :per_page, :language
 
   def self.find_or_initialize_with_rpx(data)
     identifier = data['identifier']

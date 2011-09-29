@@ -34,8 +34,8 @@ module RLetters
     # config.time_zone = 'Central Time (US & Canada)'
 
     # Add vendor locales (for CLDR files)
-    config.i18n.load_path += Dir[Rails.root.join('vendor', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = :en
+    config.i18n.load_path += Dir[Rails.root.join('vendor', 'locales', '**', '*.{rb,yml}').to_s]
+    config.i18n.default_locale = :'en-US'
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
