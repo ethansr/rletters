@@ -6,6 +6,9 @@ APP_CONFIG['available_locales'] = []
 
 # This exact line is taken from the README file of the rails-i18n gem, which
 # supplies localizations for all our Rails defaults.
+#
+# Note: When you update this list from rails-i18n, you *must* copy over the
+# appropriate CLDR files into vendor/locales/cldr.
 "ar, bg, bs, ca, cs, cy, da, de, de-AT, de-CH, el, en-AU, en-GB, en-US, eo, " \
 "es, es-AR, es-CL, es-CO, es-MX, et, eu, fa, fi, fr, fr-CA, fr-CH, gsw-CH, " \
 "he, hi, hi-IN, hu, id, is, it, ja, kn, ko, lv, nb, nl, pl, pt-BR, pt-PT, " \
