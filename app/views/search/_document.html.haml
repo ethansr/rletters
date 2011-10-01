@@ -9,7 +9,7 @@
     %em><
       = "#{document.journal}, "
   - unless document.volume.blank?
-    = t(:'search.cite.volume_abbr', :volume => document.volume)} + ','
+    = t(:'search.cite.volume_abbr', :volume => document.volume) + ','
   - unless document.number.blank?
     = t(:'search.cite.number_abbr', :number => document.number)
   - unless document.year.blank?
