@@ -47,7 +47,7 @@ module SearchHelper
     end
     decade = Integer(decade)
 
-    return [field.to_sym, "#{decade}&mdash;#{decade + 9}", 0]
+    return [field.to_sym, "#{decade}–#{decade + 9}", 0]
   end
 
   # Convert from a three-tuple to a facet query (fq parameter)
@@ -68,7 +68,7 @@ module SearchHelper
     return "#{facet[0].to_s}:\"#{facet[1]}\"" unless facet[0] == :year
 
     # Convert from a decade to a query
-    decade = facet[1][0..-2]
+    decade = facet[1][0, 4]
     if decade == "1790"
       query = "[* TO 1799]"
     elsif decade == "2010"
@@ -164,7 +164,7 @@ module SearchHelper
     ret = ''.html_safe
     unless active_facets.empty?
       facet_map = { :authors_facet => I18n.t('search.index.authors_facet_short'),
-        :journal_facet => I18n.t('search.index.journal_facets_short'),
+        :journal_facet => I18n.t('search.index.journal_facet_short'),
         :year => I18n.t('search.index.year_facet_short') }
 
       ret << content_tag(:li, I18n.t('search.index.active_filters'), 'data-role' => 'list-divider')
