@@ -7,11 +7,10 @@ module SearchHelper
   # @return [String] number of documents in the last search
   def num_results_string
     if params[:precise] or params[:q] or params[:fq]
-      ret = I18n.t 'search.index.num_results_found', :articles => pluralize(Document.num_results, 'document')
+      I18n.t 'search.index.num_results_found', :count => Document.num_results
     else
-      ret = I18n.t 'search.index.num_results_database', :articles => pluralize(Document.num_results, 'document')
+      I18n.t 'search.index.num_results_database', :count => Document.num_results
     end
-    ret
   end
 
 
