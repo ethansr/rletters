@@ -4,7 +4,7 @@
       = render :partial => 'no_datasets'
 - else
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' }== #{@datasets.count} datasets found
+    %li{ 'data-role' => 'list-divider' }= t('.num_datasets_found', :count => @datasets.count)
     - @datasets.each do |dataset|
       %li
         %a{ :href => dataset_path(dataset) }

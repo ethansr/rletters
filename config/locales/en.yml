@@ -3,6 +3,58 @@ en:
     help_account_button: "Help / Account"
     search_button: "Search / Browse"
     datasets_button: "Datasets"
+    login_warning: "You must be logged in to view this page."
+  activerecord:
+    models:
+      dataset: "Dataset"
+      document: "Document"
+      user: "User"
+    attributes:
+      dataset:
+        name: "Name"
+      document:
+        shasum: "SHA-1 checksum"
+        doi: "DOI"
+        authors: "Authors"
+        title: "Title"
+        journal: "Journal"
+        year: "Year"
+        volume: "Volume"
+        number: "Number"
+        pages: "Pages"
+        fulltext: "Full text"
+        term_vectors: "Term vectors"
+      user:
+        email: "Email"
+        name: "Name"
+        identifier: "Identifier"
+        per_page: "Number of search results per page"
+        language: "Preferred language"
+    errors:
+      models:
+        document:
+          shasum:
+            blank: "SHA-1 checksum was not specified (internal error)"
+            wrong_length: "SHA-1 checksum is not 20 characters (internal error)"
+            invalid: "SHA-1 checksum contains invalid characters (internal error)"
+        user:
+          name:
+            blank: "You must specify a name"
+          email:
+            blank: "You must specify an email"
+            taken: "An account with this email address already exists"
+            invalid: "%{value} is not a valid email address"
+          identifier:
+            blank: "Identifier was not specified (internal error)"
+            taken: "An account using this external account already exists (internal error)"
+            invalid: "Identifier must be a URL (internal error)"
+          per_page:
+            blank: "Number of search results per page must be specified (internal error)"
+            not_a_number: "Number of search results per page must be an integer"
+            inclusion: "Number of search results must be greater than zero"
+          language:
+            blank: "Preferred language must be specified (internal error)"
+            invalid: "Preferred language must be a valid locale code (internal error)"
   search:
     index:
       placeholder: "Search for articles..."
@@ -28,10 +80,6 @@ en:
       journal_facet_short: "Journal"
       year_facet_short: "Year"
   users:
-    email_label: "Email:"
-    name_label: "Name:"
-    language_label: "Language:"
-    per_page_label: "Number of search results per page:"    
     index:
       head: "Your user account"
       user_id: "You are logged in as %{name} (%{email})"
@@ -82,4 +130,13 @@ en:
       privacy_text: "How we use the information we collect from you."
     privacy:
       head: "Privacy Policy"
+  datasets:
+    index:
+      num_datasets_found:
+        zero: "no datasets found"
+        one: "1 dataset found"
+        other: "%{count} datasets found"
+    create:
+      success: "Dataset was successfully created."
+      failure: "Could not save dataset!"
 

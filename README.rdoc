@@ -23,8 +23,8 @@ User login for RLetters uses the external {Janrain Engage}[http://www.janrain.co
 
 Several files have some long-format text about your application that you'll want to customize.
 
--   <tt>app/views/info/privacy.html.haml</tt>:  We've filled this in with a pretty good default privacy policy for the default settings of RLetters.  If you change the way that you interact with your users, you should update this privacy policy.
--   <tt>app/views/datasets/_no_datasets.html.haml</tt>: This message is displayed to users when they log in for the first time (and don't have any datasets).  You'll want to customize it to tell users a little more about your application.
+-   <tt>app/views/info/_privacy_short.markdown</tt> and <tt>app/views/info/_privacy_long.markdown</tt>:  We've filled this in with a pretty good default privacy policy for the default settings of RLetters.  If you change the way that you interact with your users, you should update this privacy policy.
+-   <tt>app/views/datasets/_no_datasets.markdown</tt>: This message is displayed to users when they log in for the first time (and don't have any datasets).  You'll want to customize it to tell users a little more about your application.
 
 Now you've got some images to customize.
 

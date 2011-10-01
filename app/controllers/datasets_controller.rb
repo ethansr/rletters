@@ -15,9 +15,9 @@ class DatasetsController < ApplicationController
     @dataset = session[:user].datasets.build(params[:dataset])
 
     if @dataset.save
-      redirect_to @dataset, :notice => 'Dataset was successfully created.'
+      redirect_to @dataset, :notice => I18n.t('datasets.create.success')
     else
-      redirect_to search_path, :error => 'Could not save dataset!'
+      redirect_to search_path, :error => I18n.t('datasets.create.failure')
     end
   end
 

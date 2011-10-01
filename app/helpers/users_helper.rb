@@ -11,12 +11,12 @@ module UsersHelper
 
       if parts.count == 1
         # Just a language, translate
-        entry = t("languages.#{loc}")
+        entry = I18n.t("languages.#{loc}")
       elsif parts.count == 2
         # A language and a territory
-        entry = t("languages.#{parts[0]}")
+        entry = I18n.t("languages.#{parts[0]}")
         entry += " ("
-        entry += t("territories.#{parts[1]}")
+        entry += I18n.t("territories.#{parts[1]}")
         entry += ")"
       end
 

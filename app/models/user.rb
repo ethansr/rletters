@@ -4,12 +4,12 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
   validates :email, :email => true
   validates :identifier, :uniqueness => true
-  validates :identifier, :format => { :with => /^(#{URI::regexp(%w(http https))})$/, :message => "Identifier must be a URL" }
+  validates :identifier, :format => { :with => /^(#{URI::regexp(%w(http https))})$/ }
   validates :per_page, :presence => true
   validates :per_page, :numericality => { :only_integer => true }
   validates :per_page, :inclusion => { :in => 1..9999999999 }
   validates :language, :presence => true
-  validates :language, :format => { :with => /[a-z]{2,3}(-[A-Z]{2})?/, :message => "Language must be a valid locale" }
+  validates :language, :format => { :with => /[a-z]{2,3}(-[A-Z]{2})?/ }
 
   has_many :datasets, :dependent => :delete_all
 

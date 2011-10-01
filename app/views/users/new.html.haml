@@ -11,15 +11,15 @@
   = f.hidden_field :identifier
 
   %div{ 'data-role' => 'fieldcontain' }
-    = f.label :email, t('users.email_label')
-    = f.text_field :email
-  
-  %div{ 'data-role' => 'fieldcontain' }
-    = f.label :name, t('users.name_label')
+    = f.label :name, User.human_attribute_name('name')
     = f.text_field :name
   
   %div{ 'data-role' => 'fieldcontain' }
-    = f.label :language, t('users.language_label')
+    = f.label :email, User.human_attribute_name('email')
+    = f.text_field :email
+  
+  %div{ 'data-role' => 'fieldcontain' }
+    = f.label :language, User.human_attribute_name('language')
     = f.select :language, options_from_locales(get_user_language)
 
   = f.submit t('.submit_label')

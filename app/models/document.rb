@@ -280,7 +280,7 @@ class Document
   # The shasum attribute is the only required one
   validates :shasum, :presence => true
   validates :shasum, :length => { :is => 20 }
-  validates :shasum, :format => { :with => /\A[a-fA-F\d]+\z/, :message => "Invalid SHA1 checksum" }
+  validates :shasum, :format => { :with => /\A[a-fA-F\d]+\z/ }
 
   def initialize(attributes = {})
     attributes.each do |name, value|
