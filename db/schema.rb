@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110929135437) do
+ActiveRecord::Schema.define(:version => 20111001233930) do
 
   create_table "datasets", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20110929135437) do
     t.datetime "updated_at"
     t.integer  "per_page",   :default => 10
     t.string   "language",   :default => "en-US"
+    t.string   "csl_style",  :default => ""
   end
 
 end

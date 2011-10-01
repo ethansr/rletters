@@ -36,5 +36,16 @@ module UsersHelper
       I18n.default_locale.to_s
     end
   end
+
+  # Create a list of all available CSL styles
+  def options_from_csl_styles(current = '')
+    list = [ [ I18n.t('users.index.default_style'), '' ] ]
+
+    APP_CONFIG['available_csl_styles'].each do |loc|
+      list << [ APP_CONFIG['csl_style_names'][loc], loc ]
+    end
+
+    options_for_select(list, current)
+  end
 end
 

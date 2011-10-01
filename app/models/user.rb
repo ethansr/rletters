@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   has_many :datasets, :dependent => :delete_all
 
   # Only attributes that can be edited by the user should be whitelisted here
-  attr_accessible :name, :email, :per_page, :language
+  attr_accessible :name, :email, :per_page, :language, :csl_style
 
   def self.find_or_initialize_with_rpx(data)
     identifier = data['identifier']

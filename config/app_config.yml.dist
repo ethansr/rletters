@@ -9,6 +9,20 @@ all_environments: &all_environments
   janrain_secret: 12341234
   
   solr_server_url: http://localhost:8080/solr
+  
+  available_csl_styles:
+    - apa.csl
+    - apsa.csl
+    - asa.csl
+    - chicago-author-date.csl
+    - chicago-note-bibliography.csl
+    - harvard1.csl
+    - ieee.csl
+    - mhra.csl
+    - mla.csl
+    - nature.csl
+    - nlm.csl
+    - vancouver.csl
 
 development:
   <<: *all_environments  

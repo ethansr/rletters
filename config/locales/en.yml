@@ -93,6 +93,7 @@ en:
         one: "1 error kept these options from being saved:"
         other: "%{count} errors kept these options from being saved:"
       submit_label: "Save user options"
+      default_style: "Default citation style"
     new:
       head: "Welcome!"
       intro: |
