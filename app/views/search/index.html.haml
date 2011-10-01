@@ -3,7 +3,7 @@
     %li{ 'data-role' => 'list-divider' }= num_results_string
     %li.search
       = form_tag(search_path, :method => :get, 'data-transition' => 'none') do
-        = search_field_tag :q, (params[:precise] ? "(advanced search)" : params[:q]), :placeholder => "Search for articles..."
+        = search_field_tag :q, (params[:precise] ? t('.adv_search_placeholder') : params[:q]), :placeholder => t('.placeholder')
     - @documents.each do |d|
       %li
         %h3= d.title
@@ -11,17 +11,15 @@
 
 %div.rightcolumn
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' } Analyze these results
-    
-    -# If the user isn't logged in or doesn't have any datasets, make this yellow
+    %li{ 'data-role' => 'list-divider' }= t('.analyze')
     - if session[:user].nil?
-      %li{ 'data-theme' => 'e' }= link_to "Log in to analyze results!", users_path
+      %li{ 'data-theme' => 'e' }= link_to t('.login_prompt'), users_path
     - else
-      %li= link_to 'Create dataset from search', '#'
+      %li= link_to t('.create_dataset'), '#'
   %div.verticalpad
 
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' }= t('search.filters')
+    %li{ 'data-role' => 'list-divider' }= t('.filters')
   %div.verticalpad
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
     = facet_link_list

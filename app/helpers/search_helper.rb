@@ -5,9 +5,9 @@ module SearchHelper
   # @return [String] number of documents in the last search
   def num_results_string
     if params[:precise] or params[:q] or params[:fq]
-      ret = "#{pluralize(Document.num_results, 'document')} found"
+      ret = I18n.t 'search.index.num_results_found', :articles => pluralize(Document.num_results, 'document')
     else
-      ret = "#{pluralize(Document.num_results, 'document')} in database"
+      ret = I18n.t 'search.index.num_results_database', :articles => pluralize(Document.num_results, 'document')
     end
     ret
   end
@@ -43,11 +43,11 @@ module SearchHelper
     # We need to parse the decade query if it's 'year'
     decade = query[1..-2].split[0]
     if decade == '*'
-      decade = '1790s'
-    else
-      decade << 's'
+      decade = '1790'
     end
-    return [field.to_sym, decade, 0]
+    decade = Integer(decade)
+
+    return [field.to_sym, "#{decade}&mdash;#{decade + 9}", 0]
   end
 
   # Convert from a three-tuple to a facet query (fq parameter)
@@ -163,24 +163,28 @@ module SearchHelper
     # Start with the active facets
     ret = ''.html_safe
     unless active_facets.empty?
-      ret << content_tag(:li, 'Active Filters', 'data-role' => 'list-divider')
+      facet_map = { :authors_facet => I18n.t('search.index.authors_facet_short'),
+        :journal_facet => I18n.t('search.index.journal_facets_short'),
+        :year => I18n.t('search.index.year_facet_short') }
+
+      ret << content_tag(:li, I18n.t('search.index.active_filters'), 'data-role' => 'list-divider')
       ret << content_tag(:li, 'data-icon' => 'delete') do
-        facet_link "Remove All", []
+        facet_link I18n.t('search.index.remove_all'), []
       end
       active_facets.each do |a|
         ret << content_tag(:li, 'data-icon' => 'delete') do
           new_facets = active_facets.dup
           new_facets.delete(a)
 
-          facet_link "#{a[0].to_s.split('_')[0].capitalize}: #{a[1]}", new_facets
+          facet_link "#{facet_map[a[0]]}: #{a[1]}", new_facets
         end
       end
     end
 
     # Run the facet-getting code for all three facet types
-    ret << list_links_for_facet(:authors_facet, 'Author', active_facets)
-    ret << list_links_for_facet(:journal_facet, 'Journal', active_facets)
-    ret << list_links_for_facet(:year, 'Publication Date', active_facets)
+    ret << list_links_for_facet(:authors_facet, I18n.t('search.index.authors_facet'), active_facets)
+    ret << list_links_for_facet(:journal_facet, I18n.t('search.index.journal_facet'), active_facets)
+    ret << list_links_for_facet(:year, I18n.t('search.index.year_facet'), active_facets)
     ret
   end
 end

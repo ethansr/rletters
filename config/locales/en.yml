@@ -1,4 +1,30 @@
 en:
   search:
-    filters: "Filter Search"
-
+    index:
+      placeholder: "Search for articles..."
+      adv_search_placeholder: "(advanced search)"
+      num_results_found: "%{articles} found"
+      num_results_database: "%{articles} in database"
+      analyze: "Analyze these results"
+      login_prompt: "Log in to analyze results!"
+      create_dataset: "Create dataset from search"
+      filters: "Filter search"
+      active_filters: "Active Filters"
+      remove_all: "Remove All"
+      authors_facet: "Authors"
+      journal_facet: "Journal"
+      year_facet: "Publication Date"
+      authors_facet_short: "Authors"
+      journal_facet_short: "Journal"
+      year_facet_short: "Year"
+  users:
+    index:
+      account: "Your user account"
+      user_id: "You are logged in as %{name} (%{email})"
+      not_you: "Not you? Log in as a different user."
+      options: "User options"
+      errors: "%{errors} kept these options from being saved:"
+      email_label: "Email:"
+      name_label: "Name:"
+      language_label: "Language:"
+      per_page_label: "Number of search results per page:"
