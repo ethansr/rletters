@@ -29,6 +29,23 @@ class DocumentTest < ActiveSupport::TestCase
     assert doc.valid?
   end
 
+  test "should parse authors into author_list correctly" do
+    stub_solr_response(SOLR_RESPONSE_VALID)
+    doc = Document.find_with_fulltext('8e740d30df3f9941e2ca059ef6896830c8a8e226')
+    assert_equal 3, doc.author_list.count
+    assert_equal "Nadia Francia", doc.author_list[0]
+    assert_equal "Augusto Vitale", doc.author_list[1]
+    assert_equal "Enrico Alleva", doc.author_list[2]
+  end
+
+  test "should parse authors into formatted_author_list correctly" do
+    stub_solr_response(SOLR_RESPONSE_VALID)
+    doc = Document.find_with_fulltext('8e740d30df3f9941e2ca059ef6896830c8a8e226')
+    assert_equal 3, doc.formatted_author_list.count
+    assert_equal "Nadia", doc.formatted_author_list[0][:first]
+    assert_equal "Alleva", doc.formatted_author_list[2][:last]
+  end
+
   test "find should throw on Solr error" do
     stub_solr_response(SOLR_RESPONSE_ERROR)
     assert_raise(ActiveRecord::StatementInvalid) { Document.find('wut') }

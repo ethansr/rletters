@@ -184,6 +184,11 @@ class Document
   attr_reader :doi
   # @return [String] the document's authors, in a comma-delimited list
   attr_reader :authors
+  # @return [Array] the document's authors, in an array
+  attr_reader :author_list
+  # @return [Array] the document's authors, split into name parts, in an array
+  # @see NameHelpers.author_name_parts
+  attr_reader :formatted_author_list
   # @return [String] the title of this document
   attr_reader :title
   # @return [String] the journal in which this document was published
@@ -286,5 +291,9 @@ class Document
     attributes.each do |name, value|
       instance_variable_set("@#{name}".to_sym, value)
     end
+
+    # Split out the author list and format it
+    @author_list = @authors.split(',').map { |a| a.strip } unless @authors.nil?
+    @formatted_author_list = @author_list.map { |a| NameHelpers.name_parts(a) } unless @author_list.nil?
   end
 end
