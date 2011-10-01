@@ -7,6 +7,6 @@ class MarkdownTemplate
 
   def self.call(template)
     compiled_source = erb_handler.call(template)
-    "erb_source = #{compiled_source}; Maruku::new(erb_source).to_html"
+    "erb_source = #{compiled_source}; Maruku::new(erb_source).to_html.html_safe"
   end
 end
