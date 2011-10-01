@@ -1,4 +1,4 @@
-require 'CiteProc'
+require 'citeproc'
 
 module Serializers
   module CSL
