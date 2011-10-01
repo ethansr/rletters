@@ -3,8 +3,8 @@ module ApplicationHelper
 
   def render_footer_list
     footer_buttons = [
-      { :controller => 'search', :text => 'Search/Browse', :icon => 'search' },
-      { :controller => 'datasets', :text => 'Datasets', :icon => 'grid' },
+      { :controller => 'search', :text => I18n.t('all.search_button'), :icon => 'search' },
+      { :controller => 'datasets', :text => I18n.t('all.datasets_button'), :icon => 'grid' },
     ]
     
     ret = ''.html_safe

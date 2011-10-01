@@ -11,6 +11,7 @@ RLetters::Application.routes.draw do
   match 'users' => 'users#index', :via => :get
   match 'users' => 'users#create', :via => :post
   match 'users/rpx' => 'users#rpx', :via => :post
+  match 'users/new' => 'users#new'
   match 'users/update' => 'users#update', :via => :put
   match 'users/login' => 'users#login', :via => :get
   match 'users/logout' => 'users#logout', :via => :get

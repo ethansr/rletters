@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.find_or_initialize_with_rpx(data)
     if @user.new_record?
       logger.debug "First time we've seen this user, render the form"
-      render :template => 'users/form'
+      render :template => 'users/new'
     else
       logger.debug "We've seen this user before, redirect to the datasets page"
       reset_session
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
       session[:user] = @user
       redirect_to datasets_path
     else
-      render :template => 'users/form'
+      render :template => 'users/new'
     end
   end
 

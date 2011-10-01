@@ -1,14 +1,11 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-  %li{ 'data-role' => 'list-divider' } #{APP_CONFIG['app_name']} Information
-  %li
-    Need help using #{APP_CONFIG['app_name']}?  Want to know more about what
-    this is all about?  You're in the right place.
+  %li{ 'data-role' => 'list-divider' }= t('.head', :app_name => APP_CONFIG['app_name'])
+  %li= t('.intro', :app_name => APP_CONFIG['app_name'])
   %li
     = link_to(users_path) do
-      %h3 Your user account and settings
-      %p Visit this page to configure your user account and personal settings.
+      %h3= t('.account_header')
+      %p= t('.account_text')
   %li
     = link_to :controller => 'info', :action => 'privacy' do
-      %h3 Privacy policy
-      %p How we use the information we collect from you.
-
+      %h3= t('.privacy_header')
+      %p= t('.privacy_text')

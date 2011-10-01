@@ -1,4 +1,8 @@
 en:
+  all:
+    help_account_button: "Help / Account"
+    search_button: "Search / Browse"
+    datasets_button: "Datasets"
   search:
     index:
       placeholder: "Search for articles..."
@@ -24,15 +28,58 @@ en:
       journal_facet_short: "Journal"
       year_facet_short: "Year"
   users:
+    email_label: "Email:"
+    name_label: "Name:"
+    language_label: "Language:"
+    per_page_label: "Number of search results per page:"    
     index:
-      account: "Your user account"
+      head: "Your user account"
       user_id: "You are logged in as %{name} (%{email})"
       not_you: "Not you? Log in as a different user."
       options: "User options"
       errors:
         one: "1 error kept these options from being saved:"
         other: "%{count} errors kept these options from being saved:"
-      email_label: "Email:"
-      name_label: "Name:"
-      language_label: "Language:"
-      per_page_label: "Number of search results per page:"
+      submit_label: "Save user options"
+    new:
+      head: "Welcome!"
+      intro: |
+        Thanks for signing up for %{app_name}!  Please double-check
+        your information before continuing.
+      errors:
+        one: "1 error kept you from creating your account:"
+        other: "%{count} errors kept you from creating your account:"
+      submit_label: "Create user account"
+    login:
+      head: "Log in to continue"
+      instructions_header: "Log in to %{app_name}"
+      instructions_one: |
+        If you want to perform any analysis on a set of search results,
+        you'll have to register for a user account.  This lets us save 
+        your search results as a dataset, perform analysis on them in 
+        the background, and send you an e-mail when the analysis is 
+        complete.
+      instructions_two: |
+        You can use your account with Google, Facebook, Yahoo, Flickr, 
+        myOpenID, or any other OpenID.
+      privacy_header: "Concerned about your privacy?"
+      privacy_text: |
+        If you're concerned about logging in with your third-party 
+        account, don't be!  There's no way for %{app_name} to leak your
+        account details: we never see your third-party password.  For 
+        more information, click to read our privacy policy.
+  info:
+    index:
+      head: "%{app_name} Information"
+      intro: |
+        Need help using %{app_name}?  Want to know more about what this 
+        is all about?  You're in the right place.
+      account_header: "Your user account and settings"
+      account_text: |
+        Visit this page to configure your user account and personal 
+        settings.
+      privacy_header: "Privacy policy"
+      privacy_text: "How we use the information we collect from you."
+    privacy:
+      head: "Privacy Policy"
+

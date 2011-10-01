@@ -18,7 +18,7 @@
     %div{ 'data-role' => 'page', 'data-add-back-btn' => 'true' }
       %div{ 'data-role' => 'header', 'data-id' => 'rlheader', 'data-position' => 'fixed' }
         %h1= APP_CONFIG['app_name']
-        = link_to 'Help / Account', info_path, :class => 'ui-btn-right', 'data-icon' => 'info'
+        = link_to t('all.help_account_button'), info_path, :class => 'ui-btn-right', 'data-icon' => 'info'
       
       %div{ 'data-role' => 'content' }
         = render :partial => 'layouts/flashes'
