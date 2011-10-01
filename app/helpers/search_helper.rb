@@ -130,6 +130,10 @@ module SearchHelper
   # @param [Document] doc document for which bibliographic entry is desired
   # @return [ActiveSupport::SafeBuffer] bibliographic entry for document
   def document_bibliography_entry(doc)
-    render :partial => 'document', :locals => { :document => doc }
+    if session[:user].nil? || session[:user].csl_style == ''
+      render :partial => 'document', :locals => { :document => doc }
+    else
+      doc.to_csl_entry(session[:user].csl_style)
+    end
   end
 end

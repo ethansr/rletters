@@ -30,6 +30,7 @@ en:
         identifier: "Identifier"
         per_page: "Number of search results per page"
         language: "Preferred language"
+        csl_style: "Citation style"
     errors:
       models:
         document:
