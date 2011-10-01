@@ -9,6 +9,7 @@ gem 'rails-i18n'
 gem 'rpx_now'
 
 gem 'rsolr'
+gem 'citeproc-ruby'
 
 gem 'haml'
 gem 'maruku'
