@@ -118,8 +118,8 @@ class DocumentTest < ActiveSupport::TestCase
     assert_nil(Document.facets[:journal_facet]['Journal of Nothing'])
 
     assert_not_nil(Document.facets[:year])
-    assert_equal(0, Document.facets[:year]['1940s'])
-    assert_equal(25, Document.facets[:year]['2000s'])
+    assert_equal(0, Document.facets[:year]['1940–1949'])
+    assert_equal(25, Document.facets[:year]['2000–2009'])
   end
 
   test "find_all_by_solr_query should not set TV if not found" do

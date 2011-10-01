@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 
 module SearchHelper
+  include SolrHelpers
+
   # Return a formatted version of the number of documents in the last search
   # @return [String] number of documents in the last search
   def num_results_string
@@ -12,74 +14,6 @@ module SearchHelper
     ret
   end
 
-  # Convert from a facet query (fq parameter) to a three-tuple
-  #
-  # Our internal format for facet parsing is a 3-tuple, <tt>[:symbol, value,
-  # count]</tt>.  Solr facets (as found in +params+) are an array of strings
-  # of the format +field:query+, and are more complicated than that
-  # (+year:[start TO end]+) for the +:year+ facet.  This function takes a Solr
-  # query parameter and returns a three-tuple value.  Notably, Solr query
-  # parameters lack the +count+ value, so it will be set to zero.
-  #
-  # This function is used to parse the current facet query parameters and 
-  # return the active facets in a format which we can use.
-  #
-  # @param [String] fq Solr facet query to convert
-  # @return [Array] +[:symbol, value, 0]+ representation of facet
-  def fq_to_facet(fq)
-    # Facet query parameters are of the form 'field:query'
-    parts = fq.split(':')
-    return [''.to_sym, '', count] unless parts.count == 2
-
-    field = parts[0]
-    query = parts[1]
-
-    # Strip quotes from the query if present
-    query = query[1..-2] if query[0] == "\"" and query[query.length - 1] == "\""
-
-    # If the field isn't 'year', we're done here
-    return [field.to_sym, query, 0] unless field == 'year'
-
-    # We need to parse the decade query if it's 'year'
-    decade = query[1..-2].split[0]
-    if decade == '*'
-      decade = '1790'
-    end
-    decade = Integer(decade)
-
-    return [field.to_sym, "#{decade}–#{decade + 9}", 0]
-  end
-
-  # Convert from a three-tuple to a facet query (fq parameter)
-  #
-  # Our internal format for facet parsing is a 3-tuple, <tt>[:symbol, value,
-  # count]</tt>.  Solr facets (as found in +params+) are an array of strings
-  # of the format +field:query+, and are more complicated than that
-  # (+year:[start TO end]+) for the +:year+ facet.  This function takes a
-  # three-tuple and returns a Solr facet query string.
-  #
-  # This function is used to generate the links for adding new facets to
-  # the current query.
-  #
-  # @param [Array] facet +[:symbol, value, count]+ to convert
-  # @return [String] Solr facet query representation of facet
-  def facet_to_fq(facet)
-    # Unless the field is year, we're done
-    return "#{facet[0].to_s}:\"#{facet[1]}\"" unless facet[0] == :year
-
-    # Convert from a decade to a query
-    decade = facet[1][0, 4]
-    if decade == "1790"
-      query = "[* TO 1799]"
-    elsif decade == "2010"
-      query = "[2010 TO *]"
-    else
-      last = Integer(decade) + 9
-      query = "[#{decade} TO #{last}]"
-    end
-
-    return "year:#{query}"
-  end
 
   # Create a link to the given set of facets
   #
