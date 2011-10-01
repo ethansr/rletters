@@ -44,6 +44,9 @@ class Document
   # Bring in some helpers for parsing Solr's syntax
   extend SolrHelpers
 
+  # Serialization methods
+  include Serializers::CSL
+
   # Return a document (just bibliographic data) by SHA-1 checksum
   #
   # @api public
