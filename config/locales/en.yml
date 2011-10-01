@@ -79,6 +79,10 @@ en:
       authors_facet_short: "Authors"
       journal_facet_short: "Journal"
       year_facet_short: "Year"
+    cite:
+      volume_abbr: "Vol. %{volume}"
+      number_abbr: "No. %{number}"
+      pages_abbr: "pp. %{pages}"
   users:
     index:
       head: "Your user account"

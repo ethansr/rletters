@@ -120,4 +120,16 @@ module SearchHelper
     ret << list_links_for_facet(:year, I18n.t('search.index.year_facet'), active_facets)
     ret
   end
+
+
+  # Get the short, formatted representation of a document
+  #
+  # This function returns the short bibliographic entry for a document that will
+  # appear in the search results list.
+  #
+  # @param [Document] doc document for which bibliographic entry is desired
+  # @return [ActiveSupport::SafeBuffer] bibliographic entry for document
+  def document_bibliography_entry(doc)
+    render :partial => 'document', :locals => { :document => doc }
+  end
 end
