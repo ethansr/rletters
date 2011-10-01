@@ -1,5 +1,6 @@
 require "i18n/backend/fallbacks" 
-I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+I18n::Backend::Simple.include(I18n::Backend::Fallbacks)
+I18n::Backend::Simple.include(I18n::Backend::Pluralization)
 
 # Set the list of available locales ('en' ships with Rails)
 APP_CONFIG['available_locales'] = ['en']
