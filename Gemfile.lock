@@ -142,6 +142,8 @@ GEM
       multi_json (>= 1.0.2)
     unicode_utils (1.0.0)
     yard (0.7.2)
+    yard-rails (0.1.0)
+      yard
     yardstick (0.4.0)
       yard (~> 0.7.0)
 
@@ -171,4 +173,5 @@ DEPENDENCIES
   therubyracer
   uglifier
   yard
+  yard-rails
   yardstick

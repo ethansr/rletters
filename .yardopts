@@ -3,8 +3,8 @@
 --main README.rdoc
 --charset utf-8
 --title 'RLetters API Documentation'
---load './lib/yard/class_attribute_handler.rb'
 --exclude '^lib/yard/.*'
+--plugin yard-rails
 app/**/*.rb
 lib/**/*.rb
 -
