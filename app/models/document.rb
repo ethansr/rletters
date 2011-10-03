@@ -141,6 +141,12 @@ class Document
     # Do the Solr query
     solr_response = get_solr_response(params)
 
+    # Set the num_results count (before possibly bailing!)
+    @@num_results = 0
+    if solr_response["response"] && solr_response["response"]["numFound"]
+      @@num_results = Integer(solr_response["response"]["numFound"])
+    end
+
     raise ActiveRecord::StatementInvalid unless solr_response["response"]
     raise ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
     return [] if solr_response["response"]["numFound"] == 0
@@ -175,12 +181,6 @@ class Document
     @@facets = nil
     if solr_response["facet_counts"]
       @@facets = parse_facet_counts(solr_response["facet_counts"])
-    end
-
-    # Set the num_results count
-    @@num_results = 0
-    if solr_response["response"]["numFound"]
-      @@num_results = Integer(solr_response["response"]["numFound"])
     end
 
     # Initialize all the documents and get out of here
