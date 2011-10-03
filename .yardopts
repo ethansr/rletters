@@ -4,7 +4,7 @@
 --charset utf-8
 --title 'RLetters API Documentation'
 --exclude '^lib/yard/.*'
---plugin yard-rails
+--plugin rails
 app/**/*.rb
 lib/**/*.rb
 -
