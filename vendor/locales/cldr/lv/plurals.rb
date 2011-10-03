@@ -1,1 +1,2 @@
+# -*- encoding : utf-8 -*-
 { :lv => { :i18n => {:plural => { :keys => [:zero, :one, :other], :rule => lambda { |n| n == 0 ? :zero : n % 10 == 1 && n % 100 != 11 ? :one : :other } } } } }

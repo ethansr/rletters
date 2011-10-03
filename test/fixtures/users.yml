@@ -2,8 +2,13 @@ john:
   name: John Doe
   email: jdoe@gmail.com
   identifier: https://google.com/profiles/johndoe
+  per_page: 10
+  language: en-US
+  csl_style: chicago-author-date.csl
 
 alice:
   name: Alice Cooper
   email: acooper@aol.com
   identifier: https://google.com/profiles/alicecooper
+  per_page: 25
+  language: es-MX

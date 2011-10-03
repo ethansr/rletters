@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 APP_CONFIG['csl_style_names'] = {}
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 # Run Markdown templates through ERB before Maruku
 class MarkdownTemplate

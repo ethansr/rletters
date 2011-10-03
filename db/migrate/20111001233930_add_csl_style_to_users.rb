@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddCslStyleToUsers < ActiveRecord::Migration
   def up
     add_column :users, :csl_style, :string, :default => ""

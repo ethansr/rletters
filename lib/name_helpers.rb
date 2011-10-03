@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module NameHelpers
   # Split a name into its component parts

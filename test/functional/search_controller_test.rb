@@ -3,40 +3,57 @@ require 'test_helper'
 
 class SearchControllerTest < ActionController::TestCase
   test "should get index" do
-    stub_solr_response(:standard_empty_search)
+    stub_solr_response :standard_empty_search
     get :index
     assert_response :success
   end
 
   test "should set documents variable" do
-    stub_solr_response(:precise_all_docs)
+    stub_solr_response :precise_all_docs
     get :index
     assert_not_nil assigns(:documents)
     assert_equal 10, assigns(:documents).count
   end
 
   test "should display number of documents found" do
-    stub_solr_response(:precise_all_docs)
+    stub_solr_response :precise_all_docs
     get :index
     assert_select 'li', '10 articles in database'
   end
 
   test "should display correctly when no documents found" do
-    stub_solr_response(:standard_empty_search)
+    stub_solr_response :standard_empty_search
     get :index, { :q => 'shatner' }
     assert_select 'li', 'no articles found'
   end
 
   test "should display search text in search box" do
-    stub_solr_response(:standard_empty_search)
+    stub_solr_response :standard_empty_search
     get :index, { :q => 'shatner' }
     assert_select 'input[value=shatner]'
   end
 
   test "should display advanced search placeholder" do
-    stub_solr_response(:precise_year_2009)
+    stub_solr_response :precise_year_2009
     get :index, { :precise => 'true', :q => 'year:2009' }
     assert_select 'input[value=(advanced search)]'
+  end
+
+  test "should display document details (default citation format)" do
+    stub_solr_response :precise_all_docs
+    get :index
+    assert_select 'div.leftcolumn ul li:nth-of-type(3)' do
+      assert_select 'h3', 'Parental and Mating Effort: Is There Necessarily a Trade-Off?'
+      assert_select 'p:first-of-type', 'Kelly A. Stiver, Suzanne H. Alonzo'
+      assert_select 'p:last-of-type', "Ethology, Vol. 115,\n(2009),\npp. 1101-1126"
+    end
+  end
+
+  test "should display document details (chicago format)" do
+    stub_solr_response :precise_all_docs
+    session[:user] = users(:john)
+    get :index
+    assert_select 'div.leftcolumn ul li:nth-of-type(7)', "Botero, Carlos A., Andrew E. Mudge, Amanda M. Koltz, Wesley M. Hochachka, and Sandra L. Vehrencamp. 2008. “How Reliable are the Methods for Estimating Repertoire Size?”. Ethology 114: 1227-1238."
   end
 
   test "should correctly parse page, per_page in index" do
