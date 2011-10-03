@@ -3,16 +3,16 @@ require 'test_helper'
 
 class SearchControllerTest < ActionController::TestCase
   test "should get index" do
-    stub_solr_response(SOLR_RESPONSE_EMPTY)
+    stub_solr_response(:standard_empty_search)
     get :index
     assert_response :success
   end
 
   test "should set documents variable" do
-    stub_solr_response(SOLR_RESPONSE_VALID)
+    stub_solr_response(:precise_all_docs)
     get :index
     assert_not_nil assigns(:documents)
-    assert_equal 5, assigns(:documents).count
+    assert_equal 10, assigns(:documents).count
   end
 
   test "should correctly parse page, per_page in index" do

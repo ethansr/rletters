@@ -150,7 +150,13 @@ class Document
     # everything into UTF-8 encoding, which is how all Solr's data
     # comes back
     documents = solr_response["response"]["docs"]
-    documents.map! { |doc| doc.each { |k, v| doc[k] = v.force_encoding("UTF-8") }}
+    documents.map! do |doc| 
+      doc.each do |k, v|
+        if v.is_a? String
+          doc[k] = v.force_encoding("UTF-8")
+        end
+      end
+    end
 
     # See if the term vectors are available, and add them to the documents
     if solr_response["termVectors"]
