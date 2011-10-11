@@ -74,7 +74,7 @@ module NameHelpers
       if m = au.match(/(,)/)
         if m.begin(1) == 0
           # Broken string that begins w/ a comma?
-          first = au[1, -1]
+          first = au[1..-1]
           last = ''
         else
           last = au[0...m.begin(1)]

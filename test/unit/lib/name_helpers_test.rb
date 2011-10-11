@@ -60,4 +60,8 @@ class NameHelpersTest < ActiveSupport::TestCase
   test "should parse full last-first" do
     test_name_parts("von der Last, First, Sr", "First", "von der", "Last", "Sr")
   end
+  
+  test "should parse broken string that starts w/ comma" do
+    test_name_parts(", First", "First", "", "", "")
+  end
 end
