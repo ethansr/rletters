@@ -29,15 +29,15 @@ class Document
 
   # Throw an exception if +destroy+ is called on this object
   # @api private
-  # @return nothing, always throws
+  # @return [undefined] always throws
   def before_destroy; raise ActiveRecord::ReadOnlyRecord; end
   # Throw an exception if +Document.delete_all+ is called
   # @api private
-  # @return nothing, always throws
+  # @return [undefined] always throws
   def self.delete_all; raise ActiveRecord::ReadOnlyRecord; end
   # Throw an exception if +delete+ is called on this object
   # @api private
-  # @return nothing, always throws
+  # @return [undefined] always throws
   def delete; raise ActiveRecord::ReadOnlyRecord; end
 
 
@@ -81,7 +81,6 @@ class Document
     set[0]
   end
 
-  #:nocov:
   # Return the Solr response for the given query
   #
   # This function makes sure that any exceptions that may be raised by RSolr
@@ -90,6 +89,8 @@ class Document
   #
   # @api private
   # @param [Hash] params Solr query parameters
+  # @return [Hash] Solr search result
+  #:nocov:
   def self.get_solr_response(query)
     begin
       solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
@@ -284,11 +285,19 @@ class Document
 
   # Number of documents returned by the last search
   #
-  # Since the search results are almost always limited by the per-page count,
+  # Since the search results (i.e., the size of the +@documents+ variable 
+  # for a given view) are almost always limited by the per-page count,
   # this variable returns the full number of documents that were returned by
   # the last search.
   #
+  # A method for pretty-printing this variable is available as
+  # +SearchHelper#num_results_string+.
+  #
+  # @api public
   # @return [Integer] number of documents in the last search
+  # @example Returns true if there are more hits than documents returned
+  #   @documents.count > Document.num_results
+  # @see SearchHelper#num_results_string
   cattr_reader :num_results
 
   # The shasum attribute is the only required one

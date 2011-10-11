@@ -4,7 +4,11 @@ module SearchHelper
   include SolrHelpers
 
   # Return a formatted version of the number of documents in the last search
+  #
+  # @api public
   # @return [String] number of documents in the last search
+  # @example Print the number of documents in the last search (in HAML)
+  #   = num_results_string
   def num_results_string
     if params[:precise] or params[:q] or params[:fq]
       I18n.t 'search.index.num_results_found', :count => Document.num_results
@@ -21,9 +25,20 @@ module SearchHelper
   # parameters other than +:fq+ are simply duplicated (including the search
   # query itself, +:q+).
   #
+  # For the format of the three-tuple facet values, see 
+  # +SolrHelpers#fq_to_facet+.
+  #
+  # @api public
   # @param [String] text body of the link
   # @param [Array] facets array of 3-tuple facet values, possibly empty
-  # @return [ActiveSupport::SafeBuffer] link to search for the given set of facets
+  # @return [String] link to search for the given set of facets
+  # @example Get a "remove all facets" link
+  #   facet_link("Remove all facets", [])
+  #   # == link_to "Remove all facets", search_path
+  # @example Get a link to a given set of facets
+  #   facet_link("Some facets", [[:title_facet, 'Evolution', 6], [:authors_facet, 'Johnson', 1]])
+  #   # == link_to "Some facets", search_path({ :fq => [ 'title_facet:(Evolution)', 'authors_facet:(Johnson)' ] })
+  # @see SolrHelpers#fq_to_facet
   def facet_link(text, facets)
     new_params = params.dup
 
@@ -43,9 +58,14 @@ module SearchHelper
   # against +active_facets+, and creates a set of list items.  It is used
   # by +facet_link_list+.
   #
+  # @api public
   # @param [Symbol] sym symbol for facet (e.g., +:authors_facet+)
   # @param [String] header content of list item header
   # @param [Array] active_facets array of 3-tuples for all active facets
+  # @return [String] list items for links for the given facet
+  # @example Get the links for the authors facet
+  #   list_links_for_facet(:authors_facet, "Authors", [...])
+  #   # "<li><a href='...'>Johnson <span class='ui-li-count'>2</a></li>..."
   def list_links_for_facet(sym, header, active_facets)
     return ''.html_safe unless Document.facets
 
@@ -87,7 +107,11 @@ module SearchHelper
   # available facets for authors, journals, and years.  It returns a set of
   # +<li>+ elements (_not_ a +<ul>+), including list dividers.
   #
-  # @return [ActiveSupport::SafeBuffer] set of list items for faceted browsing
+  # @api public
+  # @return [String] set of list items for faceted browsing
+  # @example Get all of the links for faceted browsing
+  #   facet_link_list
+  #   # "<li>Active Filters</li>...<li>Authors</li><li><a href='...'>Johnson</a></li>..."
   def facet_link_list
     # Convert the active facet parameters to 3-tuples
     active_facets = []
@@ -124,11 +148,18 @@ module SearchHelper
 
   # Get the short, formatted representation of a document
   #
-  # This function returns the short bibliographic entry for a document that will
-  # appear in the search results list.
+  # This function returns the short bibliographic entry for a document that 
+  # will appear in the search results list.  The formatting here depends on 
+  # the current user's settings.  By default, we use a jQuery Mobile-formatted
+  # partial with an H3 and some P's.  The user can set, however, to format the
+  # bibliographic entries using their favorite CSL style.
   #
+  # @api public
   # @param [Document] doc document for which bibliographic entry is desired
-  # @return [ActiveSupport::SafeBuffer] bibliographic entry for document
+  # @return [String] bibliographic entry for document
+  # @example Get the entry for a given document
+  #   document_bibliography_entry(Document.new(:authors => 'W. Johnson', :year => '2000'))
+  #   # "Johnson, W. 2000. ..."
   def document_bibliography_entry(doc)
     if session[:user].nil? || session[:user].csl_style == ''
       render :partial => 'document', :locals => { :document => doc }

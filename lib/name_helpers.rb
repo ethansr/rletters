@@ -8,11 +8,15 @@ module NameHelpers
   # tried to duplicate the BibTeX parsing as much as I can, which is something
   # of an industry standard.
   #
+  # @api public
   # @return [Hash] parts of the author's name
   #   +ret[:first]+: first name
   #   +ret[:last]+: last name
   #   +ret[:von]+: "von" part, such as "van der"
   #   +ret[:suffix]+: suffix, such as "Sr."
+  # @example Split a complicated name into its parts
+  #   NameHelpers.name_parts("First van der Last, Jr")
+  #   # { :first => "First", :von => "van der", :last => "Last", :suffix => "Jr" }
   def self.name_parts(a)
     au = a.dup
     first = ''

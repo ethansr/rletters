@@ -1,65 +1,8 @@
-app/controllers/application_controller.rb:6: ApplicationController#set_locale: The method summary should be specified
-app/controllers/application_controller.rb:6: ApplicationController#set_locale: The public/semipublic method should have an example specified
-app/controllers/application_controller.rb:6: ApplicationController#set_locale: The @api tag should be specified
-app/controllers/application_controller.rb:6: ApplicationController#set_locale: The @api tag must be either public, semipublic or private
-app/controllers/application_controller.rb:6: ApplicationController#set_locale: The @return tag should be specified
-app/controllers/search_controller.rb:20: SearchController#search_params_to_solr_query: The method summary should be less than 80 characters in length
-app/controllers/search_controller.rb:20: SearchController#search_params_to_solr_query: The method summary should not end in a period
-app/controllers/search_controller.rb:20: SearchController#search_params_to_solr_query: The method summary should be a single line
-app/controllers/search_controller.rb:20: SearchController#search_params_to_solr_query: The public/semipublic method should have an example specified
-app/controllers/search_controller.rb:20: SearchController#search_params_to_solr_query: The @api tag should be specified
-app/controllers/search_controller.rb:20: SearchController#search_params_to_solr_query: The @api tag must be either public, semipublic or private
-app/controllers/search_controller.rb:20: SearchController#search_params_to_solr_query: The @return tag should be specified
-app/controllers/users_controller.rb:18: UsersController#rpx: The method summary should be less than 80 characters in length
-app/controllers/users_controller.rb:18: UsersController#rpx: The method summary should not end in a period
-app/controllers/users_controller.rb:18: UsersController#rpx: The method summary should be a single line
-app/controllers/users_controller.rb:18: UsersController#rpx: The public/semipublic method should have an example specified
-app/controllers/users_controller.rb:18: UsersController#rpx: The @api tag should be specified
-app/controllers/users_controller.rb:18: UsersController#rpx: The @api tag must be either public, semipublic or private
-app/controllers/users_controller.rb:18: UsersController#rpx: The @return tag should be specified
-app/controllers/users_controller.rb:34: UsersController#create: The public/semipublic method should have an example specified
-app/controllers/users_controller.rb:34: UsersController#create: The @api tag should be specified
-app/controllers/users_controller.rb:34: UsersController#create: The @api tag must be either public, semipublic or private
-app/controllers/users_controller.rb:34: UsersController#create: The @return tag should be specified
-app/helpers/search_helper.rb:8: SearchHelper#num_results_string: The public/semipublic method should have an example specified
-app/helpers/search_helper.rb:8: SearchHelper#num_results_string: The @api tag should be specified
-app/helpers/search_helper.rb:8: SearchHelper#num_results_string: The @api tag must be either public, semipublic or private
-app/helpers/search_helper.rb:27: SearchHelper#facet_link: The public/semipublic method should have an example specified
-app/helpers/search_helper.rb:27: SearchHelper#facet_link: The @api tag should be specified
-app/helpers/search_helper.rb:27: SearchHelper#facet_link: The @api tag must be either public, semipublic or private
-app/helpers/search_helper.rb:49: SearchHelper#list_links_for_facet: The public/semipublic method should have an example specified
-app/helpers/search_helper.rb:49: SearchHelper#list_links_for_facet: The @api tag should be specified
-app/helpers/search_helper.rb:49: SearchHelper#list_links_for_facet: The @api tag must be either public, semipublic or private
-app/helpers/search_helper.rb:49: SearchHelper#list_links_for_facet: The @return tag should be specified
-app/helpers/search_helper.rb:91: SearchHelper#facet_link_list: The public/semipublic method should have an example specified
-app/helpers/search_helper.rb:91: SearchHelper#facet_link_list: The @api tag should be specified
-app/helpers/search_helper.rb:91: SearchHelper#facet_link_list: The @api tag must be either public, semipublic or private
-app/helpers/search_helper.rb:132: SearchHelper#document_bibliography_entry: The public/semipublic method should have an example specified
-app/helpers/search_helper.rb:132: SearchHelper#document_bibliography_entry: The @api tag should be specified
-app/helpers/search_helper.rb:132: SearchHelper#document_bibliography_entry: The @api tag must be either public, semipublic or private
-app/helpers/users_helper.rb:5: UsersHelper#options_from_locales: The public/semipublic method should have an example specified
-app/helpers/users_helper.rb:5: UsersHelper#options_from_locales: The @api tag should be specified
-app/helpers/users_helper.rb:5: UsersHelper#options_from_locales: The @api tag must be either public, semipublic or private
-app/helpers/users_helper.rb:5: UsersHelper#options_from_locales: The @return tag should be specified
-app/helpers/users_helper.rb:31: UsersHelper#get_user_language: The public/semipublic method should have an example specified
-app/helpers/users_helper.rb:31: UsersHelper#get_user_language: The @api tag should be specified
-app/helpers/users_helper.rb:31: UsersHelper#get_user_language: The @api tag must be either public, semipublic or private
-app/helpers/users_helper.rb:31: UsersHelper#get_user_language: The @return tag should be specified
-app/helpers/users_helper.rb:41: UsersHelper#options_from_csl_styles: The public/semipublic method should have an example specified
-app/helpers/users_helper.rb:41: UsersHelper#options_from_csl_styles: The @api tag should be specified
-app/helpers/users_helper.rb:41: UsersHelper#options_from_csl_styles: The @api tag must be either public, semipublic or private
-app/helpers/users_helper.rb:41: UsersHelper#options_from_csl_styles: The @return tag should be specified
-app/models/document.rb:93: Document.get_solr_response: The method summary should be a single line
-app/models/document.rb:93: Document.get_solr_response: The @return tag should be specified
-app/models/document.rb:286: Document.num_results: The public/semipublic method should have an example specified
-app/models/document.rb:286: Document.num_results: The @api tag should be specified
-app/models/document.rb:286: Document.num_results: The @api tag must be either public, semipublic or private
-lib/name_helpers.rb:15: NameHelpers.name_parts: The public/semipublic method should have an example specified
-lib/name_helpers.rb:15: NameHelpers.name_parts: The @api tag should be specified
-lib/name_helpers.rb:15: NameHelpers.name_parts: The @api tag must be either public, semipublic or private
-lib/serializers/csl.rb:8: Serializers::CSL#to_csl: The public/semipublic method should have an example specified
-lib/serializers/csl.rb:8: Serializers::CSL#to_csl: The @api tag should be specified
-lib/serializers/csl.rb:8: Serializers::CSL#to_csl: The @api tag must be either public, semipublic or private
+app/controllers/datasets_controller.rb:5: DatasetsController#index: The method summary should be specified
+app/controllers/datasets_controller.rb:5: DatasetsController#index: The public/semipublic method should have an example specified
+app/controllers/datasets_controller.rb:5: DatasetsController#index: The @api tag should be specified
+app/controllers/datasets_controller.rb:5: DatasetsController#index: The @api tag must be either public, semipublic or private
+app/controllers/datasets_controller.rb:5: DatasetsController#index: The @return tag should be specified
 lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The public/semipublic method should have an example specified
 lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The @api tag should be specified
 lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The @api tag must be either public, semipublic or private
@@ -67,8 +10,8 @@ lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The @return tag should be
 lib/solr_helpers.rb:60: SolrHelpers#fq_to_facet: The public/semipublic method should have an example specified
 lib/solr_helpers.rb:60: SolrHelpers#fq_to_facet: The @api tag should be specified
 lib/solr_helpers.rb:60: SolrHelpers#fq_to_facet: The @api tag must be either public, semipublic or private
-lib/solr_helpers.rb:97: SolrHelpers#facet_to_fq: The public/semipublic method should have an example specified
-lib/solr_helpers.rb:97: SolrHelpers#facet_to_fq: The @api tag should be specified
-lib/solr_helpers.rb:97: SolrHelpers#facet_to_fq: The @api tag must be either public, semipublic or private
+lib/solr_helpers.rb:105: SolrHelpers#facet_to_fq: The public/semipublic method should have an example specified
+lib/solr_helpers.rb:105: SolrHelpers#facet_to_fq: The @api tag should be specified
+lib/solr_helpers.rb:105: SolrHelpers#facet_to_fq: The @api tag must be either public, semipublic or private
 
-Coverage: 76.0%  Success: 228  Failed: 72  Total: 300
+Coverage: 96.1%  Success: 365  Failed: 15  Total: 380

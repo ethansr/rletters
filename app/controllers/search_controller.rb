@@ -1,5 +1,14 @@
 # -*- encoding : utf-8 -*-
 class SearchController < ApplicationController
+  
+  # Show the main search index page
+  #
+  # The controller just passes the search parameters through 
+  # +search_params_to_solr_query+, then sends this solr query on to the
+  # server using +Document.find_all_by_solr_query+.
+  #
+  # @api public
+  # @return [undefined]
   def index
     # Treat 'page' and 'per_page' separately
     page = 0
@@ -15,8 +24,18 @@ class SearchController < ApplicationController
     @documents = Document.find_all_by_solr_query(search_params_to_solr_query(params), :offset => offset, :limit => limit)
   end
 
-  # Convert from web-query params (one per field) to a set of Solr 
-  # query parameters to be passed to <tt>Document.find_all_by_solr_query</tt>.
+  # Convert from search parameters to Solr query parameters
+  #
+  # This function takes the GET parameters passed in to the search and
+  # handles converting them to the query format expected by Solr.  Primarily,
+  # it is intended to support the advanced search page.
+  #
+  # @api public
+  # @param [Hash] params the Rails params object
+  # @return [Hash] Solr-format query parameters
+  # @example Convert an advanced search to Solr format
+  #   search_params_to_solr_query({ :precise => 'true', :title => 'test' })
+  #   # { :qt => 'precise', :q => 'title:(test)' }
   def search_params_to_solr_query(params)
     # Remove any blank values (you get these on form submissions, for
     # example)
