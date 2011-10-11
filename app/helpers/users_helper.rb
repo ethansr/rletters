@@ -31,7 +31,14 @@ module UsersHelper
   def get_user_language
     acc_language = request.env['HTTP_ACCEPT_LANGUAGE']
     if acc_language
-      acc_language.scan(/^[a-z]{2,3}(-[A-Z]{2})?/).first
+      lang = acc_language.scan(/^([a-z]{2,3}(-[A-Za-z]{2})?)/).first[0]
+      if lang.include? '-'
+        # Capitalize the country portion (many browsers send it lowercase)
+        lang[-2, 2] = lang[-2, 2].upcase
+        lang
+      else
+        lang
+      end
     else
       I18n.default_locale.to_s
     end

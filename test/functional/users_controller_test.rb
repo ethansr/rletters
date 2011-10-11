@@ -40,6 +40,17 @@ class UsersControllerTest < ActionController::TestCase
       assert_select 'ul[data-theme=e]'
     end
   end
+  
+  # POSTing an invalid user is the only way to test the form on
+  # the "new" template.
+  test "should fill in the user's default language on the form" do
+    @request.env['HTTP_ACCEPT_LANGUAGE'] = "es-mx,es;q=0.5"
+    post :create, :user => { :name => 'New User Test', :email => 'this is a bad email', :identifier => 'notaurl' }
+    assert_response :success
+    assert_select 'select[id=user_language]' do
+      assert_select 'option[value=es-MX][selected=selected]'
+    end
+  end
 
   test "should update user" do
     session[:user] = users(:john)
