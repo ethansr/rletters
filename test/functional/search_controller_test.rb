@@ -103,7 +103,7 @@ class SearchControllerTest < ActionController::TestCase
     stub_solr_response :precise_all_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(11)', '2010–20192' do
+    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(11)', '2010 and later2' do
       assert_select "a[href=#{search_path(:fq => [ 'year:[2010 TO *]' ])}]"
       assert_select 'span.ui-li-count', '2'
     end    
@@ -113,7 +113,7 @@ class SearchControllerTest < ActionController::TestCase
     stub_solr_response :precise_old_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(13)', '1790–17991' do
+    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(13)', 'Before 18001' do
       assert_select "a[href=#{search_path(:fq => [ 'year:[* TO 1799]' ])}]"
       assert_select 'span.ui-li-count', '1'
     end

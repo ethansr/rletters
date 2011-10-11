@@ -78,7 +78,15 @@ module SolrHelpers
     end
     decade = Integer(decade)
 
-    return [field.to_sym, "#{decade}–#{decade + 9}", 0]
+    if decade == 1790
+      str = I18n.t('search.index.year_before_1800')
+    elsif decade == 2010
+      str = I18n.t('search.index.year_after_2010')
+    else
+      str = "#{decade}–#{decade + 9}"
+    end
+
+    return [field.to_sym, str, 0]
   end
 
   # Convert from a three-tuple to a facet query (fq parameter)
@@ -98,13 +106,13 @@ module SolrHelpers
     # Unless the field is year, we're done
     return "#{facet[0].to_s}:\"#{facet[1]}\"" unless facet[0] == :year
 
-    # Convert from a decade to a query
-    decade = facet[1][0, 4]
-    if decade == "1790"
+    # Convert the year strings
+    if facet[1] == I18n.t("search.index.year_before_1800")
       query = "[* TO 1799]"
-    elsif decade == "2010"
+    elsif facet[1] == I18n.t("search.index.year_after_2010")
       query = "[2010 TO *]"
     else
+      decade = facet[1][0, 4]
       last = Integer(decade) + 9
       query = "[#{decade} TO #{last}]"
     end

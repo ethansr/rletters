@@ -80,6 +80,8 @@ en:
       authors_facet_short: "Authors"
       journal_facet_short: "Journal"
       year_facet_short: "Year"
+      year_before_1800: "Before 1800"
+      year_after_2010: "2010 and later"
     cite:
       volume_abbr: "Vol. %{volume}"
       number_abbr: "No. %{number}"
