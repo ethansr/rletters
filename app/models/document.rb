@@ -43,6 +43,7 @@ class Document
 
   # Serialization methods
   include Serializers::CSL
+  include Serializers::OpenURL
 
   # Return a document (just bibliographic data) by SHA-1 checksum
   #
@@ -214,6 +215,31 @@ class Document
   # @return [String] the full text of this document.  May be +nil+ if the query
   #   type used to retrieve the document does not provide the full text
   attr_reader :fulltext
+  
+  # @return [String] the starting page of this document, if it can be parsed
+  def start_page
+    return '' if pages.blank?
+    pages.split('-')[0]
+  end
+  
+  # @return [String] the ending page of this document, if it can be parsed
+  def end_page
+    return '' if pages.blank?
+    parts = pages.split('-')
+    return '' if parts.length <= 1
+    
+    spage = parts[0]
+    epage = parts[-1]
+    
+    # Check for range strings like "1442-7"
+    if spage.length > epage.length
+      ret = spage
+      ret[-epage.length..-1] = epage
+    else
+      ret = epage
+    end
+    ret
+  end
   
   # Term vectors for this document
   #

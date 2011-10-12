@@ -44,6 +44,19 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal "Andrew E.", doc.formatted_author_list[1][:first]
     assert_equal "Vehrencamp", doc.formatted_author_list[4][:last]
   end
+  
+  test "should parse start and end pages correctly" do
+    stub_solr_response(:precise_one_doc)
+    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    assert_equal '1227', doc.start_page
+    assert_equal '1238', doc.end_page
+  end
+  
+  test "should parse start and end pages correctly with short range" do
+    doc = Document.new({ "shasum" => "1234567890abcdef0987", "pages" => "1483-92" })
+    assert_equal '1483', doc.start_page
+    assert_equal '1492', doc.end_page
+  end
 
   test "find should throw on Solr error" do
     stub_solr_response(:error)
