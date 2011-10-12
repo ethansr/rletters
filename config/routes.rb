@@ -21,6 +21,7 @@ RLetters::Application.routes.draw do
 
   # Static information pages
   match 'info' => 'info#index', :via => :get
+  match 'info/faq' => 'info#faq', :via => :get
   match 'info/privacy' => 'info#privacy', :via => :get
 
   # Start off on the search page (it's the part you can

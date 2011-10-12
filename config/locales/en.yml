@@ -143,6 +143,10 @@ en:
       intro: |
         Need help using %{app_name}?  Want to know more about what this 
         is all about?  You're in the right place.
+      faq_header: "Frequently asked questions"
+      faq_text: |
+        See a list of commonly asked questions about and problems 
+        with %{app_name}
       account_header: "Your user account and settings"
       account_text: |
         Visit this page to configure your user account and personal 

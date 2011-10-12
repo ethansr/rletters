@@ -2,10 +2,14 @@
   %li{ 'data-role' => 'list-divider' }= t('.head', :app_name => APP_CONFIG['app_name'])
   %li= t('.intro', :app_name => APP_CONFIG['app_name'])
   %li
+    = link_to :controller => 'info', :action => 'faq' do
+      %h3= t('.faq_header')
+      %p= t('.faq_text', :app_name => APP_CONFIG['app_name'])
+  %li
     = link_to(users_path) do
       %h3= t('.account_header')
-      %p= t('.account_text')
+      %p= t('.account_text', :app_name => APP_CONFIG['app_name'])
   %li
     = link_to :controller => 'info', :action => 'privacy' do
       %h3= t('.privacy_header')
-      %p= t('.privacy_text')
+      %p= t('.privacy_text', :app_name => APP_CONFIG['app_name'])
