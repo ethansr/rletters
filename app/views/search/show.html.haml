@@ -9,4 +9,5 @@
   %li{ 'data-role' => 'list-divider' }= t('.get')
   - unless @document.doi.blank?
     %li= link_to t('.publisher', :doi => @document.doi), "http://dx.doi.org/#{@document.doi}"
-  %li= link_to t('.ol_library')
+  %li= link_to t('.ol_library'), search_links_path(:id => @document.shasum)
+  

@@ -36,11 +36,62 @@ class SearchController < ApplicationController
   end
   
   # Show an individual document
-  #
   # @api public
   # @return [undefined]
   def show
     @document = Document.find(params[:id])
+  end
+  
+  # Show a list of online and library links for a document
+  # @api public
+  # @return [undefined]
+  def links
+    @document = Document.find(params[:id])
+  end
+  
+  # Redirect to the Mendeley page for a document
+  # @api public
+  # @return [undefined]
+  def to_mendeley
+    raise ActiveRecord::RecordNotFound if APP_CONFIG['mendeley_key'].blank?
+    
+    @document = Document.find(params[:id])
+    
+    begin
+      res = Net::HTTP.start("api.mendeley.com") { |http| 
+        http.get("/oapi/documents/search/title%3A#{URI.escape(@document.title)}/?consumer_key=#{APP_CONFIG['mendeley_key']}") 
+      }
+      json = res.body
+      result = JSON.parse(json)
+    
+      mendeley_docs = result["documents"]
+      raise ActiveRecord::RecordNotFound unless mendeley_docs.size
+    
+      redirect_to mendeley_docs[0]["mendeley_url"]
+    rescue
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+  
+  # Redirect to the Citeulike page for a document
+  # @api public
+  # @return [undefined]
+  def to_citeulike
+    @document = Document.find(params[:id])
+
+    begin
+      res = Net::HTTP.start("www.citeulike.org") { |http| 
+        http.get("/json/search/all?per_page=1&page=1&q=title%3A%28#{CGI::escape(@document.title)}%29")
+      }
+      json = res.body
+      cul_docs = JSON.parse(json)
+
+      raise ActiveRecord::RecordNotFound unless cul_docs.size
+
+      redirect_to cul_docs[0]["href"]
+    rescue
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   # Convert from search parameters to Solr query parameters

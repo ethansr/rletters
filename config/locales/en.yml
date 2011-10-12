@@ -92,6 +92,13 @@ en:
       get: "Get this document"
       publisher: "From the publisher (DOI: %{doi})"
       ol_library: "Online and library access"
+    links:
+      head: "Online and library access links"
+      worldcat: "Find in WorldCat"
+      uk_openurl: "Find with UK OpenURL Resolver"
+      google: "Find on Google Scholar"
+      mendeley: "Find on Mendeley"
+      citeulike: "Find on CiteULike"
   users:
     index:
       head: "Your user account"
