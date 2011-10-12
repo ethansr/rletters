@@ -1,6 +1,19 @@
 # -*- encoding : utf-8 -*-
+
+# Markup generators common to all of RLetters
 module ApplicationHelper
 
+  # Create the list of nagivation buttons at the bottom of the screen
+  #
+  # This function primarily makes sure that the transitions between the
+  # different modes of RLetters move in the "right" direction depending on
+  # the currently-selected item.  It also makes it easy for us to add more
+  # "major modes" to RLetters.
+  #
+  # @api public
+  # @return [String] the navigation footer at the bottom of every page
+  # @example Show the footer list
+  #   <ul id='footer'><%= render_footer_list %></ul>
   def render_footer_list
     footer_buttons = [
       { :controller => 'search', :text => I18n.t('all.search_button'), :icon => 'search' },

@@ -1,4 +1,9 @@
 # -*- encoding : utf-8 -*-
+
+# Representation of a user in the database
+#
+# RLetters keeps track of users so that it can send e-mails regarding
+# background jobs and keep a set of customizable user options.
 class User < ActiveRecord::Base
   validates :name, :email, :identifier, :presence => true
   validates :email, :uniqueness => true

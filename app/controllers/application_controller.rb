@@ -1,4 +1,9 @@
 # -*- encoding : utf-8 -*-
+
+# The main application controller for RLetters
+#
+# This controller implements functionality shared throughout the entire
+# RLetters site.
 class ApplicationController < ActionController::Base
   protect_from_forgery
 

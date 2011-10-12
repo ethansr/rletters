@@ -1,4 +1,11 @@
 # -*- encoding : utf-8 -*-
+
+# Handles all user login, logout, and options
+#
+# This controller handles user login (using Janrain Engage), logout, and
+# the display and modification of user options.
+#
+# @see User
 class UsersController < ApplicationController
   before_filter :login_required, :only => [ :logout, :update ]
 

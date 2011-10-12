@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 
+# Markup generators for the search controller
 module SearchHelper
   include SolrHelpers
 

@@ -6,9 +6,6 @@
 # the RLetters Solr backend.  It abstracts both single-document retrieval and
 # document searching in class-level methods, and access to the data provided by
 # Solr in instance-level methods and attributes.
-#
-# @todo When working on serialization, make sure to integrate this with the sort
-#   of thing that +ActiveModel::Serializers+ does.
 class Document
   # Make this class act like an ActiveRecord model, though it's not backed by
   # the database (it's in Solr)

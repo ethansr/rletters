@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 
+# Markup generators for the users controller
 module UsersHelper
   # Create a localized list of languages
   #

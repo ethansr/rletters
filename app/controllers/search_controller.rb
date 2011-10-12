@@ -1,4 +1,15 @@
 # -*- encoding : utf-8 -*-
+
+# Search and browse the document database
+#
+# This controller displays both traditional and advanced search pages, the
+# resulting lists of documents, and also handles the detailed display of
+# information about a single document.  Its main function is to convert the
+# user's provided search criteria into Solr queries for 
+# +Document.find_all_by_solr_query+.
+#
+# @see Document
+# @see Document.find_all_by_solr_query
 class SearchController < ApplicationController
   
   # Show the main search index page

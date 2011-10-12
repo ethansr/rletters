@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 
+# Code for formatting the names of authors
 module NameHelpers
+  
   # Split a name into its component parts
   #
   # This function applies the standard BibTeX author name splitting rules

@@ -1,7 +1,32 @@
 # -*- encoding : utf-8 -*-
 
+# Code for parsing Solr's Ruby response format
 module SolrHelpers
-  # Parse the strange format in which Solr's term vector arrays show up
+  
+  # Parse the term vector array format returned by Solr
+  #
+  # Example of the Solr term vector format:
+  #
+  #   [ 'doc-N', [ 'uniqueKey', 'shasum', 
+  #     'fulltext', [
+  #       'term', [
+  #         'tf', 1,
+  #         'offsets', ['start', 100, 'end', 110],
+  #         'positions', ['position', 50],
+  #         'df', 1,
+  #         'tf-idf', 0.234],
+  #       'term2', ... ]]]
+  #
+  # This function expects to be passed the array following 'fulltext' in the
+  # above example, present for each document in the search at 
+  # +solr_response['termVectors'][N + 1][3]+.
+  #
+  # @api public
+  # @param [Array] tvec_array the Solr term vector array
+  # @return [Hash] term vectors as stored in +Document#term_vectors+
+  # @see Document#term_vectors
+  # @example Convert the term vectors for the first document in the response
+  #   doc.term_vectors = parse_term_vectors(solr_response['termVectors'][1][3])
   def parse_term_vectors(tvec_array)
     term_vectors = {}
     
@@ -55,8 +80,12 @@ module SolrHelpers
   # This function is used to parse the current facet query parameters and 
   # return the active facets in a format which we can use.
   #
+  # @api public
   # @param [String] fq Solr facet query to convert
   # @return [Array] +[:symbol, value, 0]+ representation of facet
+  # @example Parse an author facet
+  #   fq_to_facet('authors_facet:(W. Johnson)')
+  #   # [ :authors_facet, 'W. Johnson', 0 ]
   def fq_to_facet(fq)
     # Facet query parameters are of the form 'field:query'
     parts = fq.split(':')
@@ -100,8 +129,12 @@ module SolrHelpers
   # This function is used to generate the links for adding new facets to
   # the current query.
   #
+  # @api public
   # @param [Array] facet +[:symbol, value, count]+ to convert
   # @return [String] Solr facet query representation of facet
+  # @example Convert an author facet to a Solr query
+  #   facet_to_fq([:authors_facet, 'W. Johnson', 6])
+  #   # "authors_facet:(W. Johnson)"
   def facet_to_fq(facet)
     # Unless the field is year, we're done
     return "#{facet[0].to_s}:\"#{facet[1]}\"" unless facet[0] == :year
@@ -129,9 +162,29 @@ module SolrHelpers
   # values.  To do that, we use the parsing code in +fq_to_facet+ (which creates
   # a human-readable facet name from the facet query).
   #
-  # @api private
-  # @return [Hash] The +Document.facets+ hash
+  # Example of the Solr facet format:
+  #
+  #   'facet_counts' => {
+  #     'facet_queries' => {
+  #       'year:[* TO 1799]' => 0,
+  #       'year:[1800 TO 1809]' => 0,
+  #       ...
+  #       'year:[2010 TO *]' => 0 },
+  #     'facet_fields' => {
+  #       'authors_facet' => [
+  #         'A. Aardvark', 0,
+  #         'B. Bonobo', 0,
+  #         ...
+  #         'Z. Zebra', 0 ],
+  #       'journal_facet' => [ ... ] },
+  #     'facet_dates' => {} }
+  #
+  # @api public
+  # @param [Hash] solr_facets the hash in +facet_counts+ from Solr
+  # @return [Hash] the hash as stored in +Document.facets+
   # @see Document.facets
+  # @example Convert the facets for this search and store them
+  #   @@facets = parse_facet_counts(solr_response['facet_counts'])
   def parse_facet_counts(solr_facets)
     facets = {}
     

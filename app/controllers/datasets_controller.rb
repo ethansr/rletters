@@ -1,4 +1,13 @@
 # -*- encoding : utf-8 -*-
+
+# Display, modify, delete, and analyze datasets belonging to a given user
+#
+# This controller is responsible for the handling of the datasets which
+# belong to a given user.  It displays the user's list of datasets, and
+# handles the starting and management of the user's background analysis
+# jobs.
+#
+# @see Dataset
 class DatasetsController < ApplicationController
   before_filter :login_required
 

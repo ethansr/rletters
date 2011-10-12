@@ -1,17 +1,7 @@
-app/controllers/datasets_controller.rb:5: DatasetsController#index: The method summary should be specified
-app/controllers/datasets_controller.rb:5: DatasetsController#index: The public/semipublic method should have an example specified
-app/controllers/datasets_controller.rb:5: DatasetsController#index: The @api tag should be specified
-app/controllers/datasets_controller.rb:5: DatasetsController#index: The @api tag must be either public, semipublic or private
-app/controllers/datasets_controller.rb:5: DatasetsController#index: The @return tag should be specified
-lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The public/semipublic method should have an example specified
-lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The @api tag should be specified
-lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The @api tag must be either public, semipublic or private
-lib/solr_helpers.rb:5: SolrHelpers#parse_term_vectors: The @return tag should be specified
-lib/solr_helpers.rb:60: SolrHelpers#fq_to_facet: The public/semipublic method should have an example specified
-lib/solr_helpers.rb:60: SolrHelpers#fq_to_facet: The @api tag should be specified
-lib/solr_helpers.rb:60: SolrHelpers#fq_to_facet: The @api tag must be either public, semipublic or private
-lib/solr_helpers.rb:105: SolrHelpers#facet_to_fq: The public/semipublic method should have an example specified
-lib/solr_helpers.rb:105: SolrHelpers#facet_to_fq: The @api tag should be specified
-lib/solr_helpers.rb:105: SolrHelpers#facet_to_fq: The @api tag must be either public, semipublic or private
+app/controllers/datasets_controller.rb:14: DatasetsController#index: The method summary should be specified
+app/controllers/datasets_controller.rb:14: DatasetsController#index: The public/semipublic method should have an example specified
+app/controllers/datasets_controller.rb:14: DatasetsController#index: The @api tag should be specified
+app/controllers/datasets_controller.rb:14: DatasetsController#index: The @api tag must be either public, semipublic or private
+app/controllers/datasets_controller.rb:14: DatasetsController#index: The @return tag should be specified
 
-Coverage: 96.1%  Success: 365  Failed: 15  Total: 380
+Coverage: 98.9%  Success: 435  Failed: 5  Total: 440
