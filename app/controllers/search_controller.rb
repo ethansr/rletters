@@ -42,13 +42,6 @@ class SearchController < ApplicationController
     @document = Document.find(params[:id])
   end
   
-  # Show a list of online and library links for a document
-  # @api public
-  # @return [undefined]
-  def links
-    @document = Document.find(params[:id])
-  end
-  
   # Redirect to the Mendeley page for a document
   # @api public
   # @return [undefined]

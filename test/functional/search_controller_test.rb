@@ -257,22 +257,15 @@ class SearchControllerTest < ActionController::TestCase
     end
   end
   
-  test "should get links page" do
-    stub_solr_response :precise_one_doc
-    get :links, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
-    assert_response :success
-    assert_not_nil assigns(:document)
-  end
-  
   test "should have redirect links" do
     stub_solr_response :precise_one_doc
-    get :links, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
+    get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
     unless APP_CONFIG['mendeley_key'].blank?
-      assert_select "ul li:nth-last-child(2)" do
+      assert_select "ul[data-inset=true] li:nth-last-child(2)" do
         assert_select "a[href='#{mendeley_redirect_path(:id => '00972c5123877961056b21aea4177d0dc69c7318')}']"
       end
     end
-    assert_select "ul li:nth-last-child(1)" do
+    assert_select "ul[data-inset=true] li:nth-last-child(1)" do
       assert_select "a[href='#{citeulike_redirect_path(:id => '00972c5123877961056b21aea4177d0dc69c7318')}']"
     end    
   end
