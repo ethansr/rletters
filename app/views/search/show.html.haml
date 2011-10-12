@@ -1,0 +1,12 @@
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+  %li{ 'data-role' => 'list-divider' }= t('.details')
+  %li= document_bibliography_entry(@document)
+
+%div.verticalpad
+
+%ul{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
+  %li= link_to t('.single_dataset'), '#'
+  %li{ 'data-role' => 'list-divider' }= t('.get')
+  - unless @document.doi.blank?
+    %li= link_to t('.publisher', :doi => @document.doi), "http://dx.doi.org/#{@document.doi}"
+  %li= link_to t('.ol_library')

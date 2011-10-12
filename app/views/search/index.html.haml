@@ -5,7 +5,7 @@
       = form_tag(search_path, :method => :get, 'data-transition' => 'none') do
         = search_field_tag :q, (params[:precise] ? t('.adv_search_placeholder') : params[:q]), :placeholder => t('.placeholder')
     - @documents.each do |d|
-      %li.searchlist= link_to document_bibliography_entry(d), '#'
+      %li.searchlist= link_to document_bibliography_entry(d), search_show_path(:id => d.shasum)
 
 %div.rightcolumn
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }

@@ -86,6 +86,12 @@ en:
       volume_abbr: "Vol. %{volume}"
       number_abbr: "No. %{number}"
       pages_abbr: "pp. %{pages}"
+    show:
+      details: "Document details"
+      single_dataset: "Create a dataset from only this document"
+      get: "Get this document"
+      publisher: "From the publisher (DOI: %{doi})"
+      ol_library: "Online and library access"
   users:
     index:
       head: "Your user account"

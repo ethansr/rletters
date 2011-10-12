@@ -34,6 +34,14 @@ class SearchController < ApplicationController
 
     @documents = Document.find_all_by_solr_query(search_params_to_solr_query(params), :offset => offset, :limit => limit)
   end
+  
+  # Show an individual document
+  #
+  # @api public
+  # @return [undefined]
+  def show
+    @document = Document.find(params[:id])
+  end
 
   # Convert from search parameters to Solr query parameters
   #

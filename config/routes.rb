@@ -3,6 +3,7 @@
 RLetters::Application.routes.draw do
   # Search/Browse page
   match 'search' => 'search#index', :via => :get
+  match 'search/document/:id' => 'search#show', :via => :get, :as => 'search_show'
 
   # Datasets (per-user)
   resources :datasets, :except => [:edit, :update, :new]
