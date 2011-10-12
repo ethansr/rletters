@@ -8,6 +8,8 @@ all_environments: &all_environments
   janrain_appid: asdfasdf
   janrain_secret: 12341234
   
+  mendeley_key: asdfasdfasdfasdf
+  
   solr_server_url: http://localhost:8080/solr
   
   available_csl_styles:
