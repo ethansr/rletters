@@ -11,7 +11,6 @@ gem 'rpx_now'
 gem 'rsolr'
 gem 'citeproc-ruby'
 gem 'marc'
-gem 'builder'
 gem 'rdf'
 gem 'rdf-raptor'
 
@@ -35,6 +34,7 @@ group :test do
   gem 'mocha', :require => false
   gem 'sqlite3'
   gem 'simplecov', '>= 0.4.0', :require => false
+  gem 'nokogiri'
 end
 
 gem 'yard'

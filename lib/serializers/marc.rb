@@ -138,19 +138,22 @@ module Serializers
     
     # Returns this document as MARC-XML
     #
-    # Note that this method returns an XML document that *does* include the
-    # namespace, and hence cannot simply be bundled together into a
-    # collection.
+    # This method will include the XML namespace declarations in the root
+    # element by default, making this document suitable to be saved
+    # standalone.  Pass +false+ to get a plain root element, suitable for 
+    # inclusion in a MARC collection.
     #
     # @note No tests for this method, as it is implemented by the MARC gem.
     # @api public
+    # @param [Boolean] include_namespace if false, put no namespace in the
+    #   root element
     # @return [REXML::Document] the document as a MARC-XML document
     # @example Output the document as MARC-XML in a string
     #   ret = ''
     #   doc.to_marc_xml.write(ret, 2)
     # :nocov:
-    def to_marc_xml
-      to_marc.to_xml
+    def to_marc_xml(include_namespace = false)
+      MARC::XMLWriter.encode(to_marc, :include_namespace => include_namespace)
     end
     # :nocov:
     

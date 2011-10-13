@@ -46,6 +46,7 @@ class Document
   include Serializers::CSL
   include Serializers::EndNote
   include Serializers::Marc
+  include Serializers::Mods
   include Serializers::OpenURL
 
   # Return a document (just bibliographic data) by SHA-1 checksum
