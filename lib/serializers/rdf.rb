@@ -1,0 +1,56 @@
+# -*- encoding : utf-8 -*-
+
+module Serializers
+  
+  # Convert a document to an RDF record
+  module RDF
+    # Returns this document as a RDF::Graph object
+    #
+    # For the moment, we provide only metadata items for the basic Dublin
+    # Core elements, and for the Dublin Core 
+    # {"bibliographicCitation" element.}[http://dublincore.org/documents/dc-citation-guidelines/]
+    # We also encode an OpenURL reference (using the standard OpenURL 
+    # namespace), in a second bibliographicCitation element.  The precise way
+    # to encode journal articles in DC is in serious flux, but this should
+    # provide a reasonable solution.
+    #
+    # @api public
+    # @return [RDF::Graph] document as a RDF graph
+    # @example Convert this document to RDF-Turtle
+    #   RDF::Writer.for(:turtle).buffer do |writer|
+    #     writer << doc.to_rdf
+    #   end
+    def to_rdf
+      graph = ::RDF::Graph.new
+      doc = ::RDF::Node.new
+
+      formatted_author_list.each do |a|
+        name = ''
+        name << "#{a[:von]} " unless a[:von].blank?
+        name << "#{a[:last]}"
+        name << " #{a[:suffix]}" unless a[:suffix].blank?
+        name << ", #{a[:first]}"
+        graph << [doc, ::RDF::DC.creator, name]
+      end
+      graph << [doc, ::RDF::DC.issued, year] unless year.blank?
+
+      citation = "#{journal}" unless journal.blank?
+      citation << " #{volume}" unless volume.blank?
+      citation << ' ' if volume.blank?
+      citation << "(#{number})" unless number.blank?
+      citation << ", #{pages}" unless pages.blank?
+      citation << ". (#{year})" unless year.blank?
+      graph << [doc, ::RDF::DC.bibliographicCitation, citation]
+
+      ourl = ::RDF::Literal.new("&" + to_openurl_params, :datatype => ::RDF::URI.new("info:ofi/fmt:kev:mtx:ctx"))
+      graph << [doc, ::RDF::DC.bibliographicCitation, ourl]
+
+      graph << [doc, ::RDF::DC.relation, journal] unless journal.blank?
+      graph << [doc, ::RDF::DC.title, title] unless title.blank?
+      graph << [doc, ::RDF::DC.type, 'Journal Article']
+      graph << [doc, ::RDF::DC.identifier, "info:doi/#{doi}"] unless doi.blank?
+
+      graph
+    end
+  end
+end

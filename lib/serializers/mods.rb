@@ -1,7 +1,7 @@
 module Serializers
   
   # Convert a document to a MARC record
-  module Mods
+  module MODS
     # Returns this document as a MODS XML document
     #
     # By default, this will include the XML namespace declarations in the

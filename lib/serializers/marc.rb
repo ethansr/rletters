@@ -3,7 +3,7 @@
 module Serializers
   
   # Convert a document to a MARC record
-  module Marc
+  module MARC
     # Returns this document as a MARC::Record object
     #
     # Support for individual-article MARC records is spotty at best -- this is
@@ -26,41 +26,41 @@ module Serializers
     #   writer.write(doc.to_marc)
     #   writer.close()
     def to_marc
-      record = MARC::Record.new()
+      record = ::MARC::Record.new()
 
-      record.append(MARC::ControlField.new('001', shasum))
-      record.append(MARC::ControlField.new('003', "PDFSHASUM"))
-      record.append(MARC::ControlField.new('005', Time.now.strftime("%Y%m%d%H%M%S.0")))
+      record.append(::MARC::ControlField.new('001', shasum))
+      record.append(::MARC::ControlField.new('003', "PDFSHASUM"))
+      record.append(::MARC::ControlField.new('005', Time.now.strftime("%Y%m%d%H%M%S.0")))
       
       if year.blank?
         year_control = '0000'
       else
         year_control = sprintf '%04d', year
       end
-      record.append(MARC::ControlField.new('008', "110501s#{year_control}       ||||fo     ||0 0|eng d"))
+      record.append(::MARC::ControlField.new('008', "110501s#{year_control}       ||||fo     ||0 0|eng d"))
       
-      record.append(MARC::DataField.new('040', ' ', ' ',
+      record.append(::MARC::DataField.new('040', ' ', ' ',
         ['a', 'RLetters'], ['b', 'eng'], ['c', 'RLetters']))
 
       unless doi.blank?
-        record.append(MARC::DataField.new('024', '7', ' ',
+        record.append(::MARC::DataField.new('024', '7', ' ',
           ['2', 'doi'], ['a', doi]))
       end
 
       unless authors.blank?
-        record.append(MARC::DataField.new('100', '1', ' ',
-          MARC::Subfield.new('a', author_to_marc(formatted_author_list[0]))))
+        record.append(::MARC::DataField.new('100', '1', ' ',
+          ::MARC::Subfield.new('a', author_to_marc(formatted_author_list[0]))))
       end
 
       formatted_author_list.each do |a|
-        record.append(MARC::DataField.new('700', '1', ' ',
-          MARC::Subfield.new('a', author_to_marc(a))))
+        record.append(::MARC::DataField.new('700', '1', ' ',
+          ::MARC::Subfield.new('a', author_to_marc(a))))
       end
 
       unless title.blank?
         marc_title = title
         marc_title << '.' unless marc_title[-1] == '.'
-        record.append(MARC::DataField.new('245', '1', '0',
+        record.append(::MARC::DataField.new('245', '1', '0',
           ['a', marc_title]))
       end
 
@@ -68,12 +68,12 @@ module Serializers
       marc_volume << "v. #{volume}" unless volume.blank?
       marc_volume << " " if not volume.blank? and not number.blank?
       marc_volume << "no. #{number}" unless number.blank?
-      record.append(MARC::DataField.new('490', '1', ' ',
-        MARC::Subfield.new('a', journal),
-        MARC::Subfield.new('v', marc_volume)))
-      record.append(MARC::DataField.new('830', ' ', '0',
-        MARC::Subfield.new('a', journal),
-        MARC::Subfield.new('v', marc_volume)))
+      record.append(::MARC::DataField.new('490', '1', ' ',
+        ::MARC::Subfield.new('a', journal),
+        ::MARC::Subfield.new('v', marc_volume)))
+      record.append(::MARC::DataField.new('830', ' ', '0',
+        ::MARC::Subfield.new('a', journal),
+        ::MARC::Subfield.new('v', marc_volume)))
 
       marc_free = ''
       unless volume.blank?
@@ -89,7 +89,7 @@ module Serializers
       marc_enumeration << ":#{number}" unless number.blank?
       marc_enumeration << "<#{start_page}" unless start_page.blank?
 
-      record.append(MARC::DataField.new('773', '0', ' ',
+      record.append(::MARC::DataField.new('773', '0', ' ',
         ['t', journal], ['g', marc_free], 
         ['q', marc_enumeration], ['7', 'nnas']))
 
@@ -98,10 +98,10 @@ module Serializers
       subfields << ['b', number] unless number.blank?
       subfields << ['c', start_page] unless start_page.blank?
       subfields << ['i', year] unless year.blank?
-      record.append(MARC::DataField.new('363', ' ', ' ', *subfields))
+      record.append(::MARC::DataField.new('363', ' ', ' ', *subfields))
 
       unless year.blank?
-        record.append(MARC::DataField.new('362', '0', ' ', ['a', year + '.']))
+        record.append(::MARC::DataField.new('362', '0', ' ', ['a', year + '.']))
       end
 
       record
@@ -153,7 +153,7 @@ module Serializers
     #   doc.to_marc_xml.write(ret, 2)
     # :nocov:
     def to_marc_xml(include_namespace = false)
-      MARC::XMLWriter.encode(to_marc, :include_namespace => include_namespace)
+      ::MARC::XMLWriter.encode(to_marc, :include_namespace => include_namespace)
     end
     # :nocov:
     

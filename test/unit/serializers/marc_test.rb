@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'test_helper'
 
-class MarcTest < ActiveSupport::TestCase
+class MARCTest < ActiveSupport::TestCase
   test "should create good MARC::Records" do
     stub_solr_response(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
