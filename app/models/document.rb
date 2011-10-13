@@ -42,7 +42,9 @@ class Document
   extend SolrHelpers
 
   # Serialization methods
+  include Serializers::BibTex
   include Serializers::CSL
+  include Serializers::EndNote
   include Serializers::OpenURL
 
   # Return a document (just bibliographic data) by SHA-1 checksum
