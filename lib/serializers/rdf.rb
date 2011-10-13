@@ -52,5 +52,35 @@ module Serializers
 
       graph
     end
+    
+    # Returns this document as RDF+XML
+    #
+    # @note No tests for this method, as it is implemented by the RDF gem.
+    # @api public
+    # @return [String] document in RDF+XML format
+    # @example Download this document as an XML file
+    #   controller.send_data doc.to_rdf_xml, :filename => 'export.xml', :disposition => 'attachment'
+    # :nocov:
+    def to_rdf_xml
+      RDF::Writer.for(:rdfxml).buffer do |writer|
+        writer << to_rdf
+      end
+    end
+    # :nocov:
+    
+    # Returns this document as RDF+Turtle
+    #
+    # @note No tests for this method, as it is implemented by the RDF gem.
+    # @api public
+    # @return [String] document in RDF+Turtle format
+    # @example Download this document as a ttl file
+    #   controller.send_data doc.to_rdf_turtle, :filename => 'export.ttl', :disposition => 'attachment'
+    # :nocov:
+    def to_rdf_turtle
+      RDF::Writer.for(:turtle).buffer do |writer|
+        writer << to_rdf
+      end
+    end
+    # :nocov:
   end
 end

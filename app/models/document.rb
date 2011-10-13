@@ -48,6 +48,7 @@ class Document
   include Serializers::MARC
   include Serializers::MODS
   include Serializers::RDF
+  include Serializers::RIS
   include Serializers::OpenURL
 
   # Return a document (just bibliographic data) by SHA-1 checksum
