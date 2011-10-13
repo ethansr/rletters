@@ -10,6 +10,10 @@ gem 'rpx_now'
 
 gem 'rsolr'
 gem 'citeproc-ruby'
+gem 'marc'
+gem 'builder'
+gem 'rdf'
+gem 'rdf-raptor'
 
 gem 'haml'
 gem 'maruku'
