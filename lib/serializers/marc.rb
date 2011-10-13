@@ -107,6 +107,53 @@ module Serializers
       record
     end
     
+    
+    # Returns this document in MARC21 transmission format
+    #
+    # @note No tests for this method, as it is implemented by the MARC gem.
+    # @api public
+    # @return [String] document in MARC21 transmission format
+    # @example Download this document as a marc file
+    #   controller.send_data doc.to_marc21, :filename => 'export.marc', :disposition => 'attachment'
+    # :nocov:
+    def to_marc21
+      to_marc.to_marc
+    end
+    # :nocov:
+    
+    # Returns this document in MARC JSON format
+    #
+    # MARC in JSON is the newest and shiniest way to transmit MARC records.
+    #
+    # @note No tests for this method, as it is implemented by the MARC gem.
+    # @api public
+    # @return [String] document in MARC JSON format
+    # @example Download this document as a MARC-JSON file
+    #   controller.send_data doc.to_marc_json, :filename => 'export.json', :disposition => 'attachment'
+    # :nocov
+    def to_marc_json
+      to_marc.to_hash.to_json
+    end
+    # :nocov
+    
+    # Returns this document as MARC-XML
+    #
+    # Note that this method returns an XML document that *does* include the
+    # namespace, and hence cannot simply be bundled together into a
+    # collection.
+    #
+    # @note No tests for this method, as it is implemented by the MARC gem.
+    # @api public
+    # @return [REXML::Document] the document as a MARC-XML document
+    # @example Output the document as MARC-XML in a string
+    #   ret = ''
+    #   doc.to_marc_xml.write(ret, 2)
+    # :nocov:
+    def to_marc_xml
+      to_marc.to_xml
+    end
+    # :nocov:
+    
     private
     
     # Convert the given author (from +formatted_author_list+) to MARC's format
