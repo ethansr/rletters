@@ -15,6 +15,7 @@ gem 'rdf-rdfxml'
 gem 'rdf-n3'
 
 gem 'haml'
+gem 'haml-rails'
 gem 'maruku'
 
 group :assets do
