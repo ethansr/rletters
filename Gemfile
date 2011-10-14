@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-source 'http://gemcutter.org'
 
 gem 'rails', '~> 3.1.0'
 gem 'mysql2'
@@ -12,7 +11,8 @@ gem 'rsolr'
 gem 'citeproc-ruby'
 gem 'marc'
 gem 'rdf'
-gem 'rdf-raptor'
+gem 'rdf-rdfxml'
+gem 'rdf-n3'
 
 gem 'haml'
 gem 'maruku'

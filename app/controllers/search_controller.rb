@@ -42,6 +42,70 @@ class SearchController < ApplicationController
     @document = Document.find(params[:id])
   end
   
+  # Show an individual document
+  # @api public
+  # @return [undefined]
+  def export
+    @document = Document.find(params[:id])
+    
+    export_formats = {
+      :marc => { 
+        :method => lambda { @document.to_marc }, 
+        :filename => 'export.marc', :mime => 'application/marc' },
+      :marcjson => { 
+        :method => lambda { @document.to_marc_json }, 
+        :filename => 'export.json', :mime => 'application/json' },
+      :marcxml => { 
+        :method => lambda { 
+            xml = @document.to_marc_xml
+            ret = ''
+            xml.write(ret, 2)
+            ret
+          }, :filename => 'export.xml', :mime => 'application/marcxml+xml'},
+      :bibtex => { 
+        :method => lambda { @document.to_bibtex }, 
+        :filename => 'export.bib', :mime => 'application/x-bibtex' },
+      :endnote => { 
+        :method => lambda { @document.to_endnote },
+        :filename => 'export.enw', :mime => 'application/x-endnote-refer' },
+      :ris => {
+        :method => lambda { @document.to_ris },
+        :filename => 'export.ris', :mime => 'application/x-research-info-systems' },
+      :mods => {
+        :method => lambda { 
+          xml = @document.to_mods
+          ret = ''
+          xml.write(ret, 2)
+          ret
+        }, :filename => 'export.xml', :mime => 'application/mods+xml' },
+      :rdf => {
+        :method => lambda { @document.to_rdf_xml },
+        :filename => 'export.rdf', :mime => 'application/rdf+xml' },
+      :n3 => {
+        :method => lambda { @document.to_rdf_n3 },
+        :filename => 'export.n3', :mime => 'text/rdf+n3' }
+    }
+    
+    f = {}
+    respond_to do |format|
+      format.marc { f = export_formats[:marc] }
+      format.json { f = export_formats[:marcjson] }
+      format.marcxml { f = export_formats[:marcxml] }
+      format.bibtex { f = export_formats[:bibtex] }
+      format.endnote { f = export_formats[:endnote] }
+      format.ris { f = export_formats[:ris] }
+      format.mods { f = export_formats[:mods] }
+      format.rdf { f = export_formats[:rdf] }
+      format.n3 { f = export_formats[:n3] }
+      format.all { render :file => Rails.root.join('public', '404.html'), :layout => false, :status => 406 and return }
+    end
+    
+    headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+    headers["Expires"] = "0"
+    send_data(f[:method].call, :filename => f[:filename], 
+      :type => f[:mime], :disposition => 'attachment')
+  end
+  
   # Redirect to the Mendeley page for a document
   # @api public
   # @return [undefined]

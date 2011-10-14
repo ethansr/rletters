@@ -1,5 +1,8 @@
 # -*- encoding : utf-8 -*-
 
+require 'rdf/rdfxml'
+require 'rdf/n3'
+
 module Serializers
   
   # Convert a document to an RDF record
@@ -62,22 +65,22 @@ module Serializers
     #   controller.send_data doc.to_rdf_xml, :filename => 'export.xml', :disposition => 'attachment'
     # :nocov:
     def to_rdf_xml
-      RDF::Writer.for(:rdfxml).buffer do |writer|
+      ::RDF::Writer.for(:rdf).buffer do |writer|
         writer << to_rdf
       end
     end
     # :nocov:
     
-    # Returns this document as RDF+Turtle
+    # Returns this document as RDF+N3
     #
     # @note No tests for this method, as it is implemented by the RDF gem.
     # @api public
-    # @return [String] document in RDF+Turtle format
-    # @example Download this document as a ttl file
-    #   controller.send_data doc.to_rdf_turtle, :filename => 'export.ttl', :disposition => 'attachment'
+    # @return [String] document in RDF+N3 format
+    # @example Download this document as a n3 file
+    #   controller.send_data doc.to_rdf_turtle, :filename => 'export.n3', :disposition => 'attachment'
     # :nocov:
-    def to_rdf_turtle
-      RDF::Writer.for(:turtle).buffer do |writer|
+    def to_rdf_n3
+      ::RDF::Writer.for(:n3).buffer do |writer|
         writer << to_rdf
       end
     end

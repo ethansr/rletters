@@ -4,6 +4,7 @@ RLetters::Application.routes.draw do
   # Search/Browse page
   match 'search' => 'search#index', :via => :get
   match 'search/document/:id' => 'search#show', :via => :get, :as => 'search_show'
+  match 'search/document/:id/export' => 'search#export', :via => :get, :as => 'search_export'
   match 'search/document/:id/mendeley' => 'search#to_mendeley', :via => :get, :as => 'mendeley_redirect'
   match 'search/document/:id/citeulike' => 'search#to_citeulike', :via => :get, :as => 'citeulike_redirect'
 

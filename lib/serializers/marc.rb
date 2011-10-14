@@ -153,7 +153,10 @@ module Serializers
     #   doc.to_marc_xml.write(ret, 2)
     # :nocov:
     def to_marc_xml(include_namespace = false)
-      ::MARC::XMLWriter.encode(to_marc, :include_namespace => include_namespace)
+      doc = REXML::Document.new
+      doc << REXML::XMLDecl.new
+      doc << ::MARC::XMLWriter.encode(to_marc, :include_namespace => include_namespace)
+      doc
     end
     # :nocov:
     
