@@ -35,75 +35,72 @@ class SearchController < ApplicationController
     @documents = Document.find_all_by_solr_query(search_params_to_solr_query(params), :offset => offset, :limit => limit)
   end
   
-  # Show an individual document
+  # Details of the various formats in which we can export documents
+  #
+  # This is a hash with the following format:
+  #   :mime_type_tag => {
+  #     :method => lambda { |doc| doc.to_whatever }, # doc is a Document, should return String
+  #     :filename => 'export.ext', # appropriate extension for format
+  #     :mime => 'application/whatever' # appropriate MIME type
+  #   },
+  EXPORT_FORMATS = {
+    :marc => { 
+      :method => lambda { |doc| doc.to_marc }, 
+      :filename => 'export.marc', :mime => 'application/marc' },
+    :json => { 
+      :method => lambda { |doc| doc.to_marc_json }, 
+      :filename => 'export.json', :mime => 'application/json' },
+    :marcxml => { 
+      :method => lambda { |doc|
+          xml = doc.to_marc_xml
+          ret = ''
+          xml.write(ret, 2)
+          ret
+        }, :filename => 'export.xml', :mime => 'application/marcxml+xml'},
+    :bibtex => { 
+      :method => lambda { |doc| doc.to_bibtex }, 
+      :filename => 'export.bib', :mime => 'application/x-bibtex' },
+    :endnote => { 
+      :method => lambda { |doc| doc.to_endnote },
+      :filename => 'export.enw', :mime => 'application/x-endnote-refer' },
+    :ris => {
+      :method => lambda { |doc| doc.to_ris },
+      :filename => 'export.ris', :mime => 'application/x-research-info-systems' },
+    :mods => {
+      :method => lambda { |doc|
+        xml = doc.to_mods
+        ret = ''
+        xml.write(ret, 2)
+        ret
+      }, :filename => 'export.xml', :mime => 'application/mods+xml' },
+    :rdf => {
+      :method => lambda { |doc| doc.to_rdf_xml },
+      :filename => 'export.rdf', :mime => 'application/rdf+xml' },
+    :n3 => {
+      :method => lambda { |doc| doc.to_rdf_n3 },
+      :filename => 'export.n3', :mime => 'text/rdf+n3' }
+  }
+  
+  # Show or export an individual document
+  #
+  # This action is content-negotiated: if you request the page for a document
+  # with any of the MIME types specified in +EXPORT_FORMATS+, you will get
+  # a citation export back, as a download.
+  #
   # @api public
   # @return [undefined]
   def show
     @document = Document.find(params[:id])
-  end
-  
-  # Show an individual document
-  # @api public
-  # @return [undefined]
-  def export
-    @document = Document.find(params[:id])
-    
-    export_formats = {
-      :marc => { 
-        :method => lambda { @document.to_marc }, 
-        :filename => 'export.marc', :mime => 'application/marc' },
-      :marcjson => { 
-        :method => lambda { @document.to_marc_json }, 
-        :filename => 'export.json', :mime => 'application/json' },
-      :marcxml => { 
-        :method => lambda { 
-            xml = @document.to_marc_xml
-            ret = ''
-            xml.write(ret, 2)
-            ret
-          }, :filename => 'export.xml', :mime => 'application/marcxml+xml'},
-      :bibtex => { 
-        :method => lambda { @document.to_bibtex }, 
-        :filename => 'export.bib', :mime => 'application/x-bibtex' },
-      :endnote => { 
-        :method => lambda { @document.to_endnote },
-        :filename => 'export.enw', :mime => 'application/x-endnote-refer' },
-      :ris => {
-        :method => lambda { @document.to_ris },
-        :filename => 'export.ris', :mime => 'application/x-research-info-systems' },
-      :mods => {
-        :method => lambda { 
-          xml = @document.to_mods
-          ret = ''
-          xml.write(ret, 2)
-          ret
-        }, :filename => 'export.xml', :mime => 'application/mods+xml' },
-      :rdf => {
-        :method => lambda { @document.to_rdf_xml },
-        :filename => 'export.rdf', :mime => 'application/rdf+xml' },
-      :n3 => {
-        :method => lambda { @document.to_rdf_n3 },
-        :filename => 'export.n3', :mime => 'text/rdf+n3' }
-    }
-    
-    f = {}
+
     respond_to do |format|
-      format.marc { f = export_formats[:marc] }
-      format.json { f = export_formats[:marcjson] }
-      format.marcxml { f = export_formats[:marcxml] }
-      format.bibtex { f = export_formats[:bibtex] }
-      format.endnote { f = export_formats[:endnote] }
-      format.ris { f = export_formats[:ris] }
-      format.mods { f = export_formats[:mods] }
-      format.rdf { f = export_formats[:rdf] }
-      format.n3 { f = export_formats[:n3] }
-      format.all { render :file => Rails.root.join('public', '404.html'), :layout => false, :status => 406 and return }
+      format.html { render }
+      format.any(*EXPORT_FORMATS.keys) { 
+        f = EXPORT_FORMATS[request.format.to_sym] 
+        send_file f[:method].call(@document), f[:filename], f[:mime]
+        return
+      }
+      format.any { render(:file => Rails.root.join('public', '404.html'), :layout => false, :status => 406) and return }
     end
-    
-    headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
-    headers["Expires"] = "0"
-    send_data(f[:method].call, :filename => f[:filename], 
-      :type => f[:mime], :disposition => 'attachment')
   end
   
   # Redirect to the Mendeley page for a document
@@ -216,5 +213,20 @@ class SearchController < ApplicationController
     end
     
     query_params
+  end
+
+  private
+
+  # Send the given string content to the browser as a file download
+  #
+  # @api public
+  # @param [String] str content to send to the browser
+  # @param [String] filename filename for the downloaded file
+  # @param [String] mime MIME type for the content
+  # @return [undefined]
+  def send_file(str, filename, mime)
+    headers["Cache-Control"] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+    headers["Expires"] = "0"
+    send_data str, :filename => filename, :type => mime, :disposition => 'attachment'
   end
 end
