@@ -1,6 +1,12 @@
+= content_for :head_tags do
+  %link{ :rel => 'unapi-server', :type => 'application/xml', :title => 'unAPI', :href => unapi_url }/
+
+%abbr{ :class => 'unapi-id', :title => @document.shasum }= ''
+
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li{ 'data-role' => 'list-divider' }= t('.details')
-  %li= document_bibliography_entry(@document)
+  %li
+    = document_bibliography_entry(@document)
 
 %div.verticalpad
 

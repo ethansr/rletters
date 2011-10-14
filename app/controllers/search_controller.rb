@@ -40,45 +40,44 @@ class SearchController < ApplicationController
   # This is a hash with the following format:
   #   :mime_type_tag => {
   #     :method => lambda { |doc| doc.to_whatever }, # doc is a Document, should return String
-  #     :filename => 'export.ext', # appropriate extension for format
-  #     :mime => 'application/whatever' # appropriate MIME type
+  #     :docs => 'http://www.google.com/' # documentation for format (for unAPI)
   #   },
   EXPORT_FORMATS = {
     :marc => { 
       :method => lambda { |doc| doc.to_marc }, 
-      :filename => 'export.marc', :mime => 'application/marc' },
+      :docs => 'http://www.loc.gov/marc/' },
     :json => { 
       :method => lambda { |doc| doc.to_marc_json }, 
-      :filename => 'export.json', :mime => 'application/json' },
+      :docs => 'http://www.oclc.org/developer/content/marc-json-draft-2010-03-11' },
     :marcxml => { 
       :method => lambda { |doc|
           xml = doc.to_marc_xml
           ret = ''
           xml.write(ret, 2)
           ret
-        }, :filename => 'export.xml', :mime => 'application/marcxml+xml'},
+        }, :docs => 'http://www.loc.gov/standards/marcxml/'},
     :bibtex => { 
       :method => lambda { |doc| doc.to_bibtex }, 
-      :filename => 'export.bib', :mime => 'application/x-bibtex' },
+      :docs => 'http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxdoc.pdf' },
     :endnote => { 
       :method => lambda { |doc| doc.to_endnote },
-      :filename => 'export.enw', :mime => 'application/x-endnote-refer' },
+      :docs => 'http://auditorymodels.org/jba/bibs/NetBib/Tools/bp-0.2.97/doc/endnote.html' },
     :ris => {
       :method => lambda { |doc| doc.to_ris },
-      :filename => 'export.ris', :mime => 'application/x-research-info-systems' },
+      :docs => 'http://www.refman.com/support/risformat_intro.asp' },
     :mods => {
       :method => lambda { |doc|
         xml = doc.to_mods
         ret = ''
         xml.write(ret, 2)
         ret
-      }, :filename => 'export.xml', :mime => 'application/mods+xml' },
+      }, :docs => 'http://www.loc.gov/standards/mods/' },
     :rdf => {
       :method => lambda { |doc| doc.to_rdf_xml },
-      :filename => 'export.rdf', :mime => 'application/rdf+xml' },
+      :docs => 'http://www.w3.org/TR/rdf-syntax-grammar/' },
     :n3 => {
       :method => lambda { |doc| doc.to_rdf_n3 },
-      :filename => 'export.n3', :mime => 'text/rdf+n3' }
+      :docs => 'http://www.w3.org/DesignIssues/Notation3.html' }
   }
   
   # Show or export an individual document
@@ -95,8 +94,8 @@ class SearchController < ApplicationController
     respond_to do |format|
       format.html { render }
       format.any(*EXPORT_FORMATS.keys) { 
-        f = EXPORT_FORMATS[request.format.to_sym] 
-        send_file f[:method].call(@document), f[:filename], f[:mime]
+        f = EXPORT_FORMATS[request.format.to_sym]
+        send_file f[:method].call(@document), "export.#{request.format.to_sym.to_s}", request.format.to_s
         return
       }
       format.any { render(:file => Rails.root.join('public', '404.html'), :layout => false, :status => 406) and return }

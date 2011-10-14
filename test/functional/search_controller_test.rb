@@ -177,4 +177,16 @@ class SearchControllerTest < ActionController::TestCase
       assert_select "a[href='#{citeulike_redirect_path(:id => '00972c5123877961056b21aea4177d0dc69c7318')}']"
     end
   end
+  
+  test "should have unAPI link in the page" do
+    stub_solr_response :precise_one_doc
+    get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
+    assert_select "link[href='#{unapi_url}'][rel=unapi-server][type=application/xml]"
+  end
+  
+  test "should have some element with class unapi-id" do
+    stub_solr_response :precise_one_doc
+    get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
+    assert_select ".unapi-id"
+  end
 end

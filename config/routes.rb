@@ -25,6 +25,9 @@ RLetters::Application.routes.draw do
   match 'info/faq' => 'info#faq', :via => :get
   match 'info/privacy' => 'info#privacy', :via => :get
 
+  # unAPI service
+  match 'unapi' => 'unapi#index', :via => :get
+
   # Start off on the search page (it's the part you can
   # do without being logged in)
   root :to => 'search#index'
