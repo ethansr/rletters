@@ -73,6 +73,8 @@ en:
         zero: "no articles in database"
         one: "1 article in database"
         other: "%{count} articles in database"
+      next_button: "Next"
+      previous_button: "Previous"
       tools: "Tools"
       login_prompt: "Log in to analyze results!"
       create_dataset: "Create dataset from search"

@@ -17,6 +17,84 @@ module SearchHelper
       I18n.t 'search.index.num_results_database', :count => Document.num_results
     end
   end
+  
+  
+  # Make a link to a page for the pagination widget
+  #
+  # @param [String] text text for this link
+  # @param [Integer] num the *displayed* page number (1-based)
+  # @param [Integer] current the current displayed page number (1-based)
+  # @param [Boolean] button if true, make a jQM button for this link
+  # @param [String] icon icon for the button, if desired
+  # @return [String] the requested link
+  def page_link(text, num, current, button = false, icon = '')
+    new_params = params.dup
+    new_params[:page] = num - 1
+
+    if num == current
+      target = "#"
+    else
+      target = search_path(new_params)
+    end
+
+    style = { 'data-transition' => :none }
+    style['data-role'] = :button if button
+    style['data-inline'] = :true if button
+    style[:class] = :paglink unless button
+    style['data-icon'] = icon unless icon.empty?
+
+    link_to text, target, style
+  end
+
+  # Render the pagination links
+  #
+  # The way we render (inspired by Flickr):
+  # - For 1-8: prev 1 2 3 4 5 6 7 8 9 10 ... N-1 N next
+  # - For 9-(N-9): prev 1 2 ... C-3 C-2 C-1 C C+1 C+2 C+3 ... N-1 N next
+  # - For (N-8)-end: prev 1 2 ... N-9 N-8 N-7 N-6 N-5 N-4 N-3 N-2 N-1 N next
+  #
+  # @return [String]
+  def render_pagination
+    page = 1
+    page = Integer(params[:page]) if params.has_key? :page
+    
+    per_page = 10
+    per_page = session[:user].per_page if session[:user]
+    per_page = Integer(params[:per_page]) if params.has_key? :per_page
+    
+    num_pages = Document.num_results.to_f / per_page.to_f
+    num_pages = Integer(num_pages.ceil)
+
+    # Previous-page link
+    ret = page_link(I18n.t(:'search.index.previous_button'), page, page + 1, true, 'arrow-l')
+
+    # Figure out a set of ranges of numbers we need to draw
+    if num_pages < 15
+      ranges = [ (1..num_pages) ]
+    elsif page < 8
+      ranges = [ (1..10), (num_pages - 1..num_pages) ]
+    elsif page >= num_pages - 8
+      ranges = [ (1..2), (num_pages - 9..num_pages) ]
+    else
+      ranges = [ (1..2), (page - 2..page + 4), (num_pages - 1..num_pages) ]
+    end
+
+    ranges.each_with_index do |r, i|
+      r.each do |p|
+        ret += page_link(p.to_s, p, page + 1)
+      end
+
+      # Put a separator between each of the page ranges
+      if i != (ranges.count - 1)
+        ret += '<span class="pagsep"> &hellip; </span>'
+      end
+    end
+
+    # Next-page link
+    ret += page_link(I18n.t(:'search.index.next_button'), page + 2, page + 1, true, 'arrow-r')
+
+    ret.html_safe
+  end
 
 
   # Create a link to the given set of facets
