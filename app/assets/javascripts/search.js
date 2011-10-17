@@ -30,10 +30,10 @@ function destroyCollapsibleList() {
   var toolsCollapse = $('div.ui-page-active').find('div.toolscollapse');
   var facetCollapse = $('div.ui-page-active').find('div.facetcollapse');
   
-  if (toolsCollapse.length()) {
+  if (toolsCollapse.length) {
     toolsCollapse.remove();
   }
-  if (facetCollapse.length()) {
+  if (facetCollapse.length) {
     facetCollapse.remove();
   }
 }
