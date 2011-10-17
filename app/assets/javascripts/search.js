@@ -52,4 +52,4 @@ function checkCollapsibleList() {
 // We need to look for page resizes on both window-resize, and on any time
 // a new page is shown
 $(window).resize( function() { checkCollapsibleList(); });
-$('[data-role=page]').live('pagecreate', function (event, ui) { checkCollapsibleList(); });
+$('div[data-role=page]').live('pageshow', function (event, ui) { checkCollapsibleList(); });
