@@ -29,7 +29,7 @@
   %div.verticalpad
 
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' }= t('.filters')
+    %li.filterheader{ 'data-role' => 'list-divider' }= t('.filters')
   %div.verticalpad
   %ul.facetlist{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
     = facet_link_list
