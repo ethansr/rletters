@@ -71,6 +71,12 @@ class SearchControllerIndexTest < ActionController::TestCase
     get :index
     assert_select 'li', 'Create dataset from search'
   end
+  
+  test "should show advanced search link" do
+    stub_solr_response :standard_empty_search
+    get :index
+    assert_select 'div.rightcolumn ul li:last-of-type', 'Advanced search'    
+  end
 
   test "should show author facets" do
     stub_solr_response :precise_all_docs

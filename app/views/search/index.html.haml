@@ -9,11 +9,12 @@
 
 %div.rightcolumn
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' }= t('.analyze')
+    %li{ 'data-role' => 'list-divider' }= t('.tools')
     - if session[:user].nil?
       %li{ 'data-theme' => 'e' }= link_to t('.login_prompt'), users_path
     - else
       %li= link_to t('.create_dataset'), '#'
+    %li= link_to t('.advanced_search'), search_advanced_path
   %div.verticalpad
 
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
