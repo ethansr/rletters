@@ -22,13 +22,7 @@ class SearchController < ApplicationController
   # @return [undefined]
   def index
     # Treat 'page' and 'per_page' separately
-    page = 0
-    page = Integer(params[:page]) if params.has_key? :page
-
-    per_page = 10
-    per_page = session[:user].per_page if session[:user]
-    per_page = Integer(params[:per_page]) if params.has_key? :per_page
-
+    page, per_page = get_pagination_params
     offset = page * per_page
     limit = per_page
 
@@ -151,6 +145,24 @@ class SearchController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
   end
+
+  # Get the page and per_page values
+  #
+  # @api public
+  # @return [Array] [Integer(page), Integer(per_page)]
+  # @example Get the pagination values
+  #   page, per_page = get_page_params
+  def get_pagination_params
+    page = 0
+    page = Integer(params[:page]) if params.has_key? :page
+
+    per_page = 10
+    per_page = session[:user].per_page if session[:user]
+    per_page = Integer(params[:per_page]) if params.has_key? :per_page
+
+    [ page, per_page ]
+  end
+  helper_method :get_pagination_params
 
   # Convert from search parameters to Solr query parameters
   #
