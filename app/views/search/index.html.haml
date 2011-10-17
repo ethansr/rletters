@@ -10,22 +10,16 @@
   %div.verticalpad
   %p.pagination= render_pagination
   %div.verticalpad
-  
-  %div.portraitbuttons
-    - if session[:user].nil?
-      = link_to t('.login_prompt'), users_path, { 'data-theme' => 'e', 'data-role' => 'button', 'data-icon' => 'arrow-r', 'data-iconpos' => 'right' }
-    - else
-      = link_to t('.create_dataset'), '#', { 'data-role' => 'button', 'data-icon' => 'plus', 'data-iconpos' => 'right' }
-    = link_to t('.advanced_search'), search_advanced_path, { 'data-role' => 'button', 'data-icon' => 'search', 'data-iconpos' => 'right' }
 
 %div.rightcolumn
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' }= t('.tools')
+    %li.toolsheader{ 'data-role' => 'list-divider' }= t('.tools')
+  %ul.toolslist{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
     - if session[:user].nil?
       %li{ 'data-theme' => 'e' }= link_to t('.login_prompt'), users_path
     - else
       %li{ 'data-icon' => 'plus' }= link_to t('.create_dataset'), '#'
-    %li= link_to t('.advanced_search'), search_advanced_path, { 'data-icon' => 'search' }
+    %li{ 'data-icon' => 'search' }= link_to t('.advanced_search'), search_advanced_path
   %div.verticalpad
 
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }

@@ -62,26 +62,26 @@ class SearchControllerIndexTest < ActionController::TestCase
     stub_solr_response :standard_empty_search
     session[:user] = nil
     get :index
-    assert_select 'li[data-theme=e]', 'Log in to analyze results!'
+    assert_select 'div.rightcolumn ul.toolslist li[data-theme=e]', 'Log in to analyze results!'
   end
 
   test "should show create-dataset prompt if logged in" do
     stub_solr_response :standard_empty_search
     session[:user] = users(:john)
     get :index
-    assert_select 'li', 'Create dataset from search'
+    assert_select 'div.rightcolumn ul.toolslist li:first-of-type', 'Create dataset from search'
   end
   
   test "should show advanced search link" do
     stub_solr_response :standard_empty_search
     get :index
-    assert_select 'div.rightcolumn ul li:last-of-type', 'Advanced search'    
+    assert_select 'div.rightcolumn ul.toolslist li:last-of-type', 'Advanced search'    
   end
 
   test "should show author facets" do
     stub_solr_response :precise_all_docs
     get :index
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(2)', 'Amanda M. Koltz1' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(2)', 'Amanda M. Koltz1' do
       assert_select "a[href=#{search_path(:fq => [ 'authors_facet:"Amanda M. Koltz"' ])}]"
       assert_select 'span.ui-li-count', '1'
     end
@@ -91,7 +91,7 @@ class SearchControllerIndexTest < ActionController::TestCase
     stub_solr_response :precise_all_docs
     get :index
     # We show five author facet choices, then the journal facet, which is number 6.
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(8)', 'Ethology10' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(8)', 'Ethology10' do
       assert_select "a[href=#{search_path(:fq => [ 'journal_facet:"Ethology"' ])}]"
       assert_select 'span.ui-li-count', '10'
     end
@@ -101,7 +101,7 @@ class SearchControllerIndexTest < ActionController::TestCase
     stub_solr_response :precise_all_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(12)', '1990–19991' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(12)', '1990–19991' do
       assert_select "a[href=#{search_path(:fq => [ 'year:[1990 TO 1999]' ])}]"
       assert_select 'span.ui-li-count', '1'
     end
@@ -111,7 +111,7 @@ class SearchControllerIndexTest < ActionController::TestCase
     stub_solr_response :precise_all_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(11)', '2010 and later2' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(11)', '2010 and later2' do
       assert_select "a[href=#{search_path(:fq => [ 'year:[2010 TO *]' ])}]"
       assert_select 'span.ui-li-count', '2'
     end    
@@ -121,7 +121,7 @@ class SearchControllerIndexTest < ActionController::TestCase
     stub_solr_response :precise_old_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(13)', 'Before 18001' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(13)', 'Before 18001' do
       assert_select "a[href=#{search_path(:fq => [ 'year:[* TO 1799]' ])}]"
       assert_select 'span.ui-li-count', '1'
     end
@@ -130,7 +130,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   test "should display remove all link with facets" do
     stub_solr_response :precise_with_facet_koltz
     get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"' ] }
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(2)', 'Remove All' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(2)', 'Remove All' do
       assert_select "a[href=#{search_path}]"
     end
   end
@@ -138,7 +138,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   test "should display specific remove facet links" do
     stub_solr_response :precise_facet_author_and_journal
     get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"', 'journal_facet:"Ethology"' ] }
-    assert_select 'div.rightcolumn ul:nth-of-type(3) li:nth-of-type(3)', 'Authors: Amanda M. Koltz' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(3)', 'Authors: Amanda M. Koltz' do
       assert_select "a[href=#{search_path(:fq => [ 'journal_facet:"Ethology"' ])}]"
     end
   end
