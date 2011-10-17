@@ -4,14 +4,10 @@ en:
     search_button: "Search / Browse"
     datasets_button: "Datasets"
     login_warning: "You must be logged in to view this page."
-  activerecord:
+  activemodel:
     models:
-      dataset: "Dataset"
       document: "Document"
-      user: "User"
     attributes:
-      dataset:
-        name: "Name"
       document:
         shasum: "SHA-1 checksum"
         doi: "DOI"
@@ -23,7 +19,21 @@ en:
         number: "Number"
         pages: "Pages"
         fulltext: "Full text"
-        term_vectors: "Term vectors"
+        term_vectors: "Term vectors"    
+    errors:
+      models:
+        document:
+          shasum:
+            blank: "SHA-1 checksum was not specified (internal error)"
+            wrong_length: "SHA-1 checksum is not 20 characters (internal error)"
+            invalid: "SHA-1 checksum contains invalid characters (internal error)"
+  activerecord:
+    models:
+      dataset: "Dataset"
+      user: "User"
+    attributes:
+      dataset:
+        name: "Name"
       user:
         email: "Email"
         name: "Name"
@@ -33,11 +43,6 @@ en:
         csl_style: "Citation style"
     errors:
       models:
-        document:
-          shasum:
-            blank: "SHA-1 checksum was not specified (internal error)"
-            wrong_length: "SHA-1 checksum is not 20 characters (internal error)"
-            invalid: "SHA-1 checksum contains invalid characters (internal error)"
         user:
           name:
             blank: "You must specify a name"
@@ -82,6 +87,32 @@ en:
       year_facet_short: "Year"
       year_before_1800: "Before 1800"
       year_after_2010: "2010 and later"
+    advanced:
+      head: "Advanced search"
+      intro_header: "Construct an advanced search"
+      intro_markdown: >
+        This page lets you perform an advanced search of the article database.
+        You may choose either to utilize our guided search form, or to 
+        construct a query directly in [Solr's query 
+        syntax](http://wiki.apache.org/solr/SolrQuerySyntax), 
+        which is itself a superset of [Lucene query 
+        syntax](http://lucene.apache.org/java/2_9_1/queryparsersyntax.html).
+        These custom searches are extremely powerful.
+      search_header: "Guided search form"
+      type_fuzzy: "Fuzzy"
+      type_exact: "Exact"
+      title_type_label: "Title search type"
+      journal_type_label: "Journal search type"
+      fulltext_type_label: "Full text search type"
+      year_range_start: "Published between"
+      year_range_end: "and"
+      authors_placeholder: "e.g., A. Johnson, B. Smith"
+      year_placeholder: "year"
+      pages_placeholder: "e.g., 135-150"
+      search_button: "Perform advanced search"
+      solr_header: "Search with Solr syntax"
+      solr_label: "Solr query"
+      solr_button: "Perform Solr query"
     cite:
       volume_abbr: "Vol. %{volume}"
       number_abbr: "No. %{number}"
@@ -112,7 +143,7 @@ en:
       default_style: "Default citation style"
     new:
       head: "Welcome!"
-      intro: |
+      intro: >
         Thanks for signing up for %{app_name}!  Please double-check
         your information before continuing.
       errors:
@@ -122,17 +153,17 @@ en:
     login:
       head: "Log in to continue"
       instructions_header: "Log in to %{app_name}"
-      instructions_one: |
+      instructions_one: >
         If you want to perform any analysis on a set of search results,
         you'll have to register for a user account.  This lets us save 
         your search results as a dataset, perform analysis on them in 
         the background, and send you an e-mail when the analysis is 
         complete.
-      instructions_two: |
+      instructions_two: >
         You can use your account with Google, Facebook, Yahoo, Flickr, 
         myOpenID, or any other OpenID.
       privacy_header: "Concerned about your privacy?"
-      privacy_text: |
+      privacy_text: >
         If you're concerned about logging in with your third-party 
         account, don't be!  There's no way for %{app_name} to leak your
         account details: we never see your third-party password.  For 
@@ -140,15 +171,15 @@ en:
   info:
     index:
       head: "%{app_name} Information"
-      intro: |
+      intro: >
         Need help using %{app_name}?  Want to know more about what this 
         is all about?  You're in the right place.
       faq_header: "Frequently asked questions"
-      faq_text: |
+      faq_text: >
         See a list of commonly asked questions about and problems 
         with %{app_name}
       account_header: "Your user account and settings"
-      account_text: |
+      account_text: >
         Visit this page to configure your user account and personal 
         settings.
       privacy_header: "Privacy policy"

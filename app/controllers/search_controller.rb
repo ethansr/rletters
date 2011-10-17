@@ -35,6 +35,11 @@ class SearchController < ApplicationController
     @documents = Document.find_all_by_solr_query(search_params_to_solr_query(params), :offset => offset, :limit => limit)
   end
   
+  # Show the advanced search page
+  # @api public
+  # @return [undefined]
+  def advanced; end
+  
   # Details of the various formats in which we can export documents
   #
   # This is a hash with the following format:
