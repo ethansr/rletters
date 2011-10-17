@@ -11,7 +11,7 @@ function createCollapsibleList() {
   }
   
   if (toolsList.length) {
-    var toolsButtonText = $('li.toolsheader').text();
+    var toolsButtonText = $('div.ui-page-active').find('li.toolsheader').text();
     var toolsCollapse = $(document.createElement('div')).attr('class', 'toolscollapse').append($(document.createElement('h3')).text(toolsButtonText));
     toolsList.clone().appendTo(toolsCollapse);
     toolsCollapse.appendTo(leftColumn);
@@ -19,7 +19,7 @@ function createCollapsibleList() {
   }
   
   if (facetList.length) {
-    var facetButtonText = $('li.filterheader').text();
+    var facetButtonText = $('div.ui-page-active').find('li.filterheader').text();
     var facetCollapse = $(document.createElement('div')).attr('class', 'facetcollapse').append($(document.createElement('h3')).text(facetButtonText));
     facetList.clone().appendTo(facetCollapse);
     facetCollapse.appendTo(leftColumn);
