@@ -15,6 +15,10 @@
   font-size: 85% !important;
 }
 
+// Extra buttons in portrait mode
+.leftcolumn .portraitbuttons { display: none; }
+
+
 // jQuery Mobile does some funny business regarding the margins on
 // ULs, which makes them not work as full-width elements.  Fix that
 // here.  HACK ALERT: This is tied to internal jQM styles.
@@ -32,15 +36,13 @@
 // Portrait mode: collapse the columns into one row
 @media screen and (max-width: 768px) {
   .leftcolumn { width: 100% !important; }
-  .rightcolumn { width: 100% !important; }
+  .leftcolumn .portraitbuttons { display: block; }
+  .rightcolumn { display: none; }
 
-  // Also undo the UL margin hacks.  HACK ALERT: This is tied to
+  // Also undo the UL margin hack.  HACK ALERT: This is tied to
   // internal jQM styles.
   .leftcolumn ul {
     margin-right: -15px !important;
-  }
-  .rightcolumn ul {
-    margin-left: -15px !important;
   }
 }
 
