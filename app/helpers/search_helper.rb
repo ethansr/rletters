@@ -21,11 +21,14 @@ module SearchHelper
   
   # Make a link to a page for the pagination widget
   #
+  # @api public
   # @param [String] text text for this link
   # @param [Integer] num the page number (0-based)
   # @param [String] icon icon for the button, if desired
   # @param [Boolean] right if true, put icon on the right side of the button
   # @return [String] the requested link
+  # @example Get a link to the 3rd page of results, with an arrow icon on the right
+  #   page_link('Page 3!', 2, 'arrow-r', true)
   def page_link(text, num, icon = '', right = false)
     new_params = params.dup
     if num == 0
@@ -43,7 +46,16 @@ module SearchHelper
 
   # Render the pagination links
   #
-  # @return [String]
+  # We currently render four buttons, in a 4x1 grid: first, previous, next,
+  # and last.  Pagination is difficult for an application like this; we don't
+  # want infinite scroll, as there are far too many items, but full
+  # pagination (like that on Google or Flickr) really doesn't work on mobile
+  # devices.  So this is a compromise.
+  #
+  # @api public
+  # @return [String] full set of pagination links for the current page
+  # @example Put the current pagination links in a paragraph element
+  #   <p><%= render_pagination %></p>
   def render_pagination
     page, per_page = get_pagination_params
     num_pages = Document.num_results.to_f / per_page.to_f

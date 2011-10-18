@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-# Representation of a document in the Solr database.
+# Representation of a document in the Solr database
 #
 # This class provides an ActiveRecord-like model object for documents hosted in
 # the RLetters Solr backend.  It abstracts both single-document retrieval and

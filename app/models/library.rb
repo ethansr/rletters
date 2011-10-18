@@ -1,4 +1,9 @@
 # -*- encoding : utf-8 -*-
+
+# Representation of a library-owned OpenURL resolver
+#
+# @attr [String] name The name of the library
+# @attr [String] url The base URL for its OpenURL resolver
 class Library < ActiveRecord::Base
   belongs_to :user
   

@@ -3,5 +3,36 @@ app/controllers/datasets_controller.rb:14: DatasetsController#index: The public/
 app/controllers/datasets_controller.rb:14: DatasetsController#index: The @api tag should be specified
 app/controllers/datasets_controller.rb:14: DatasetsController#index: The @api tag must be either public, semipublic or private
 app/controllers/datasets_controller.rb:14: DatasetsController#index: The @return tag should be specified
+app/models/library.rb:7: Library#url: The public/semipublic method should have an example specified
+app/models/library.rb:7: Library#url: The @api tag should be specified
+app/models/library.rb:7: Library#url: The @api tag must be either public, semipublic or private
+app/models/library.rb:7: Library#name: The public/semipublic method should have an example specified
+app/models/library.rb:7: Library#name: The @api tag should be specified
+app/models/library.rb:7: Library#name: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#email: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#email: The @api tag should be specified
+app/models/user.rb:18: User#email: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#name: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#name: The @api tag should be specified
+app/models/user.rb:18: User#name: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#language=: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#language=: The @api tag should be specified
+app/models/user.rb:18: User#language=: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#csl_style=: The method summary should be a single line
+app/models/user.rb:18: User#csl_style=: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#csl_style=: The @api tag should be specified
+app/models/user.rb:18: User#csl_style=: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#identifier=: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#identifier=: The @api tag should be specified
+app/models/user.rb:18: User#identifier=: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#per_page=: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#per_page=: The @api tag should be specified
+app/models/user.rb:18: User#per_page=: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#datasets=: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#datasets=: The @api tag should be specified
+app/models/user.rb:18: User#datasets=: The @api tag must be either public, semipublic or private
+app/models/user.rb:18: User#libraries=: The public/semipublic method should have an example specified
+app/models/user.rb:18: User#libraries=: The @api tag should be specified
+app/models/user.rb:18: User#libraries=: The @api tag must be either public, semipublic or private
 
-Coverage: 98.9%  Success: 435  Failed: 5  Total: 440
+Coverage: 95.7%  Success: 794  Failed: 36  Total: 830

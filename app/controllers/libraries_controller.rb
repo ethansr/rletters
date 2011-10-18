@@ -9,33 +9,51 @@
 class LibrariesController < ApplicationController
   before_filter :login_required
 
+  # Display the list of the user's libraries
+  #
+  # This action is meant to be pulled in via AJAX, so it doesn't render a
+  # layout.
+  #
+  # @api public
+  # @return [undefined]
   def index
     @libraries = session[:user].libraries
     render :layout => false
   end
   
+  # Show the form for creating a new library link
+  # @api public
+  # @return [undefined]
   def new
     @library = Library.new
     @library.user = session[:user]
     render :layout => 'dialog'
   end
 
+  # Show the form for editing a library link
+  # @api public
+  # @return [undefined]
   def edit
     @library = session[:user].libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
     render :layout => 'dialog'
   end
 
+  # Show a confirmation form for deleting a library link
+  # @api public
+  # @return [undefined]
   def delete
     @library = session[:user].libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
     render :layout => 'dialog'
   end
-
+  
+  # Create a new library link in the database
+  # @api public
+  # @return [undefined]
   def create
     @library = Library.new(params[:library])
     @library.user = session[:user]
-    logger.info "params: #{@library.inspect}"
 
     if @library.save
       session[:user].libraries(true)
@@ -45,6 +63,9 @@ class LibrariesController < ApplicationController
     end
   end
   
+  # Update the attributes of a library link in the database
+  # @api public
+  # @return [undefined]
   def update
     @library = session[:user].libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
@@ -57,6 +78,9 @@ class LibrariesController < ApplicationController
     end
   end
   
+  # Delete a library link from the database
+  # @api public
+  # @return [undefined]
   def destroy
     @library = session[:user].libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
@@ -68,7 +92,14 @@ class LibrariesController < ApplicationController
 
     redirect_to user_path
   end
-    
+  
+  # Query the list of available libraries from OCLC
+  #
+  # This function sets +@libraries+ to the list of all available libraries
+  # for the client's IP address, according to the WorldCat library database.
+  #
+  # @api public
+  # @return [undefined]
   def query
     @libraries = []
     

@@ -21,7 +21,6 @@ class UsersController < ApplicationController
   end
   
   # Render the login page
-  #
   # @api public
   # @return [undefined]
   def login; end

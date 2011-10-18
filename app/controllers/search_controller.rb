@@ -29,11 +29,6 @@ class SearchController < ApplicationController
     @documents = Document.find_all_by_solr_query(search_params_to_solr_query(params), :offset => offset, :limit => limit)
   end
   
-  # Show the advanced search page
-  # @api public
-  # @return [undefined]
-  def advanced; end
-  
   # Details of the various formats in which we can export documents
   #
   # This is a hash with the following format:
@@ -235,7 +230,7 @@ class SearchController < ApplicationController
 
   # Send the given string content to the browser as a file download
   #
-  # @api public
+  # @api private
   # @param [String] str content to send to the browser
   # @param [String] filename filename for the downloaded file
   # @param [String] mime MIME type for the content

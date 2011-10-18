@@ -13,6 +13,9 @@ class UnapiController < ApplicationController
   # particular document.  If +params[:id]+ and +params[:format]+ are both set,
   # return the actual document (or a 406 error).  If +params[:id]+ is not set,
   # then show the list of all possible export formats.
+  #
+  # @api public
+  # @return [undefined]
   def index
     if params[:id]
       if params[:format]
