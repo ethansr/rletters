@@ -149,7 +149,7 @@ en:
       mendeley: "Find on Mendeley"
       citeulike: "Find on CiteULike"
   users:
-    index:
+    show:
       head: "Your user account"
       user_id: "You are logged in as %{name} (%{email})"
       not_you: "Not you? Log in as a different user."
@@ -159,6 +159,7 @@ en:
         other: "%{count} errors kept these options from being saved:"
       submit_label: "Save user options"
       default_style: "Default citation style"
+      library_links: "Look up documents using your local library"
     new:
       head: "Welcome!"
       intro: >
@@ -186,9 +187,41 @@ en:
         account, don't be!  There's no way for %{app_name} to leak your
         account details: we never see your third-party password.  For 
         more information, click to read our privacy policy.
+  libraries:
+    delete:
+      head: "Are you sure you want to delete this library link?"
+      yes: "Yes"
+      no: "No"
+    edit:
+      head: "Edit library link"
+      cancel: "Cancel"
+    index:
+      delete: "Delete"
+      query: "Look up your library automatically"
+      add_new: "Add your library manually"
+    new:
+      head: "Add your library manually"
+      cancel: "Cancel"
+    query:
+      head: "Look up library automatically"
+      no_libraries: >
+        Could not determine your library automatically.  If you'd like,
+        you can still add your library manually.
+      your_libraries: "Libraries available at your address:"
+    form:
+      errors:
+        one: "1 error kept you from adding your library:"
+        other: "%{count} errors kept you from adding your library:"
+      submit_label: "Link your library"
+    create:
+      success: "Library was successfully connected."
+      failure: "Could not save library link!"
+    update:
+      success: "Library was successfully updated."
+      failure: "Could not update library link!"
   info:
     index:
-      head: "%{app_name} Information"
+      head: "%{app_name} information"
       intro: >
         Need help using %{app_name}?  Want to know more about what this 
         is all about?  You're in the right place.

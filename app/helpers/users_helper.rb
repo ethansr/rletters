@@ -75,7 +75,7 @@ module UsersHelper
   # @example Create a select box for the CSL style
   #   <select name='csl_style'><%= options_from_csl_styles(user.csl_style) %></select>
   def options_from_csl_styles(current = '')
-    list = [ [ I18n.t('users.index.default_style'), '' ] ]
+    list = [ [ I18n.t('users.show.default_style'), '' ] ]
 
     APP_CONFIG['available_csl_styles'].each do |loc|
       list << [ APP_CONFIG['csl_style_names'][loc], loc ]

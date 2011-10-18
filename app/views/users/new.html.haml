@@ -3,7 +3,7 @@
 
 = form_for(@user, :url => user_path) do |f|
   - if @user.errors.any?
-    %ul{ 'data-theme' => 'e' }
+    %ul{ 'data-role' => 'listview', 'data-theme' => 'e', 'data-divider-theme' => 'e', 'style' => 'margin-bottom: 30px;' }
       %li= t('.errors', :count => @user.errors.count)
       - @user.errors.full_messages.each do |msg|
         %li= msg

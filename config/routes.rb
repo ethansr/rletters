@@ -18,6 +18,15 @@ RLetters::Application.routes.draw do
       get 'login'
       get 'logout'
     end
+    
+    resources :libraries, :except => :show do
+      member do
+        get 'delete'
+      end
+      collection do
+        get 'query'
+      end
+    end
   end
 
   # Static information pages

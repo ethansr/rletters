@@ -39,3 +39,12 @@
         = f.select :csl_style, options_from_csl_styles(session[:user].csl_style)
       
     %li= f.submit t('.submit_label')
+
+%div.verticalpad
+
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+  %li{ 'data-role' => 'list-divider' }= t('.library_links')
+
+%div.verticalpad
+
+%div.librarylist
