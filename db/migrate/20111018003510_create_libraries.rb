@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateLibraries < ActiveRecord::Migration
   def change
     create_table :libraries do |t|

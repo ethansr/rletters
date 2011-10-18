@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Serializers
   
   # Convert a document to a MARC record
