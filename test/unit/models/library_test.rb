@@ -36,5 +36,21 @@ class LibraryTest < ActiveSupport::TestCase
     library.url = "http://google.com/"
     assert library.save, 'Failed to save valid library'
   end
+  
+  test "should save library with no-HTTP url" do
+    library = Library.new    
+    library.name = "Google"
+    library.user = users(:john)
+    library.url = "google.com"
+    assert library.save
+  end
 
+  test "should give library URL a question mark on save" do
+    library = Library.new    
+    library.name = "Google"
+    library.user = users(:john)
+    library.url = "http://google.com"
+    assert library.save
+    assert_equal "http://google.com?", library.url
+  end
 end
