@@ -9,7 +9,7 @@ class DatasetsControllerTest < ActionController::TestCase
   test "should redirect to users if not logged in" do
     session[:user] = nil
     get :index
-    assert_redirected_to :controller => 'users', :action => 'index'
+    assert_redirected_to user_path
   end
 
   test "should get index" do

@@ -12,13 +12,13 @@ RLetters::Application.routes.draw do
   resources :datasets, :except => [:edit, :update, :new]
 
   # Custom login built around Janrain Engage
-  match 'users' => 'users#index', :via => :get
-  match 'users' => 'users#create', :via => :post
-  match 'users/rpx' => 'users#rpx', :via => :post
-  match 'users/new' => 'users#new'
-  match 'users/update' => 'users#update', :via => :put
-  match 'users/login' => 'users#login', :via => :get
-  match 'users/logout' => 'users#logout', :via => :get
+  resource :user, :except => [ :destroy, :edit ] do
+    member do
+      post 'rpx'
+      get 'login'
+      get 'logout'
+    end
+  end
 
   # Static information pages
   match 'info' => 'info#index', :via => :get

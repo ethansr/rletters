@@ -7,7 +7,7 @@
 
 %div.verticalpad
 
-= form_for(session[:user], :url => users_update_path, :html => { 'data-ajax' => 'false' }) do |f|
+= form_for(session[:user], :url => user_path, :html => { 'data-ajax' => 'false' }) do |f|
   %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }  
     - if session[:user].errors.any?
       %li{ 'data-theme' => 'e' } = t('.errors', :count => session[:user].errors.count)

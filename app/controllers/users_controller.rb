@@ -16,8 +16,8 @@ class UsersController < ApplicationController
   #
   # @api public
   # @return [undefined]
-  def index
-    redirect_to users_login_path if session[:user].nil?
+  def show
+    redirect_to login_user_path if session[:user].nil?
   end
   
   # Render the login page
@@ -107,9 +107,9 @@ class UsersController < ApplicationController
   def update
     user = session[:user]
     if user.update_attributes(params[:user])
-      redirect_to users_path
+      redirect_to user_path
     else
-      render "index"
+      render "show"
     end
   end
 end

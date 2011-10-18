@@ -36,6 +36,6 @@ class DatasetsController < ApplicationController
 
     @dataset.destroy
 
-    redirect_to datasets_url
+    redirect_to datasets_path
   end
 end

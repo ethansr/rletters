@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   #   before_filter :login_required, :only => [ :index ]
   def login_required
     if session[:user].nil?
-      redirect_to users_path, :rel => :external, :notice => I18n.t('all.login_warning')
+      redirect_to user_path, :rel => :external, :notice => I18n.t('all.login_warning')
     end
   end
 end

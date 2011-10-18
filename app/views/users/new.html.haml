@@ -1,7 +1,7 @@
 %h1= t('.head')
 %p= t('.intro', :app_name => APP_CONFIG['app_name'])
 
-= form_for(@user) do |f|
+= form_for(@user, :url => user_path) do |f|
   - if @user.errors.any?
     %ul{ 'data-theme' => 'e' }
       %li= t('.errors', :count => @user.errors.count)

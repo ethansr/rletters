@@ -8,9 +8,9 @@ class UsersControllerTest < ActionController::TestCase
     @user = users(:john)
   end
 
-  test "should get index (to login)" do
-    get :index
-    assert_redirected_to users_login_path
+  test "should get show (to login)" do
+    get :show
+    assert_redirected_to login_user_path
   end
 
   test "should get login" do
@@ -100,13 +100,13 @@ class UsersControllerTest < ActionController::TestCase
   test "should redirect from logout if not logged in" do
     session[:user] = nil
     get :logout
-    assert_redirected_to :controller => 'users', :action => 'index'
+    assert_redirected_to user_path
   end
 
   test "should redirect from update if not logged in" do
     session[:user] = nil
     get :update
-    assert_redirected_to :controller => 'users', :action => 'index'
+    assert_redirected_to user_path
   end
 
   # We explicitly can't get a functional test for users#rpx, because
