@@ -17,9 +17,15 @@ class User < ActiveRecord::Base
   validates :language, :format => { :with => /[a-z]{2,3}(-[A-Z]{2})?/ }
 
   has_many :datasets, :dependent => :delete_all
+  has_many :libraries, :dependent => :delete_all
 
-  # Only attributes that can be edited by the user should be whitelisted here
-  attr_accessible :name, :email, :per_page, :language, :csl_style
+  validates_associated :datasets
+  validates_associated :libraries
+
+  # Attributes that can be edited by the user (in the user options form) 
+  # should be whitelisted here.  Programmatic-access things (like datasets or
+  # the RPX identifier) do *not* need to occur here.
+  attr_accessible :name, :email, :per_page, :language, :csl_style, :libraries
 
   def self.find_or_initialize_with_rpx(data)
     identifier = data['identifier']

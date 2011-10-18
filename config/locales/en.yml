@@ -30,10 +30,14 @@ en:
   activerecord:
     models:
       dataset: "Dataset"
+      library: "Library"
       user: "User"
     attributes:
       dataset:
         name: "Name"
+      library:
+        name: "Name"
+        url: "Base URL"
       user:
         email: "Email"
         name: "Name"
@@ -41,8 +45,17 @@ en:
         per_page: "Number of search results per page"
         language: "Preferred language"
         csl_style: "Citation style"
+        libraries: "Library access links"
     errors:
       models:
+        library:
+          name:
+            blank: "You must specify a name for this library entry"
+          url:
+            blank: "You must specify a URL for this library entry"
+            invalid: "Library base URL must be a URL"
+          user_id:
+            blank: "Library must be associated with user (internal error)"
         user:
           name:
             blank: "You must specify a name"

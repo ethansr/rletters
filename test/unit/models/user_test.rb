@@ -122,4 +122,9 @@ class UserTest < ActiveSupport::TestCase
     user = User.find_or_initialize_with_rpx(hash)
     assert user.new_record?
   end
+  
+  test "should get libraries for user" do
+    assert !users(:john).libraries.empty?
+    assert users(:alice).libraries.empty?
+  end
 end
