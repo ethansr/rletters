@@ -11,6 +11,7 @@ end
 require File.expand_path('../../config/environment', __FILE__)
 require 'test/unit'
 require 'mocha'
+require 'webmock/test_unit'
 require 'rails/test_help'
 require 'examples/examples'
 

@@ -78,4 +78,19 @@ class LibrariesControllerTest < ActionController::TestCase
     
     assert_redirected_to user_path
   end
+  
+  test "query page with empty response" do
+    stub_request(:get, /worldcatlibraries.org\/registry\/lookup.*/).to_return(ResponseExamples.load(:worldcat_request_empty))
+    get :query
+    assert_select 'form', 0
+  end
+  
+  test "query page wth non-empty response" do
+    stub_request(:get, /worldcatlibraries.org\/registry\/lookup.*/).to_return(ResponseExamples.load(:worldcat_request_nd))
+    get :query
+    assert_select 'form' do
+      assert_select "input[value='University of Notre Dame']"
+      assert_select "input[value='http://findtext.library.nd.edu:8889/ndu_local?']"
+    end
+  end
 end

@@ -78,11 +78,17 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   # You shouldn't be able to load the RPX page without posting the
-  # RPX data blob to it
+  # RPX data blob to it (allow real network connections here, as the
+  # RPXNow gem will try to validate this out to the Janrain server and
+  # fail)
   test "should not be able to load RPX page" do
+    WebMock.allow_net_connect!
+    
     assert_raise(RPXNow::ApiError) do
       get :rpx
     end
+    
+    WebMock.disable_net_connect!
   end
 
   test "should blank user on logout" do

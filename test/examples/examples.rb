@@ -8,3 +8,10 @@ module SolrExamples
     hash
   end
 end
+
+module ResponseExamples
+  def self.load(example)
+    file_name = Rails.root.join('test', 'examples', example.to_s + '.txt')
+    IO.read(file_name)
+  end
+end

@@ -33,6 +33,7 @@ gem 'jquery_mobile-rails', '1.0rc1'
 group :test do
   gem 'test-unit', :require => false
   gem 'mocha', :require => false
+  gem 'webmock'
   gem 'sqlite3'
   gem 'simplecov', '>= 0.4.0', :require => false
   gem 'nokogiri'

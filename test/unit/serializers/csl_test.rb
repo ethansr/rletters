@@ -46,8 +46,9 @@ class CSLTest < ActiveSupport::TestCase
 
   test "should be able to fetch CSL styles over HTTP" do
     stub_solr_response(:precise_one_doc)
-    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    stub_request(:get, 'https://raw.github.com/citation-style-language/styles/master/science.csl').to_return(ResponseExamples.load(:csl_request_science))
 
+    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
     cite = doc.to_csl_entry('https://raw.github.com/citation-style-language/styles/master/science.csl').to_s
     assert_equal "C. A. Botero, A. E. Mudge, A. M. Koltz, W. M. Hochachka, S. L. Vehrencamp, How Reliable are the Methods for Estimating Repertoire Size?, <i>Ethology</i> <b>114</b>, 1227-1238 (2008).", cite
   end
