@@ -142,6 +142,7 @@ en:
       publisher: "From the publisher (DOI: %{doi})"
       ol_library: "Online and library access"
       library: "Find this document in a library"
+      yours: "Your library:"
       worldcat: "Find in WorldCat"
       uk_openurl: "Find with UK OpenURL Resolver"
       online: "Find this document online"
