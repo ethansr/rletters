@@ -78,4 +78,13 @@ class MARCTest < ActiveSupport::TestCase
     # Always ends with a period, since we do not express date ranges
     assert_equal '2008.', record['362']['a']
   end
+  
+  test "should create good MARCXML collections" do
+    stub_solr_response(:precise_one_doc)
+    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')    
+    arr = [doc, doc]
+    
+    xml = arr.to_marc_xml
+    assert_equal 2, xml.elements['collection'].elements.size
+  end
 end

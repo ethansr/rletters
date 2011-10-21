@@ -35,3 +35,23 @@ module Serializers
     end
   end
 end
+
+class Array
+  # Convert this array (of Document objects) to a BibTeX collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.
+  #
+  # @api public
+  # @return [String] array of documents as BibTeX collection
+  # @example Save an array of documents in BibTeX format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   $stdout.write(doc_array.to_bibtex)
+  def to_bibtex
+    self.each do |x|
+      raise ArgumentError, 'No to_bibtex method for array element' unless x.respond_to? :to_bibtex
+    end
+    
+    self.map { |x| x.to_bibtex }.join
+  end
+end

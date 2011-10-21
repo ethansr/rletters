@@ -87,3 +87,55 @@ module Serializers
     # :nocov:
   end
 end
+
+class Array
+  # Convert this array (of Document objects) to an RDF+XML collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.
+  #
+  # @api public
+  # @return [String] array of documents as RDF+XML collection
+  # @note No tests for this method, as it is implemented by the RDF gem.
+  # @example Save an array of documents in RDF+XML format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   $stdout.write(doc_array.to_rdf_xml)
+  # :nocov:
+  def to_rdf_xml
+    self.each do |x|
+      raise ArgumentError, 'No to_rdf method for array element' unless x.respond_to? :to_rdf
+    end
+    
+    ::RDF::Writer.for(:rdf).buffer do |writer|
+      self.each do |x|
+        writer << x.to_rdf
+      end
+    end
+  end
+  # :nocov:
+
+  # Convert this array (of Document objects) to an RDF+N3 collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.
+  #
+  # @api public
+  # @return [String] array of documents as RDF+N3 collection
+  # @note No tests for this method, as it is implemented by the RDF gem.
+  # @example Save an array of documents in RDF+N3 format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   $stdout.write(doc_array.to_rdf_n3)
+  # :nocov:
+  def to_rdf_n3
+    self.each do |x|
+      raise ArgumentError, 'No to_rdf method for array element' unless x.respond_to? :to_rdf
+    end
+    
+    ::RDF::Writer.for(:n3).buffer do |writer|
+      self.each do |x|
+        writer << x.to_rdf
+      end
+    end
+  end
+  # :nocov:
+end

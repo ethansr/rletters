@@ -23,4 +23,14 @@ class EndNoteTest < ActiveSupport::TestCase
     # important
     assert str.end_with? "\n\n"
   end
+  
+  test "should create EndNote for array" do
+    stub_solr_response(:precise_one_doc)
+    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    arr = [doc, doc]
+    
+    str = arr.to_endnote
+    assert str.start_with? "%0 Journal Article\n"
+    assert str.include? "\n\n%0 Journal Article\n"
+  end
 end

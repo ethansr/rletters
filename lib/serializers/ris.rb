@@ -31,3 +31,23 @@ module Serializers
     end
   end
 end
+
+class Array
+  # Convert this array (of Document objects) to a RIS collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.
+  #
+  # @api public
+  # @return [String] array of documents as RIS collection
+  # @example Save an array of documents in RIS format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   $stdout.write(doc_array.to_ris)
+  def to_ris
+    self.each do |x|
+      raise ArgumentError, 'No to_ris method for array element' unless x.respond_to? :to_ris
+    end
+    
+    self.map { |x| x.to_ris }.join
+  end
+end

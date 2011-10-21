@@ -148,3 +148,35 @@ module Serializers
     end
   end
 end
+
+class Array
+  # Convert this array (of Document objects) to a MODS collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.
+  #
+  # @api public
+  # @return [REXML::Document] array of documents as MODS collection document
+  # @example Save an array of documents in MODS format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   doc_array.to_mods.write($stdout, 2)
+  def to_mods
+    self.each do |x|
+      raise ArgumentError, 'No to_mods method for array element' unless x.respond_to? :to_mods
+    end
+
+    coll = REXML::Element.new 'modsCollection'
+    coll.add_namespace "xlink", "http://www.w3.org/1999/xlink"
+    coll.add_namespace "xsi", "http://www.w3.org/2001/XMLSchema-instance"
+    coll.add_namespace "http://www.loc.gov/mods/v3"
+    coll.attributes['xsi:schemaLocation'] = "http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"
+  
+    self.map { |d| coll.add(d.to_mods(false).root) }
+  
+    ret = REXML::Document.new
+    ret << REXML::XMLDecl.new
+    ret << coll
+  
+    ret
+  end
+end

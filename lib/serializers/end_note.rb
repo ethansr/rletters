@@ -30,3 +30,23 @@ module Serializers
     end
   end
 end
+
+class Array
+  # Convert this array (of Document objects) to an EndNote collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.
+  #
+  # @api public
+  # @return [String] array of documents as EndNote collection
+  # @example Save an array of documents in EndNote format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   $stdout.write(doc_array.to_endnote)
+  def to_endnote
+    self.each do |x|
+      raise ArgumentError, 'No to_endnote method for array element' unless x.respond_to? :to_endnote
+    end
+    
+    self.map { |x| x.to_endnote }.join
+  end
+end

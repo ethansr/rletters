@@ -21,4 +21,14 @@ class RISTest < ActiveSupport::TestCase
     assert str.include? "PY  - 2008"
     assert str.end_with? "ER  - \n"
   end
+  
+  test "should create RIS for array" do
+    stub_solr_response(:precise_one_doc)
+    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    arr = [doc, doc]
+    
+    str = arr.to_ris
+    assert str.start_with? "TY  - JOUR\n"
+    assert str.include? "ER  - \nTY  - JOUR\n"
+  end
 end

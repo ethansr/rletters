@@ -177,3 +177,52 @@ module Serializers
   end
 end
 
+class Array
+  # Convert this array (of Document objects) to a MARC-JSON collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.  No tests for this method, as it's a
+  # very unofficial extension to the MARC-in-JSON standard.
+  #
+  # @api public
+  # @return [String] array of documents as MARC-JSON collection
+  # @example Save an array of documents in MARC-JSON format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   $stdout.write(doc_array.to_marc_json)
+  # :nocov:
+  def to_marc_json
+    self.each do |x|
+      raise ArgumentError, 'No to_marc method for array element' unless x.respond_to? :to_marc
+    end
+    
+    self.map { |x| x.to_marc.to_hash }.to_json
+  end
+  # :nocov:
+  
+  # Convert this array (of Document objects) to a MARCXML collection
+  #
+  # Only will work on arrays that consist entirely of Document objects, will
+  # raise an ArgumentError otherwise.
+  #
+  # @api public
+  # @return [REXML::Document] array of documents as MARCXML collection document
+  # @example Save an array of documents in MARCXML format to stdout
+  #   doc_array = Document.find_all_by_solr_query(...)
+  #   doc_array.to_marc_xml.write($stdout, 2)
+  def to_marc_xml
+    self.each do |x|
+      raise ArgumentError, 'No to_marc method for array element' unless x.respond_to? :to_marc
+    end
+    
+    coll = REXML::Element.new 'collection'
+    coll.add_namespace("http://www.loc.gov/MARC21/slim")
+    
+    self.map { |d| coll.add(d.to_marc_xml(false).root) }
+    
+    ret = REXML::Document.new
+    ret << REXML::XMLDecl.new
+    ret << coll
+    
+    ret
+  end
+end
