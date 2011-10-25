@@ -47,20 +47,6 @@
 }
 
 
-// Make the search bar 100% width.  HACK ALERT: This is tied to
-// internal jQM styles.
-/*
-.search { padding: 0 !important; }
-.search form { position: relative; padding: 3px; }
-.search form .ui-input-search {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  width: 100% !important;
-}
-*/
-
-
 ul.searchlist .ui-li-desc, li.searchlist .ui-li-desc {
   /* HACK: This relies on internal jQM font sizes! */
   font-size: 14px;
