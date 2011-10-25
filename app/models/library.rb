@@ -4,6 +4,7 @@
 #
 # @attr [String] name The name of the library
 # @attr [String] url The base URL for its OpenURL resolver
+# @attr [User] user The user this library entry belongs to
 class Library < ActiveRecord::Base
   belongs_to :user
   

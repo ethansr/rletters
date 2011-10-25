@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111018003510) do
+ActiveRecord::Schema.define(:version => 20111024225019) do
+
+  create_table "dataset_entries", :force => true do |t|
+    t.string   "shasum"
+    t.integer  "dataset_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dataset_entries", ["dataset_id"], :name => "index_dataset_entries_on_dataset_id"
 
   create_table "datasets", :force => true do |t|
     t.string   "name"

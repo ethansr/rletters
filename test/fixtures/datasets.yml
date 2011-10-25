@@ -1,2 +1,4 @@
-# FIXME: figure out how to create fixtures that refer to the users
-# generated in the users fixture?
+
+one:
+  name: Test Dataset
+  user: john

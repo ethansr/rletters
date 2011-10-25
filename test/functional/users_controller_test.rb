@@ -63,13 +63,17 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should update user" do
     session[:user] = users(:john)
-    post :update, :id => users(:john), :user => { :name => 'Not Johns Name', :email => 'jdoe@gmail.com', :identifier => 'https://google.com/profiles/johndoe' }
-    assert_equal "Not Johns Name", User.find(users(:john).id).name
+    post :update, :id => users(:john), :user => { :name => 'Not Johns Name', :email => 'jdoe@gmail.com' }
+    
+    assert_equal 0, session[:user].errors.count
+    
+    users(:john).reload
+    assert_equal "Not Johns Name", users(:john).name
   end
 
   test "should fail to invalidly update user" do
     session[:user] = users(:john)
-    post :update, :id => users(:john), :user => { :name => 'John Doe', :email => 'thisisnotan.email', :identifier => 'https://google.com/profiles/johndoe' }
+    post :update, :id => users(:john), :user => { :name => 'John Doe', :email => 'thisisnotan.email' }
 
     assert_response :success
     assert_select 'form' do

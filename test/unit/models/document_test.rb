@@ -25,7 +25,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "minimal document should be valid" do
-    doc = Document.new({ "shasum" => "1234567890abcdef0987" })
+    doc = Document.new({ "shasum" => "00972c5123877961056b21aea4177d0dc69c7318" })
     assert doc.valid?
   end
 
@@ -53,7 +53,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
   
   test "should parse start and end pages correctly with short range" do
-    doc = Document.new({ "shasum" => "1234567890abcdef0987", "pages" => "1483-92" })
+    doc = Document.new({ "shasum" => "00972c5123877961056b21aea4177d0dc69c7318", "pages" => "1483-92" })
     assert_equal '1483', doc.start_page
     assert_equal '1492', doc.end_page
   end
