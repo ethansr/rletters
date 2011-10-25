@@ -262,3 +262,8 @@ en:
       head: "Information for dataset"
       num_entries: "Number of documents: %{count}"
       created_at: "Created at: %{date}"
+      delete: "Delete this dataset"
+    delete:
+      head: "Are you sure you want to delete this dataset?"
+      yes: "Yes"
+      no: "No"

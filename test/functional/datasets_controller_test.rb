@@ -72,12 +72,17 @@ class DatasetsControllerTest < ActionController::TestCase
     get :show, :id => datasets(:one).to_param
     assert_select "ul li p:first-of-type", 'Number of documents: 10'
   end
+  
+  test "should get delete form" do
+    get :delete, :id => datasets(:one).to_param
+    assert_response :success
+  end
 
-  # test "should destroy dataset" do
-  #   assert_difference('Dataset.count', -1) do
-  #     delete :destroy, :id => @dataset.to_param
-  #   end
+  test "should destroy dataset" do
+    assert_difference('users(:john).datasets.count', -1) do
+      delete :destroy, :id => datasets(:one).to_param
+    end
 
-  #   assert_redirected_to datasets_path
-  # end
+    assert_redirected_to datasets_path
+  end
 end

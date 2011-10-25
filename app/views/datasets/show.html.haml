@@ -4,3 +4,4 @@
     %h3= @dataset.name
     %p= t('.num_entries', :count => @dataset.entries.size)
     %p= t('.created_at', :date => @dataset.created_at.to_formatted_s(:long))
+  %li{ 'data-icon' => 'delete' }= link_to t('.delete'), delete_dataset_path(@dataset), 'data-rel' => 'dialog'

@@ -38,6 +38,15 @@ class DatasetsController < ApplicationController
     render :layout => 'dialog'
   end
   
+  # Show a confirmation box for deleting a dataset
+  # @api public
+  # @return [undefined]
+  def delete
+    @dataset = session[:user].datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @dataset
+    render :layout => 'dialog'
+  end
+  
   # Create a new dataset in the database
   # @api public
   # @return [undefined]
@@ -66,11 +75,17 @@ class DatasetsController < ApplicationController
     end
   end
 
+  # Delete a dataset from the database
+  # @api public
+  # @return [undefined]
   def destroy
     @dataset = session[:user].datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @dataset
 
+    redirect_to @dataset and return if params[:cancel]
+
     @dataset.destroy
+    session[:user].datasets(true)
 
     redirect_to datasets_path
   end
