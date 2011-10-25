@@ -1,5 +1,6 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-  %li{ 'data-role' => 'list-divider' } Information for dataset:
+  %li{ 'data-role' => 'list-divider' }= t('.head')
   %li
-    %h3 Info about the dataset
-    %p Will be the content here
+    %h3= @dataset.name
+    %p= t('.num_entries', :count => @dataset.entries.size)
+    %p= t('.created_at', :date => @dataset.created_at.to_formatted_s(:long))

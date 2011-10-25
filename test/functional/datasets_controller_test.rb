@@ -63,10 +63,15 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_redirected_to dataset_path(assigns(:dataset))
   end
   
-  # test "should show dataset" do
-  #   get :show, :id => @dataset.to_param
-  #   assert_response :success
-  # end
+  test "should show dataset" do
+    get :show, :id => datasets(:one).to_param
+    assert_response :success
+  end
+  
+  test "should show correct number of entries" do
+    get :show, :id => datasets(:one).to_param
+    assert_select "ul li p:first-of-type", 'Number of documents: 10'
+  end
 
   # test "should destroy dataset" do
   #   assert_difference('Dataset.count', -1) do

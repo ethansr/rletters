@@ -11,10 +11,20 @@
 class DatasetsController < ApplicationController
   before_filter :login_required
 
+  # Show all of the current user's datasets
+  # @api public
+  # @return [undefined]
   def index
     @datasets = session[:user].datasets
   end
 
+  # Show information about the requested dataset
+  #
+  # This action also includes links for users to perform various analysis
+  # tasks on the dataset.
+  #
+  # @api public
+  # @return [undefined]
   def show
     @dataset = session[:user].datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @dataset

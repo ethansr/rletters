@@ -258,4 +258,7 @@ en:
     create:
       success: "Dataset was successfully created."
       failure: "Could not save dataset!"
-
+    show:
+      head: "Information for dataset"
+      num_entries: "Number of documents: %{count}"
+      created_at: "Created at: %{date}"
