@@ -9,7 +9,7 @@ RLetters::Application.routes.draw do
   match 'search/document/:id/citeulike' => 'search#to_citeulike', :via => :get, :as => 'citeulike_redirect'
 
   # Datasets (per-user)
-  resources :datasets, :except => [:edit, :update, :new]
+  resources :datasets, :except => [:edit, :update]
 
   # Custom login built around Janrain Engage
   resource :user, :except => [ :destroy, :edit ] do

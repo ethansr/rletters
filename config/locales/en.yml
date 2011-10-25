@@ -244,6 +244,17 @@ en:
         zero: "no datasets found"
         one: "1 dataset found"
         other: "%{count} datasets found"
+    new:
+      head: "Create a new dataset"      
+      errors:
+        one: "1 error kept you from creating this dataset:"
+        other: "%{count} errors kept you from creating this dataset:"
+      query: "Solr query:"
+      query_type: "Solr query type:"
+      facet_query: "Solr query filter:"
+      no_facets: "no search filters"
+      submit_label: "Save dataset"
+      cancel: "Cancel"
     create:
       success: "Dataset was successfully created."
       failure: "Could not save dataset!"

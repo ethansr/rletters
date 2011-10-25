@@ -70,6 +70,7 @@ class SearchControllerIndexTest < ActionController::TestCase
     session[:user] = users(:john)
     get :index
     assert_select 'div.rightcolumn ul.toolslist li:first-of-type', 'Create dataset from search'
+    assert_select "a[href='#{CGI::escapeHTML(new_dataset_path(:q => '*:*', :qt => 'precise', :fq => nil))}']"
   end
   
   test "should show advanced search link" do

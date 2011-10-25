@@ -1,0 +1,30 @@
+- content_for :title do
+  = t('.head')
+
+= form_for(@dataset) do |f|
+  - if @dataset.errors.any?
+    %ul{ 'data-role' => 'listview', 'data-theme' => 'e', 'data-divider-theme' => 'e', 'style' => 'margin-bottom: 30px;' }
+      %li= t('.errors', :count => @dataset.errors.count)
+      - @dataset.errors.full_messages.each do |msg|
+        %li= msg
+
+  %div{ 'data-role' => 'fieldcontain' }
+    = f.label :name, Dataset.human_attribute_name('name')
+    = f.text_field :name
+  %div{ 'data-role' => 'fieldcontain' }
+    = label_tag :q, t('.query')
+    = text_field_tag :q, params[:q], :disabled => true
+  %div{ 'data-role' => 'fieldcontain' }
+    = label_tag :qt, t('.query_type')
+    = text_field_tag :qt, params[:qt], :disabled => true
+  %div{ 'data-role' => 'fieldcontain' }
+    = label_tag :fq, t('.facet_query')
+    - unless params[:fq].nil?
+      - fq_value = params[:fq].to_s
+    - else
+      - fq_value = t('.no_facets')
+    = text_field_tag :fq, fq_value, :disabled => true  
+
+  = f.submit t('.submit_label')
+
+= link_to t('.cancel'), user_path, 'data-role' => 'button'

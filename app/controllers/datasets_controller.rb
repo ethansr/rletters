@@ -20,8 +20,34 @@ class DatasetsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @dataset
   end
 
+  # Show the form for creating a new dataset
+  # @api public
+  # @return [undefined]
+  def new
+    @dataset = session[:user].datasets.build
+    render :layout => 'dialog'
+  end
+  
+  # Create a new dataset in the database
+  # @api public
+  # @return [undefined]
   def create
     @dataset = session[:user].datasets.build(params[:dataset])
+    
+    solr_query = {}
+    solr_query[:q] = params[:q]
+    solr_query[:fq] = params[:fq]
+    
+    if params[:qt] == 'precise'
+      solr_query[:qt] = 'dataset_precise'
+    else
+      solr_query[:qt] = 'dataset'
+    end
+    
+    @shasums = Document.find_all_by_solr_query(solr_query, :offset => 0, :limit => 500000)
+    @shasums.each do |d|
+      @dataset.entries.build({ :shasum => d.shasum })
+    end
 
     if @dataset.save
       redirect_to @dataset, :notice => I18n.t('datasets.create.success')
