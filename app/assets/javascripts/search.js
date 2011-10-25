@@ -31,10 +31,14 @@ function destroyCollapsibleList() {
   var facetCollapse = $('div.ui-page-active').find('div.facetcollapse');
   
   if (toolsCollapse.length) {
+    var parent = toolsCollapse.parent();
     toolsCollapse.remove();
+    parent.trigger('updatelayout');
   }
   if (facetCollapse.length) {
+    var parent = facetCollapse.parent();
     facetCollapse.remove();
+    parent.trigger('updatelayout');
   }
 }
 
