@@ -151,4 +151,18 @@ class SearchControllerIndexTest < ActionController::TestCase
     get :index, { :page => "1", :per_page => "20" }
     assert_equal 0, assigns(:documents).count
   end
+  
+  test "should set precise solr params as assign variables" do
+    stub_solr_response :precise_all_docs
+    get :index
+    assert_equal "*:*", assigns(:solr_q)
+    assert_equal "precise", assigns(:solr_qt)
+    assert_nil assigns(:solr_fq)
+  end
+  
+  test "should set faceted solr params as assign for faceted query" do
+    stub_solr_response :precise_facet_author_and_journal
+    get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"', 'journal_facet:"Ethology"' ] }
+    assert_not_nil assigns(:solr_fq)
+  end
 end

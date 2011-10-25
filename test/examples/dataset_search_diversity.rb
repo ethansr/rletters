@@ -1,0 +1,21 @@
+# -*- encoding : utf-8 -*-
+{
+ 'responseHeader'=>{
+  'status'=>0,
+  'QTime'=>21,
+  'params'=>{
+	'explainOther'=>'',
+	'fl'=>'',
+	'indent'=>'on',
+	'start'=>'0',
+	'q'=>'diversity',
+	'hl.fl'=>'',
+	'qt'=>'dataset',
+	'wt'=>'ruby',
+	'fq'=>'',
+	'version'=>'2.2',
+	'rows'=>'10'}},
+ 'response'=>{'numFound'=>1,'start'=>0,'docs'=>[
+	{
+	 'shasum'=>'001954306c066a8a4cff3da02f7e9dda8e0fb634'}]
+ }}

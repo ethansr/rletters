@@ -26,7 +26,14 @@ class SearchController < ApplicationController
     offset = page * per_page
     limit = per_page
 
-    @documents = Document.find_all_by_solr_query(search_params_to_solr_query(params), :offset => offset, :limit => limit)
+    # Expose the precise Solr search so we can use it to create datasets
+    solr_query = search_params_to_solr_query(params)
+    @solr_q = solr_query[:q]
+    @solr_qt = solr_query[:qt]
+    @solr_fq = solr_query[:fq]
+
+    # Get the documents
+    @documents = Document.find_all_by_solr_query(solr_query, :offset => offset, :limit => limit)
   end
   
   # Details of the various formats in which we can export documents
