@@ -1,5 +1,5 @@
 test:
-  adapter: sqlite3
-  database: ":memory:"
-  timeout: 500
-  verbosity: quiet
+  adapter: mysql2
+  database: rletters_test
+  username:
+  encoding: utf8

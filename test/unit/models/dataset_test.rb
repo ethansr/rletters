@@ -13,12 +13,6 @@ class DatasetTest < ActiveSupport::TestCase
     assert !dataset.valid?
   end
   
-  test "dataset with no entries should be invalid" do
-    dataset = datasets(:one)
-    dataset.entries.clear
-    assert !dataset.valid?
-  end
-  
   test "dataset with no user should be invalid" do
     dataset = datasets(:one)
     dataset.user = nil

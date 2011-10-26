@@ -13,11 +13,9 @@
 class Dataset < ActiveRecord::Base
   validates :name, :presence => true
   validates :user_id, :presence => true
-  validates :entries, :length => { :minimum => 1 }
   
   belongs_to :user
-  has_many :entries, :class_name => 'DatasetEntry', :dependent => :delete_all,
-    :autosave => true
+  has_many :entries, :class_name => 'DatasetEntry', :dependent => :delete_all
   
   validates_associated :entries
   

@@ -28,11 +28,15 @@ production:
   password:
   socket: /var/run/mysqld/mysqld.sock
 
-# Define the testing database as in-memory to save testing
-# time, as we don't use any MySQL-specific SQL
+# Unfortunately, you need a MySQL database for testing as well, as
+# we do use MySQL-specific SQL statements.
 test:
-  adapter: sqlite3
-  database: ":memory:"
-  timeout: 500
-  verbosity: quiet
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: rletters_test
+  pool: 5
+  username: root
+  password:
+  socket: /var/run/mysqld/mysqld.sock
 

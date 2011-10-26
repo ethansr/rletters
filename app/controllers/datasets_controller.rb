@@ -52,6 +52,11 @@ class DatasetsController < ApplicationController
   # @return [undefined]
   def create
     @dataset = @user.datasets.build(params[:dataset])
+    if @dataset.save
+      redirect_to @dataset, :notice => I18n.t('datasets.create.success')
+    else
+      redirect_to search_path, :error => I18n.t('datasets.create.failure')
+    end
     
     solr_query = {}
     solr_query[:q] = params[:q]
@@ -63,16 +68,15 @@ class DatasetsController < ApplicationController
       solr_query[:qt] = 'dataset'
     end
     
+    now = DateTime.current.to_formatted_s(:db)
+    inserts = []
+
     @shasums = Document.find_all_by_solr_query(solr_query, :offset => 0, :limit => 500000)
     @shasums.each do |d|
-      @dataset.entries.build({ :shasum => d.shasum })
+      inserts.push "('#{d.shasum}', '#{@dataset.to_param}', '#{now}', '#{now}')"
     end
-
-    if @dataset.save
-      redirect_to @dataset, :notice => I18n.t('datasets.create.success')
-    else
-      redirect_to search_path, :error => I18n.t('datasets.create.failure')
-    end
+    sql = "INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES #{inserts.join(', ')}"
+    ActiveRecord::Base.connection.execute(sql)
   end
 
   # Delete a dataset from the database
