@@ -4,4 +4,4 @@ before_script:
   - "cp config/app_config.yml.dist config/app_config.yml"
   - "cp app/views/datasets/_no_datasets.markdown.dist app/views/datasets/_no_datasets.markdown"
   - "mysql -e 'create database rletters_test;'"
-
+script: "bundle exec rake db:migrate test"
