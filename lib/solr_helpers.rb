@@ -200,10 +200,17 @@ module SolrHelpers
     
     if solr_facets["facet_fields"]
       { "authors_facet" => :authors_facet, "journal_facet" => :journal_facet }.each do |s, f|
-        facets[f] = Hash[*solr_facets["facet_fields"][s].flatten]
+        facet_array = solr_facets["facet_fields"][s].map do |x| 
+          if x.is_a? String
+            x.force_encoding("UTF-8")
+          else
+            x
+          end
+        end
+        facets[f] = Hash[*facet_array.flatten]
       end
     end
-    
+        
     facets
   end
 end
