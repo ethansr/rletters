@@ -7,6 +7,6 @@
     %li{ 'data-role' => 'list-divider' }= t('.num_datasets_found', :count => @datasets.count)
     - @datasets.each do |dataset|
       %li
-        %a{ :href => dataset_path(dataset) }
-          %h3= dataset.name
-          %p Created on WHENEVER goes here
+        = link_to dataset do
+          = dataset.name
+          %span.ui-li-count= dataset.entries.size

@@ -19,6 +19,11 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:datasets)
   end
   
+  test "index should list the one dataset" do
+    get :index
+    assert_select 'ul li a', "Test Dataset\n10"
+  end
+  
   test "should get the new dataset form" do
     get :new
     assert_response :success
