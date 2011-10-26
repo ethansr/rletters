@@ -11,20 +11,13 @@
   %div{ 'data-role' => 'fieldcontain' }
     = f.label :name, Dataset.human_attribute_name('name')
     = f.text_field :name
-  %div{ 'data-role' => 'fieldcontain' }
-    = label_tag :q, t('.query')
-    = text_field_tag :q, params[:q], :disabled => true
-  %div{ 'data-role' => 'fieldcontain' }
-    = label_tag :qt, t('.query_type')
-    = text_field_tag :qt, params[:qt], :disabled => true
-  %div{ 'data-role' => 'fieldcontain' }
-    = label_tag :fq, t('.facet_query')
-    - unless params[:fq].nil?
-      - fq_value = params[:fq].to_s
-    - else
-      - fq_value = t('.no_facets')
-    = text_field_tag :fq, fq_value, :disabled => true  
-
+  
+  = hidden_field_tag :q, params[:q]
+  = hidden_field_tag :qt, params[:qt]
+  - if params[:fq]
+    - params[:fq].each do |fq|
+      = hidden_field_tag :'fq[]', fq
+  
   = f.submit t('.submit_label')
 
 = link_to t('.cancel'), user_path, 'data-role' => 'button'

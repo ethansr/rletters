@@ -21,8 +21,6 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
-    session[:user_id] = nil
-    
     assert_difference('User.count') do
       post :create, :user => { :name => 'New User Test', :email => 'new@user.com', :identifier => 'https://newuser.com', :per_page => 10, :language => 'es-MX' }
     end

@@ -33,7 +33,7 @@ class DatasetsControllerTest < ActionController::TestCase
     get :new, { :q => '*:*', :fq => nil, :qt => 'precise' }
     assert_select "input[name='dataset[name]']"
     assert_select "input[name=q][value='*:*']"
-    assert_select "input[name=fq][value='no search filters']"
+    assert_select "input[name='fq[]']", 0
     assert_select "input[name=qt][value=precise]"
   end
   
