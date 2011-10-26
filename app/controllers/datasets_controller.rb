@@ -15,7 +15,7 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def index
-    @datasets = session[:user].datasets
+    @datasets = @user.datasets
   end
 
   # Show information about the requested dataset
@@ -26,7 +26,7 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def show
-    @dataset = session[:user].datasets.find(params[:id])
+    @dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @dataset
   end
 
@@ -34,7 +34,7 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def new
-    @dataset = session[:user].datasets.build
+    @dataset = @user.datasets.build
     render :layout => 'dialog'
   end
   
@@ -42,7 +42,7 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def delete
-    @dataset = session[:user].datasets.find(params[:id])
+    @dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @dataset
     render :layout => 'dialog'
   end
@@ -51,7 +51,7 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def create
-    @dataset = session[:user].datasets.build(params[:dataset])
+    @dataset = @user.datasets.build(params[:dataset])
     
     solr_query = {}
     solr_query[:q] = params[:q]
@@ -79,13 +79,13 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def destroy
-    @dataset = session[:user].datasets.find(params[:id])
+    @dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @dataset
 
     redirect_to @dataset and return if params[:cancel]
 
     @dataset.destroy
-    session[:user].datasets(true)
+    @user.datasets(true)
 
     redirect_to datasets_path
   end

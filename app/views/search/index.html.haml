@@ -17,7 +17,7 @@
     %li.toolsheader{ 'data-role' => 'list-divider' }= t('.tools')
   %div.verticalpad
   %ul.toolslist{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
-    - if session[:user].nil?
+    - if @user.nil?
       %li{ 'data-theme' => 'e' }= link_to t('.login_prompt'), user_path
     - else
       %li{ 'data-icon' => 'plus' }= link_to t('.create_dataset'), new_dataset_path(:q => @solr_q, :qt => @solr_qt, :fq => @solr_fq), 'data-rel' => 'dialog'

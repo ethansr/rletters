@@ -8,9 +8,24 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   private
-
-  before_filter :set_locale
   
+  before_filter :get_user, :set_locale
+  
+  # Get the user if one is currently logged in
+  #
+  # We must save only the user's ID, as packing the +datasets+ value into the
+  # session table is a big problem.  This filter looks up the user
+  # automatically on every page load and saves it as +@user+.  
+  # Do not disable it!
+  #
+  # @api private
+  # @return [undefined]
+  def get_user
+    @user = nil
+    return if session[:user_id].nil?
+    @user = User.find(session[:user_id])
+  end
+
   # Set the locale if the user is logged in
   #
   # This function is called as a =before_filter= in all controllers, you do
@@ -20,10 +35,10 @@ class ApplicationController < ActionController::Base
   # @api private
   # @return [undefined]
   def set_locale
-    if session[:user].nil?
+    if @user.nil?
       I18n.locale = I18n.default_locale
     else
-      I18n.locale = session[:user].language.to_sym
+      I18n.locale = @user.language.to_sym
     end
   end
 
@@ -38,7 +53,7 @@ class ApplicationController < ActionController::Base
   # @example Require login for the "index" action of a controller
   #   before_filter :login_required, :only => [ :index ]
   def login_required
-    if session[:user].nil?
+    if @user.nil?
       redirect_to user_path, :rel => :external, :notice => I18n.t('all.login_warning')
     end
   end

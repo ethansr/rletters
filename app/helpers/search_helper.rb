@@ -234,10 +234,10 @@ module SearchHelper
   #   document_bibliography_entry(Document.new(:authors => 'W. Johnson', :year => '2000'))
   #   # "Johnson, W. 2000. ..."
   def document_bibliography_entry(doc)
-    if session[:user].nil? || session[:user].csl_style == ''
+    if @user.nil? || @user.csl_style == ''
       render :partial => 'document', :locals => { :document => doc }
     else
-      doc.to_csl_entry(session[:user].csl_style)
+      doc.to_csl_entry(@user.csl_style)
     end
   end
 end

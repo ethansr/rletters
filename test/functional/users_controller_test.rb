@@ -6,6 +6,7 @@ SimpleCov.command_name 'test:functionals'
 class UsersControllerTest < ActionController::TestCase
   setup do
     @user = users(:john)
+    session[:user_id] = nil
   end
 
   test "should get show (to login)" do
@@ -20,12 +21,15 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
+    session[:user_id] = nil
+    
     assert_difference('User.count') do
       post :create, :user => { :name => 'New User Test', :email => 'new@user.com', :identifier => 'https://newuser.com', :per_page => 10, :language => 'es-MX' }
     end
 
     assert_redirected_to datasets_path
-    assert_not_nil session[:user]
+    assert_not_nil session[:user_id]
+    assert_not_nil assigns(:user)
   end
 
   # Attempting to POST an invalid user should make the form
@@ -62,17 +66,17 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should update user" do
-    session[:user] = users(:john)
+    session[:user_id] = users(:john).to_param
     post :update, :id => users(:john), :user => { :name => 'Not Johns Name', :email => 'jdoe@gmail.com' }
     
-    assert_equal 0, session[:user].errors.count
+    assert_equal 0, users(:john).errors.count
     
     users(:john).reload
     assert_equal "Not Johns Name", users(:john).name
   end
 
   test "should fail to invalidly update user" do
-    session[:user] = users(:john)
+    session[:user_id] = users(:john).to_param
     post :update, :id => users(:john), :user => { :name => 'John Doe', :email => 'thisisnotan.email' }
 
     assert_response :success
@@ -96,25 +100,26 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should blank user on logout" do
-    session[:user] = users(:john)
+    session[:user_id] = users(:john).to_param
     get :logout
-    assert_nil session[:user]
+    assert_nil session[:user_id]
+    assert_nil assigns(:user)
   end
 
   test "should redirect to search on logout" do
-    session[:user] = users(:john)
+    session[:user_id] = users(:john).to_param
     get :logout
     assert_redirected_to root_url
   end
 
   test "should redirect from logout if not logged in" do
-    session[:user] = nil
+    session[:user_id] = nil
     get :logout
     assert_redirected_to user_path
   end
 
   test "should redirect from update if not logged in" do
-    session[:user] = nil
+    session[:user_id] = nil
     get :update
     assert_redirected_to user_path
   end

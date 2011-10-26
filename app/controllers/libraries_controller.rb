@@ -17,7 +17,7 @@ class LibrariesController < ApplicationController
   # @api public
   # @return [undefined]
   def index
-    @libraries = session[:user].libraries
+    @libraries = @user.libraries
     render :layout => false
   end
   
@@ -26,7 +26,7 @@ class LibrariesController < ApplicationController
   # @return [undefined]
   def new
     @library = Library.new
-    @library.user = session[:user]
+    @library.user = @user
     render :layout => 'dialog'
   end
 
@@ -34,7 +34,7 @@ class LibrariesController < ApplicationController
   # @api public
   # @return [undefined]
   def edit
-    @library = session[:user].libraries.find(params[:id])
+    @library = @user.libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
     render :layout => 'dialog'
   end
@@ -43,7 +43,7 @@ class LibrariesController < ApplicationController
   # @api public
   # @return [undefined]
   def delete
-    @library = session[:user].libraries.find(params[:id])
+    @library = @user.libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
     render :layout => 'dialog'
   end
@@ -53,10 +53,10 @@ class LibrariesController < ApplicationController
   # @return [undefined]
   def create
     @library = Library.new(params[:library])
-    @library.user = session[:user]
+    @library.user = @user
 
     if @library.save
-      session[:user].libraries(true)
+      @user.libraries(true)
       redirect_to user_path, :notice => I18n.t('libraries.create.success')
     else
       render :action => 'new', :layout => 'dialog'
@@ -67,11 +67,11 @@ class LibrariesController < ApplicationController
   # @api public
   # @return [undefined]
   def update
-    @library = session[:user].libraries.find(params[:id])
+    @library = @user.libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
     
     if @library.update_attributes(params[:library])
-      session[:user].libraries(true)
+      @user.libraries(true)
       redirect_to user_path, :notice => I18n.t('libraries.update.success')
     else
       render :action => 'edit', :layout => 'dialog'
@@ -82,13 +82,13 @@ class LibrariesController < ApplicationController
   # @api public
   # @return [undefined]
   def destroy
-    @library = session[:user].libraries.find(params[:id])
+    @library = @user.libraries.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @library
     
     redirect_to user_path and return if params[:cancel]
 
     @library.destroy
-    session[:user].libraries(true)
+    @user.libraries(true)
 
     redirect_to user_path
   end

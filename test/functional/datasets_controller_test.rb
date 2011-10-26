@@ -4,11 +4,11 @@ require 'test_helper'
 class DatasetsControllerTest < ActionController::TestCase
   setup do
     @user = users(:john)
-    session[:user] = @user
+    session[:user_id] = @user.to_param
   end
 
   test "should redirect to users if not logged in" do
-    session[:user] = nil
+    session[:user_id] = nil
     get :index
     assert_redirected_to user_path
   end

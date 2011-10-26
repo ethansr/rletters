@@ -16,8 +16,8 @@
   - unless @document.doi.blank?
     %li= link_to t('.publisher', :doi => @document.doi), "http://dx.doi.org/#{@document.doi}"
   %li{ 'data-role' => 'list-divider' }= t('.library')
-  - if session[:user]
-    - session[:user].libraries.each do |library|
+  - if @user
+    - @user.libraries.each do |library|
       %li= link_to t('.yours') + ' ' + library.name, "#{library.url}#{@document.to_openurl_params}"
   %li= link_to t('.worldcat'), "http://worldcatlibraries.org/registry/gateway?#{@document.to_openurl_params}"
   %li= link_to t('.uk_openurl'), "http://openurl.ac.uk/?#{@document.to_openurl_params}"

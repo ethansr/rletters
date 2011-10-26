@@ -3,7 +3,7 @@ require 'test_helper'
 
 class LibrariesControllerTest < ActionController::TestCase
   setup do
-    session[:user] = users(:john)
+    session[:user_id] = users(:john).to_param
     @harvard = users(:john).libraries[0]
   end
   
@@ -58,7 +58,7 @@ class LibrariesControllerTest < ActionController::TestCase
   end
   
   test "should create library" do
-    assert_difference('session[:user].libraries.count') do
+    assert_difference('users(:john).libraries.count') do
       post :create, :library => @harvard.attributes
     end
     
@@ -72,7 +72,7 @@ class LibrariesControllerTest < ActionController::TestCase
   end
   
   test "should destroy library" do
-    assert_difference('session[:user].libraries.count', -1) do
+    assert_difference('users(:john).libraries.count', -1) do
       delete :destroy, :id => @harvard.to_param
     end
     

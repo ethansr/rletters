@@ -53,21 +53,21 @@ class SearchControllerIndexTest < ActionController::TestCase
 
   test "should display document details (chicago format)" do
     stub_solr_response :precise_all_docs
-    session[:user] = users(:john)
+    session[:user_id] = users(:john).to_param
     get :index
     assert_select 'div.leftcolumn ul li:nth-of-type(7)', "Botero, Carlos A., Andrew E. Mudge, Amanda M. Koltz, Wesley M. Hochachka, and Sandra L. Vehrencamp. 2008. “How Reliable are the Methods for Estimating Repertoire Size?”. Ethology 114: 1227-1238."
   end
 
   test "should show login prompt if not logged in" do
     stub_solr_response :standard_empty_search
-    session[:user] = nil
+    session[:user_id] = nil
     get :index
     assert_select 'div.rightcolumn ul.toolslist li[data-theme=e]', 'Log in to analyze results!'
   end
 
   test "should show create-dataset prompt if logged in" do
     stub_solr_response :standard_empty_search
-    session[:user] = users(:john)
+    session[:user_id] = users(:john).to_param
     get :index
     assert_select 'div.rightcolumn ul.toolslist li:first-of-type', 'Create dataset from search'
     assert_select "a[href='#{CGI::escapeHTML(new_dataset_path(:q => '*:*', :qt => 'precise', :fq => nil))}']"
