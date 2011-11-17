@@ -73,7 +73,7 @@ class DatasetsController < ApplicationController
       solr_query[:qt] = 'dataset'
     end
 
-    solr_response = get_solr_response(solr_query)
+    solr_response = self.get_solr_response(solr_query)
     raise ActiveRecord::StatementInvalid unless solr_response["response"]
     raise ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
     raise ActiveRecord::RecordNotFound unless solr_response["response"]["numFound"] > 0
