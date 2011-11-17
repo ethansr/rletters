@@ -82,13 +82,20 @@ class DatasetsController < ApplicationController
     now = DateTime.current.to_formatted_s(:db)
     dataset_id = @dataset.to_param
     
-    inserts = []    
-    solr_response["response"]["docs"].each do |doc|
-      inserts.push "('#{doc["shasum"].force_encoding("UTF-8")}', '#{dataset_id}', '#{now}', '#{now}')"
-    end
+    #inserts = []    
+    #solr_response["response"]["docs"].each do |doc|
+    #  inserts.push "('#{doc["shasum"].force_encoding("UTF-8")}', '#{dataset_id}', '#{now}', '#{now}')"
+    #end
+    #
+    #sql = "INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES #{inserts.join(', ')}"
     
-    sql = "INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES #{inserts.join(', ')}"
-    ActiveRecord::Base.connection.execute(sql)
+    tail = "'#{dataset_id}', '#{now}', '#{now}'"
+    
+    sql = 'INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES '
+    solr_response["response"]["docs"].each do |doc|
+      sql << "('#{doc["shasum"].force_encoding("UTF-8")}', #{tail}),"
+    end
+    ActiveRecord::Base.connection.execute(sql.chop!())
   end
 
   # Delete a dataset from the database
