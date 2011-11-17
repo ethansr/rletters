@@ -22,7 +22,7 @@ class ActiveSupport::TestCase
   def stub_solr_response(example)
     res = SolrExamples.load(example)
     
-    SolrHelpers.stubs(:get_solr_response).returns(res)
     Document.stubs(:get_solr_response).returns(res)
+    DatasetsController.stubs(:get_solr_response).returns(res)
   end
 end
