@@ -20,6 +20,9 @@ class ActiveSupport::TestCase
 
   # Stub out the Solr connection with the contents of an example file
   def stub_solr_response(example)
-    Document.stubs(:get_solr_response).returns(SolrExamples.load(example))
+    res = SolrExamples.load(example)
+    
+    SolrHelpers.stubs(:get_solr_response).returns(res)
+    Document.stubs(:get_solr_response).returns(res)
   end
 end

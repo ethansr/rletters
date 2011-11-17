@@ -3,6 +3,29 @@
 # Code for parsing Solr's Ruby response format
 module SolrHelpers
   
+  # Return the Solr response for the given query
+  #
+  # This function makes sure that any exceptions that may be raised by RSolr
+  # are caught and handled.  This method cannot be tested, we stub it out
+  # to deal with the absence of a Solr server.
+  #
+  # @api private
+  # @param [Hash] params Solr query parameters
+  # @return [Hash] Solr search result
+  #:nocov:
+  def get_solr_response(query)
+    begin
+      solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
+      ret = solr.get('select', :params => query)
+    rescue Exception
+      ret = {}
+    end
+
+    ret
+  end
+  #:nocov:
+  
+  
   # Parse the term vector array format returned by Solr
   #
   # Example of the Solr term vector format:

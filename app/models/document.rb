@@ -38,7 +38,7 @@ class Document
   def delete; raise ActiveRecord::ReadOnlyRecord; end
 
 
-  # Bring in some helpers for parsing Solr's syntax
+  # Bring in some helpers for dealing with Solr
   extend SolrHelpers
 
   # Serialization methods
@@ -84,28 +84,6 @@ class Document
     raise ActiveRecord::RecordNotFound if set.empty?
     set[0]
   end
-
-  # Return the Solr response for the given query
-  #
-  # This function makes sure that any exceptions that may be raised by RSolr
-  # are caught and handled.  This method cannot be tested, we stub it out
-  # to deal with the absence of a Solr server.
-  #
-  # @api private
-  # @param [Hash] params Solr query parameters
-  # @return [Hash] Solr search result
-  #:nocov:
-  def self.get_solr_response(query)
-    begin
-      solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
-      ret = solr.get('select', :params => query)
-    rescue Exception
-      ret = {}
-    end
-
-    ret
-  end
-  #:nocov:
 
   # Find a set of documents using a direct Solr query
   #
