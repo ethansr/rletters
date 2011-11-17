@@ -59,6 +59,8 @@ class DatasetsController < ApplicationController
     end
     
     solr_query = {}
+    solr_query[:start] = 0
+    solr_query[:rows] = 500000
     solr_query[:q] = params[:q]
     solr_query[:fq] = params[:fq]
     
@@ -67,14 +69,21 @@ class DatasetsController < ApplicationController
     else
       solr_query[:qt] = 'dataset'
     end
+
+    solr_response = SolrHelpers.get_solr_response(solr_query)
+    raise ActiveRecord::StatementInvalid unless solr_response["response"]
+    raise ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
+    raise ActiveRecord::RecordNotFound unless solr_response["response"]["numFound"] > 0
+    raise ActiveRecord::StatementInvalid unless solr_response["response"]["docs"]
     
     now = DateTime.current.to_formatted_s(:db)
-    inserts = []
-
-    @shasums = Document.find_all_by_solr_query(solr_query, :offset => 0, :limit => 500000)
-    @shasums.each do |d|
-      inserts.push "('#{d.shasum}', '#{@dataset.to_param}', '#{now}', '#{now}')"
+    dataset_id = @dataset.to_param
+    
+    inserts = []    
+    solr_response["response"]["docs"].each do |doc|
+      inserts.push "('#{doc["shasum"].force_encoding("UTF-8")}', '#{dataset_id}', '#{now}', '#{now}')"
     end
+    
     sql = "INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES #{inserts.join(', ')}"
     ActiveRecord::Base.connection.execute(sql)
   end
