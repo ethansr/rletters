@@ -10,6 +10,9 @@
 # @see Dataset
 class DatasetsController < ApplicationController
   before_filter :login_required
+  
+  # This controller connects to Solr directly for speed
+  extend SolrHelpers
 
   # Show all of the current user's datasets
   # @api public
@@ -70,7 +73,7 @@ class DatasetsController < ApplicationController
       solr_query[:qt] = 'dataset'
     end
 
-    solr_response = SolrHelpers.get_solr_response(solr_query)
+    solr_response = get_solr_response(solr_query)
     raise ActiveRecord::StatementInvalid unless solr_response["response"]
     raise ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
     raise ActiveRecord::RecordNotFound unless solr_response["response"]["numFound"] > 0
