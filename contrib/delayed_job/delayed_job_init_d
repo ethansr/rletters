@@ -1,0 +1,30 @@
+#! /bin/sh
+
+if [ `id -u` -ne 0 ]; then
+        echo "You need root privileges to run this script"
+        exit 1
+fi
+
+WEBAPP_USER="your_username"
+WEBAPP_ROOT="/var/webapps/your_webapp_path"
+
+case "$1" in
+  start)
+        echo -n "Starting delayed_job: "
+                su -c "cd $WEBAPP_ROOT && /usr/bin/env HOME=/home/$WEBAPP_USER RAILS_ENV=production PATH=/usr/local/bin:$PATH bundle exec script/delayed_job start" - $WEBAPP_USER >> $WEBAPP_ROOT/log/delayed_job.log 2>&1
+        echo "done."
+        ;;
+  stop)
+        echo -n "Stopping delayed_job: "
+                su -c "cd $WEBAPP_ROOT && /usr/bin/env HOME=/home/$WEBAPP_USER RAILS_ENV=production PATH=/usr/local/bin:$PATH bundle exec script/delayed_job stop" - $WEBAPP_USER >> $WEBAPP_ROOT/log/delayed_job.log 2>&1
+        echo "done."
+        ;;
+      *)
+            N=/etc/init.d/delayed_job
+            echo "Usage: $N {start|stop}" >&2
+            exit 1
+            ;;
+    esac
+
+    exit 0
+

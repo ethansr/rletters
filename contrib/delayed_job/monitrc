@@ -1,0 +1,13 @@
+check file delayed_job_sh with path /var/webapps/your_webapp_path/script/delayed_job
+   group www
+   if failed checksum then unmonitor
+   if failed permission 755 then unmonitor
+   if failed uid evoadmin then unmonitor
+   if failed gid evoadmin then unmonitor
+
+check process delayed_job with pidfile /var/webapps/your_webapp_path/tmp/pids/delayed_job.pid
+   group www
+   start program = "/etc/init.d/delayed_job start" with timeout 60 seconds
+   stop program = "/etc/init.d/delayed_job stop"
+   if 5 restarts within 5 cycles then timeout
+   depends on delayed_job_sh
