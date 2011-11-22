@@ -191,8 +191,8 @@ en:
   libraries:
     delete:
       head: "Are you sure you want to delete this library link?"
-      yes: "Yes"
-      no: "No"
+      "yes": "Yes"
+      "no": "No"
     edit:
       head: "Edit library link"
       cancel: "Cancel"
@@ -260,5 +260,5 @@ en:
       delete: "Delete this dataset"
     delete:
       head: "Are you sure you want to delete this dataset?"
-      yes: "Yes"
-      no: "No"
+      "yes": "Yes"
+      "no": "No"
