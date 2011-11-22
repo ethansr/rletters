@@ -1,15 +1,23 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li{ 'data-role' => 'list-divider' }= t('.head', :app_name => APP_CONFIG['app_name'])
-  %li= t('.intro', :app_name => APP_CONFIG['app_name'])
-  %li
-    = link_to :controller => 'info', :action => 'faq' do
-      %h3= t('.faq_header')
-      %p= t('.faq_text', :app_name => APP_CONFIG['app_name'])
-  %li
-    = link_to(user_path) do
-      %h3= t('.account_header')
-      %p= t('.account_text', :app_name => APP_CONFIG['app_name'])
-  %li
-    = link_to :controller => 'info', :action => 'privacy' do
-      %h3= t('.privacy_header')
-      %p= t('.privacy_text', :app_name => APP_CONFIG['app_name'])
+  - if params.has_key? :first_time
+    %li
+      = link_to '#' do
+        %h3= t('.tutorial_header')
+        %p= t('.tutorial_text', :app_name => APP_CONFIG['app_name'])
+
+%div{ 'data-role' => 'collapsible', 'data-content-theme' => 'c' }
+  %h3= t('.help')
+  %ul{ 'data-role' => 'listview', 'data-inset' => 'true' }
+    %li
+      = link_to :controller => 'info', :action => 'faq' do
+        %h3= t('.faq_header')
+        %p= t('.faq_text', :app_name => APP_CONFIG['app_name'])
+    %li
+      = link_to(user_path) do
+        %h3= t('.account_header')
+        %p= t('.account_text', :app_name => APP_CONFIG['app_name'])
+    %li
+      = link_to :controller => 'info', :action => 'privacy' do
+        %h3= t('.privacy_header')
+        %p= t('.privacy_text', :app_name => APP_CONFIG['app_name'])

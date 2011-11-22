@@ -222,10 +222,12 @@ en:
       failure: "Could not update library link!"
   info:
     index:
-      head: "%{app_name} information"
-      intro: >
-        Need help using %{app_name}?  Want to know more about what this 
-        is all about?  You're in the right place.
+      head: "%{app_name}"
+      tutorial_header: Welcome!
+      tutorial_text: >
+        Welcome to %{app_name}.  To get started, click here to view our
+        tutorial.
+      help: More information and help
       faq_header: "Frequently asked questions"
       faq_text: >
         See a list of commonly asked questions about and problems 
