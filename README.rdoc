@@ -7,8 +7,7 @@
 
 RLetters provides support for the following web and library standards:
 
--   {unAPI}[http://unapi.info] for automatic bibliographic data retrieval
-    from individual documents
+-   {unAPI}[http://unapi.info] for automatic bibliographic data retrieval from individual documents
 -   {WorldCat OpenURL Registry}[http://www.oclc.org/developer/services/worldcat-registry] for detection of the OpenURL resolver of the user's local library
 
 And you can export bibliographic data in the following standard formats:
@@ -22,6 +21,13 @@ And you can export bibliographic data in the following standard formats:
 -   {BibTeX}[http://www.ctan.org/pkg/bibtex]
 -   {EndNote (ENW format)}[http://www.endnote.com/]
 -   {Reference Manager (RIS format)}[http://www.refman.com/support/risformat_intro.asp]
+
+=== Cutting-edge development and maintenance tools
+
+RLetters doesn't leave your developers out in the cold, either.  We've got support for the following features that make development, deployment, maintenance, and monitoring easier:
+
+-   Continuous integration support with {Travis}[http://travis-ci.org/]
+-   Baked-in support for error reporting using {Airbrake}[http://airbrake.io/] (account registration required)
 
 
 == Installation
@@ -48,6 +54,8 @@ Set up the required configuration files:
 User login for RLetters uses the external {Janrain Engage}[http://www.janrain.com/products/engage] service, which allows users to log in through Google, Facebook, LinkedIn, and a number of other third-party services.  For user login to work properly, you will need to create a Janrain Engage account at their website (free for less than 2,500 users per year, which should be more than enough for an academic resource like RLetters).  Once you've created an account, click "Sign-In for Websites" on the right-hand side, and configure your login widget.  Under "Application Settings," make sure to add your deployment URL to the Domain Whitelist.  Add a link to your privacy policy ((YOUR URL)/info/privacy), and your favicon.  Now open <tt>config/app_config.yml</tt>.  The value for <tt>janrain_appname</tt> is the subdomain under Application Domain (e.g., for rletters.rpxnow.com, the <tt>janrain_appname</tt> is <tt>rletters</tt>).  Copy the value for "App ID" as <tt>janrain_appid</tt>, and the value for "API Key (Secret)" as <tt>janrain_secret</tt>.
 
 If you would like your users to be able to search for document results on {Mendeley}[http://www.mendeley.com], you will need to visit the {Mendeley Developers Portal}[http://dev.mendeley.com] and register your application.  Take the value of your "Consumer Key" and paste it into <tt>config/app_config.yml</tt> as <tt>mendeley_key</tt>.
+
+If you have an {Airbrake}[http://airbrake.io/] account, take your Airbrake API key (available under "Edit this Project" in the Airbrake main window) and copy its value into <tt>config/app_config.yml</tt> as <tt>airbrake_key</tt>.
 
 Obviously, make sure to secure your <tt>config/app_config.yml</tt> file.
 
