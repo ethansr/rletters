@@ -33,7 +33,7 @@ group :assets do
   gem 'therubyracer'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '= 1.0.15'
 gem 'jquery_mobile-rails', '1.0'
 
 group :test do
