@@ -3,6 +3,7 @@ require 'test_helper'
 
 class InfoControllerTest < ActionController::TestCase
   test "should get index" do
+    stub_solr_response :precise_one_doc
     get :index
     assert_response :success
   end

@@ -13,11 +13,13 @@ class InfoController < ApplicationController
   # This controller will query the Solr database to get some nice statistics
   # for our index page.
   def index
+    solr_query = {}
     solr_query[:q] = '*:*'
     solr_query[:qt] = 'precise'
     solr_query[:rows] = 5
     solr_query[:start] = 0
-    solr_response = get_solr_response(solr_query)
+    
+    solr_response = InfoController.get_solr_response(solr_query)
     
     if (solr_response["response"] && solr_response["response"]["numFound"])
       @database_size = solr_response["response"]["numFound"]
