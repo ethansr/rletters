@@ -17,7 +17,7 @@
         %p= t('.account_text', :app_name => APP_CONFIG['app_name'])
     %li{ 'data-role' => 'list-divider' }= t('.dbinfo')
     %li= t('.dbsize', :count => @database_size)
-    %li= t('.all_datasets', :count => Datasets.count)
+    %li= t('.all_datasets', :count => Dataset.count)
 
 %div.verticalpad
 
