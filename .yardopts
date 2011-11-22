@@ -1,12 +1,11 @@
 --protected
 --private
---main README.rdoc
+--main README.md
 --charset utf-8
 --title 'RLetters API Documentation'
---exclude '^lib/yard/.*'
 --plugin rails
 app/**/*.rb
 lib/**/*.rb
 -
-README.rdoc
+README.md
 COPYING
