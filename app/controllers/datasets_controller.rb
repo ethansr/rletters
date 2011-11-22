@@ -54,7 +54,7 @@ class DatasetsController < ApplicationController
     Delayed::Job.enqueue Jobs::CreateDataset.new(@user.to_param, 
       params[:dataset][:name], params[:q], params[:fq], params[:qt])
     
-    redirect_to :index, :notice => I18n.t('datasets.create.building')
+    redirect_to datasets_path, :notice => I18n.t('datasets.create.building')
   end
 
   # Delete a dataset from the database
