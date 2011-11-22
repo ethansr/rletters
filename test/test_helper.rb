@@ -22,7 +22,9 @@ class ActiveSupport::TestCase
   def stub_solr_response(example)
     res = SolrExamples.load(example)
     
+    # Make sure to stub everywhere that extends SolrHelpers!
+    # FIXME: Can we somehow just stub the SolrHelpers method?!
     Document.stubs(:get_solr_response).returns(res)
-    DatasetsController.stubs(:get_solr_response).returns(res)
+    Jobs::CreateDataset.stubs(:get_solr_response).returns(res)
   end
 end

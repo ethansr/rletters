@@ -10,6 +10,8 @@ all_environments: &all_environments
   
   mendeley_key: ""
   
+  airbrake_key: ""
+  
   solr_server_url: http://localhost:8080/solr
   
   available_csl_styles:

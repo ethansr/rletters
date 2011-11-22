@@ -1,3 +1,7 @@
+# Load the application config, as we're doing some loading of gems based on
+# whether or not you specify your secret API keys
+APP_CONFIG = YAML.load_file(File.join(Dir.pwd, 'config', 'app_config.yml'))["all_environments"]
+
 source 'http://rubygems.org'
 
 gem 'rails', '~> 3.1.0'
@@ -44,7 +48,10 @@ end
 gem 'yard'
 gem 'yard-rails'
 gem 'yardstick'
-gem 'grit'
+
+unless APP_CONFIG['airbrake_key'].nil? || APP_CONFIG['airbrake_key'].empty?
+  gem 'airbrake'
+end
 
 gem 'magic_encoding'
 

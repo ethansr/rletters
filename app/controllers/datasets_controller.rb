@@ -11,9 +11,6 @@
 class DatasetsController < ApplicationController
   before_filter :login_required
   
-  # This controller connects to Solr directly for speed
-  extend SolrHelpers
-
   # Show all of the current user's datasets
   # @api public
   # @return [undefined]
@@ -54,48 +51,10 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def create
-    @dataset = @user.datasets.build(params[:dataset])
-    if @dataset.save
-      redirect_to @dataset, :notice => I18n.t('datasets.create.success')
-    else
-      redirect_to search_path, :error => I18n.t('datasets.create.failure')
-    end
+    Delayed::Job.enqueue Jobs::CreateDataset.new(@user.to_param, 
+      params[:dataset][:name], params[:q], params[:fq], params[:qt])
     
-    solr_query = {}
-    solr_query[:start] = 0
-    solr_query[:rows] = 500000
-    solr_query[:q] = params[:q]
-    solr_query[:fq] = params[:fq]
-    
-    if params[:qt] == 'precise'
-      solr_query[:qt] = 'dataset_precise'
-    else
-      solr_query[:qt] = 'dataset'
-    end
-
-    solr_response = DatasetsController.get_solr_response(solr_query)
-    raise ActiveRecord::StatementInvalid unless solr_response["response"]
-    raise ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
-    raise ActiveRecord::RecordNotFound unless solr_response["response"]["numFound"] > 0
-    raise ActiveRecord::StatementInvalid unless solr_response["response"]["docs"]
-    
-    now = DateTime.current.to_formatted_s(:db)
-    dataset_id = @dataset.to_param
-    
-    #inserts = []    
-    #solr_response["response"]["docs"].each do |doc|
-    #  inserts.push "('#{doc["shasum"].force_encoding("UTF-8")}', '#{dataset_id}', '#{now}', '#{now}')"
-    #end
-    #
-    #sql = "INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES #{inserts.join(', ')}"
-    
-    tail = "'#{dataset_id}', '#{now}', '#{now}'"
-    
-    sql = 'INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES '
-    solr_response["response"]["docs"].each do |doc|
-      sql << "('#{doc["shasum"].force_encoding("UTF-8")}', #{tail}),"
-    end
-    ActiveRecord::Base.connection.execute(sql.chop!())
+    redirect_to :index, :notice => I18n.t('datasets.create.building')
   end
 
   # Delete a dataset from the database

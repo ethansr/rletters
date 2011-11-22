@@ -252,8 +252,7 @@ en:
       submit_label: "Save dataset"
       cancel: "Cancel"
     create:
-      success: "Dataset was successfully created."
-      failure: "Could not save dataset!"
+      building: "Now building dataset, please wait..."
     show:
       head: "Information for dataset"
       num_entries: "Number of documents: %{count}"

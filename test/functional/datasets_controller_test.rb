@@ -36,38 +36,7 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_select "input[name='fq[]']", 0
     assert_select "input[name=qt][value=precise]"
   end
-  
-  test "should create dataset from precise_all" do
-    stub_solr_response :dataset_precise_all
-    assert_difference('users(:john).datasets.count') do
-      post :create, { :dataset => { :name => 'Test Dataset' }, 
-        :q => '*:*', :fq => nil, :qt => 'precise' }
-    end
     
-    assert_redirected_to dataset_path(assigns(:dataset))
-  end
-
-  test "should create dataset from precise_with_facet_koltz" do
-    stub_solr_response :dataset_precise_with_facet_koltz
-    assert_difference('users(:john).datasets.count') do
-      post :create, { :dataset => { :name => 'Test Dataset' }, 
-        :q => '*:*', :fq => ['authors_facet:"Amanda M. Koltz"'], 
-        :qt => 'precise' }
-    end
-    
-    assert_redirected_to dataset_path(assigns(:dataset))
-  end
-  
-  test "should create dataset from search_diversity" do
-    stub_solr_response :dataset_search_diversity
-    assert_difference('users(:john).datasets.count') do
-      post :create, { :dataset => { :name => 'Test Dataset' }, 
-        :q => 'diversity', :fq => nil, :qt => 'standard' }
-    end
-    
-    assert_redirected_to dataset_path(assigns(:dataset))
-  end
-  
   test "should show dataset" do
     get :show, :id => datasets(:one).to_param
     assert_response :success
