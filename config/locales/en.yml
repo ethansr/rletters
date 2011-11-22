@@ -1,6 +1,6 @@
 en:
   all:
-    help_account_button: "Help / Account"
+    home_button: "Home"
     search_button: "Search / Browse"
     datasets_button: "Datasets"
     login_warning: "You must be logged in to view this page."

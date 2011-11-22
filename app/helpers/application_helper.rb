@@ -16,6 +16,7 @@ module ApplicationHelper
   #   <ul id='footer'><%= render_footer_list %></ul>
   def render_footer_list
     footer_buttons = [
+      { :controller => 'info', :text => I18n.t('all.home_button'), :icon => 'home' },
       { :controller => 'search', :text => I18n.t('all.search_button'), :icon => 'search' },
       { :controller => 'datasets', :text => I18n.t('all.datasets_button'), :icon => 'grid' },
     ]

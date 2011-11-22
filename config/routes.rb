@@ -43,5 +43,5 @@ RLetters::Application.routes.draw do
 
   # Start off on the search page (it's the part you can
   # do without being logged in)
-  root :to => 'search#index'
+  root :to => 'info#index'
 end
