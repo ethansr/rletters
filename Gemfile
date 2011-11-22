@@ -8,6 +8,7 @@ gem 'rails', '~> 3.1.3'
 gem 'mysql2'
 
 gem 'delayed_job'
+gem 'whenever', :require => false
 
 gem 'rails-i18n'
 

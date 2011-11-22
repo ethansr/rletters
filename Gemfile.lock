@@ -35,6 +35,7 @@ GEM
       builder
     arel (2.2.1)
     builder (3.0.0)
+    chronic (0.6.5)
     citeproc-ruby (0.0.2)
       logging (~> 1.5)
       nokogiri (~> 1.4)
@@ -161,6 +162,9 @@ GEM
     webmock (1.7.8)
       addressable (~> 2.2, > 2.2.5)
       crack (>= 0.1.7)
+    whenever (0.7.0)
+      activesupport (>= 2.3.4)
+      chronic (~> 0.6.3)
     yard (0.7.3)
     yard-rails (0.2.0)
       yard
@@ -200,6 +204,7 @@ DEPENDENCIES
   therubyracer
   uglifier
   webmock
+  whenever
   yard
   yard-rails
   yardstick
