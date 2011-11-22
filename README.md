@@ -7,7 +7,7 @@
 [travis]: http://travis-ci.org/cpence/rletters
 [travis_img]: http://travis-ci.org/cpence/rletters.png
 
-**Homepage:** [http://charlespence.net/rletters](http://charlespence.net/rletters})
+**Homepage:** [http://charlespence.net/rletters](http://charlespence.net/rletters})  
 **Git:** [http://github.com/cpence/rletters](http://github.com/cpence/rletters)  
 **Author:** Charles Pence  
 **Contributors:** See Contributors section below  
