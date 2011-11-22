@@ -21,6 +21,14 @@ module Jobs
     extend SolrHelpers
     
     # Check the response from Solr for a host of common errors
+    #
+    # This method will throw if the Solr response is not valid.
+    #
+    # @api private
+    # @return [undefined]
+    # @example Check that we have a good Solr response
+    #   solr_response = SolrHandlers.get_solr_response(...)
+    #   # Will have thrown if the response is not valid
     def check_solr_response(solr_response)
       raise StandardError, 'Unknown error in Solr response' unless solr_response["response"]
       raise StandardError, 'Unknown error in Solr response' unless solr_response["response"]["numFound"]
@@ -28,7 +36,13 @@ module Jobs
       raise StandardError, 'Unknown error in Solr response' unless solr_response["response"]["docs"]
     end
     
-    # Perform the job
+    # Create a dataset for the user
+    #
+    # @api public
+    # @return [undefined]
+    # @example Start a job for creating a dataset
+    #   Delayed::Job.enqueue Jobs::CreateDataset.new(users(:john).to_param, 
+    #     'Test Dataset', '*:*', ['authors_facet:"Shatner"'], 'precise')
     def perform
       # Fetch the user based on ID
       user = User.find(user_id)
@@ -95,6 +109,13 @@ module Jobs
     end
     
     # Report any exceptions to Airbrake, if it's enabled
+    #
+    # This method is a callback that is invoked by Delayed::Job.
+    #
+    # @param [Delayed::Job] job The job currently being run
+    # @param [StandardError] exception The exception raised to cause the error
+    # @api private
+    # @return [undefined]
     def error(job, exception)
       unless APP_CONFIG['airbrake_key'].blank?
         Airbrake.notify(exception)

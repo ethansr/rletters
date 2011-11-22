@@ -1,5 +1,13 @@
 = RLetters {<img src="http://stillmaintained.com/cpence/rletters.png" />}[http://stillmaintained.com/cpence/rletters] {<img src="http://travis-ci.org/cpence/rletters.png" />}[http://travis-ci.org/cpence/rletters] 
 
+**Homepage:** [http://charlespence.net/rletters]{http://charlespence.net/rletters}
+**Git:** [http://github.com/cpence/rletters]{http://github.com/cpence/rletters}
+**Author:** Charles Pence
+**Contributors:** See Contributors section below
+**Copyright:** 2011
+**License:** MIT License
+**Latest Version:** (still in private beta)
+**Release Date:** (still in private beta)
 
 == Features
 
@@ -26,6 +34,7 @@ And you can export bibliographic data in the following standard formats:
 
 RLetters doesn't leave your developers out in the cold, either.  We've got support for the following features that make development, deployment, maintenance, and monitoring easier:
 
+-   Source well-documented using {Yard}[http://yardoc.org]
 -   Continuous integration support with {Travis}[http://travis-ci.org/]
 -   Baked-in support for error reporting using {Airbrake}[http://airbrake.io/] (account registration required)
 
@@ -78,3 +87,15 @@ Now you've got some images to customize.
 - Finally, <tt>public/favicon.ico</tt>, the standard favorite icon.
 
 If you'd like, you can update the {humans.txt}[http://humanstxt.org] file at <tt>public/humans.txt</tt>.
+
+== Contributors
+
+Special thanks to all contributors for submitting patches. A full list of
+contributors including their patches can be found at: 
+
+https://github.com/cpence/rletters/contributors
+
+== Copyright
+
+RLetters &copy; 2011 by [Charles Pence](mailto:charles@charlespence.net). RLetters is licensed under the MIT license. Please see the {file:LICENSE} document for more information.
+

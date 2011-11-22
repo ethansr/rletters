@@ -12,6 +12,9 @@ class InfoController < ApplicationController
   #
   # This controller will query the Solr database to get some nice statistics
   # for our index page.
+  #
+  # @api public
+  # @return [undefined]
   def index
     solr_query = {}
     solr_query[:q] = '*:*'
