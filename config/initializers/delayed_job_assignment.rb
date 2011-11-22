@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 # Whitelist the attributes for delayed_job
 ActiveRecord::Base.send(:attr_accessible, :priority)
