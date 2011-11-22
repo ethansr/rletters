@@ -3,9 +3,11 @@
 .sass-cache/
 .yardoc/
 
+Capfile
 app/assets/images/
 config/app_config.yml
 config/database.yml
+config/deploy.rb
 db/*.sqlite3
 doc/
 test/coverage/

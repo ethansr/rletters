@@ -1,0 +1,22 @@
+
+base:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  username: root
+  password: <%= Capistrano::CLI.password_prompt("Enter MySQL database root password: ") %>
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  database: <%= application %>_development
+  <<: *base
+
+production:
+  database: <%= application %>_production
+  <<: *base
+
+test:
+  database: <%= application %>_test
+  <<: *base
+
