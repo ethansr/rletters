@@ -4,7 +4,7 @@ APP_CONFIG = YAML.load_file(File.join(Dir.pwd, 'config', 'app_config.yml'))["all
 
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.1.0'
+gem 'rails', '~> 3.1.3'
 gem 'mysql2'
 
 gem 'delayed_job'
@@ -25,8 +25,8 @@ gem 'haml-rails'
 gem 'maruku'
 
 group :assets do
-  gem 'sass-rails', "~> 3.1.0"
-  gem 'coffee-rails', "~> 3.1.0"
+  gem 'sass-rails', "~> 3.1.5"
+  gem 'coffee-rails', "~> 3.1.1"
 
   gem 'uglifier'
   gem 'execjs'
