@@ -1,6 +1,6 @@
 # Load the application config, as we're doing some loading of gems based on
 # whether or not you specify your secret API keys
-APP_CONFIG = YAML.load_file(File.join(Dir.pwd, 'config', 'app_config.yml'))["all_environments"]
+APP_CONFIG = YAML.load_file(File.join(Dir.pwd, 'config', 'app_config.yml'))["all_environments"] unless ENV['TRAVIS']
 
 source 'http://rubygems.org'
 
@@ -49,7 +49,7 @@ gem 'yard'
 gem 'yard-rails'
 gem 'yardstick'
 
-unless APP_CONFIG['airbrake_key'].nil? || APP_CONFIG['airbrake_key'].empty?
+unless ENV['TRAVIS'] || APP_CONFIG['airbrake_key'].nil? || APP_CONFIG['airbrake_key'].empty?
   gem 'airbrake'
 end
 
