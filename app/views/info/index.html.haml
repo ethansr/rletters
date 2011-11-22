@@ -10,7 +10,7 @@
     %li= link_to t('.login'), user_path
   - else
     %li= link_to t('.search'), search_path
-    %li= link_to t('.datasets', :count => @user.datasets), datasets_path
+    %li= link_to t('.datasets', :count => @user.datasets.count), datasets_path
     %li
       = link_to user_path do
         %h3= t('.account_header')
@@ -19,6 +19,7 @@
     %li= t('.dbsize', :count => @database_size)
     %li= t('.all_datasets', :count => Dataset.count)
 
+%div.verticalpad
 %div.verticalpad
 
 %div{ 'data-role' => 'collapsible', 'data-content-theme' => 'c' }
