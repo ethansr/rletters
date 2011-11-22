@@ -37,11 +37,11 @@ RLetters::Application.routes.draw do
   match 'info' => 'info#index', :via => :get
   match 'info/faq' => 'info#faq', :via => :get
   match 'info/privacy' => 'info#privacy', :via => :get
+  match 'info/tutorial' => 'info#tutorial', :via => :get
 
   # unAPI service
   match 'unapi' => 'unapi#index', :via => :get
 
-  # Start off on the search page (it's the part you can
-  # do without being logged in)
+  # Start off on the info/home page
   root :to => 'info#index'
 end

@@ -227,7 +227,19 @@ en:
       tutorial_text: >
         Welcome to %{app_name}.  To get started, click here to view our
         tutorial.
-      help: More information and help
+      search: "Search or browse the database"
+      login: "Create an account or log in to analyze results"
+      datasets:
+        one: "You have one dataset"
+        other: "You have %{count} datasets"
+      dbinfo: "Database information"
+      dbsize:
+        one: "The database contains one document"
+        other: "The database contains %{count} documents"
+      all_datasets:
+        one: "Users have saved a total of one dataset"
+        other: "Users have saved a total of %{count} datasets"
+      help: "More information and help"
       faq_header: "Frequently asked questions"
       faq_text: >
         See a list of commonly asked questions about and problems 

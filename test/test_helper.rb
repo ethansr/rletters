@@ -25,6 +25,7 @@ class ActiveSupport::TestCase
     # Make sure to stub everywhere that extends SolrHelpers!
     # FIXME: Can we somehow just stub the SolrHelpers method?!
     Document.stubs(:get_solr_response).returns(res)
+    InfoController.stubs(:get_solr_response).returns(res)
     Jobs::CreateDataset.stubs(:get_solr_response).returns(res)
   end
 end

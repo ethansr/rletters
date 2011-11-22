@@ -5,5 +5,23 @@
 # This controller displays static information, such as the RLetters help, FAQ,
 # and privacy policy.
 class InfoController < ApplicationController
+  # We run a Solr query to get information to put on the index page
+  extend SolrHelpers
+  
+  # Query some Solr parameters for the index page
+  #
+  # This controller will query the Solr database to get some nice statistics
+  # for our index page.
+  def index
+    solr_query[:q] = '*:*'
+    solr_query[:qt] = 'precise'
+    solr_query[:rows] = 5
+    solr_query[:start] = 0
+    solr_response = get_solr_response(solr_query)
+    
+    if (solr_response["response"] && solr_response["response"]["numFound"])
+      @database_size = solr_response["response"]["numFound"]
+    end
+  end
 end
 
