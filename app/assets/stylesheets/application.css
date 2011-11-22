@@ -5,6 +5,7 @@
 */
 
 .verticalpad { margin-top: 14px; margin-bottom: 14px; }
+.doublepad { margin-top: 28px; margin-bottom: 28px; }
 
 ul.longlist .ui-li-desc, li.longlist .ui-li-desc {
   /* HACK: This relies on internal jQM font sizes! */
