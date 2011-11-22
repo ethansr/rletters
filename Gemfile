@@ -3,6 +3,8 @@ source 'http://rubygems.org'
 gem 'rails', '~> 3.1.0'
 gem 'mysql2'
 
+gem 'delayed_job'
+
 gem 'rails-i18n'
 
 gem 'rpx_now'
@@ -28,7 +30,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'jquery_mobile-rails', '1.0rc2'
+gem 'jquery_mobile-rails', '1.0'
 
 group :test do
   gem 'test-unit', :require => false
