@@ -103,5 +103,5 @@ https://github.com/cpence/rletters/contributors
 
 ## Copyright ##
 
-RLetters &copy; 2011 by [Charles Pence](mailto:charles@charlespence.net). RLetters is licensed under the MIT license. Please see the {file:LICENSE} document for more information.
+RLetters &copy; 2011 by [Charles Pence](mailto:charles@charlespence.net). RLetters is licensed under the MIT license. Please see the {file:COPYING} document for more information.
 
