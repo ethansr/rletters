@@ -13,6 +13,7 @@ public/assets/
 public/favicon.ico
 public/images/
 tmp/
+vendor/bundle
 
 app/views/datasets/_no_datasets.markdown
 
