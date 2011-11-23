@@ -1,0 +1,21 @@
+
+unless Capistrano::Configuration.respond_to?(:instance)
+  abort "This extension requires Capistrano 2"
+end
+
+Capistrano::Configuration.instance.load do
+
+  # The name of your application (lowercase/simple)
+  set :application, "rletters"
+
+  # Your application servers
+  role :web, "rletters.not.a.site"
+  role :app, "rletters.not.a.site"
+  role :db,  "rletters.not.a.site", :primary => true
+
+  # Deployment path and users
+  set :deploy_to, "/var/webapps/rletters"
+  set :user, "rails"
+  #set :use_sudo, false
+
+end
