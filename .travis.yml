@@ -1,7 +1,7 @@
 rvm: 1.9.2
 before_script:
   - "cp config/database.yml.travis config/database.yml"
-  - "cp config/app_config.yml.dist config/app_config.yml"
+  - "cp config/app_config.yml.travis config/app_config.yml"
   - "cp app/views/datasets/_no_datasets.markdown.dist app/views/datasets/_no_datasets.markdown"
   - "mysql -e 'create database rletters_test;'"
 script: "bundle exec rake db:migrate test"

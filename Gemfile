@@ -1,17 +1,13 @@
-# Load the application config, as we're doing some loading of gems based on
-# whether or not you specify your secret API keys
-APP_CONFIG = YAML.load_file(File.join(Dir.pwd, 'config', 'app_config.yml'))["all_environments"] unless ENV['TRAVIS']
-
 source 'http://rubygems.org'
 
 gem 'rails', '~> 3.1.3'
+gem 'rails-i18n'
 gem 'mysql2'
 
 gem 'capistrano'
 gem 'delayed_job'
 gem 'whenever', :require => false
-
-gem 'rails-i18n'
+gem 'airbrake'
 
 gem 'rpx_now'
 
@@ -26,6 +22,9 @@ gem 'haml'
 gem 'haml-rails'
 gem 'maruku'
 
+gem 'jquery-rails', '= 1.0.15'
+gem 'jquery_mobile-rails', '1.0'
+
 group :assets do
   gem 'sass-rails', "~> 3.1.5"
   gem 'coffee-rails', "~> 3.1.1"
@@ -35,25 +34,19 @@ group :assets do
   gem 'therubyracer'
 end
 
-gem 'jquery-rails', '= 1.0.15'
-gem 'jquery_mobile-rails', '1.0'
-
 group :test do
   gem 'test-unit', :require => false
   gem 'mocha', :require => false
   gem 'webmock'
-  gem 'sqlite3'
+  
   gem 'simplecov', '>= 0.4.0', :require => false
   gem 'nokogiri'
+  
+  gem 'yardstick'
 end
 
-gem 'yard'
-gem 'yard-rails'
-gem 'yardstick'
-
-unless ENV['TRAVIS'] || APP_CONFIG['airbrake_key'].nil? || APP_CONFIG['airbrake_key'].empty?
-  gem 'airbrake'
+group :development do
+  gem 'yard'
+  gem 'yard-rails'
+  gem 'magic_encoding'
 end
-
-gem 'magic_encoding'
-
