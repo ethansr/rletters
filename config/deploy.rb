@@ -28,8 +28,6 @@ set :deploy_via, :remote_cache
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
-set :rails_env, "production"
-
 # Your local application configuration
 require 'deploy_config'
 require 'passenger'

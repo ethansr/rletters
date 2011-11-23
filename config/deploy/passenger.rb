@@ -5,7 +5,9 @@ end
 
 Capistrano::Configuration.instance.load do
 
-  # Touch the restart file when we restart the application
+  # Touch the restart file when we restart the application.  You can comment
+  # out the reference to this file in deploy.rb if you aren't using
+  # Passenger.
   namespace :deploy do
     task :start do ; end
     task :stop do ; end
