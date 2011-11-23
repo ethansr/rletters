@@ -4,8 +4,8 @@ all_environments: &all_environments
   app_email: <%= Capistrano::CLI.ui.ask("Enter developer e-mail: ") %>
   app_domain: <%= Capistrano::CLI.ui.ask("Enter application domain: ") %>
   
-  janrain_appname: <%= application %>
-  janrain_appid: <%= Capistrano::CLI.ui.ask("Enter Janrain app ID: ") %>
+  janrain_appname: <%= Capistrano::CLI.ui.ask("Enter Janrain application name: ") %>
+  janrain_appid: <%= Capistrano::CLI.ui.ask("Enter Janrain application ID: ") %>
   janrain_secret: <%= Capistrano::CLI.ui.ask("Enter Janrain secret: ") %>
   
   mendeley_key: "<%= Capistrano::CLI.ui.ask("Enter Mendeley key: ") %>"

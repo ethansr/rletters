@@ -1,10 +1,18 @@
 # -*- encoding : utf-8 -*-
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'deploy')
 
-# Gem recipes (Bundler, Whenever)
+# Gem recipes (Bundler, whenever, delayed_job)
 require 'bundler/capistrano'
+
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
+
+require "delayed/recipes"
+before "deploy:restart", "delayed_job:stop"
+after "deploy:restart", "delayed_job:start"
+
+after "deploy:stop", "delayed_job:stop"
+after "deploy:start", "delayed_job:start"
 
 # Local recipes
 require 'capistrano_database'
@@ -19,6 +27,8 @@ set :deploy_via, :remote_cache
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
+
+set :rails_env, "production"
 
 # Your local application configuration
 require 'deploy_config'
