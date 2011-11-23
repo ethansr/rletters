@@ -13,8 +13,6 @@ doc/
 test/coverage/
 log/*.log
 public/assets/
-public/favicon.ico
-public/images/
 tmp/
 vendor/bundle
 
