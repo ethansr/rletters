@@ -8,6 +8,6 @@ every 1.hours do
 end
 
 every :reboot do
-  env_command "script/delayed_job"
+  env_command "script/delayed_job start"
 end
 
