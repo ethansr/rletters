@@ -5,6 +5,6 @@ every 1.hours do
 end
 
 every :reboot do
-  envcommand 'script/delayed_job restart'
+  command "cd :path && RAILS_ENV=:environment script/delayed_job start"
 end
 
