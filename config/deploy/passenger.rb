@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 unless Capistrano::Configuration.respond_to?(:instance)
   abort "This extension requires Capistrano 2"
