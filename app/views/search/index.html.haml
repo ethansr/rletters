@@ -3,6 +3,9 @@
     %li{ 'data-role' => 'list-divider' }= num_results_string
     %li.search
       = form_tag(search_path, :method => :get, 'data-transition' => 'none') do
+        - if params[:fq]
+          - params[:fq].each do |p|
+            = hidden_field_tag "fq[]", p
         = label_tag :q, t('.placeholder'), :class => 'ui-hidden-accessible'
         = search_field_tag :q, (params[:precise] ? t('.adv_search_placeholder') : params[:q]), :placeholder => t('.placeholder')
     - @documents.each do |d|
