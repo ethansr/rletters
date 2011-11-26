@@ -23,7 +23,7 @@ Capistrano::Configuration.instance.load do
       run "mkdir -p #{shared_path}/static_text"
       
       Dir.glob('app/views/static/*.markdown.dist') do |file|
-        md_file = basename(file, '.dist')
+        md_file = File.basename(file, '.dist')
         
         unless remote_file_exists? "#{shared_path}/static_text/#{md_file}"
           run "cp #{release_path}/#{file} #{shared_path}/static_text/#{md_file}"
