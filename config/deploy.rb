@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'deploy')
 
+
 # Gem recipes (Bundler, whenever, delayed_job)
 require 'bundler/capistrano'
 
@@ -15,6 +16,7 @@ after "deploy:stop", "delayed_job:stop"
 after "deploy:start", "delayed_job:start"
 
 # Local recipes
+require 'remote_file'
 require 'capistrano_database'
 require 'app_config'
 require 'static_assets'

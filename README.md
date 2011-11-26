@@ -87,12 +87,14 @@ Finally, execute `cap deploy:start` and fire up your new RLetters installation i
 
 ### Customize some static content ###
 
-The only thing remaining is to customize some static content -- images and text -- that is shipped with RLetters.  First, several files have some long-format text about your application that you'll want to customize.
+The only thing remaining is to customize some static content -- images and text -- that is shipped with RLetters.  All of the following content is placed in the `DEPLOY_PATH/shared` directory.  The first time you deploy to a new server, sample data for all the following images is installed, replace this data with customized versions for your site.
 
--   `app/views/info/_privacy_short.markdown` and `app/views/info/_privacy_long.markdown`:  We've filled this in with a pretty good default privacy policy for the default settings of RLetters.  If you change the way that you interact with your users, you should update this privacy policy.
--   `app/views/datasets/_no_datasets.markdown`: This message is displayed to users when they log in for the first time (and don't have any datasets).  You'll want to customize it to tell users a little more about your application.
+-   `static_text/_privacy_short.markdown` and `static_text/_privacy_long.markdown`:  We've filled this in with a pretty good default privacy policy for the default settings of RLetters.  If you change the way that you interact with your users, you should update this privacy policy.
+-   `static_text/_about.markdown`:  A general "about this application" page for your application.
+-   `static_text/_faq.markdown`:  A page of frequently asked questions for your application.  This file ships with a few default questions that users are likely to ask about the framework in general.
+-   `static_text/_tutorial.markdown`:  A tutorial that introduces your application to users.  A nice tutorial would show users how the search and datasets pages work, and then provide a few examples of searches and analyses that provide interesting results.
 
-Now you've got some images to customize.  You can start by copying the `shared_assets` directory from the RLetters `contrib` directory over to your server.  This directory should be located at `DEPLOY_PATH/shared/static_assets`, and it contains the following images:
+A handful of images, then, are stored in the `static_assets` directory:
 
 -   `static_assets/error-watermark.png`: This is an image shown in the bottom-left corner of the site's error pages.  Something like 500x300 pixels is a good size for this image.
 -   Now, the iOS splash images and icons:

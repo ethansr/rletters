@@ -4,10 +4,6 @@ unless Capistrano::Configuration.respond_to?(:instance)
   abort "This extension requires Capistrano 2"
 end
 
-def remote_file_exists?(full_path)
-  'true' ==  capture("if [ -e #{full_path} ]; then echo 'true'; fi").strip
-end
-
 Capistrano::Configuration.instance.load do
 
   namespace :rletters do
