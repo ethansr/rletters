@@ -9,8 +9,8 @@ all_environments: &all_environments
   janrain_secret: 12341234
   
   mendeley_key: ""
-  
   airbrake_key: ""
+  google_analytics_key: ""
   
   solr_server_url: http://localhost:8080/solr
   
