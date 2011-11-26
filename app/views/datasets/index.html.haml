@@ -1,10 +1,10 @@
-  %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-    %li{ 'data-role' => 'list-divider' }= t('.num_datasets_found', :count => @datasets.count)
-    - unless @datasets.count
-      %li{ 'data-theme' => 'e' }= t('.no_datasets')
-    - else
-      - @datasets.each do |dataset|
-        %li
-          = link_to dataset do
-            = dataset.name
-            %span.ui-li-count= dataset.entries.size
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+  %li{ 'data-role' => 'list-divider' }= t('.num_datasets_found', :count => @datasets.count)
+  - unless @datasets.count
+    %li{ 'data-theme' => 'e' }= t('.no_datasets')
+  - else
+    - @datasets.each do |dataset|
+      %li
+        = link_to dataset do
+          = dataset.name
+          %span.ui-li-count= dataset.entries.size

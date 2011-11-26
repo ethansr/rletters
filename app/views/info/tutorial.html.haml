@@ -1,4 +1,5 @@
 %ul.longlist{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li
     %h2= t('.head', :app_name => APP_CONFIG['app_name'])
+  %li= render_static_partial 'tutorial'
 

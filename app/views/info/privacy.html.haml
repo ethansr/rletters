@@ -1,5 +1,5 @@
 %ul.longlist{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li
     %h2= t('.head')
-  %li= render :partial => 'static/privacy_short'
-  %li= render :partial => 'static/privacy_long'
+  %li= render_static_partial 'privacy_short'
+  %li= render_static_partial 'privacy_long'
