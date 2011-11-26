@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'test_helper'
 
-class CreateDatasetTest < ActionController::TestCase
+class CreateDatasetTest < ActiveSupport::TestCase
   test "should create dataset from precise_all" do
     stub_solr_response :dataset_precise_all
     assert_difference('users(:john).datasets.count') do

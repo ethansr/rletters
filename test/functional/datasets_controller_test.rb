@@ -52,11 +52,5 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should destroy dataset" do
-    assert_difference('users(:john).datasets.count', -1) do
-      delete :destroy, :id => datasets(:one).to_param
-    end
-
-    assert_redirected_to datasets_path
-  end
+  # FIXME: Should figure out how to test the DJ tasks here (create, destroy)
 end
