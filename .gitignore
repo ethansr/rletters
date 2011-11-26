@@ -15,5 +15,4 @@ public/assets/
 tmp/
 vendor/bundle
 
-app/views/datasets/_no_datasets.markdown
-
+app/views/static/*.markdown

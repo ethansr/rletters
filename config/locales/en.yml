@@ -252,12 +252,19 @@ en:
       privacy_text: "How we use the information we collect from you."
     privacy:
       head: "Privacy Policy"
+    about:
+      head: "About %{app_name}"
+    tutorial:
+      head: "Tutorial"
+    faq:
+      head: "Frequently Asked Questions"
   datasets:
     index:
       num_datasets_found:
         zero: "no datasets found"
         one: "1 dataset found"
         other: "%{count} datasets found"
+      no_datasets: "No datasets"
     new:
       head: "Create a new dataset"      
       errors:
