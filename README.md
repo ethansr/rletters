@@ -87,7 +87,7 @@ Finally, execute `cap deploy:start` and fire up your new RLetters installation i
 
 ### Customize some static content ###
 
-The only thing remaining is to customize some static content -- images and text -- that is shipped with RLetters.  All of the following content is placed in the `DEPLOY_PATH/shared` directory.  The first time you deploy to a new server, sample data for all the following images is installed, replace this data with customized versions for your site.
+The only thing remaining is to customize some static content -- images and text -- that is shipped with RLetters.  All of the following content is placed in the `DEPLOY_PATH/shared` directory.  The first time you deploy to a new server, sample data for all the following images and text is installed; replace this data with customized versions for your site.
 
 -   `static_text/_privacy_short.markdown` and `static_text/_privacy_long.markdown`:  We've filled this in with a pretty good default privacy policy for the default settings of RLetters.  If you change the way that you interact with your users, you should update this privacy policy.
 -   `static_text/_about.markdown`:  A general "about this application" page for your application.
