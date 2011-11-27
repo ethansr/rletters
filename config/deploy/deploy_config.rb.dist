@@ -20,5 +20,6 @@ Capistrano::Configuration.instance.load do
   
   # Rails environment for this server (change for multistaging)
   set :rails_env, "production"
+  set :whenever_environment, 'production'
 
 end
