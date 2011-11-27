@@ -2,7 +2,7 @@
   %li{ 'data-role' => 'list-divider' }= t('.head')
   %li.longlist
     %h3= t('.intro_header')
-    = raw(Maruku.new(t('.intro_markdown')).to_html)
+    = t_md('.intro_markdown')
 
 %div.verticalpad
 

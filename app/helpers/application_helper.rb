@@ -54,4 +54,12 @@ module ApplicationHelper
       render :file => Rails.root.join('app', 'views', 'static', "_#{partial}.markdown.dist")
     end
   end
+  
+  # Fetch a translation and run it through a Markdown parser
+  #
+  # Some translations are stored in the translation database as Markdown
+  # markup.  This helper fetches them and then runs them through Kramdown.
+  def t_md(key)
+    Kramdown::Document.new(I18n.t(key)).to_html.html_safe
+  end
 end

@@ -10,13 +10,13 @@ class MarkdownTemplate
     @@erb_handler ||= ActionView::Template.registered_template_handler(:erb)
   end
 
-  # Run the provided view source through ERB and then Maruku
+  # Run the provided view source through ERB and then Kramdown
   #
   # @api private
   # @param [ActionView::Template] template the template to render
   # @return [String] the code to call to create a Markdown template
   def self.call(template)
     compiled_source = erb_handler.call(template)
-    "erb_source = #{compiled_source}; Maruku::new(erb_source).to_html.html_safe"
+    "erb_source = #{compiled_source}; Kramdown::Document.new(erb_source).to_html.html_safe"
   end
 end

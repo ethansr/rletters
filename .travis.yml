@@ -1,6 +1,10 @@
-rvm: 1.9.2
+rvm:
+  - 1.9.2
+  - 1.9.3
+
 before_script:
   - "cp config/database.yml.travis config/database.yml"
   - "cp config/app_config.yml.travis config/app_config.yml"
   - "mysql -e 'create database rletters_test;'"
+
 script: "bundle exec rake db:migrate test"

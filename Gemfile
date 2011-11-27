@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.1.3'
-gem 'rails-i18n'
+gem 'rails', '~> 3.0'
+gem 'rails-i18n', '= 0.1.11'
 gem 'mysql2'
 
 gem 'capistrano'
@@ -20,14 +20,14 @@ gem 'rdf-n3'
 
 gem 'haml'
 gem 'haml-rails'
-gem 'maruku'
+gem 'kramdown'
 
 gem 'jquery-rails', '= 1.0.15'
 gem 'jquery_mobile-rails', '1.0'
 
 group :assets do
-  gem 'sass-rails', "~> 3.1.5"
-  gem 'coffee-rails', "~> 3.1.1"
+  gem 'sass-rails'
+  gem 'coffee-rails'
 
   gem 'uglifier'
   gem 'execjs'
