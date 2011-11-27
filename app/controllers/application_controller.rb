@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base
     @user = nil
     return if session[:user_id].nil?
     @user = User.find(session[:user_id])
+    
+    # If the user in the session isn't valid, remove the user_id from
+    # the session object
+    if @user.nil?
+      session.delete :user_id
+    end
   end
 
   # Set the locale if the user is logged in
