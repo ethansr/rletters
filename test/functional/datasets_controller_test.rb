@@ -36,6 +36,18 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_select "input[name='fq[]']", 0
     assert_select "input[name=qt][value=precise]"
   end
+  
+  test "should create dataset (DJ)" do
+    stub_solr_response :dataset_precise_all
+    
+    expected_job = Jobs::CreateDataset.new(users(:john).to_param,
+      'Test Dataset', '*:*', nil, 'precise')
+    Delayed::Job.expects(:enqueue).with(expected_job).once
+    
+    post :create, { :dataset => { :name => 'Test Dataset' }, 
+      :q => '*:*', :fq => nil, :qt => 'precise' }
+    assert_redirected_to datasets_path
+  end
     
   test "should show dataset" do
     get :show, :id => datasets(:one).to_param
@@ -52,5 +64,11 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  # FIXME: Should figure out how to test the DJ tasks here (create, destroy)
+  test "should destroy dataset (DJ)" do
+    expected_job = Jobs::DestroyDataset.new(users(:john).to_param, datasets(:one).to_param)
+    Delayed::Job.expects(:enqueue).with(expected_job).once
+    
+    delete :destroy, :id => datasets(:one).to_param
+    assert_redirected_to datasets_path
+  end
 end
