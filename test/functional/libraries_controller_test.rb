@@ -71,6 +71,14 @@ class LibrariesControllerTest < ActionController::TestCase
     assert_redirected_to user_path
   end
   
+  test "cancel should prevent library from being destroyed" do
+    assert_no_difference('users(:john).libraries.count') do
+      delete :destroy, :id => @harvard.to_param, :cancel => true
+    end
+    
+    assert_redirected_to user_path
+  end
+  
   test "should destroy library" do
     assert_difference('users(:john).libraries.count', -1) do
       delete :destroy, :id => @harvard.to_param
