@@ -121,7 +121,12 @@ class UsersControllerTest < ActionController::TestCase
     get :update
     assert_redirected_to user_path
   end
-
-  # We explicitly can't get a functional test for users#rpx, because
-  # there's no way to mock the interaction with the Janrain server.
+  
+  test "should not be able to spoof the session user id" do
+    session[:user_id] = '31337'
+    get :show
+    
+    assert_nil assigns(:user)
+    assert !session.has_key?(:user_id)
+  end
 end

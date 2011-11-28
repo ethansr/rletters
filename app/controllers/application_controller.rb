@@ -23,11 +23,13 @@ class ApplicationController < ActionController::Base
   def get_user
     @user = nil
     return if session[:user_id].nil?
-    @user = User.find(session[:user_id])
     
-    # If the user in the session isn't valid, remove the user_id from
-    # the session object
-    if @user.nil?
+    # Don't throw a 404 if someone tries to spoof the user_id, just
+    # chomp it silently
+    begin
+      @user = User.find(session[:user_id])
+    rescue ActiveRecord::RecordNotFound
+      @user = nil
       session.delete :user_id
     end
   end
