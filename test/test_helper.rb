@@ -3,8 +3,19 @@ ENV["RAILS_ENV"] = "test"
 
 require 'simplecov'
 if ENV["COVERAGE"]
-  SimpleCov.start 'rails' do
-    coverage_dir('test/coverage')
+  SimpleCov.start do
+    add_filter '/test/'
+    add_filter '/config/'
+    add_filter '/db/'
+    add_filter '/vendor/bundle/'
+    
+    add_group 'Models', '/app/models/'
+    add_group 'Controllers', '/app/controllers/'
+    add_group 'Mailers', '/app/mailers/'
+    add_group 'Helpers', '/app/helpers/'
+    add_group 'Libraries', '/lib/'
+    
+    coverage_dir('/test/coverage/')
   end
 end
 
