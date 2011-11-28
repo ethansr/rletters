@@ -61,6 +61,8 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def destroy
+    @dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @dataset
     redirect_to @dataset and return if params[:cancel]
 
     Delayed::Job.enqueue Jobs::DestroyDataset.new(@user.to_param, params[:id])

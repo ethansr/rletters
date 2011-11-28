@@ -63,6 +63,13 @@ class DatasetsControllerTest < ActionController::TestCase
     get :delete, :id => datasets(:one).to_param
     assert_response :success
   end
+  
+  test "destroy cancel button should work" do
+    Delayed::Job.expects(:enqueue).never
+    delete :destroy, :id => datasets(:one).to_param, :cancel => true
+    
+    assert_redirected_to dataset_path(datasets(:one))
+  end
 
   test "should destroy dataset (DJ)" do
     expected_job = Jobs::DestroyDataset.new(users(:john).to_param, datasets(:one).to_param)
