@@ -19,7 +19,7 @@ class UnapiController < ApplicationController
   def index
     if params[:id]
       if params[:format]
-        if SearchController::EXPORT_FORMATS.has_key? params[:format]
+        if Document.serializers.has_key? params[:format]
           redirect_to :controller => 'search', :action => 'show', :id => params[:id], :format => params[:format]
         else
           render :file => Rails.root.join('public', '404.html'), :layout => false, :status => 406

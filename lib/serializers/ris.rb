@@ -4,6 +4,13 @@ module Serializers
   
   # Convert a document to a RIS record
   module RIS
+    
+    # Register this serializer in the Document list
+    def self.included(base)
+      base.register_serializer(:ris, lambda { |doc| doc.to_ris },
+        'http://www.refman.com/support/risformat_intro.asp')
+    end
+    
     # Returns this document as a RIS record
     #
     # @api public

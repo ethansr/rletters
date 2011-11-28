@@ -4,6 +4,21 @@ module Serializers
   
   # Convert a document to a MARC record
   module MARC
+    
+    # Register this serializer in the Document list
+    def self.included(base)
+      base.register_serializer(:marc, lambda { |doc| doc.to_marc },
+        'http://www.loc.gov/marc/')
+      base.register_serializer(:marcxml, lambda { |doc|
+            xml = doc.to_marc_xml
+            ret = ''
+            xml.write(ret, 2)
+            ret },
+        'http://www.loc.gov/standards/marcxml/')
+      base.register_serializer(:json, lambda { |doc| doc.to_marc_json }, 
+        'http://www.oclc.org/developer/content/marc-json-draft-2010-03-11')
+    end
+    
     # Returns this document as a MARC::Record object
     #
     # Support for individual-article MARC records is spotty at best -- this is

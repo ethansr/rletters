@@ -36,56 +36,11 @@ class SearchController < ApplicationController
     @documents = Document.find_all_by_solr_query(solr_query, :offset => offset, :limit => limit)
   end
   
-  # Details of the various formats in which we can export documents
-  #
-  # This is a hash with the following format:
-  #   :mime_type_tag => {
-  #     :method => lambda { |doc| doc.to_whatever }, # doc is a Document, should return String
-  #     :docs => 'http://www.google.com/' # documentation for format (for unAPI)
-  #   },
-  EXPORT_FORMATS = {
-    :marc => { 
-      :method => lambda { |doc| doc.to_marc }, 
-      :docs => 'http://www.loc.gov/marc/' },
-    :json => { 
-      :method => lambda { |doc| doc.to_marc_json }, 
-      :docs => 'http://www.oclc.org/developer/content/marc-json-draft-2010-03-11' },
-    :marcxml => { 
-      :method => lambda { |doc|
-          xml = doc.to_marc_xml
-          ret = ''
-          xml.write(ret, 2)
-          ret
-        }, :docs => 'http://www.loc.gov/standards/marcxml/'},
-    :bibtex => { 
-      :method => lambda { |doc| doc.to_bibtex }, 
-      :docs => 'http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxdoc.pdf' },
-    :endnote => { 
-      :method => lambda { |doc| doc.to_endnote },
-      :docs => 'http://auditorymodels.org/jba/bibs/NetBib/Tools/bp-0.2.97/doc/endnote.html' },
-    :ris => {
-      :method => lambda { |doc| doc.to_ris },
-      :docs => 'http://www.refman.com/support/risformat_intro.asp' },
-    :mods => {
-      :method => lambda { |doc|
-        xml = doc.to_mods
-        ret = ''
-        xml.write(ret, 2)
-        ret
-      }, :docs => 'http://www.loc.gov/standards/mods/' },
-    :rdf => {
-      :method => lambda { |doc| doc.to_rdf_xml },
-      :docs => 'http://www.w3.org/TR/rdf-syntax-grammar/' },
-    :n3 => {
-      :method => lambda { |doc| doc.to_rdf_n3 },
-      :docs => 'http://www.w3.org/DesignIssues/Notation3.html' }
-  }
-  
   # Show or export an individual document
   #
   # This action is content-negotiated: if you request the page for a document
-  # with any of the MIME types specified in +EXPORT_FORMATS+, you will get
-  # a citation export back, as a download.
+  # with any of the MIME types specified in +Document.serializers+, you 
+  # will get a citation export back, as a download.
   #
   # @api public
   # @return [undefined]
@@ -94,8 +49,8 @@ class SearchController < ApplicationController
 
     respond_to do |format|
       format.html { render }
-      format.any(*EXPORT_FORMATS.keys) { 
-        f = EXPORT_FORMATS[request.format.to_sym]
+      format.any(*Document.serializers.keys) { 
+        f = Document.serializers[request.format.to_sym]
         send_file f[:method].call(@document), "export.#{request.format.to_sym.to_s}", request.format.to_s
         return
       }

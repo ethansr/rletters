@@ -41,6 +41,39 @@ class Document
   # Bring in some helpers for dealing with Solr
   extend SolrHelpers
 
+
+  # Registration for all serializers
+  #
+  # This variable is a hash of hashes.  For its format, see the documentation
+  # for register_serializer.
+  #
+  # @see Document.register_serializer
+  @@serializers = {}
+  
+  # Access the serializer registry
+  #
+  # @api public
+  # @return [Hash] the serializer registry
+  # @example See if there is a serializer loaded for JSON
+  #   Document.serializers.has_key? :json
+  def self.serializers; @@serializers; end
+  
+  # Register a serializer
+  #
+  # @api public
+  # @return [undefined]
+  # @param [Symbol] key the MIME type key for this serializer, as defined
+  #   in config/initializers/mime_types.rb
+  # @param [Proc] method a method which accepts a Document object as a 
+  #   parameter and returns the serialized document as a String
+  # @param [String] docs a URL pointing to documentation for this method
+  # @example Register a serializer for JSON
+  #   Document.register_serializer :json, lambda { |doc| doc.to_json },
+  #     'http://www.json.org/'
+  def self.register_serializer(key, method, docs)
+    @@serializers[key] = { :method => method, :docs => docs }
+  end
+
   # Serialization methods
   include Serializers::BibTex
   include Serializers::CSL

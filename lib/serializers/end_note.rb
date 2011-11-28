@@ -4,6 +4,13 @@ module Serializers
   
   # Convert a document to an EndNote record
   module EndNote
+    
+    # Register this serializer in the Document list
+    def self.included(base)
+      base.register_serializer(:endnote, lambda { |doc| doc.to_endnote },
+        'http://auditorymodels.org/jba/bibs/NetBib/Tools/bp-0.2.97/doc/endnote.html')
+    end
+    
     # Returns this document as an EndNote record
     #
     # @api public

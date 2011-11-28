@@ -7,6 +7,15 @@ module Serializers
   
   # Convert a document to an RDF record
   module RDF
+    
+    # Register this serializer in the Document list
+    def self.included(base)
+      base.register_serializer(:rdf, lambda { |doc| doc.to_rdf_xml },
+        'http://www.w3.org/TR/rdf-syntax-grammar/')
+      base.register_serializer(:n3, lambda { |doc| doc.to_rdf_n3 },
+        'http://www.w3.org/DesignIssues/Notation3.html')
+    end
+    
     # Returns this document as a RDF::Graph object
     #
     # For the moment, we provide only metadata items for the basic Dublin

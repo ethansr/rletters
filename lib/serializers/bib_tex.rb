@@ -4,6 +4,13 @@ module Serializers
   
   # Convert a document to a BibTeX record
   module BibTex
+    
+    # Register this serializer in the Document list
+    def self.included(base)
+      base.register_serializer(:bibtex, lambda { |doc| doc.to_bibtex },
+        'http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxdoc.pdf')
+    end
+    
     # Returns this document as a BibTeX record
     #
     # @api public

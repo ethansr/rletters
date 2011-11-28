@@ -3,6 +3,16 @@ module Serializers
   
   # Convert a document to a MARC record
   module MODS
+    
+    # Register this serializer in the Document list
+    def self.included(base)
+      base.register_serializer(:mods, lambda { |doc|
+          xml = doc.to_mods
+          ret = ''
+          xml.write(ret, 2)
+          ret }, 'http://www.loc.gov/standards/mods/')
+    end
+    
     # Returns this document as a MODS XML document
     #
     # By default, this will include the XML namespace declarations in the
