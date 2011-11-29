@@ -35,14 +35,16 @@ module Serializers
     def to_rdf
       graph = ::RDF::Graph.new
       doc = ::RDF::Node.new
-
-      formatted_author_list.each do |a|
-        name = ''
-        name << "#{a[:von]} " unless a[:von].blank?
-        name << "#{a[:last]}"
-        name << " #{a[:suffix]}" unless a[:suffix].blank?
-        name << ", #{a[:first]}"
-        graph << [doc, ::RDF::DC.creator, name]
+      
+      unless formatted_author_list.nil?
+        formatted_author_list.each do |a|
+          name = ''
+          name << "#{a[:von]} " unless a[:von].blank?
+          name << "#{a[:last]}"
+          name << " #{a[:suffix]}" unless a[:suffix].blank?
+          name << ", #{a[:first]}"
+          graph << [doc, ::RDF::DC.creator, name]
+        end
       end
       graph << [doc, ::RDF::DC.issued, year] unless year.blank?
 

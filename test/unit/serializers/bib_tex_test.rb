@@ -17,6 +17,17 @@ class BibTexTest < ActiveSupport::TestCase
     assert str.include? "year = {2008}"
   end
   
+  test "should create cite keys for anonymous articles" do
+    stub_solr_response(:precise_one_doc)
+    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    doc.instance_variable_set(:@author, nil)
+    doc.instance_variable_set(:@author_list, nil)
+    doc.instance_variable_set(:@formatted_author_list, nil)
+    
+    str = doc.to_bibtex
+    assert str.start_with? "@article{Anon2008,"
+  end
+  
   test "should create BibTeX for array" do
     stub_solr_response(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')

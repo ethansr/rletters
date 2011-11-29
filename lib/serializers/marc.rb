@@ -62,14 +62,14 @@ module Serializers
           ['2', 'doi'], ['a', doi]))
       end
 
-      unless authors.blank?
+      unless formatted_author_list.nil? || formatted_author_list.count == 0
         record.append(::MARC::DataField.new('100', '1', ' ',
           ::MARC::Subfield.new('a', author_to_marc(formatted_author_list[0]))))
-      end
 
-      formatted_author_list.each do |a|
-        record.append(::MARC::DataField.new('700', '1', ' ',
-          ::MARC::Subfield.new('a', author_to_marc(a))))
+        formatted_author_list.each do |a|
+          record.append(::MARC::DataField.new('700', '1', ' ',
+            ::MARC::Subfield.new('a', author_to_marc(a))))
+        end
       end
 
       unless title.blank?

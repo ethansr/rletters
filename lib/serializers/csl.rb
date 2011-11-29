@@ -27,10 +27,10 @@ module Serializers
       ret = {}
       ret['type'] = 'article-journal'
 
-      if self.formatted_author_list && self.formatted_author_list.count
+      if formatted_author_list && formatted_author_list.count
         ret['author'] = []
      
-        self.formatted_author_list.each do |a|
+        formatted_author_list.each do |a|
           h = {}
           h['given'] = a[:first]
           h['family'] = a[:last]
@@ -41,12 +41,12 @@ module Serializers
         end
       end
       
-      ret['title'] = self.title if self.title
-      ret['container-title'] = self.journal if self.journal
-      ret['issued'] = { 'date-parts' => [[ Integer(self.year) ]] } if self.year
-      ret['volume'] = self.volume if self.volume
-      ret['issue'] = self.number if self.number
-      ret['page'] = self.pages if self.pages
+      ret['title'] = title unless title.blank?
+      ret['container-title'] = journal unless journal.blank?
+      ret['issued'] = { 'date-parts' => [[ Integer(year) ]] } unless year.blank?
+      ret['volume'] = volume unless volume.blank?
+      ret['issue'] = number unless number.blank?
+      ret['page'] = pages unless pages.blank?
 
       ret
     end

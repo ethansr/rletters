@@ -46,7 +46,7 @@ module Serializers
         title_elt.text = title
       end
       
-      unless authors.blank?
+      unless formatted_author_list.nil? || formatted_author_list.count == 0
         formatted_author_list.each do |a|
           name = mods.add_element 'name'
           name.attributes['type'] = 'personal'

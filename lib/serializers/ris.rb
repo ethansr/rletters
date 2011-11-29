@@ -19,12 +19,14 @@ module Serializers
     #   controller.send_data doc.to_ris, :filename => 'export.ris', :disposition => 'attachment'
     def to_ris
       ret  = "TY  - JOUR\n"
-      formatted_author_list.each do |a|
-        ret << "AU  - "
-        ret << "#{a[:von]} " unless a[:von].blank?
-        ret << "#{a[:last]},#{a[:first]}"
-        ret << ",#{a[:suffix]}" unless a[:suffix].blank?
-        ret << "\n"
+      unless formatted_author_list.nil?
+        formatted_author_list.each do |a|
+          ret << "AU  - "
+          ret << "#{a[:von]} " unless a[:von].blank?
+          ret << "#{a[:last]},#{a[:first]}"
+          ret << ",#{a[:suffix]}" unless a[:suffix].blank?
+          ret << "\n"
+        end
       end
       ret << "TI  - #{title}\n" unless title.blank?
       ret << "PY  - #{year}\n" unless year.blank?

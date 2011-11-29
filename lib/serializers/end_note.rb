@@ -19,11 +19,13 @@ module Serializers
     #   controller.send_data doc.to_endnote, :filename => 'export.enw', :disposition => 'attachment'
     def to_endnote
       ret  = "%0 Journal Article\n"
-      formatted_author_list.each do |a|
-        ret << "%A #{a[:last]}, #{a[:first]}"
-        ret << " #{a[:von]}" unless a[:von].blank?
-        ret << ", #{a[:suffix]}" unless a[:suffix].blank?
-        ret << "\n"
+      if formatted_author_list && formatted_author_list.count
+        formatted_author_list.each do |a|
+          ret << "%A #{a[:last]}, #{a[:first]}"
+          ret << " #{a[:von]}" unless a[:von].blank?
+          ret << ", #{a[:suffix]}" unless a[:suffix].blank?
+          ret << "\n"
+        end
       end
       ret << "%T #{title}\n" unless title.blank?
       ret << "%D #{year}\n" unless year.blank?

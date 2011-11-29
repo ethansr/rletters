@@ -20,9 +20,11 @@ module Serializers
       params << "&rft.issue=#{CGI::escape(number)}" unless number.blank?
       params << "&rft.spage=#{CGI::escape(start_page)}" unless start_page.blank?
       params << "&rft.epage=#{CGI::escape(end_page)}" unless end_page.blank?
-      params << "&rft.aufirst=#{CGI::escape(formatted_author_list[0][:first])}" unless formatted_author_list.empty?
-      params << "&rft.aulast=#{CGI::escape(formatted_author_list[0][:last])}" unless formatted_author_list.empty?
-      if author_list.size > 1
+      unless formatted_author_list.nil? || formatted_author_list.count == 0
+        params << "&rft.aufirst=#{CGI::escape(formatted_author_list[0][:first])}"
+        params << "&rft.aulast=#{CGI::escape(formatted_author_list[0][:last])}"
+      end
+      unless author_list.nil? || author_list.count <= 1
         author_list[1...author_list.size].each do |a|
           params << "&rft.au=#{CGI::escape(a)}"
         end
