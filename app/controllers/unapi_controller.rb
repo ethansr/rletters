@@ -17,10 +17,11 @@ class UnapiController < ApplicationController
   # @api public
   # @return [undefined]
   def index
-    if params[:id]
-      if params[:format]
-        if Document.serializers.has_key? params[:format]
-          redirect_to :controller => 'search', :action => 'show', :id => params[:id], :format => params[:format]
+    unless params[:id].blank?
+      unless params[:format].blank?
+        format = params[:format].to_s.to_sym
+        if Document.serializers.has_key? format
+          redirect_to :controller => 'search', :action => 'show', :id => params[:id], :format => format
         else
           render :file => Rails.root.join('public', '404.html'), :layout => false, :status => 406
         end

@@ -88,8 +88,10 @@ class UnapiControllerTest < ActionController::TestCase
     get_unapi true
     @formats.each do |f|
       get_unapi true, f.attributes['name']
-      assert_equal f.attributes['type'], @response.content_type
-      assert_not_equal 0, @response.body.length
+      
+      assert_redirected_to :controller => 'search', :action => 'show', 
+        :id => '00972c5123877961056b21aea4177d0dc69c7318', 
+        :format => f.attributes['name'].to_s
     end
   end
   
