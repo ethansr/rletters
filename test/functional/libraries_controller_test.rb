@@ -123,4 +123,10 @@ class LibrariesControllerTest < ActionController::TestCase
       assert_select "input[value='http://findtext.library.nd.edu:8889/ndu_local?']"
     end
   end
+  
+  test "query page when WorldCat times out" do
+    stub_request(:get, /worldcatlibraries.org\/registry\/lookup.*/).to_timeout
+    get :query
+    assert_select 'form', 0
+  end
 end

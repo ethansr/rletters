@@ -78,4 +78,27 @@ class SearchControllerAdvancedTest < ActionController::TestCase
 
     assert_redirected_to 'http://www.citeulike.org/article/3509563'
   end
+  
+  test "should 404 when Mendeley times out" do
+    # Patch in a temporary Mendeley key
+    APP_CONFIG['mendeley_key'] = 'asdf'
+    
+    stub_request(:get, /api\.mendeley\.com\/oapi\/documents\/search\/title.*/).to_timeout
+    stub_solr_response :precise_one_doc
+    
+    assert_raise ActiveRecord::RecordNotFound do
+      get :to_mendeley, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
+    end
+    
+    APP_CONFIG['mendeley_key'] = ''
+  end
+  
+  test "should 404 when citeulike times out" do
+    stub_request(:get, /www\.citeulike\.org\/json\/search\/all\?.*/).to_timeout
+    stub_solr_response :precise_one_doc
+    
+    assert_raise ActiveRecord::RecordNotFound do
+      get :to_citeulike, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
+    end
+  end
 end
