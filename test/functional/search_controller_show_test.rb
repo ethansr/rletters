@@ -57,4 +57,25 @@ class SearchControllerAdvancedTest < ActionController::TestCase
     get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
     assert_select ".unapi-id"
   end
+  
+  test "should properly parse Mendeley API results" do
+    # Patch in a temporary Mendeley key
+    APP_CONFIG['mendeley_key'] = 'asdf'
+    
+    stub_request(:get, /api\.mendeley\.com\/oapi\/documents\/search\/title.*/).to_return(ResponseExamples.load(:mendeley_response_p1d))
+    stub_solr_response :precise_one_doc
+    get :to_mendeley, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
+    
+    assert_redirected_to 'http://www.mendeley.com/research/how-reliable-are-the-methods-for-estimating-repertoire-size-1/'
+
+    APP_CONFIG['mendeley_key'] = ''
+  end
+  
+  test "should properly parse citeulike API results" do
+    stub_request(:get, /www\.citeulike\.org\/json\/search\/all\?.*/).to_return(ResponseExamples.load(:citeulike_response_p1d))
+    stub_solr_response :precise_one_doc
+    get :to_citeulike, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
+
+    assert_redirected_to 'http://www.citeulike.org/article/3509563'
+  end
 end

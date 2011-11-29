@@ -46,7 +46,7 @@ class CSLTest < ActiveSupport::TestCase
 
   test "should be able to fetch CSL styles over HTTP" do
     stub_solr_response(:precise_one_doc)
-    stub_request(:get, 'https://raw.github.com/citation-style-language/styles/master/science.csl').to_return(ResponseExamples.load(:csl_request_science))
+    stub_request(:get, 'https://raw.github.com/citation-style-language/styles/master/science.csl').to_return(ResponseExamples.load(:csl_response_science))
 
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
     cite = doc.to_csl_entry('https://raw.github.com/citation-style-language/styles/master/science.csl').to_s
