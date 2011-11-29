@@ -5,6 +5,7 @@ class MODSTest < ActiveSupport::TestCase
   test "should create good MODS documents" do
     stub_solr_response(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    doc.instance_variable_set(:@number, '12')
     
     xml = doc.to_mods
     
@@ -15,7 +16,8 @@ class MODSTest < ActiveSupport::TestCase
     assert_equal "2008", xml.elements['mods/originInfo/dateIssued'].text
     assert_equal "Ethology", xml.elements['mods/relatedItem/titleInfo/title'].text
     assert_equal "2008", xml.elements['mods/relatedItem/originInfo/dateIssued'].text
-    assert_equal "114", xml.elements['mods/relatedItem/part/detail/number'].text
+    assert_equal "114", xml.elements['mods/relatedItem/part/detail[@type = "volume"]/number'].text
+    assert_equal "12", xml.elements['mods/relatedItem/part/detail[@type = "issue"]/number'].text
     assert_equal "1227", xml.elements['mods/relatedItem/part/extent/start'].text
     assert_equal "2008", xml.elements['mods/relatedItem/part/date'].text
     assert_equal "10.1111/j.1439-0310.2008.01576.x", xml.elements['mods/identifier'].text
@@ -35,6 +37,7 @@ class MODSTest < ActiveSupport::TestCase
   test "should validate MODS against the schema" do
     stub_solr_response(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    doc.instance_variable_set(:@number, '12')
     
     rexml_doc = doc.to_mods
     xml_str = ''
