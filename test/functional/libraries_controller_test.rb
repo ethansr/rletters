@@ -41,6 +41,16 @@ class LibrariesControllerTest < ActionController::TestCase
     assert_select "input[name='library[url]']"
   end
   
+  test "trying to create an invalid library should show the new form" do
+    assert_no_difference('users(:john).libraries.count') do
+      post :create, :library => { :name => 'bad', :url => 'not##::aurl.asdfwut' }
+    end
+    
+    # Duplicate one of the checks from the previous test to make sure that
+    # we're actually showing the :new form here
+    assert_select "input[name='library[name]']"    
+  end
+  
   test "should get edit library form" do
     get :edit, :id => @harvard.to_param
     assert_response :success
@@ -50,6 +60,18 @@ class LibrariesControllerTest < ActionController::TestCase
     get :edit, :id => @harvard.to_param
     assert_select "input[name='library[name]'][value=Harvard]"
     assert_select "input[name='library[url]'][value='http://sfx.hul.harvard.edu/sfx_local?']"
+  end
+  
+  test "trying to update a library invalidly should show the edit form" do
+    put :update, :id => @harvard.to_param, :library => { :user => users(:john).to_param,
+      :name => 'Woo', :url => 'not##::aurl.asdfwut' }
+    
+    # Check that the update was *not* saved into the database
+    users(:john).libraries(true)
+    assert_equal 'Harvard', users(:john).libraries[0][:name]
+    
+    # Check that the edit form is displayed
+    assert_select "input[name='library[name]'][value=Woo]"
   end
   
   test "should get delete form" do
