@@ -42,11 +42,8 @@
           = radio_button_tag(:journal_type, "exact", false, :id => :journal_type_exact)
           = label_tag(:journal_type_exact, t(:'.type_exact'))
       %div{ 'data-role' => 'fieldcontain' }
-        = label_tag :year_start, t('.year_range_start')
-        = text_field_tag(:year_start, nil, :placeholder => t('.year_placeholder'))
-      %div{ 'data-role' => 'fieldcontain' }
-        = label_tag :year_end, t('.year_range_end')
-        = text_field_tag(:year_end, nil, :placeholder => t('.year_placeholder'))
+        = label_tag :year_ranges, t('.year_ranges')
+        = text_field_tag(:year_ranges, nil, :placeholder => t('.year_ranges_placeholder'))
       %div{ 'data-role' => 'fieldcontain' }
         = label_tag :volume, Document.human_attribute_name('volume')
         = text_field_tag(:volume)

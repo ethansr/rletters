@@ -160,14 +160,29 @@ class SearchController < ApplicationController
       end
 
       # Handle the year separately, for range support
-      if params[:year_start] or params[:year_end]
-        year = params[:year_start]
-        year ||= params[:year_end]
-        if params[:year_start] and params[:year_end]
-          year = "[#{params[:year_start]} TO #{params[:year_end]}]"
+      if params[:year_ranges]
+        # Strip whitespace, split on commas
+        ranges = params[:year_ranges].gsub(/\s/, '').split(',')
+        year_queries = []
+        
+        ranges.each do |r|
+          if r.include? '-'
+            range_years = r.split('-')
+            next unless range_years.count == 2
+            next if range_years[0].match(/\A\d+\z/) == nil
+            next if range_years[1].match(/\A\d+\z/) == nil
+            
+            year_queries << "[#{range_years[0]} TO #{range_years[1]}]"
+          else
+            next if r.match(/\A\d+\z/) == nil
+            
+            year_queries << r
+          end
         end
         
-        query_params[:q] += " year:(#{year})"
+        unless year_queries.empty?
+          query_params[:q] += " year:(#{year_queries.join(" OR ")})"
+        end
       end
 
       # If there's no query after that, add the all-documents operator

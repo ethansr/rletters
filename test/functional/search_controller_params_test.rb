@@ -73,22 +73,34 @@ class SearchControllerParamsTest < ActionController::TestCase
     assert ret[:q].include? 'fulltext_search:(alien)'
   end
 
-  test "should handle only year_start" do
-    params = { :precise => 'true', :year_start => '1900' }
+  test "should handle only single year" do
+    params = { :precise => 'true', :year_ranges => '1900' }
     ret = @controller.search_params_to_solr_query(params)
     assert ret[:q].include? 'year:(1900)'
   end
-
-  test "should handle only year_end" do
-    params = { :precise => 'true', :year_end => '1900' }
-    ret = @controller.search_params_to_solr_query(params)
-    assert ret[:q].include? 'year:(1900)'
-  end
-
+  
   test "should handle year range" do
-    params = { :precise => 'true', :year_start => '1900', :year_end => '1910' }
+    params = { :precise => 'true', :year_ranges => '1900 - 1910' }
     ret = @controller.search_params_to_solr_query(params)
     assert ret[:q].include? 'year:([1900 TO 1910])'
+  end
+  
+  test "should handle multiple single years" do
+    params = { :precise => 'true', :year_ranges => '1900, 1910' }
+    ret = @controller.search_params_to_solr_query(params)
+    assert ret[:q].include? 'year:(1900 OR 1910)'
+  end
+  
+  test "should handle single years with ranges" do
+    params = { :precise => 'true', :year_ranges => '1900, 1910-1920, 1930' }
+    ret = @controller.search_params_to_solr_query(params)
+    assert ret[:q].include? 'year:(1900 OR [1910 TO 1920] OR 1930)'    
+  end
+  
+  test "should reject non-numeric year params" do
+    params = { :precise => 'true', :year_ranges => 'asdf, wut-asf, 1-2-523' }
+    ret = @controller.search_params_to_solr_query(params)
+    assert ret[:q].include?('year:(') == false
   end
 
   test "should correctly copy dismax search" do
