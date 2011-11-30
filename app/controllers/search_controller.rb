@@ -148,7 +148,7 @@ class SearchController < ApplicationController
       query_params[:q] = "#{params[:q]}"
       
       # Verbatim search fields
-      %W(authors volume number pages).each do |f|
+      %W(volume number pages).each do |f|
         query_params[:q] += " #{f}:(#{params[f.to_sym]})" if params[f.to_sym]
       end
 
@@ -157,6 +157,15 @@ class SearchController < ApplicationController
         field = f
         field += "_search" if params[(f + "_type").to_sym] and params[(f + "_type").to_sym] == "fuzzy"
         query_params[:q] += " #{field}:(#{params[f.to_sym]})" if params[f.to_sym]
+      end
+      
+      # Handle the authors separately, for splitting support (authors search
+      # is an AND search, not an OR search)
+      if params[:authors]
+        authors = params[:authors].split(',').map { |a| "\"#{a.strip}\"" }
+        authors_str = authors.join(" AND ")
+        
+        query_params[:q] += " authors:(#{authors_str})"
       end
 
       # Handle the year separately, for range support

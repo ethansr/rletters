@@ -36,7 +36,7 @@ class SearchControllerParamsTest < ActionController::TestCase
     params = { :precise => 'true', :authors => 'W. Shatner', 
       :volume => '30', :number => '5', :pages => '300-301' }
     ret = @controller.search_params_to_solr_query(params)
-    assert ret[:q].include? 'authors:(W. Shatner)'
+    assert ret[:q].include? 'authors:("W. Shatner")'
     assert ret[:q].include? 'volume:(30)'
     assert ret[:q].include? 'number:(5)'
     assert ret[:q].include? 'pages:(300-301)'
@@ -71,6 +71,12 @@ class SearchControllerParamsTest < ActionController::TestCase
     assert ret[:q].include? 'journal_search:(Astrobiology)'
     assert ret[:q].include? 'title_search:(Testing with Spaces)'
     assert ret[:q].include? 'fulltext_search:(alien)'
+  end
+  
+  test "should handle multiple authors correctly" do
+    params = { :precise => 'true', :authors => 'W. Shatner, J. Doe' }
+    ret = @controller.search_params_to_solr_query(params)
+    assert ret[:q].include? 'authors:("W. Shatner" AND "J. Doe")'
   end
 
   test "should handle only single year" do
