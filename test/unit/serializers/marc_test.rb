@@ -79,6 +79,16 @@ class MARCTest < ActiveSupport::TestCase
     assert_equal '2008.', record['362']['a']
   end
   
+  test "should create good MARC records for no-year documents" do
+    stub_solr_response(:precise_one_doc)
+    doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
+    doc.instance_variable_set(:@year, nil)
+    
+    record = doc.to_marc
+    
+    assert_equal '110501s0000       ||||fo     ||0 0|eng d', record['008'].value
+  end
+  
   test "should create good MARCXML collections" do
     stub_solr_response(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')    
