@@ -46,9 +46,7 @@ class LibrariesControllerTest < ActionController::TestCase
       post :create, :library => { :name => 'bad', :url => 'not##::aurl.asdfwut' }
     end
     
-    # Duplicate one of the checks from the previous test to make sure that
-    # we're actually showing the :new form here
-    assert_select "input[name='library[name]']"    
+    assert_template :new
   end
   
   test "should get edit library form" do
@@ -71,7 +69,7 @@ class LibrariesControllerTest < ActionController::TestCase
     assert_equal 'Harvard', users(:john).libraries[0][:name]
     
     # Check that the edit form is displayed
-    assert_select "input[name='library[name]'][value=Woo]"
+    assert_template :edit
   end
   
   test "should get delete form" do
