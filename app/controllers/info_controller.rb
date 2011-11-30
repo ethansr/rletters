@@ -26,6 +26,8 @@ class InfoController < ApplicationController
     
     if (solr_response["response"] && solr_response["response"]["numFound"])
       @database_size = solr_response["response"]["numFound"]
+    else
+      @database_size = 0
     end
   end
 end

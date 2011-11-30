@@ -7,6 +7,12 @@ class InfoControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
+  
+  test "should not fail to get index if Solr returns error" do
+    stub_solr_response :error
+    get :index
+    assert_response :success
+  end
 
   test "should get faq" do
     get :faq

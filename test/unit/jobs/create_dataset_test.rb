@@ -37,4 +37,14 @@ class CreateDatasetTest < ActiveSupport::TestCase
     assert_not_nil dataset
     assert_equal 2300, dataset.entries.count
   end
+  
+  test "should not create dataset if Solr fails" do
+    stub_solr_response :error
+    assert_no_difference('users(:john).datasets.count') do
+      assert_raise do
+        Jobs::CreateDataset.new(users(:john).to_param, 'Test Dataset', 
+          '*:*', nil, 'precise').perform
+      end
+    end
+  end
 end
