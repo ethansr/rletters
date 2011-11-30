@@ -10,6 +10,7 @@ module Jobs
   # @attr [String] user_id The user that owns this dataset
   # @attr [String] dataset_id The id of the dataset to be destroyed
   class DestroyDataset < Struct.new(:user_id, :dataset_id)
+    include Jobs::ErrorHandling
     
     # Destroy a dataset
     #

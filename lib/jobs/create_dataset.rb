@@ -1,8 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-# Code that runs as delayed jobs
-#
-# This namespace contains classes for all code that runs as a delayed job.
 module Jobs
   
   # Create a dataset from a Solr query for a given user
@@ -16,6 +13,7 @@ module Jobs
   # @attr [Array<String>] fq Faceted browsing parameters for this search
   # @attr [String] qt Query type of this search
   class CreateDataset < Struct.new(:user_id, :name, :q, :fq, :qt)
+    include Jobs::ErrorHandling
     
     # We're connecting to Solr, get the connection mechanisms
     extend SolrHelpers
@@ -107,20 +105,5 @@ module Jobs
         raise
       end
     end
-    
-    # Report any exceptions to Airbrake, if it's enabled
-    #
-    # This method is a callback that is invoked by Delayed::Job.
-    #
-    # @param [Delayed::Job] job The job currently being run
-    # @param [StandardError] exception The exception raised to cause the error
-    # @api private
-    # @return [undefined]
-    def error(job, exception)
-      unless APP_CONFIG['airbrake_key'].blank?
-        Airbrake.notify(exception)
-      end
-    end
-  end
-  
+  end  
 end
