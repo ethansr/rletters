@@ -31,12 +31,20 @@ class ActiveSupport::TestCase
 
   # Stub out the Solr connection with the contents of an example file
   def stub_solr_response(example)
-    res = SolrExamples.load(example)
+    # Convert everything to an array
+    if example.is_an? Array
+      examples = example
+    else
+      examples = [ example ]
+    end
+    
+    # Load the example files
+    examples.map! { |e| SolrExamples.load(e) }
     
     # Make sure to stub everywhere that extends SolrHelpers!
     # FIXME: Can we somehow just stub the SolrHelpers method?!
-    Document.stubs(:get_solr_response).returns(res)
-    InfoController.stubs(:get_solr_response).returns(res)
-    Jobs::CreateDataset.stubs(:get_solr_response).returns(res)
+    Document.stubs(:get_solr_response).returns(*examples)
+    InfoController.stubs(:get_solr_response).returns(*examples)
+    Jobs::CreateDataset.stubs(:get_solr_response).returns(*examples)
   end
 end

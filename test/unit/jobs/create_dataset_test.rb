@@ -25,4 +25,16 @@ class CreateDatasetTest < ActiveSupport::TestCase
         'diversity', nil, 'standard').perform
     end
   end
+  
+  test "should create large dataset" do
+    stub_solr_response [ :long_query_one, :long_query_two, :long_query_three ]
+    assert_difference('users(:john).datasets.count') do
+      Jobs::CreateDataset.new(users(:john).to_param, 'Long Dataset',
+        '*:*', nil, 'precise').perform
+    end
+    
+    dataset = users(:john).datasets.find_by_name('Long Dataset')
+    assert_not_nil dataset
+    assert_equal 2300, dataset.entries.count
+  end
 end
