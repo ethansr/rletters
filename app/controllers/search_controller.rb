@@ -162,7 +162,7 @@ class SearchController < ApplicationController
       # Handle the authors separately, for splitting support (authors search
       # is an AND search, not an OR search)
       if params[:authors]
-        authors = params[:authors].split(',').map { |a| "\"#{a.strip}\"" }
+        authors = params[:authors].split(',').map { |a| "#{NameHelpers.name_to_lucene(a.strip)}" }
         authors_str = authors.join(" AND ")
         
         query_params[:q] += " authors:(#{authors_str})"

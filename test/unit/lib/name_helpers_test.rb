@@ -64,4 +64,68 @@ class NameHelpersTest < ActiveSupport::TestCase
   test "should parse broken string that starts w/ comma" do
     test_name_parts(", First", "First", "", "", "")
   end
+  
+  test "should create simple query for last-only name" do
+    assert_equal '"Last"', NameHelpers.name_to_lucene("Last")
+  end
+  
+  test "should create simple query correctly including suffix and von" do
+    assert_equal '"van der Last Jr"', NameHelpers.name_to_lucene("van der Last, Jr.")
+  end
+  
+  test "should create correct queries for F Last" do
+    ret = NameHelpers.name_to_lucene("F Last")
+    
+    assert ret.include? '"F* Last"'
+  end
+  
+  test "should create correct queries for FMM Last" do
+    ret = NameHelpers.name_to_lucene("FMM Last")
+    
+    assert ret.include? '"F* Last"'
+    assert ret.include? '"F* M* M* Last"'
+  end
+  
+  test "should create correct queries for First Last" do
+    ret = NameHelpers.name_to_lucene("First Last")
+    
+    assert ret.include? '"F Last"'
+    assert ret.include? '"First Last"'
+  end
+  
+  test "should create correct queries for First M M Last" do
+    ret = NameHelpers.name_to_lucene("First M M Last")
+    
+    assert ret.include? '"F M* M* Last"'
+    assert ret.include? '"First M* M* Last"'
+    assert ret.include? '"First Last"'
+    assert ret.include? '"F Last"'
+  end
+  
+  test "should create correct queries for First MM Last" do
+    ret = NameHelpers.name_to_lucene("First MM Last")
+
+    assert ret.include? '"F M* M* Last"'
+    assert ret.include? '"First M* M* Last"'
+    assert ret.include? '"First Last"'
+    assert ret.include? '"F Last"'
+  end
+  
+  test "should create correct queries for First Middle Middle Last" do
+    ret = NameHelpers.name_to_lucene("First Middle Middle Last")
+    
+    assert ret.include? '"First Last"'
+    assert ret.include? '"F Last"'
+    assert ret.include? '"First Middle Middle Last"'
+    assert ret.include? '"First Middle M Last"'
+    assert ret.include? '"First M Middle Last"'
+    assert ret.include? '"First M M Last"'
+    assert ret.include? '"First MM Last"'
+    assert ret.include? '"F Middle Middle Last"'
+    assert ret.include? '"F Middle M Last"'
+    assert ret.include? '"F M Middle Last"'
+    assert ret.include? '"FM Middle Last"'
+    assert ret.include? '"F M M Last"'
+    assert ret.include? '"FMM Last"'
+  end
 end
