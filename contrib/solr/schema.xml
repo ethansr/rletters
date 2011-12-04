@@ -26,6 +26,10 @@
     <fieldType name="text_searchableVerbatim" class="solr.TextField" positionIncrementGap="10">
       <analyzer>
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <!-- Strip leading and trailing punctuation (issue #2) -->
+        <filter class="solr.PatternReplaceFilterFactory"
+            pattern="^(\p{Punct}*)(.*?)(\p{Punct}*)$"
+            replacement="$2"/>
         <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
     </fieldType>    
