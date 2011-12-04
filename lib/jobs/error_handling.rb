@@ -5,13 +5,13 @@
 # This namespace contains classes for all code that runs as a delayed job.
 #
 # Some guidelines for RLetters delayed jobs:
-#  - These jobs should, except in rare cases (like +DestroyDataset+) only
-#    query Solr or the SQL database for something like 1,000 rows at a time.
-#    Forgetting to put bounds on queries could result in fetching hundreds of
-#    thousands of records from the database, possibly freezing up the DJ
-#    worker for a period of days.
-#  - All of these jobs should +include ErrorHandling+ to enable the reporting
-#    of DJ errors to Airbrake (if enabled by the user).
+# - These jobs should, except in rare cases (like +DestroyDataset+) only
+#   query Solr or the SQL database for something like 1,000 rows at a time.
+#   Forgetting to put bounds on queries could result in fetching hundreds of
+#   thousands of records from the database, possibly freezing up the DJ
+#   worker for a period of days.
+# - All of these jobs should +include ErrorHandling+ to enable the reporting
+#   of DJ errors to Airbrake (if enabled by the user).
 module Jobs
   
   # Mixin for job classes to gain Airbrake exception handling
