@@ -4,7 +4,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <config>
   <indexDefaults>
-    <!-- Note that Solr's default maxFieldLength is much to small for 
+    <!-- Note that Solr's default maxFieldLength is much too small for 
          journal article fulltext searching! -->
     <maxFieldLength>1000000</maxFieldLength>
   </indexDefaults>
@@ -133,6 +133,8 @@
         <bool name="tv">true</bool>
         <str name="tv.fl">fulltext</str>
         <bool name="tv.tf">true</bool>
+        <bool name="tv.df">true</bool>
+        <bool name="tv.tf_idf">true</bool>
         <bool name="tv.positions">false</bool>
         <bool name="tv.offsets">false</bool>
      </lst>
