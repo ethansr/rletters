@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   private
   
-  before_filter :get_user, :set_locale
+  before_filter :get_user, :set_locale, :set_timezone
   
   # Get the user if one is currently logged in
   #
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
 
   # Set the locale if the user is logged in
   #
-  # This function is called as a =before_filter= in all controllers, you do
+  # This function is called as a +before_filter+ in all controllers, you do
   # not need to call it yourself.  Do not disable it, or the locale system
   # will go haywire.
   #
@@ -49,10 +49,26 @@ class ApplicationController < ActionController::Base
       I18n.locale = @user.language.to_sym
     end
   end
+  
+  # Set the timezone if the user is logged in
+  #
+  # This function is called as a +before_filter+ in all controllers, you do
+  # not need to call it yourself.  Do not disable it, or the locale system
+  # will go haywire.
+  #
+  # @api private
+  # @return [undefined]
+  def set_timezone
+    if @user.nil?
+      Time.zone = 'Eastern Time (US & Canada)'
+    else
+      Time.zone = @user.timezone
+    end
+  end
 
   # Redirect to the users page if there is no logged in user
   #
-  # This function is intended to serve as an optional =before_filter= that
+  # This function is intended to serve as an optional +before_filter+ that
   # a controller can use to indicate that only logged-in users should be able
   # to access certain pages.
   #
