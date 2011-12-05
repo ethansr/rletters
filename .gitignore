@@ -3,16 +3,16 @@
 .sass-cache/
 .yardoc/
 
-app/assets/images/
 config/app_config.yml
 config/database.yml
 config/deploy/deploy_config.rb
 db/*.sqlite3
-doc/
+doc
+downloads
 test/coverage/
 log/*.log
 public/assets/
-tmp/
+tmp
 vendor/bundle
 
 app/views/static/*.markdown

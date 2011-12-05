@@ -16,6 +16,58 @@ class Download < ActiveRecord::Base
   
   before_destroy :delete_file
   
+  # Creates a download object and file, then passes the file to the block
+  #
+  # This function will create the file +basename+ in the downloads folder
+  # (do not put a path of any sort on +basename+).  A unique timestamp will 
+  # be appended to the filename, and the file created.  The file handle will
+  # then be passed to the provided block.  Finally, the function creates a
+  # +Download+ model, saves it in the database, and returns it.
+  #
+  # Closing the file within the block is optional, but recommended.
+  #
+  # @api public
+  # @param basename [String] the base name of the file to create
+  # @yield [f] Yields a File object, opened for writing
+  # @yieldparam [File] f the file object created
+  # @return [Download] a new +Download+ object
+  #
+  # @example Create a file
+  #   dl = Download.create_file('test.txt') do |f|
+  #     f.write("1234567890")
+  #     f.close
+  #   end
+  def self.create_file(basename)
+    dir = Rails.root.join('downloads')
+    
+    ext = File.extname(basename)
+    base = File.basename(basename, ext)
+    
+    # Add a timestamp to the basename
+    timestamp = Time.now.utc.strftime('-%Y%m%d%H%M%S')
+    filename = File.join(dir, base + timestamp + ext)
+    
+    i = 0
+    while File.exists? filename
+      i = i + 1
+      filename = File.join(dir base + timestamp + i + ext)
+      
+      # Runaway loop counter (DoS?)
+      if i == 100
+        raise StandardError, "Cannot find a filename for download"
+      end
+    end
+    
+    # Yield out to the block
+    f = File.new(filename, "w")
+    yield f
+    
+    f.close unless f.closed?
+    
+    # Build a Download object and return it
+    Download.create({ :filename => filename })
+  end
+  
   attr_accessible :filename
   
   # Send this download to the user
