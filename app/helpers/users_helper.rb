@@ -83,5 +83,20 @@ module UsersHelper
 
     options_for_select(list, current)
   end
+  
+  # Create a list of all timezones
+  #
+  # This function returns a set of option tags for every timezone (similar
+  # to +options_from_collection+ in Rails), which can be put inside a select
+  # item.
+  #
+  # @api public
+  # @param [String] current the currently selected timezone
+  # @return [String] set of timezone option tags
+  # @example Create a select box for the timezone
+  #   <select name='timezone'><%= options_from_timezones(user.timezone) %></select>
+  def options_from_timezones(current = '')
+    options_for_select(ActiveSupport::TimeZone.all.map { |tz| [tz.to_s, tz.name]}, current)
+  end
 end
 

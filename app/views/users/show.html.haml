@@ -25,6 +25,9 @@
         = f.label :language, User.human_attribute_name('language')
         = f.select :language, options_from_locales(@user.language)
       %div{ 'data-role' => 'fieldcontain' }
+        = f.label :timezone, User.human_attribute_name('timezone')
+        = f.select :timezone, options_from_timezones(@user.timezone)
+      %div{ 'data-role' => 'fieldcontain' }
         = field_set_tag User.human_attribute_name('per_page'), 'data-role' => 'controlgroup', 'data-type' => 'horizontal' do
           = f.radio_button :per_page, '10'
           = f.label :per_page_10, 10.to_s

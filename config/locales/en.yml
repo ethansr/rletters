@@ -30,11 +30,17 @@ en:
   activerecord:
     models:
       dataset: "Dataset"
+      dataset_entry: "Dataset Entry"
+      download: "Download"
       library: "Library"
       user: "User"
     attributes:
       dataset:
         name: "Name"
+      dataset_entry:
+        shasum: "SHA-1 checksum"
+      download:
+        filename: "Filename"
       library:
         name: "Name"
         url: "Base URL"
@@ -44,6 +50,7 @@ en:
         identifier: "Identifier"
         per_page: "Number of search results per page"
         language: "Preferred language"
+        timezone: "Time zone"
         csl_style: "Citation style"
         libraries: "Library access links"
     errors:
@@ -74,6 +81,8 @@ en:
           language:
             blank: "Preferred language must be specified (internal error)"
             invalid: "Preferred language must be a valid locale code (internal error)"
+          timezone:
+            blank: "Timezone must be specified (internal error)"
   search:
     index:
       placeholder: "Search for articles..."

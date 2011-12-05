@@ -4,6 +4,7 @@ john:
   identifier: https://google.com/profiles/johndoe
   per_page: 10
   language: en-US
+  timezone: 'Eastern Time (US & Canada)'
   csl_style: chicago-author-date.csl
 
 alice:
@@ -12,3 +13,4 @@ alice:
   identifier: https://google.com/profiles/alicecooper
   per_page: 25
   language: es-MX
+  timezone: 'Mexico City'

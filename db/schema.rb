@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205172114) do
+ActiveRecord::Schema.define(:version => 20111205185208) do
 
   create_table "dataset_entries", :force => true do |t|
     t.string   "shasum"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20111205172114) do
     t.integer  "per_page",   :default => 10
     t.string   "language",   :default => "en-US"
     t.string   "csl_style",  :default => ""
+    t.string   "timezone",   :default => "Eastern Time (US & Canada)"
   end
 
 end

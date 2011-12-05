@@ -10,6 +10,7 @@
 # @attr [String] identifier URL identifier of third-party profile
 # @attr [Integer] per_page Number of search results to display per page
 # @attr [String] language Locale code of user's preferred language
+# @attr [String] timezone User's timezone, in Rails' format
 # @attr [String] csl_style User's preferred citation style, blank 
 #   for default
 #
@@ -26,6 +27,7 @@ class User < ActiveRecord::Base
   validates :per_page, :inclusion => { :in => 1..9999999999 }
   validates :language, :presence => true
   validates :language, :format => { :with => /[a-z]{2,3}(-[A-Z]{2})?/ }
+  validates :timezone, :presence => true
 
   has_many :datasets, :dependent => :delete_all
   has_many :libraries, :dependent => :delete_all
@@ -36,7 +38,7 @@ class User < ActiveRecord::Base
   # Attributes that can be edited by the user (in the user options form) 
   # should be whitelisted here.  Programmatic-access things (like datasets or
   # the RPX identifier) do *not* need to occur here.
-  attr_accessible :name, :email, :per_page, :language, :csl_style, :libraries
+  attr_accessible :name, :email, :per_page, :language, :csl_style, :libraries, :timezone
 
   # Locate current user (or create new) from an Engage response
   #
