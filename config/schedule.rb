@@ -9,6 +9,7 @@ job_type :env_command, "cd :path && RAILS_ENV=:environment bundle exec :task :ou
 
 every 1.hours do
   rake "db:sessions:expire"
+  rake "db:downloads:expire"
 end
 
 every :reboot do

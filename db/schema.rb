@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111122135408) do
+ActiveRecord::Schema.define(:version => 20111205172114) do
 
   create_table "dataset_entries", :force => true do |t|
     t.string   "shasum"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(:version => 20111122135408) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "downloads", :force => true do |t|
+    t.string   "filename"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "libraries", :force => true do |t|
     t.string   "name"
