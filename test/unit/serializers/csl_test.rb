@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class CSLTest < ActiveSupport::TestCase
   test "should create good CSL" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
     csl = doc.to_csl
@@ -19,9 +19,9 @@ class CSLTest < ActiveSupport::TestCase
   end
 
   test "should create good CSL citations" do
-    return if RUBY_VERSION < "1.9.0"
+    skip("Omitting CSL test on Ruby 1.8") if RUBY_VERSION < "1.9.0"
     
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
     cite = doc.to_csl_entry.to_s
@@ -29,9 +29,9 @@ class CSLTest < ActiveSupport::TestCase
   end
 
   test "should be able to specify alternate CSL style files" do
-    return if RUBY_VERSION < "1.9.0"
+    skip("Omitting CSL test on Ruby 1.8") if RUBY_VERSION < "1.9.0"
     
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
     assert_equal "Botero, C. A., Mudge, A. E., Koltz, A. M., Hochachka, W. M., &#38; Vehrencamp, S. L. (2008). How Reliable are the Methods for Estimating Repertoire Size?. <i>Ethology</i>, <i>114</i>, 1227-1238.", doc.to_csl_entry('apa.csl')
@@ -49,9 +49,9 @@ class CSLTest < ActiveSupport::TestCase
   end
 
   test "should be able to fetch CSL styles over HTTP" do
-    return if RUBY_VERSION < "1.9.0"
+    skip("Omitting CSL test on Ruby 1.8") if RUBY_VERSION < "1.9.0"
     
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     stub_request(:get, 'https://raw.github.com/citation-style-language/styles/master/science.csl').to_return(ResponseExamples.load(:csl_response_science))
 
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')

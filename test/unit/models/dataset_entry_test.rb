@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
-class DatasetEntryTest < ActiveSupport::TestCase
+class DatasetEntryTest < ActiveRecord::TestCase
   test "dataset entry with no shasum should be invalid" do
     entry = DatasetEntry.new
     assert !entry.valid?

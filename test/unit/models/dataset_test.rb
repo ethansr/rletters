@@ -1,7 +1,9 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
-class DatasetTest < ActiveSupport::TestCase  
+class DatasetTest < ActiveRecord::TestCase
+  fixtures :datasets, :users
+  
   test "empty dataset should be invalid" do
     dataset = Dataset.new
     assert !dataset.valid?

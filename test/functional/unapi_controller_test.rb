@@ -1,10 +1,12 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class UnapiControllerTest < ActionController::TestCase
+  tests UnapiController
+  
   def get_unapi(with_id = false, format = nil)
     if with_id
-      stub_solr_response :precise_one_doc
+      SolrExamples.stub :precise_one_doc
       get :index, { :id => '00972c5123877961056b21aea4177d0dc69c7318', :format => format }
     else
       get :index
@@ -33,20 +35,20 @@ class UnapiControllerTest < ActionController::TestCase
   
   test "should have >0 formats in response" do
     get_unapi
-    assert_not_equal 0, @formats.count
+    refute_equal 0, @formats.count
   end
   
   test "each format should have a type" do
     get_unapi
     @formats.each do |f|
-      assert_not_nil f.attributes['type']
+      refute_nil f.attributes['type']
     end
   end
   
   test "each format should have a name" do
     get_unapi
     @formats.each do |f|
-      assert_not_nil f.attributes['name']
+      refute_nil f.attributes['name']
     end
   end
   
@@ -62,20 +64,20 @@ class UnapiControllerTest < ActionController::TestCase
   
   test "request for id w/o format should return formats" do
     get_unapi true
-    assert_not_equal 0, @formats.count
+    refute_equal 0, @formats.count
   end
 
   test "each format (w/ id) should have a type" do
     get_unapi true
     @formats.each do |f|
-      assert_not_nil f.attributes['type']
+      refute_nil f.attributes['type']
     end
   end
   
   test "each format (w/ id) should have a name" do
     get_unapi true
     @formats.each do |f|
-      assert_not_nil f.attributes['name']
+      refute_nil f.attributes['name']
     end
   end
   
@@ -98,7 +100,7 @@ class UnapiControllerTest < ActionController::TestCase
   test "requests for good formats w/ invalid ids should return 404" do
     get_unapi true
     @formats.each do |f|
-      stub_solr_response :precise_one_doc
+      SolrExamples.stub :precise_one_doc
       get :index, { :id => 'woobadid', :format => f.attributes['name'] }
     end
   end

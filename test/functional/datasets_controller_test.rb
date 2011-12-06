@@ -1,7 +1,10 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class DatasetsControllerTest < ActionController::TestCase
+  tests DatasetsController
+  fixtures :datasets, :dataset_entries, :users
+  
   setup do
     @user = users(:john)
     session[:user_id] = @user.to_param
@@ -16,7 +19,7 @@ class DatasetsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:datasets)
+    refute_nil assigns(:datasets)
   end
   
   test "index should list the one dataset" do
@@ -38,7 +41,7 @@ class DatasetsControllerTest < ActionController::TestCase
   end
   
   test "should create dataset (DJ)" do
-    stub_solr_response :dataset_precise_all
+    SolrExamples.stub :dataset_precise_all
     
     expected_job = Jobs::CreateDataset.new(users(:john).to_param,
       'Test Dataset', '*:*', nil, 'precise')

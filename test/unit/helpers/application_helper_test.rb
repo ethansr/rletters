@@ -1,12 +1,12 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
   #test "should properly render footer bar" do
   #  FIXME: Do we want to test ApplicationHelper#render_footer_list? 
   #end
   
-  test "should render default content in static partials" do
+  def test_that_it_renders_content_in_static_partials
     dist_filename = Rails.root.join('app', 'views', 'static', '_testing.markdown.dist')
     f = File.new(dist_filename, 'w')
     f.write('# Testing #')
@@ -18,7 +18,7 @@ class ApplicationHelperTest < ActionView::TestCase
     File.delete(dist_filename)
   end
   
-  test "should render customized content in static partials" do
+  def test_that_it_renders_customized_content_in_static_partials
     dist_filename = Rails.root.join('app', 'views', 'static', '_testing.markdown.dist')
     cust_filename = Rails.root.join('app', 'views', 'static', '_testing.markdown')
     
@@ -37,7 +37,7 @@ class ApplicationHelperTest < ActionView::TestCase
     File.delete(cust_filename)
   end
   
-  test "should render markdown in translations" do
+  def test_that_it_renders_markdown_in_translations
     I18n.backend.store_translations :en, :test_markdown => '# Testing #'
     assert_equal "<h1 id=\"testing\">Testing</h1>\n", t_md(:test_markdown)
   end

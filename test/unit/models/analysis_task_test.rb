@@ -1,7 +1,9 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
-class AnalysisTaskTest < ActiveSupport::TestCase
+class AnalysisTaskTest < ActiveRecord::TestCase
+  fixtures :datasets
+  
   test "analysis task without name is invalid" do
     task = AnalysisTask.new({ :dataset => datasets(:one) })
   end

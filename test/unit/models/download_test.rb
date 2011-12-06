@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
-class DownloadTest < ActiveSupport::TestCase
+class DownloadTest < ActiveRecord::TestCase
   test "download with no filename should be invalid" do
     dl = Download.new
     assert !dl.valid?
@@ -16,7 +16,7 @@ class DownloadTest < ActiveSupport::TestCase
     dl = Download.create_file 'test.txt' do |f|
       f.write("1234567890")
     end
-    assert_not_nil dl
+    refute_nil dl
     
     fn = dl.filename
     assert File.exists?(fn)

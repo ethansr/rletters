@@ -1,48 +1,49 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class SearchControllerIndexTest < ActionController::TestCase
   tests SearchController
+  fixtures :users
   
   test "should get index" do
-    stub_solr_response :standard_empty_search
+    SolrExamples.stub :standard_empty_search
     get :index
     assert_response :success
   end
 
   test "should set documents variable" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
-    assert_not_nil assigns(:documents)
+    refute_nil assigns(:documents)
     assert_equal 10, assigns(:documents).count
   end
 
   test "should display number of documents found" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
     assert_select 'li', '10 articles in database'
   end
 
   test "should display correctly when no documents found" do
-    stub_solr_response :standard_empty_search
+    SolrExamples.stub :standard_empty_search
     get :index, { :q => 'shatner' }
     assert_select 'li', 'no articles found'
   end
 
   test "should display search text in search box" do
-    stub_solr_response :standard_empty_search
+    SolrExamples.stub :standard_empty_search
     get :index, { :q => 'shatner' }
     assert_select 'input[value=shatner]'
   end
 
   test "should display advanced search placeholder" do
-    stub_solr_response :precise_year_2009
+    SolrExamples.stub :precise_year_2009
     get :index, { :precise => 'true', :q => 'year:2009' }
     assert_select 'input[value=(advanced search)]'
   end
 
   test "should display document details (default citation format)" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
     assert_select 'div.leftcolumn ul li:nth-of-type(3)' do
       assert_select 'h3', 'Parental and Mating Effort: Is There Necessarily a Trade-Off?'
@@ -52,23 +53,23 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
 
   test "should display document details (chicago format)" do
-    return if RUBY_VERSION < "1.9.0" # This test requires CSL enabled
+    skip("Omitting CSL test on Ruby 1.8") if RUBY_VERSION < "1.9.0"
     
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     session[:user_id] = users(:john).to_param
     get :index
     assert_select 'div.leftcolumn ul li:nth-of-type(7)', "Botero, Carlos A., Andrew E. Mudge, Amanda M. Koltz, Wesley M. Hochachka, and Sandra L. Vehrencamp. 2008. “How Reliable are the Methods for Estimating Repertoire Size?”. Ethology 114: 1227-1238."
   end
 
   test "should show login prompt if not logged in" do
-    stub_solr_response :standard_empty_search
+    SolrExamples.stub :standard_empty_search
     session[:user_id] = nil
     get :index
     assert_select 'div.rightcolumn ul.toolslist li[data-theme=e]', 'Log in to analyze results!'
   end
 
   test "should show create-dataset prompt if logged in" do
-    stub_solr_response :standard_empty_search
+    SolrExamples.stub :standard_empty_search
     session[:user_id] = users(:john).to_param
     get :index
     assert_select 'div.rightcolumn ul.toolslist li:first-of-type', 'Create dataset from search'
@@ -76,13 +77,13 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
   
   test "should show advanced search link" do
-    stub_solr_response :standard_empty_search
+    SolrExamples.stub :standard_empty_search
     get :index
     assert_select 'div.rightcolumn ul.toolslist li:last-of-type', 'Advanced search'    
   end
 
   test "should show author facets" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
     assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(2)', 'Amanda M. Koltz1' do
       assert_select "a[href=#{search_path(:fq => [ 'authors_facet:"Amanda M. Koltz"' ])}]"
@@ -91,7 +92,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
 
   test "should show journal facets" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
     # We show five author facet choices, then the journal facet, which is number 6.
     assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(8)', 'Ethology10' do
@@ -101,7 +102,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
 
   test "should show year facets" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
     assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(12)', '1990–19991' do
@@ -111,7 +112,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
   
   test "should parse 2010-* year facet correctly" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
     assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(11)', '2010 and later2' do
@@ -121,7 +122,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
   
   test "should parse *-1790 year facet correctly" do
-    stub_solr_response :precise_old_docs
+    SolrExamples.stub :precise_old_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
     assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(12)', 'Before 18001' do
@@ -131,7 +132,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
 
   test "should display remove all link with facets" do
-    stub_solr_response :precise_with_facet_koltz
+    SolrExamples.stub :precise_with_facet_koltz
     get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"' ] }
     assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(2)', 'Remove All' do
       assert_select "a[href=#{search_path}]"
@@ -139,7 +140,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
 
   test "should display specific remove facet links" do
-    stub_solr_response :precise_facet_author_and_journal
+    SolrExamples.stub :precise_facet_author_and_journal
     get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"', 'journal_facet:"Ethology"' ] }
     assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(3)', 'Authors: Amanda M. Koltz' do
       assert_select "a[href=#{search_path(:fq => [ 'journal_facet:"Ethology"' ])}]"
@@ -156,7 +157,7 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
   
   test "should set precise solr params as assign variables" do
-    stub_solr_response :precise_all_docs
+    SolrExamples.stub :precise_all_docs
     get :index
     assert_equal "*:*", assigns(:solr_q)
     assert_equal "precise", assigns(:solr_qt)
@@ -164,8 +165,8 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
   
   test "should set faceted solr params as assign for faceted query" do
-    stub_solr_response :precise_facet_author_and_journal
+    SolrExamples.stub :precise_facet_author_and_journal
     get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"', 'journal_facet:"Ethology"' ] }
-    assert_not_nil assigns(:solr_fq)
+    refute_nil assigns(:solr_fq)
   end
 end

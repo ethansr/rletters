@@ -2,7 +2,10 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.0'
 gem 'rails-i18n', '= 0.1.11'
-gem 'mysql2'
+
+gem 'mysql2', :platforms => [ :ruby, :mswin, :mingw ]
+gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
+gem 'jruby-openssl', :platforms => :jruby
 
 gem 'capistrano'
 gem 'delayed_job'
@@ -33,11 +36,15 @@ group :assets do
 
   gem 'uglifier'
   gem 'execjs'
-  gem 'therubyracer'
+  
+  gem 'therubyracer', :platforms => [ :ruby, :mswin, :mingw ]
+  gem 'therubyrhino', :platforms => :jruby
 end
 
 group :test do
-  gem 'test-unit', :require => false
+  gem 'minitest'
+  gem 'mini_specunit'
+  gem 'mini_backtrace'
   gem 'mocha', :require => false
   gem 'webmock'
   gem 'nokogiri'

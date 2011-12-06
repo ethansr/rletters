@@ -1,9 +1,10 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 SimpleCov.command_name 'test:units' if ENV["COVERAGE"] && RUBY_VERSION >= "1.9.0"
 
-class UserTest < ActiveSupport::TestCase
+class UserTest < ActiveRecord::TestCase
+  fixtures :users
 
   test "should not save empty user" do
     user = User.new

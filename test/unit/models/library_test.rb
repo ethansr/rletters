@@ -1,7 +1,8 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
-class LibraryTest < ActiveSupport::TestCase
+class LibraryTest < ActiveRecord::TestCase
+  fixtures :users
 
   test "should not save empty library" do
     library = Library.new

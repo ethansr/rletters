@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 # Tests for SearchController#search_params_to_solr_query
 class SearchControllerParamsTest < ActionController::TestCase

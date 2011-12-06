@@ -1,9 +1,10 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 # Tests for SearchController#advanced
 class SearchControllerAdvancedTest < ActionController::TestCase
   tests SearchController
+  fixtures :users
   
   test "should get advanced search page" do
     get :advanced

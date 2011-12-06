@@ -1,7 +1,10 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class LibrariesControllerTest < ActionController::TestCase
+  tests LibrariesController
+  fixtures :libraries, :users
+  
   setup do
     session[:user_id] = users(:john).to_param
     @harvard = users(:john).libraries[0]

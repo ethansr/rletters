@@ -1,9 +1,12 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 SimpleCov.command_name 'test:functionals' if ENV["COVERAGE"] && RUBY_VERSION >= "1.9.0"
 
 class UsersControllerTest < ActionController::TestCase
+  tests UsersController
+  fixtures :users
+  
   setup do
     @user = users(:john)
     session[:user_id] = nil
@@ -26,8 +29,8 @@ class UsersControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to datasets_path
-    assert_not_nil session[:user_id]
-    assert_not_nil assigns(:user)
+    refute_nil session[:user_id]
+    refute_nil assigns(:user)
   end
 
   # Attempting to POST an invalid user should make the form
@@ -90,7 +93,7 @@ class UsersControllerTest < ActionController::TestCase
   test "should not be able to load RPX page" do
     WebMock.allow_net_connect!
     
-    assert_raise(RPXNow::ApiError) do
+    assert_raises(RPXNow::ApiError) do
       get :rpx
     end
     

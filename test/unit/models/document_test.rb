@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
-class DocumentTest < ActiveSupport::TestCase
+class DocumentTest < ActiveModel::TestCase
   include ActiveModel::Lint::Tests
 
   def setup
@@ -30,7 +30,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "should parse authors into author_list correctly" do
-    stub_solr_response(:fulltext_one_doc)
+    SolrExamples.stub(:fulltext_one_doc)
     doc = Document.find_with_fulltext('00972c5123877961056b21aea4177d0dc69c7318')
     assert_equal 5, doc.author_list.count
     assert_equal "Carlos A. Botero", doc.author_list[0]
@@ -38,7 +38,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "should parse authors into formatted_author_list correctly" do
-    stub_solr_response(:fulltext_one_doc)
+    SolrExamples.stub(:fulltext_one_doc)
     doc = Document.find_with_fulltext('00972c5123877961056b21aea4177d0dc69c7318')
     assert_equal 5, doc.formatted_author_list.count
     assert_equal "Andrew E.", doc.formatted_author_list[1][:first]
@@ -46,7 +46,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
   
   test "should parse start and end pages correctly" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
     assert_equal '1227', doc.start_page
     assert_equal '1238', doc.end_page
@@ -59,65 +59,65 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "find should throw on Solr error" do
-    stub_solr_response(:error)
-    assert_raise(ActiveRecord::StatementInvalid) { Document.find('FAILURE') }
+    SolrExamples.stub(:error)
+    assert_raises(ActiveRecord::StatementInvalid) { Document.find('FAILURE') }
   end
 
   test "find should throw on no documents" do
-    stub_solr_response(:standard_empty_search)
-    assert_raise(ActiveRecord::RecordNotFound) { Document.find('shatner') }
+    SolrExamples.stub(:standard_empty_search)
+    assert_raises(ActiveRecord::RecordNotFound) { Document.find('shatner') }
   end
 
   test "find should succeed for valid doc" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
-    assert_not_nil(doc)
+    refute_nil(doc)
     assert_equal('00972c5123877961056b21aea4177d0dc69c7318', doc.shasum)
     assert_nil(doc.fulltext)
   end
 
   test "find_with_fulltext should throw on Solr error" do
-    stub_solr_response(:error)
-    assert_raise(ActiveRecord::StatementInvalid) { Document.find_with_fulltext('FAILURE') }
+    SolrExamples.stub(:error)
+    assert_raises(ActiveRecord::StatementInvalid) { Document.find_with_fulltext('FAILURE') }
   end
 
   test "find_with_fulltext should throw on no documents" do
-    stub_solr_response(:standard_empty_search)
-    assert_raise(ActiveRecord::RecordNotFound) { Document.find_with_fulltext('shatner') }
+    SolrExamples.stub(:standard_empty_search)
+    assert_raises(ActiveRecord::RecordNotFound) { Document.find_with_fulltext('shatner') }
   end
 
   test "find_with_fulltext should succeed for valid doc" do
-    stub_solr_response(:fulltext_one_doc)
+    SolrExamples.stub(:fulltext_one_doc)
     doc = Document.find_with_fulltext('00972c5123877961056b21aea4177d0dc69c7318')
-    assert_not_nil(doc)
+    refute_nil(doc)
     assert_equal('00972c5123877961056b21aea4177d0dc69c7318', doc.shasum)
-    assert_not_nil(doc.fulltext)
+    refute_nil(doc.fulltext)
   end
 
   test "find_all_by_solr_query should throw on Solr error" do
-    stub_solr_response(:error)
-    assert_raise(ActiveRecord::StatementInvalid) { Document.find_all_by_solr_query({ :q => "FAILURE", :qt => "standard" }) }
+    SolrExamples.stub(:error)
+    assert_raises(ActiveRecord::StatementInvalid) { Document.find_all_by_solr_query({ :q => "FAILURE", :qt => "standard" }) }
   end
 
   test "find_all_by_solr_query should return empty array for no docs" do
-    stub_solr_response(:standard_empty_search)
+    SolrExamples.stub(:standard_empty_search)
     assert_equal([], Document.find_all_by_solr_query({ :q => "shatner", :qt => "standard" }))
   end
 
   test "find_all_by_solr_query should work for good response" do
-    stub_solr_response(:precise_all_docs)
+    SolrExamples.stub(:precise_all_docs)
     docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
     assert_equal(10, docs.count)
   end
 
   test "find_all_by_solr_query should set num_results" do
-    stub_solr_response(:precise_all_docs)
+    SolrExamples.stub(:precise_all_docs)
     docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
     assert_equal(10, Document.num_results)
   end
 
   test "find_all_by_solr_query should load all document attributes" do
-    stub_solr_response(:precise_all_docs)
+    SolrExamples.stub(:precise_all_docs)
     docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
 
     # Check one of each attribute
@@ -135,49 +135,49 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "find_all_by_solr_query should set facets" do
-    stub_solr_response(:precise_all_docs)
+    SolrExamples.stub(:precise_all_docs)
     docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
 
     # Check some of each of the facets
-    assert_not_nil(Document.facets)
-    assert_not_nil(Document.facets[:authors_facet])
+    refute_nil(Document.facets)
+    refute_nil(Document.facets[:authors_facet])
     assert_equal(1, Document.facets[:authors_facet].assoc('Amanda M. Koltz')[1])
     assert_equal(1, Document.facets[:authors_facet].assoc('Jennifer L. Snekser')[1])
     assert_nil(Document.facets[:authors_facet].assoc('W. Shatner'))
 
-    assert_not_nil(Document.facets[:journal_facet])
+    refute_nil(Document.facets[:journal_facet])
     assert_equal(10, Document.facets[:journal_facet].assoc('Ethology')[1])
     assert_nil(Document.facets[:journal_facet].assoc('Journal of Nothing'))
 
-    assert_not_nil(Document.facets[:year])
+    refute_nil(Document.facets[:year])
     assert_equal(0, Document.facets[:year].assoc('1940–1949')[1])
     assert_equal(7, Document.facets[:year].assoc('2000–2009')[1])
   end
 
   test "find_all_by_solr_query should not set TV if not found" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     docs = Document.find_all_by_solr_query({ :q => "shasum:00972c5123877961056b21aea4177d0dc69c7318", :qt => "precise" })
     assert_nil(docs[0].term_vectors)
   end
 
   test "find_all_by_solr_query should parse response with term vectors" do
-    stub_solr_response(:fulltext_one_doc)
+    SolrExamples.stub(:fulltext_one_doc)
     docs = Document.find_all_by_solr_query({ :q => "shasum:00972c5123877961056b21aea4177d0dc69c7318", :qt => "fulltext" })
     assert_equal(1, docs.count)
   end
 
   test "find_all_by_solr_query should not set facets if not found" do
-    stub_solr_response(:fulltext_one_doc)
+    SolrExamples.stub(:fulltext_one_doc)
     docs = Document.find_all_by_solr_query({ :q => "shasum:00972c5123877961056b21aea4177d0dc69c7318", :qt => "fulltext" })
     assert_nil(Document.facets)
   end
 
   test "find_all_by_solr_query should set term vectors correctly" do
-    stub_solr_response(:fulltext_one_doc)
+    SolrExamples.stub(:fulltext_one_doc)
     docs = Document.find_all_by_solr_query({ :q => "shasum:00972c5123877961056b21aea4177d0dc69c7318", :qt => "fulltext" })
     
     # Check a couple of these to make sure the parsing is good
-    assert_not_nil(docs[0].term_vectors)
+    refute_nil(docs[0].term_vectors)
     assert_equal(3, docs[0].term_vectors["cornell"][:tf])
     assert_equal((527...539), docs[0].term_vectors["neurobiology"][:offsets][0])
     assert_equal(2, docs[0].term_vectors["reliable"][:positions][0])

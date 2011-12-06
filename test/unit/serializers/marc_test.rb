@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class MARCTest < ActiveSupport::TestCase
   test "should create good MARC::Records" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
     
     record = doc.to_marc
@@ -80,7 +80,7 @@ class MARCTest < ActiveSupport::TestCase
   end
   
   test "should create good MARC records for no-year documents" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
     doc.instance_variable_set(:@year, nil)
     
@@ -90,7 +90,7 @@ class MARCTest < ActiveSupport::TestCase
   end
   
   test "should create good MARCXML collections" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')    
     arr = [doc, doc]
     

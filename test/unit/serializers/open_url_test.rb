@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
-require 'test_helper'
+require 'minitest_helper'
 
 class OpenURLTest < ActiveSupport::TestCase
   test "should create good OpenURL params" do
-    stub_solr_response(:precise_one_doc)
+    SolrExamples.stub(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
     
     str = doc.to_openurl_params
