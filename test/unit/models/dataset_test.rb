@@ -34,4 +34,14 @@ class DatasetTest < ActiveSupport::TestCase
     end
     assert_equal 2, dataset.entries.count
   end
+  
+  test "should be able to connect analysis tasks to dataset" do
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    
+    assert task.valid?
+    assert task.save
+    
+    assert_equal 1, datasets(:one).analysis_tasks.count
+    assert_equal 'test', datasets(:one).analysis_tasks[0].name
+  end
 end

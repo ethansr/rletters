@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205185208) do
+ActiveRecord::Schema.define(:version => 20111206000437) do
+
+  create_table "analysis_tasks", :force => true do |t|
+    t.string   "name"
+    t.datetime "finished_at"
+    t.integer  "dataset_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "analysis_tasks", ["dataset_id"], :name => "index_analysis_tasks_on_dataset_id"
 
   create_table "dataset_entries", :force => true do |t|
     t.string   "shasum"
@@ -50,7 +60,10 @@ ActiveRecord::Schema.define(:version => 20111205185208) do
     t.string   "filename"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "analysis_task_id"
   end
+
+  add_index "downloads", ["analysis_task_id"], :name => "index_downloads_on_analysis_task_id"
 
   create_table "libraries", :force => true do |t|
     t.string   "name"

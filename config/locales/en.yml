@@ -35,6 +35,10 @@ en:
       library: "Library"
       user: "User"
     attributes:
+      analysis_task:
+        name: "Name"
+        created_at: "Creation date"
+        finished_at: "Completion date"
       dataset:
         name: "Name"
       dataset_entry:
@@ -55,6 +59,24 @@ en:
         libraries: "Library access links"
     errors:
       models:
+        analysis_task:
+          name:
+            blank: "You must specify a name for this analysis task"
+          dataset:
+            blank: "Analysis task not connected to dataset (internal error)"
+        dataset:
+          name:
+            blank: "You must specify a name for this dataset"
+          user_id:
+            blank: "Dataset must have a user ID specified (internal error)"
+        dataset_entry:
+          shasum:
+            blank: "SHA-1 checksum was not specified (internal error)"
+            wrong_length: "SHA-1 checksum is not 20 characters (internal error)"
+            invalid: "SHA-1 checksum contains invalid characters (internal error)"
+        download:
+          filename:
+            blank: "Download must have a filename specified (internal error)"
         library:
           name:
             blank: "You must specify a name for this library entry"

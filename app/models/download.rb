@@ -14,6 +14,9 @@
 class Download < ActiveRecord::Base
   validates :filename, :presence => true
   
+  belongs_to :analysis_task
+  attr_accessible :filename
+  
   before_destroy :delete_file
   
   # Creates a download object and file, then passes the file to the block
@@ -67,8 +70,6 @@ class Download < ActiveRecord::Base
     # Build a Download object and return it
     Download.create({ :filename => filename })
   end
-  
-  attr_accessible :filename
   
   # Send this download to the user
   #
