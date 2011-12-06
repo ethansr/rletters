@@ -1,3 +1,6 @@
+bundler_args: --without development
+script: "bundle exec rake db:migrate test"
+
 rvm:
   - 1.9.2
   - 1.9.3
@@ -7,5 +10,3 @@ before_script:
   - "cp config/app_config.yml.travis config/app_config.yml"
   - "mkdir downloads"
   - "mysql -e 'create database rletters_test;'"
-
-script: "bundle exec rake db:migrate test"

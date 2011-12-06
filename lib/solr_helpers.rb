@@ -54,7 +54,8 @@ module SolrHelpers
     term_vectors = {}
     
     (0...tvec_array.length).step(2) do |i|
-      term = tvec_array[i].force_encoding("UTF-8")
+      term = tvec_array[i]
+      term.force_encoding("UTF-8") if RUBY_VERSION >= "1.9.0"
       attr_array = tvec_array[i+1]
       hash = {}
       
@@ -118,7 +119,10 @@ module SolrHelpers
     query = parts[1]
 
     # Strip quotes from the query if present
-    query = query[1..-2] if query[0] == "\"" and query[query.length - 1] == "\""
+    query_chars = query.scan(/./mu)
+    if query_chars[0] = '"' && query_chars[-1] == '"'
+      query = query_chars[1..-2].join
+    end
 
     # If the field isn't 'year', we're done here
     return [field.to_sym, query, 0] unless field == 'year'
@@ -168,7 +172,7 @@ module SolrHelpers
     elsif facet[1] == I18n.t("search.index.year_after_2010")
       query = "[2010 TO *]"
     else
-      decade = facet[1][0, 4]
+      decade = facet[1].scan(/./mu)[0, 4].join
       last = Integer(decade) + 9
       query = "[#{decade} TO #{last}]"
     end
@@ -204,7 +208,7 @@ module SolrHelpers
   #
   # @api public
   # @param [Hash] solr_facets the hash in +facet_counts+ from Solr
-  # @return [Hash] the hash as stored in +Document.facets+
+  # @return [Array] the hash as stored in +Document.facets+
   # @see Document.facets
   # @example Convert the facets for this search and store them
   #   @@facets = parse_facet_counts(solr_response['facet_counts'])
@@ -213,24 +217,60 @@ module SolrHelpers
     
     # The "year" facets are handled as separate queries
     if solr_facets["facet_queries"]
-      facets[:year] = {}
+      facet_array = []
+      
+      # Use fq_to_facet to translate to a human-readable string
       solr_facets["facet_queries"].each do |k, v|
-        # Use fq_to_facet to translate to a human-readable string
         f = fq_to_facet(k)
-        facets[:year][f[1]] = v
+        facet_array << [f[1], v]
+      end
+
+      # Sort by count, then by year
+      facets[:year] = facet_array.sort do |a, b|
+        if a[1] != b[1]
+          -(a[1] <=> b[1])
+        elsif a[0] == b[0]
+          0
+        else
+          if a[0] == I18n.t("search.index.year_before_1800")
+            -1
+          elsif b[0] == I18n.t("search.index.year_before_1800")
+            1
+          elsif a[0] == I18n.t("search.index.year_after_2010")
+            1
+          elsif b[0] == I18n.t("search.index.year_after_2010")
+            -1
+          else
+            a[0] <=> b[0]
+          end
+        end
       end
     end
     
     if solr_facets["facet_fields"]
       { "authors_facet" => :authors_facet, "journal_facet" => :journal_facet }.each do |s, f|
-        facet_array = solr_facets["facet_fields"][s].map do |x| 
-          if x.is_a? String
+        flat_array = solr_facets["facet_fields"][s].map do |x| 
+          if x.is_a?(String) && RUBY_VERSION >= "1.9.0"
             x.force_encoding("UTF-8")
           else
             x
           end
         end
-        facets[f] = Hash[*facet_array.flatten]
+        
+        # Map to an array of arrays
+        facet_array = []
+        flat_array.each_slice(2) { |s| facet_array << s }
+        
+        # Sort first by count, then by label, alphabetically
+        facet_array.sort! do |a, b|
+          if a[1] != b[1]
+            -(a[1] <=> b[1])  
+          else
+            a[0] <=> b[0]
+          end
+        end
+        
+        facets[f] = facet_array
       end
     end
         

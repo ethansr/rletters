@@ -52,6 +52,8 @@ class SearchControllerIndexTest < ActionController::TestCase
   end
 
   test "should display document details (chicago format)" do
+    return if RUBY_VERSION < "1.9.0" # This test requires CSL enabled
+    
     stub_solr_response :precise_all_docs
     session[:user_id] = users(:john).to_param
     get :index
@@ -122,7 +124,7 @@ class SearchControllerIndexTest < ActionController::TestCase
     stub_solr_response :precise_old_docs
     get :index
     # We show five author facet choices, then the journal facet, then the year facets by count
-    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(13)', 'Before 18001' do
+    assert_select 'div.rightcolumn ul.facetlist li:nth-of-type(12)', 'Before 18001' do
       assert_select "a[href=#{search_path(:fq => [ 'year:[* TO 1799]' ])}]"
       assert_select 'span.ui-li-count', '1'
     end

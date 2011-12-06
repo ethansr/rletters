@@ -19,6 +19,8 @@ class CSLTest < ActiveSupport::TestCase
   end
 
   test "should create good CSL citations" do
+    return if RUBY_VERSION < "1.9.0"
+    
     stub_solr_response(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
@@ -27,6 +29,8 @@ class CSLTest < ActiveSupport::TestCase
   end
 
   test "should be able to specify alternate CSL style files" do
+    return if RUBY_VERSION < "1.9.0"
+    
     stub_solr_response(:precise_one_doc)
     doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
@@ -45,6 +49,8 @@ class CSLTest < ActiveSupport::TestCase
   end
 
   test "should be able to fetch CSL styles over HTTP" do
+    return if RUBY_VERSION < "1.9.0"
+    
     stub_solr_response(:precise_one_doc)
     stub_request(:get, 'https://raw.github.com/citation-style-language/styles/master/science.csl').to_return(ResponseExamples.load(:csl_response_science))
 

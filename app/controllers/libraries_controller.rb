@@ -114,7 +114,7 @@ class LibrariesController < ApplicationController
         
         @libraries << { :name => name, :url => url }
       end
-    rescue
+    rescue StandardError, Timeout::Error
       @libraries = []
     end
     

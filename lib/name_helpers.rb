@@ -28,7 +28,7 @@ module NameHelpers
     suffix = ''
     
     # Check for a BibTeX "von-part"
-    if m = au.match(/( |^)(von der|von|van der|van|del|de la|de|St|don|dos) /)
+    if m = au.match(/( |^)(von der|von|van der|van|del|de la|de|St|don|dos) /u)
       von = m[2]
       s = m.begin(2)
       e = m.end(2)
@@ -50,7 +50,7 @@ module NameHelpers
     end
     
     # Check for a BibTeX "suffix-part"
-    if m = au.match(/(,? ((Jr|Sr|1st|2nd|3rd|IV|III|II|I)\.?))/)
+    if m = au.match(/(,? ((Jr|Sr|1st|2nd|3rd|IV|III|II|I)\.?))/u)
       suffix = m[2]
       s = m.begin(1)
       e = m.end(1)
@@ -61,8 +61,9 @@ module NameHelpers
         before = au[0...s]
         after = au[e...au.length]
         
-        if after[0] == ','
-          after[0] = ''
+        # Carefully eat the first character (Ruby 1.8)
+        if after.scan(/./mu)[0] == ','
+          after = after.scan(/./mu)[1..-1].join
         end
         
         last = before
@@ -78,10 +79,10 @@ module NameHelpers
     # a comma. If au is empty, though, we've already parsed them out.
     unless au.blank?
       # Look for a comma, that's the easy method
-      if m = au.match(/(,)/)
+      if m = au.match(/(,)/u)
         if m.begin(1) == 0
           # Broken string that begins w/ a comma?
-          first = au[1..-1]
+          first = au.scan(/./mu)[1..-1].join
           last = ''
         else
           last = au[0...m.begin(1)]
@@ -145,14 +146,15 @@ module NameHelpers
         first_name_forms << [ "#{f}*" ]
       else
         # A name, search it as itself and as an initial, but without
-        # a wildcard
-        first_name_forms << [ f, f[0] ]
+        # a wildcard.  Be careful here on how to split on characters, for
+        # compatibility with Ruby 1.8!
+        first_name_forms << [ f, f.scan(/./mu)[0] ]
       end
     end
     
     # Form the list of all the names we're actually going to use
     first_name_forms_0 = first_name_forms.shift
-    names = first_name_forms_0.product(*first_name_forms, [ last ])
+    names = first_name_forms_0.product(*first_name_forms).map { |n| n << last }
     
     # Step through these and create the combined-initials queries
     new_names = []

@@ -85,7 +85,12 @@ module Jobs
           # Formulate a SQL query for all these results
           sql = 'INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES '
           solr_response["response"]["docs"].each do |doc|
-            sql << "('#{doc["shasum"].force_encoding("UTF-8")}', #{sql_tail}),"
+            # We need to force this into UTF-8 on Ruby 1.9, or we may well
+            # get concatenation errors and suchlike
+            str = doc["shasum"]
+            str.force_encoding("UTF-8") if RUBY_VERSION >= "1.9.0"
+            
+            sql << "('#{str}', #{sql_tail}),"
           end
         
           # Send it (deleting the trailing comma)

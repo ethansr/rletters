@@ -141,17 +141,17 @@ class DocumentTest < ActiveSupport::TestCase
     # Check some of each of the facets
     assert_not_nil(Document.facets)
     assert_not_nil(Document.facets[:authors_facet])
-    assert_equal(1, Document.facets[:authors_facet]['Amanda M. Koltz'])
-    assert_equal(1, Document.facets[:authors_facet]['Jennifer L. Snekser'])
-    assert_nil(Document.facets[:authors_facet]['W. Shatner'])
+    assert_equal(1, Document.facets[:authors_facet].assoc('Amanda M. Koltz')[1])
+    assert_equal(1, Document.facets[:authors_facet].assoc('Jennifer L. Snekser')[1])
+    assert_nil(Document.facets[:authors_facet].assoc('W. Shatner'))
 
     assert_not_nil(Document.facets[:journal_facet])
-    assert_equal(10, Document.facets[:journal_facet]['Ethology'])
-    assert_nil(Document.facets[:journal_facet]['Journal of Nothing'])
+    assert_equal(10, Document.facets[:journal_facet].assoc('Ethology')[1])
+    assert_nil(Document.facets[:journal_facet].assoc('Journal of Nothing'))
 
     assert_not_nil(Document.facets[:year])
-    assert_equal(0, Document.facets[:year]['1940–1949'])
-    assert_equal(7, Document.facets[:year]['2000–2009'])
+    assert_equal(0, Document.facets[:year].assoc('1940–1949')[1])
+    assert_equal(7, Document.facets[:year].assoc('2000–2009')[1])
   end
 
   test "find_all_by_solr_query should not set TV if not found" do

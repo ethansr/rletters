@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'test_helper'
 
-SimpleCov.command_name 'test:integration'
+SimpleCov.command_name 'test:integration' if ENV["COVERAGE"] && RUBY_VERSION >= "1.9.0"
 
 class UrlRoutingTest < ActionDispatch::IntegrationTest
   fixtures :all

@@ -10,7 +10,7 @@ class Library < ActiveRecord::Base
   
   validates :name, :presence => true
   validates :url, :presence => true
-  validates :url, :format => { :with => /^(#{URI::regexp(%w(http https))})$/ }
+  validates :url, :format => { :with => /^(#{URI::regexp(%w(http https))})$/u }
   validates :user_id, :presence => true
   
   attr_accessible :url, :name

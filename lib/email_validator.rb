@@ -16,7 +16,7 @@ class EmailValidator < ActiveModel::EachValidator
   # @param [String] value the value of the attribute
   # @return [undefined] adds to +record.errors+ if invalid
   def validate_each(record, attribute, value)
-    unless value =~ /^\s*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\s*$/i
+    unless value =~ /^\s*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\s*$/iu
       record.errors.add(attribute, options[:message] || :invalid)
     end
   end

@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'test_helper'
 
-SimpleCov.command_name 'test:functionals'
+SimpleCov.command_name 'test:functionals' if ENV["COVERAGE"] && RUBY_VERSION >= "1.9.0"
 
 class UsersControllerTest < ActionController::TestCase
   setup do

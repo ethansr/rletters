@@ -21,12 +21,12 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
   validates :email, :email => true
   validates :identifier, :uniqueness => true
-  validates :identifier, :format => { :with => /^(#{URI::regexp(%w(http https))})$/ }
+  validates :identifier, :format => { :with => /^(#{URI::regexp(%w(http https))})$/u }
   validates :per_page, :presence => true
   validates :per_page, :numericality => { :only_integer => true }
   validates :per_page, :inclusion => { :in => 1..9999999999 }
   validates :language, :presence => true
-  validates :language, :format => { :with => /[a-z]{2,3}(-[A-Z]{2})?/ }
+  validates :language, :format => { :with => /[a-z]{2,3}(-[A-Z]{2})?/u }
   validates :timezone, :presence => true
 
   has_many :datasets, :dependent => :delete_all

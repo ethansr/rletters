@@ -1,8 +1,9 @@
 # -*- encoding : utf-8 -*-
 ENV["RAILS_ENV"] = "test"
 
-require 'simplecov'
-if ENV["COVERAGE"]
+if ENV["COVERAGE"] && RUBY_VERSION >= "1.9.0"
+  require 'simplecov'
+
   SimpleCov.start do
     add_filter '/test/'
     add_filter '/config/'
@@ -32,7 +33,7 @@ class ActiveSupport::TestCase
   # Stub out the Solr connection with the contents of an example file
   def stub_solr_response(example)
     # Convert everything to an array
-    if example.is_an? Array
+    if example.is_a? Array
       examples = example
     else
       examples = [ example ]

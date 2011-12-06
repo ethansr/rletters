@@ -143,10 +143,12 @@ module SearchHelper
     return ''.html_safe unless Document.facets
 
     # Get the hash of facet counts from the Document model
-    hash = Hash[Document.facets[sym].sort { |a,b| -1 * (a[1] <=> b[1]) }]
     array = []
 
-    hash.each_pair do |k, v|
+    Document.facets[sym].each do |f|
+      k = f[0]
+      v = f[1]
+      
       # Skip this if it's present in the active facets, or empty
       next unless active_facets.find_index([sym, k, 0]).nil?
       next if v == 0
@@ -227,6 +229,10 @@ module SearchHelper
   # partial with an H3 and some P's.  The user can set, however, to format the
   # bibliographic entries using their favorite CSL style.
   #
+  # For Ruby < 1.9, this function will always return the default, regardless
+  # of the user's preferred setting.  (This is not a bug: the CiteProc gem
+  # for Ruby only works on Rubies >= 1.9.  Upgrade!)
+  #
   # @api public
   # @param [Document] doc document for which bibliographic entry is desired
   # @return [String] bibliographic entry for document
@@ -234,7 +240,7 @@ module SearchHelper
   #   document_bibliography_entry(Document.new(:authors => 'W. Johnson', :year => '2000'))
   #   # "Johnson, W. 2000. ..."
   def document_bibliography_entry(doc)
-    if @user.nil? || @user.csl_style == ''
+    if RUBY_VERSION <= "1.9.0" || @user.nil? || @user.csl_style == ''
       render :partial => 'document', :locals => { :document => doc }
     else
       doc.to_csl_entry(@user.csl_style)

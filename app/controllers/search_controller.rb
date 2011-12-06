@@ -77,7 +77,7 @@ class SearchController < ApplicationController
       raise ActiveRecord::RecordNotFound unless mendeley_docs.size
     
       redirect_to mendeley_docs[0]["mendeley_url"]
-    rescue
+    rescue StandardError, Timeout::Error
       raise ActiveRecord::RecordNotFound
     end
   end
@@ -98,7 +98,7 @@ class SearchController < ApplicationController
       raise ActiveRecord::RecordNotFound unless cul_docs.size
 
       redirect_to cul_docs[0]["href"]
-    rescue
+    rescue StandardError, Timeout::Error
       raise ActiveRecord::RecordNotFound
     end
   end
@@ -171,19 +171,19 @@ class SearchController < ApplicationController
       # Handle the year separately, for range support
       if params[:year_ranges]
         # Strip whitespace, split on commas
-        ranges = params[:year_ranges].gsub(/\s/, '').split(',')
+        ranges = params[:year_ranges].gsub(/\s/u, '').split(',')
         year_queries = []
         
         ranges.each do |r|
           if r.include? '-'
             range_years = r.split('-')
             next unless range_years.count == 2
-            next if range_years[0].match(/\A\d+\z/) == nil
-            next if range_years[1].match(/\A\d+\z/) == nil
+            next if range_years[0].match(/\A\d+\z/u) == nil
+            next if range_years[1].match(/\A\d+\z/u) == nil
             
             year_queries << "[#{range_years[0]} TO #{range_years[1]}]"
           else
-            next if r.match(/\A\d+\z/) == nil
+            next if r.match(/\A\d+\z/u) == nil
             
             year_queries << r
           end

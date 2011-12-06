@@ -170,12 +170,14 @@ class Document
     
     # Grab all of the document-attributes that Solr returned, forcing
     # everything into UTF-8 encoding, which is how all Solr's data
-    # comes back
+    # comes back.  On Ruby 1.8, this just happens, because $KCODE is UTF-8.
     documents = solr_response["response"]["docs"]
-    documents.map! do |doc| 
-      doc.each do |k, v|
-        if v.is_a? String
-          doc[k] = v.force_encoding("UTF-8")
+    if RUBY_VERSION >= "1.9.0"
+      documents.map! do |doc| 
+        doc.each do |k, v|
+          if v.is_a? String
+            doc[k] = v.force_encoding("UTF-8")
+          end
         end
       end
     end
@@ -313,14 +315,15 @@ class Document
   # @api public
   # @return [Hash] facets returned by the last search, +nil+ if none.
   #   The hash contains the following keys:
-  #     Document.facets[:author]["Particular Author"] = Integer
-  #     Document.facets[:journal]["Particular Journal"] = Integer
-  #     Document.facets[:year]["1980"] = Integer
-  #   The +:year+ facet is handled specially: the value for "1980" is the
-  #   facet count for the entire decade 1980-1989.
+  #     Document.facets[:author] = Array
+  #       Document.facets[:author][0] = ["Particular Author", Integer]
+  #     Document.facets[:journal] = Array
+  #       Document.facets[:journal][0] = ["Particular Journal", Integer]
+  #     Document.facets[:year]
+  #       Document.facets[:year][0] = ["1940–1949", Integer]
   #
   # @example Get the number of documents in the last search published by W. Shatner
-  #   shatner_docs = Document.facets[:author]["W. Shatner"]
+  #   shatner_docs = Document.facets[:author].assoc("W. Shatner")[1]
   cattr_reader :facets
 
   # Number of documents returned by the last search
@@ -343,7 +346,7 @@ class Document
   # The shasum attribute is the only required one
   validates :shasum, :presence => true
   validates :shasum, :length => { :is => 40 }
-  validates :shasum, :format => { :with => /\A[a-fA-F\d]+\z/ }
+  validates :shasum, :format => { :with => /\A[a-fA-F\d]+\z/u }
 
   def initialize(attributes = {})
     attributes.each do |name, value|
