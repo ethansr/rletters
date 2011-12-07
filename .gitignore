@@ -1,7 +1,8 @@
 .bundle
 .DS_Store
-.sass-cache/
-.yardoc/
+.rbx
+.sass-cache
+.yardoc
 
 config/app_config.yml
 config/database.yml
