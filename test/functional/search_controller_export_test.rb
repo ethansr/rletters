@@ -61,7 +61,7 @@ class SearchControllerExportTest < ActionController::TestCase
   end
   
   test "should get export - rdf" do
-    skip("Waiting on bug in RDFXML/JRuby to be fixed") if RUBY_PLATFORM == 'java'
+    skip("No RDFXML gem available on JRuby") if RUBY_PLATFORM == 'java'
     
     SolrExamples.stub :precise_one_doc
     get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318', :format => 'rdf' }

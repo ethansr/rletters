@@ -17,7 +17,7 @@ gem 'rpx_now'
 gem 'rsolr'
 gem 'marc'
 gem 'rdf'
-gem 'rdf-rdfxml'
+gem 'rdf-rdfxml', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'rdf-n3'
 
 # citeproc-ruby relies on unicode_utils, which is Ruby 1.9-only

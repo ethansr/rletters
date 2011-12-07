@@ -10,8 +10,10 @@ module Serializers
     
     # Register this serializer in the Document list
     def self.included(base)
-      base.register_serializer(:rdf, lambda { |doc| doc.to_rdf_xml },
-        'http://www.w3.org/TR/rdf-syntax-grammar/')
+      unless RUBY_PLATFORM == "java"
+        base.register_serializer(:rdf, lambda { |doc| doc.to_rdf_xml },
+          'http://www.w3.org/TR/rdf-syntax-grammar/')
+      end
       base.register_serializer(:n3, lambda { |doc| doc.to_rdf_n3 },
         'http://www.w3.org/DesignIssues/Notation3.html')
     end
@@ -67,20 +69,25 @@ module Serializers
       graph
     end
     
-    # Returns this document as RDF+XML
-    #
-    # @note No tests for this method, as it is implemented by the RDF gem.
-    # @api public
-    # @return [String] document in RDF+XML format
-    # @example Download this document as an XML file
-    #   controller.send_data doc.to_rdf_xml, :filename => 'export.xml', :disposition => 'attachment'
-    # :nocov:
-    def to_rdf_xml
-      ::RDF::Writer.for(:rdf).buffer do |writer|
-        writer << to_rdf
+    unless RUBY_PLATFORM == "java"
+      # Returns this document as RDF+XML
+      #
+      # This method is disabled in JRuby, as the RDFXML gem simply doesn't
+      # work with the pure-Java version of Nokogiri.
+      #
+      # @note No tests for this method, as it is implemented by the RDF gem.
+      # @api public
+      # @return [String] document in RDF+XML format
+      # @example Download this document as an XML file
+      #   controller.send_data doc.to_rdf_xml, :filename => 'export.xml', :disposition => 'attachment'
+      # :nocov:
+      def to_rdf_xml
+        ::RDF::Writer.for(:rdf).buffer do |writer|
+          writer << to_rdf
+        end
       end
+      # :nocov:
     end
-    # :nocov:
     
     # Returns this document as RDF+N3
     #
@@ -100,30 +107,32 @@ module Serializers
 end
 
 class Array
-  # Convert this array (of Document objects) to an RDF+XML collection
-  #
-  # Only will work on arrays that consist entirely of Document objects, will
-  # raise an ArgumentError otherwise.
-  #
-  # @api public
-  # @return [String] array of documents as RDF+XML collection
-  # @note No tests for this method, as it is implemented by the RDF gem.
-  # @example Save an array of documents in RDF+XML format to stdout
-  #   doc_array = Document.find_all_by_solr_query(...)
-  #   $stdout.write(doc_array.to_rdf_xml)
-  # :nocov:
-  def to_rdf_xml
-    self.each do |x|
-      raise ArgumentError, 'No to_rdf method for array element' unless x.respond_to? :to_rdf
-    end
-    
-    ::RDF::Writer.for(:rdf).buffer do |writer|
+  unless RUBY_PLATFORM == "java"
+    # Convert this array (of Document objects) to an RDF+XML collection
+    #
+    # Only will work on arrays that consist entirely of Document objects, will
+    # raise an ArgumentError otherwise.
+    #
+    # @api public
+    # @return [String] array of documents as RDF+XML collection
+    # @note No tests for this method, as it is implemented by the RDF gem.
+    # @example Save an array of documents in RDF+XML format to stdout
+    #   doc_array = Document.find_all_by_solr_query(...)
+    #   $stdout.write(doc_array.to_rdf_xml)
+    # :nocov:
+    def to_rdf_xml
       self.each do |x|
-        writer << x.to_rdf
+        raise ArgumentError, 'No to_rdf method for array element' unless x.respond_to? :to_rdf
+      end
+    
+      ::RDF::Writer.for(:rdf).buffer do |writer|
+        self.each do |x|
+          writer << x.to_rdf
+        end
       end
     end
+    # :nocov:
   end
-  # :nocov:
 
   # Convert this array (of Document objects) to an RDF+N3 collection
   #
