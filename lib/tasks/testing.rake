@@ -7,7 +7,6 @@ namespace :test do
       "test/integration/**/*_test.rb"]
 
     t.libs << 'test'
-    ##t.verbose = true
     t.test_files = files
   end
   Rake::Task['test:fast'].comment =

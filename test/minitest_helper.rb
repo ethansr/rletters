@@ -1,4 +1,8 @@
-require "minitest/autorun"
+require 'minitest/autorun'
+require 'minitest/reporters'
+
+MiniTest::Unit.runner = MiniTest::SuiteRunner.new
+MiniTest::Unit.runner.reporters << MiniTest::Reporters::SpecReporter.new
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
@@ -25,7 +29,6 @@ end
 require 'mocha'
 require 'webmock/minitest'
 require 'examples/examples'
-require 'active_record/test_case'
 
 class ActiveSupport::TestCase
   include ActiveRecord::TestFixtures

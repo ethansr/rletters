@@ -42,9 +42,10 @@ group :assets do
 end
 
 group :test do
-  gem 'minitest'
-  gem 'mini_specunit'
-  gem 'mini_backtrace'
+  gem 'minitest', :require => false
+  gem 'mini_specunit', :require => false
+  gem 'minitest-reporters', :require => false
+  
   gem 'mocha', :require => false
   gem 'webmock'
   gem 'nokogiri'
@@ -59,5 +60,6 @@ group :development do
 
   # SimpleCov requires manual intervention, don't run it in CI. Also,
   # it only runs on Ruby 1.9.
-  gem 'simplecov', '>= 0.4.0', :require => false, :platforms => [:ruby_19, :mingw_19]
+  gem 'simplecov', '>= 0.4.0', :require => false,
+    :platforms => [:ruby_19, :mingw_19]
 end
