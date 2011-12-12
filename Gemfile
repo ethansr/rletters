@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '~> 3.0'
-gem 'rails-i18n', '= 0.1.11'
+gem 'rails-i18n', '= 0.2.0'
 
 gem 'mysql2', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
