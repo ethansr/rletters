@@ -16,6 +16,11 @@ class DatasetsController < ApplicationController
   # @return [undefined]
   def index
     @datasets = @user.datasets
+    
+    @tasks = []
+    @datasets.each do |d|
+      @tasks << d.analysis_tasks
+    end
   end
 
   # Show information about the requested dataset

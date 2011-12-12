@@ -1,5 +1,7 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li{ 'data-role' => 'list-divider' }= t('.num_datasets_found', :count => @datasets.count)
+  - if @tasks.count
+    %li{ 'data-theme' => 'e' }= t('.tasks', :count => @tasks.count)
   - unless @datasets.count
     %li{ 'data-theme' => 'e' }= t('.no_datasets')
   - else

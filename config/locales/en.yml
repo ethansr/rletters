@@ -295,6 +295,10 @@ en:
         one: "1 dataset found"
         other: "%{count} datasets found"
       no_datasets: "No datasets"
+      tasks:
+        zero: "You have no analysis tasks pending..."
+        one: "You have one analysis task pending..."
+        other: "You have %{count} analysis tasks pending..."
     new:
       head: "Create a new dataset"      
       errors:
@@ -308,6 +312,9 @@ en:
       head: "Information for dataset"
       num_entries: "Number of documents: %{count}"
       created_at: "Created at: %{date}"
+      pending:
+        one: "1 analysis task pending for this dataset..."
+        other: "%{count} analysis tasks pending for this dataset..."
       delete: "Delete this dataset"
     delete:
       head: "Are you sure?"
