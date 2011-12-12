@@ -21,7 +21,7 @@ gem 'rdf-rdfxml', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'rdf-n3'
 
 # citeproc-ruby relies on unicode_utils, which is Ruby 1.9-only
-gem 'citeproc-ruby', :platforms => [:ruby_19, :mingw_19]
+gem 'citeproc-ruby', :platforms => [ :ruby_19, :mingw_19 ]
 
 gem 'haml'
 gem 'haml-rails'
@@ -61,5 +61,5 @@ group :development do
   # SimpleCov requires manual intervention, don't run it in CI. Also,
   # it only runs on Ruby 1.9.
   gem 'simplecov', '>= 0.4.0', :require => false,
-    :platforms => [:ruby_19, :mingw_19]
+    :platforms => [ :ruby_19, :mingw_19 ]
 end
