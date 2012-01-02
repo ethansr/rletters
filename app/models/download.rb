@@ -19,6 +19,30 @@ class Download < ActiveRecord::Base
   
   before_destroy :delete_file
   
+  # Get the path to a download file that is known not to exist
+  #
+  # This function will fetch a path for the file +basename+ in the downloads
+  # folder (do not put a path of any sort on +basename+).  A unique 
+  # timestamp will be appended to the filename.
+  #
+  # @api public
+  # @param basename [String] the base name of the file to create
+  # @return [String] the name of the file
+  #
+  # @example Get a download file name, then make a zip
+  #   filename = Download.file_name('test.zip')
+  #   Zip::ZipOutputStream.open(filename) do |zos| ... end
+  def self.file_name(basename)
+    dir = Rails.root.join('downloads')
+    
+    ext = File.extname(basename)
+    base = File.basename(basename, ext)
+    
+    # Add a timestamp to the basename
+    timestamp = Time.now.utc.strftime('-%Y%m%d%H%M%S')
+    File.join(dir, base + timestamp + ext)
+  end
+  
   # Creates a download object and file, then passes the file to the block
   #
   # This function will create the file +basename+ in the downloads folder
@@ -41,14 +65,7 @@ class Download < ActiveRecord::Base
   #     f.close
   #   end
   def self.create_file(basename)
-    dir = Rails.root.join('downloads')
-    
-    ext = File.extname(basename)
-    base = File.basename(basename, ext)
-    
-    # Add a timestamp to the basename
-    timestamp = Time.now.utc.strftime('-%Y%m%d%H%M%S')
-    filename = File.join(dir, base + timestamp + ext)
+    filename = Download.file_name basename
     
     i = 0
     while File.exists? filename

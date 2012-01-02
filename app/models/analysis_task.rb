@@ -18,7 +18,7 @@ class AnalysisTask < ActiveRecord::Base
   validates :dataset_id, :presence => true
 
   belongs_to :dataset
-  has_one :result_file, :class_name => 'Download'
+  has_one :result_file, :class_name => 'Download', :dependent => :destroy
   
   attr_accessible :name, :dataset
 end

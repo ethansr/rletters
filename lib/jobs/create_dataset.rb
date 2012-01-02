@@ -70,7 +70,7 @@ module Jobs
         # Get the first Solr response
         solr_response = CreateDataset.get_solr_response(solr_query)
         check_solr_response solr_response
-      
+        
         # Get our parameters
         docs_to_fetch = solr_response["response"]["numFound"]
       

@@ -14,6 +14,7 @@ gem 'airbrake'
 
 gem 'rpx_now'
 
+gem 'rubyzip'
 gem 'rsolr'
 gem 'marc'
 gem 'rdf'
