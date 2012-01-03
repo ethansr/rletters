@@ -43,6 +43,8 @@ group :assets do
 end
 
 group :test do
+  gem 'ffi-ncurses', :platforms => :jruby
+  
   gem 'minitest', :require => false
   gem 'mini_specunit', :require => false
   gem 'minitest-reporters', :require => false

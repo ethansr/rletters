@@ -67,6 +67,12 @@ GEM
     erubis (2.7.0)
     execjs (1.2.12)
       multi_json (~> 1.0)
+    ffi (1.0.11-java)
+    ffi-locale (1.0.1)
+      ffi (>= 1.0.9)
+    ffi-ncurses (0.4.0)
+      ffi (>= 1.0.9)
+      ffi-locale (>= 1.0.0)
     haml (3.1.4)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -213,6 +219,7 @@ DEPENDENCIES
   coffee-rails
   delayed_job
   execjs
+  ffi-ncurses
   haml
   haml-rails
   jquery-rails (= 1.0.15)
