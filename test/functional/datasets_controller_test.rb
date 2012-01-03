@@ -27,6 +27,23 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_select 'ul li a', "Test Dataset\n10"
   end
   
+  test "index should list pending analysis tasks" do
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task.save
+    
+    get :index
+    assert_select "li[data-theme=e]", 'You have one analysis task pending...'
+  end
+  
+  test "index should not show completed analysis tasks" do
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task.finished_at = Time.zone.now
+    task.save
+    
+    get :index
+    assert_select "li[data-theme=e]", false
+  end
+  
   test "should get the new dataset form" do
     get :new
     assert_response :success
