@@ -17,4 +17,21 @@ class AnalysisTaskTest < ActiveRecord::TestCase
     task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
     assert task.valid?
   end
+  
+  test "destroying analysis task with files deletes them" do
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    assert task.valid?
+    
+    task.result_file = Download.create_file('test.txt') do |file|
+      file.write 'test'
+    end
+    task.save
+    
+    filename = task.result_file.filename
+    assert File.exists?(filename)
+    
+    task.destroy
+    
+    refute File.exists?(filename)
+  end
 end

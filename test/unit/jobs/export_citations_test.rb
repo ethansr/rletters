@@ -5,6 +5,34 @@ require 'zip/zip'
 class ExportCitationsTest < ActiveSupport::TestCase
   fixtures :datasets, :users
   
+  test "should not be able to export citations for another user" do
+    assert_raises ActiveRecord::RecordNotFound do
+      Jobs::ExportCitations.new(users(:alice).to_param, 
+        datasets(:one).to_param, :bibtex).perform
+    end
+  end
+  
+  test "should not be able to export citations for invalid user" do
+    assert_raises ActiveRecord::RecordNotFound do
+      Jobs::ExportCitations.new('123123123123123', 
+        datasets(:one).to_param, :bibtex).perform
+    end
+  end
+  
+  test "exporting invalid dataset should not work" do
+    assert_raises ActiveRecord::RecordNotFound do
+      Jobs::ExportCitations.new(users(:john).to_param, 
+        '123123123123', :bibtex).perform
+    end
+  end
+  
+  test "exporting in an invalid format should not work" do
+    assert_raises ArgumentError do
+      Jobs::ExportCitations.new(users(:john).to_param,
+        datasets(:one).to_param, :notaformat).perform
+    end
+  end
+  
   test "should create export file" do
     # Execute the export job, which should create an AnalysisTask
     SolrExamples.stub :precise_one_doc

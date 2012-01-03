@@ -28,7 +28,7 @@ module Jobs
       
       # Fetch the dataset based on ID
       dataset = user.datasets.find(dataset_id)
-      raise ArgumentError, 'Datset ID is not valid' unless dataset
+      raise ArgumentError, 'Dataset ID is not valid' unless dataset
             
       # Check that the format is valid
       raise ArgumentError, 'Format is not valid' unless Document.serializers.has_key? format

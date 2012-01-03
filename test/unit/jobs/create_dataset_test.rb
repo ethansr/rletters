@@ -4,6 +4,13 @@ require 'minitest_helper'
 class CreateDatasetTest < ActiveSupport::TestCase
   fixtures :users
   
+  test "should not be able to create dataset for invalid user" do
+    assert_raises ActiveRecord::RecordNotFound do
+      Jobs::CreateDataset.new('123123123123', 'Test Dataset', 
+        '*:*', nil, 'precise').perform
+    end      
+  end
+  
   test "should create dataset from precise_all" do
     SolrExamples.stub :dataset_precise_all
     assert_difference('users(:john).datasets.count') do
