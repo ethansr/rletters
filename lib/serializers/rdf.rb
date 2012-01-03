@@ -1,7 +1,9 @@
 # -*- encoding : utf-8 -*-
 
-require 'rdf/rdfxml'
 require 'rdf/n3'
+unless RUBY_PLATFORM == "java"
+  require 'rdf/rdfxml'
+end
 
 module Serializers
   
