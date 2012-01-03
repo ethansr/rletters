@@ -143,7 +143,7 @@ GEM
       activesupport (= 3.1.3)
       bundler (~> 1.0)
       railties (= 3.1.3)
-    rails-i18n (0.2.0)
+    rails-i18n (0.3.0.beta2)
       i18n (~> 0.5)
     railties (3.1.3)
       actionpack (= 3.1.3)
@@ -235,7 +235,7 @@ DEPENDENCIES
   mysql2
   nokogiri
   rails (~> 3.0)
-  rails-i18n (= 0.2.0)
+  rails-i18n (= 0.3.0.beta2)
   rdf
   rdf-n3
   rdf-rdfxml
