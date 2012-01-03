@@ -4,6 +4,10 @@
     %h3= @dataset.name
     %p= t('.num_entries', :count => @dataset.entries.size)
     %p= t('.created_at', :date => @dataset.created_at.to_formatted_s(:long))
-  - if @dataset.analysis_tasks.count
-    %li{ 'data-theme' => 'e' }= t('.pending', :count => @dataset.analysis_tasks.count)
+  %li{ 'data-role' => 'list-divider' }= t('.tasks')
+  - if @dataset.analysis_tasks.where(:finished_at => nil).count > 0
+    %li{ 'data-theme' => 'e' }= t('.pending', :count => @dataset.analysis_tasks.where(:finished_at => nil).count)
+  - if @dataset.analysis_tasks.count(:finished_at)
+    - @dataset.analysis_tasks.where('finished_at IS NOT NULL').each do |task|
+      %li= task.name
   %li{ 'data-icon' => 'delete' }= link_to t('.delete'), delete_dataset_path(@dataset), 'data-rel' => 'dialog'

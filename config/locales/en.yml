@@ -312,6 +312,7 @@ en:
       head: "Information for dataset"
       num_entries: "Number of documents: %{count}"
       created_at: "Created at: %{date}"
+      tasks: "Analysis tasks for dataset"
       pending:
         one: "1 analysis task pending for this dataset..."
         other: "%{count} analysis tasks pending for this dataset..."

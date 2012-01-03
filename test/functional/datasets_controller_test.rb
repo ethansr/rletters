@@ -62,6 +62,23 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_select "ul li p:first-of-type", 'Number of documents: 10'
   end
   
+  test "should show pending analysis tasks" do
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task.save
+    
+    get :show, :id => datasets(:one).to_param
+    assert_select "li[data-theme=e]", '1 analysis task pending for this dataset...'
+  end
+  
+  test "should show completed analysis tasks" do
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task.finished_at = Time.zone.now
+    task.save
+    
+    get :show, :id => datasets(:one).to_param
+    assert_select "li:nth-of-type(4)", 'test'
+  end
+  
   test "should get delete form" do
     get :delete, :id => datasets(:one).to_param
     assert_response :success

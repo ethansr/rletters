@@ -18,6 +18,11 @@ class AnalysisTaskTest < ActiveRecord::TestCase
     assert task.valid?
   end
   
+  test "minimal analysis task has nil finished at time" do
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    assert_nil task.finished_at
+  end
+  
   test "destroying analysis task with files deletes them" do
     task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
     assert task.valid?
