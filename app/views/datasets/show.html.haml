@@ -9,5 +9,5 @@
     %li{ 'data-theme' => 'e' }= t('.pending', :count => @dataset.analysis_tasks.where(:finished_at => nil).count)
   - if @dataset.analysis_tasks.count(:finished_at)
     - @dataset.analysis_tasks.where('finished_at IS NOT NULL').each do |task|
-      %li= task.name
+      %li= link_to task.name, download_dataset_path(@dataset, :task_id => task.to_param), 'rel' => 'external'
   %li{ 'data-icon' => 'delete' }= link_to t('.delete'), delete_dataset_path(@dataset), 'data-rel' => 'dialog'
