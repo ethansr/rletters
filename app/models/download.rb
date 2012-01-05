@@ -102,8 +102,11 @@ class Download < ActiveRecord::Base
     ext = File.extname(filename)[1..-1]
     mime_type = Mime::Type.lookup_by_extension(ext)
     content_type = mime_type.to_s unless mime_type.nil?
+    content_type ||= 'text/plain'
     
-    controller.send_file filename, :x_sendfile => true, :type => content_type
+    controller.send_file(filename,
+      :x_sendfile => true,
+      :type => content_type)
   end
   
   private

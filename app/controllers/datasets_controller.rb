@@ -69,4 +69,22 @@ class DatasetsController < ApplicationController
 
     redirect_to datasets_path
   end
+  
+  # Download a file from an analysis task
+  #
+  # This method sends a user a result file from an analysis task.  It requires
+  # a dataset ID and a task ID.
+  #
+  # @api public
+  # @return [undefined]
+  def download
+    dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless dataset
+    task = dataset.analysis_tasks.find(params[:task_id])
+    raise ActiveRecord::RecordNotFound unless task
+    raise ActiveRecord::RecordNotFound unless task.result_file
+    raise ActiveRecord::RecordNotFound unless File.exists?(task.result_file.filename)
+    
+    task.result_file.send_file(self)
+  end
 end

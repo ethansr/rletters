@@ -115,4 +115,22 @@ class DatasetsControllerTest < ActionController::TestCase
     delete :destroy, :id => datasets(:one).to_param
     assert_redirected_to datasets_path
   end
+  
+  test "should download result files" do
+    # Execute the export job, which should create an AnalysisTask
+    SolrExamples.stub :precise_one_doc
+    Jobs::ExportCitations.new(users(:john).to_param,
+      datasets(:one).to_param, :bibtex).perform
+    
+    # Double-check that the task is created
+    assert_equal 1, datasets(:one).analysis_tasks.count
+    task = datasets(:one).analysis_tasks[0]
+    refute_nil task
+    
+    # Get the download page
+    get :download, :id => datasets(:one).to_param, :task_id => task.to_param
+    assert_response :success
+    assert_equal 'application/zip', @response.content_type
+    refute_equal 0, @response.body.length
+  end
 end

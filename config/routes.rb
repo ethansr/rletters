@@ -12,6 +12,7 @@ RLetters::Application.routes.draw do
   resources :datasets, :except => [ :edit, :update ] do
     member do
       get 'delete'
+      get 'download'
     end
   end
 
