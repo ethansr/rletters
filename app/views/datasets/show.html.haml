@@ -1,4 +1,4 @@
-%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b', 'data-split-icon' => 'delete', 'data-split-theme' => 'a' }
   %li{ 'data-role' => 'list-divider' }= t('.head')
   %li
     %h3= @dataset.name
@@ -9,5 +9,9 @@
     %li{ 'data-theme' => 'e' }= t('.pending', :count => @dataset.analysis_tasks.where(:finished_at => nil).count)
   - if @dataset.analysis_tasks.count(:finished_at)
     - @dataset.analysis_tasks.where('finished_at IS NOT NULL').each do |task|
-      %li= link_to task.name, download_dataset_path(@dataset, :task_id => task.to_param), 'rel' => 'external'
+      %li
+        = link_to download_dataset_path(@dataset, :task_id => task.to_param), 'rel' => 'external' do
+          %h3= t('.task_header', :name => task.name)
+          %p= t('.download_task')
+        = link_to t('.delete_task'), '#'
   %li{ 'data-icon' => 'delete' }= link_to t('.delete'), delete_dataset_path(@dataset), 'data-rel' => 'dialog'

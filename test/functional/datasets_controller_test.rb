@@ -93,7 +93,8 @@ class DatasetsControllerTest < ActionController::TestCase
     task.save
     
     get :show, :id => datasets(:one).to_param
-    assert_select "li a[href='#{download_dataset_path(datasets(:one), :task_id => task.to_param)}']", 'test'
+    assert_select "a[href='#{download_dataset_path(datasets(:one), :task_id => task.to_param)}']"
+    assert_select "h3", "“test” Complete"
   end
   
   test "should get delete form" do
