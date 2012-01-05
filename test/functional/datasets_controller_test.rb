@@ -24,7 +24,7 @@ class DatasetsControllerTest < ActionController::TestCase
   
   test "index should list the one dataset" do
     get :index
-    assert_select 'ul li a', "Test Dataset\n10"
+    assert_select 'a', "Test Dataset\n10"
   end
   
   test "index should list pending analysis tasks" do
@@ -76,7 +76,7 @@ class DatasetsControllerTest < ActionController::TestCase
   
   test "should show correct number of entries" do
     get :show, :id => datasets(:one).to_param
-    assert_select "ul li p:first-of-type", 'Number of documents: 10'
+    assert_select "p", 'Number of documents: 10'
   end
   
   test "should show pending analysis tasks" do
@@ -93,9 +93,7 @@ class DatasetsControllerTest < ActionController::TestCase
     task.save
     
     get :show, :id => datasets(:one).to_param
-    assert_select "li:nth-of-type(4)" do
-      assert_select "a[href='#{download_dataset_path(datasets(:one), :task_id => task.to_param)}']", 'test'
-    end
+    assert_select "li a[href='#{download_dataset_path(datasets(:one), :task_id => task.to_param)}']", 'test'
   end
   
   test "should get delete form" do

@@ -11,7 +11,7 @@ class SearchControllerAdvancedTest < ActionController::TestCase
     assert_response :success
     refute_nil assigns(:document)
     assert_select 'li', 'Document details'
-    assert_select 'ul li:nth-child(2) h3', 'How Reliable are the Methods for Estimating Repertoire Size?'
+    assert_select 'li h3', 'How Reliable are the Methods for Estimating Repertoire Size?'
   end
   
   test "should have DOI link" do
@@ -19,11 +19,7 @@ class SearchControllerAdvancedTest < ActionController::TestCase
     get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
     assert_response :success
     refute_nil assigns(:document)
-    assert_select 'ul[data-inset=true]' do
-      assert_select 'li' do
-        assert_select "a[href='http://dx.doi.org/10.1111/j.1439-0310.2008.01576.x']"
-      end
-    end
+    assert_select "a[href='http://dx.doi.org/10.1111/j.1439-0310.2008.01576.x']"
   end
   
   test "should have local library links if logged in" do
@@ -37,13 +33,9 @@ class SearchControllerAdvancedTest < ActionController::TestCase
     SolrExamples.stub :precise_one_doc
     get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318' }
     unless APP_CONFIG['mendeley_key'].blank?
-      assert_select "ul[data-inset=true] li:nth-last-child(2)" do
-        assert_select "a[href='#{mendeley_redirect_path(:id => '00972c5123877961056b21aea4177d0dc69c7318')}']"
-      end
+      assert_select "a[href='#{mendeley_redirect_path(:id => '00972c5123877961056b21aea4177d0dc69c7318')}']"
     end
-    assert_select "ul[data-inset=true] li:nth-last-child(1)" do
-      assert_select "a[href='#{citeulike_redirect_path(:id => '00972c5123877961056b21aea4177d0dc69c7318')}']"
-    end
+    assert_select "a[href='#{citeulike_redirect_path(:id => '00972c5123877961056b21aea4177d0dc69c7318')}']"
   end
   
   test "should have unAPI link in the page" do

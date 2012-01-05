@@ -17,20 +17,18 @@ class LibrariesControllerTest < ActionController::TestCase
   
   test "should get library in index (with links)" do
     get :index
-    assert_select 'li' do
-      assert_select "a[href='#{edit_user_library_path(@harvard)}']", 'Harvard'
-      assert_select "a[href='#{delete_user_library_path(@harvard)}']"
-    end
+    assert_select "a[href='#{edit_user_library_path(@harvard)}']", 'Harvard'
+    assert_select "a[href='#{delete_user_library_path(@harvard)}']"
   end
   
   test "should get add-library link" do
     get :index
-    assert_select "li a[href='#{new_user_library_path}']"
+    assert_select "a[href='#{new_user_library_path}']"
   end
   
   test "should get query-library link" do
     get :index
-    assert_select "li a[href='#{query_user_libraries_path}']"
+    assert_select "a[href='#{query_user_libraries_path}']"
   end
   
   test "should get the new library form" do
