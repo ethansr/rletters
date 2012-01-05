@@ -4,8 +4,11 @@ script: "bundle exec rake db:migrate test"
 rvm:
   - 1.8.7
   - 1.9.3
-  - jruby
   - ree
+
+# Not testing on JRuby until the following DJ bug is fixed:
+# https://github.com/collectiveidea/delayed_job/issues/328
+#  - jruby
 # Not until the RDF gem is upgraded, else we'll take up
 # years of build time on the poor Travis servers.
 #  - rbx

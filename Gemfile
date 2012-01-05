@@ -8,8 +8,10 @@ gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
 gem 'jruby-openssl', :platforms => :jruby
 
 gem 'capistrano'
-gem 'delayed_job'
+gem 'delayed_job', '~> 3.0'
+gem 'delayed_job_active_record'
 gem 'whenever', :require => false
+gem 'daemons'
 gem 'airbrake'
 
 gem 'rpx_now'
