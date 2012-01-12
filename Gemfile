@@ -44,14 +44,14 @@ group :assets do
   gem 'therubyrhino', :platforms => :jruby
 end
 
+group :test, :development do
+  gem 'rspec-rails'
+end
+
 group :test do
   gem 'ffi-ncurses', :platforms => :jruby
-  
-  gem 'minitest', :require => false
-  gem 'mini_specunit', :require => false
-  gem 'minitest-reporters', :require => false
-  
-  gem 'mocha', :require => false
+    
+  gem 'mocha'
   gem 'webmock'
   gem 'nokogiri'
 end

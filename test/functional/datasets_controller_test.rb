@@ -133,5 +133,7 @@ class DatasetsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 'application/zip', @response.content_type
     refute_equal 0, @response.body.length
+    
+    task.destroy
   end
 end

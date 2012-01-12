@@ -10,7 +10,7 @@ config/deploy/deploy_config.rb
 db/*.sqlite3
 doc
 downloads
-test/coverage/
+spec/coverage/
 log/*.log
 public/assets/
 tmp

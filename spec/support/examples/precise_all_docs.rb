@@ -59,6 +59,7 @@
 	 'journal'=>'Ethology',
 	 'year'=>'2008',
 	 'volume'=>'114',
+	 'number'=>'6',
 	 'pages'=>'1227-1238'},
 	{
 	 'shasum'=>'0097c3434054c25e1ace6243a1ac54b71f35bc28',
