@@ -12,7 +12,7 @@ describe Dataset do
       end
       
       it "isn't valid" do 
-        @dataset.valid?.should be_false
+        @dataset.should_not be_valid
       end
     end
     
@@ -23,7 +23,7 @@ describe Dataset do
       end
       
       it "isn't valid" do
-        @dataset.valid?.should be_false
+        @dataset.should_not be_valid
       end
     end
     
@@ -33,7 +33,7 @@ describe Dataset do
       end
       
       it "isn't valid" do
-        @dataset.valid?.should be_false
+        @dataset.should_not be_valid
       end
     end
     
@@ -44,7 +44,7 @@ describe Dataset do
       end
       
       it "is valid" do
-        @dataset.valid?.should be_true
+        @dataset.should be_valid
       end
     end
   end

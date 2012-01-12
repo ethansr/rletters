@@ -10,7 +10,7 @@ describe DatasetEntry do
       end
       
       it "isn't valid" do
-        @entry.valid?.should be_false
+        @entry.should_not be_valid
       end
     end
     
@@ -20,7 +20,7 @@ describe DatasetEntry do
       end
       
       it "isn't valid" do
-        @entry.valid?.should be_false
+        @entry.should_not be_valid
       end
     end
     
@@ -30,7 +30,7 @@ describe DatasetEntry do
       end
       
       it "isn't valid" do
-        @entry.valid?.should be_false
+        @entry.should_not be_valid
       end
     end
     
@@ -40,7 +40,7 @@ describe DatasetEntry do
       end
       
       it "is valid" do
-        @entry.valid?.should be_true
+        @entry.should be_valid
       end
     end
   end

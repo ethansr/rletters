@@ -110,77 +110,6 @@ module NameHelpers
     { :first => first, :last => last, :von => von, :suffix => suffix }
   end
   
-  # Create Lucene queries for the given names
-  #
-  # This function handles the vagaries of the formatting of an individual set
-  # of names for Lucene.  There are three basic processes that this function
-  # performs:
-  #
-  # 1. If a name is submitted by the user as a single letter, it will be 
-  #    searched with a wildcard.
-  # 2. If a name is submitted by the user *not* as a single letter, it will
-  #    result in two queries, one with the full name and one with an initial.
-  # 3. If multiple initials in a row are present, then we combine them into
-  #    a single search term.
-  #
-  # @param [Array<String>] first list of first/middle names to use
-  # @param [String] last last name to use
-  # @return [Array<String>] Lucene queries for this set of names
-  # @example Query without wildcards
-  #   NameHelpers.query_for_names [ 'First' ], 'Last'
-  #   #=> ['"F Last"', '"First Last"']
-  # @example Query with wildcards
-  #   NameHelpers.query_for_names [ 'F' ], 'Last'
-  #   #=> ['"F* Last"']
-  # @example Query with multiple forms produced
-  #   NameHelpers.query_for_names [ 'First', 'Middle' ], 'Last'
-  #   #=> ['"First Middle Last"', '"F Middle Last"', 
-  #   #    '"First M Last"', '"F M Last"', '"FM Last"']
-  def self.query_for_names(first, last)
-    # Create an array of all the forms of each name
-    first_name_forms = []
-    
-    first.each do |f|
-      if f.length == 1
-        # Just an initial, search it with a wildcard
-        first_name_forms << [ "#{f}*" ]
-      else
-        # A name, search it as itself and as an initial, but without
-        # a wildcard.  Be careful here on how to split on characters, for
-        # compatibility with Ruby 1.8!
-        first_name_forms << [ f, f.scan(/./mu)[0] ]
-      end
-    end
-    
-    # Form the list of all the names we're actually going to use
-    first_name_forms_0 = first_name_forms.shift
-    names = first_name_forms_0.product(*first_name_forms).map { |n| n << last }
-    
-    # Step through these and create the combined-initials queries
-    new_names = []
-    names.each do |name|
-      next if name.count == 2
-      
-      # We want to be able to combine "First M M Last" to "First MM Last".
-      # So loop over subsequences of all sizes >= 2 and <= number of first
-      # names.
-      (2..(name.count - 1)).each do |n|
-        name.each_with_index do |p, i|
-          # See if a part of the array at index i with size n is all initials
-          portion = name[i, n]
-          next unless portion.all? { |x| x.length == 1 || ( x.length == 2 && x[1] == '*' ) }
-          
-          # Create a new name with this portion merged
-          new_names << [ name[0...i], "#{portion.join}", name[i+n..-1] ].flatten
-        end
-      end
-    end
-    
-    names.concat(new_names)
-    
-    # Return the queries
-    names.map { |na| "\"#{na.join(' ')}\"" }
-  end
   
   # Turn an author's name into a set of Lucene queries
   #
@@ -233,4 +162,80 @@ module NameHelpers
     # Compose these together and return
     "(#{queries.join(" OR ")})"
   end
+  
+  private
+  
+  # Create Lucene queries for the given names
+  #
+  # This function handles the vagaries of the formatting of an individual set
+  # of names for Lucene.  There are three basic processes that this function
+  # performs:
+  #
+  # 1. If a name is submitted by the user as a single letter, it will be 
+  #    searched with a wildcard.
+  # 2. If a name is submitted by the user *not* as a single letter, it will
+  #    result in two queries, one with the full name and one with an initial.
+  # 3. If multiple initials in a row are present, then we combine them into
+  #    a single search term.
+  #
+  # @api private
+  # @param [Array<String>] first list of first/middle names to use
+  # @param [String] last last name to use
+  # @return [Array<String>] Lucene queries for this set of names
+  # @example Query without wildcards
+  #   NameHelpers.query_for_names [ 'First' ], 'Last'
+  #   #=> ['"F Last"', '"First Last"']
+  # @example Query with wildcards
+  #   NameHelpers.query_for_names [ 'F' ], 'Last'
+  #   #=> ['"F* Last"']
+  # @example Query with multiple forms produced
+  #   NameHelpers.query_for_names [ 'First', 'Middle' ], 'Last'
+  #   #=> ['"First Middle Last"', '"F Middle Last"', 
+  #   #    '"First M Last"', '"F M Last"', '"FM Last"']
+  def self.query_for_names(first, last)
+    # Create an array of all the forms of each name
+    first_name_forms = []
+    
+    first.each do |f|
+      if f.length == 1
+        # Just an initial, search it with a wildcard
+        first_name_forms << [ "#{f}*" ]
+      else
+        # A name, search it as itself and as an initial, but without
+        # a wildcard.  Be careful here on how to split on characters, for
+        # compatibility with Ruby 1.8!
+        first_name_forms << [ f, f.scan(/./mu)[0] ]
+      end
+    end
+    
+    # Form the list of all the names we're actually going to use
+    first_name_forms_0 = first_name_forms.shift
+    names = first_name_forms_0.product(*first_name_forms).map { |n| n << last }
+    
+    # Step through these and create the combined-initials queries
+    new_names = []
+    names.each do |name|
+      next if name.count == 2
+      
+      # We want to be able to combine "First M M Last" to "First MM Last".
+      # So loop over subsequences of all size == 1 and <= number of first
+      # names.
+      (2..(name.count - 1)).each do |n|
+        name.each_with_index do |p, i|
+          # See if a part of the array at index i with size n is all initials
+          portion = name[i, n]
+          next unless portion.all? { |x| x.length == 1 }
+          
+          # Create a new name with this portion merged
+          new_names << [ name[0...i], "#{portion.join}", name[i+n..-1] ].flatten
+        end
+      end
+    end
+    
+    names.concat(new_names)
+    
+    # Return the queries
+    names.map { |na| "\"#{na.join(' ')}\"" }
+  end
+  
 end

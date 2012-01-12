@@ -14,7 +14,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -24,7 +24,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -35,7 +35,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -46,7 +46,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -58,7 +58,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -69,7 +69,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -81,7 +81,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -92,7 +92,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -104,7 +104,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -116,7 +116,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -128,7 +128,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -140,7 +140,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -152,7 +152,7 @@ describe User do
       end
       
       it "isn't valid" do
-        @user.valid?.should be_false
+        @user.should_not be_valid
       end
     end
     
@@ -165,7 +165,7 @@ describe User do
       end
       
       it "is valid" do
-        @user.valid?.should be_true
+        @user.should be_valid
       end
     end
   end
@@ -181,7 +181,7 @@ describe User do
       end
       
       it 'does not create a new record' do
-        @user.new_record?.should be_false
+        @user.should_not be_new_record
       end
     end
     
@@ -195,7 +195,7 @@ describe User do
       end
       
       it 'creates a new database record' do
-        @user.new_record?.should be_true
+        @user.should be_new_record
       end
     end
   end

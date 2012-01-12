@@ -10,7 +10,7 @@ describe Download do
       end
       
       it "isn't valid" do
-        @dl.valid?.should be_false
+        @dl.should_not be_valid
       end
     end
     
@@ -20,7 +20,7 @@ describe Download do
       end
       
       it "is valid" do
-        @dl.valid?.should be_true
+        @dl.should be_valid
       end
     end
   end

@@ -40,7 +40,20 @@ class Download < ActiveRecord::Base
     
     # Add a timestamp to the basename
     timestamp = Time.now.utc.strftime('-%Y%m%d%H%M%S')
-    File.join(dir, base + timestamp + ext)
+    filename = File.join(dir, base + timestamp + ext)
+    
+    i = 0
+    while File.exists? filename
+      i = i + 1
+      filename = File.join(dir, base + timestamp + i.to_s + ext)
+      
+      # Runaway loop counter (DoS?)
+      if i == 100
+        raise StandardError, "Cannot find a filename for download"
+      end
+    end
+    
+    filename
   end
   
   # Creates a download object and file, then passes the file to the block
@@ -66,18 +79,7 @@ class Download < ActiveRecord::Base
   #   end
   def self.create_file(basename)
     filename = Download.file_name basename
-    
-    i = 0
-    while File.exists? filename
-      i = i + 1
-      filename = File.join(dir base + timestamp + i + ext)
-      
-      # Runaway loop counter (DoS?)
-      if i == 100
-        raise StandardError, "Cannot find a filename for download"
-      end
-    end
-    
+        
     # Yield out to the block
     f = File.new(filename, "w")
     yield f

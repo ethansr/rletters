@@ -12,7 +12,7 @@ describe AnalysisTask do
       end
       
       it "isn't valid" do
-        @task.valid?.should be_false
+        @task.should_not be_valid
       end
     end
     
@@ -22,7 +22,7 @@ describe AnalysisTask do
       end
       
       it "isn't valid" do
-        @task.valid?.should be_false
+        @task.should_not be_valid
       end
     end
     
@@ -32,7 +32,7 @@ describe AnalysisTask do
       end
       
       it "is valid" do
-        @task.valid?.should be_true
+        @task.should be_valid
       end
     end
   end

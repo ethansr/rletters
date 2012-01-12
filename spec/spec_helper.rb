@@ -35,4 +35,9 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
   config.infer_base_class_for_anonymous_controllers = true
+  
+  # Skip some tests on Ruby 1.9
+  if RUBY_VERSION < "1.9.0"
+    config.filter_run_excluding :ruby19 => true
+  end
 end

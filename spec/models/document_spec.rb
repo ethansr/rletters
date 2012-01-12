@@ -11,7 +11,7 @@ describe Document do
       end
       
       it "isn't valid" do
-        @doc.valid?.should be_false
+        @doc.should_not be_valid
       end
     end
     
@@ -21,7 +21,7 @@ describe Document do
       end
       
       it "isn't valid" do
-        @doc.valid?.should be_false
+        @doc.should_not be_valid
       end
     end
     
@@ -31,7 +31,7 @@ describe Document do
       end
       
       it "isn't valid" do
-        @doc.valid?.should be_false
+        @doc.should_not be_valid
       end
     end
     
@@ -41,7 +41,7 @@ describe Document do
       end
       
       it "is valid" do
-        @doc.valid?.should be_true
+        @doc.should be_valid
       end
     end
   end

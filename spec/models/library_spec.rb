@@ -12,7 +12,7 @@ describe Library do
       end
       
       it "isn't valid" do
-        @library.valid?.should be_false
+        @library.should_not be_valid
       end
     end
     
@@ -23,7 +23,7 @@ describe Library do
       end
       
       it "isn't valid" do
-        @library.valid?.should be_false
+        @library.should_not be_valid
       end
     end
     
@@ -33,7 +33,7 @@ describe Library do
       end
       
       it "isn't valid" do
-        @library.valid?.should be_false
+        @library.should_not be_valid
       end
     end
     
@@ -44,7 +44,7 @@ describe Library do
       end
       
       it "isn't valid" do
-        @library.valid?.should be_false
+        @library.should_not be_valid
       end
     end
     
@@ -55,7 +55,7 @@ describe Library do
       end
       
       it "is valid" do
-        @library.valid?.should be_true
+        @library.should be_valid
       end
     end
   end
@@ -68,7 +68,7 @@ describe Library do
       end
       
       it "is valid" do
-        @library.valid?.should be_true
+        @library.should be_valid
       end
       
       it "adds the protocol" do
@@ -84,7 +84,7 @@ describe Library do
       end
       
       it "is valid" do
-        @library.valid?.should be_true
+        @library.should be_valid
       end
       
       it "adds the question mark" do
