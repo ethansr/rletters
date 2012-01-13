@@ -30,5 +30,29 @@ class InfoController < ApplicationController
       @database_size = 0
     end
   end
+  
+  # Show the about page
+  #
+  # @api public
+  # @return [undefined]
+  def about; end
+  
+  # Show the FAQ
+  #
+  # @api public
+  # @return [undefined]
+  def faq; end
+  
+  # Show the privacy policy
+  #
+  # @api public
+  # @return [undefined]
+  def privacy; end
+  
+  # Show the tutorial
+  #
+  # @api public
+  # @return [undefined]
+  def tutorial; end
 end
 

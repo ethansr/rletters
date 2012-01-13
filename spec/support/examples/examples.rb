@@ -22,9 +22,9 @@ module SolrExamples
     
     # Make sure to stub everywhere that extends SolrHelpers!
     # FIXME: Can we somehow just stub the SolrHelpers method?!
-    Document.stubs(:get_solr_response).returns(*examples)
-    InfoController.stubs(:get_solr_response).returns(*examples)
-    Jobs::CreateDataset.stubs(:get_solr_response).returns(*examples)
+    Document.stub(:get_solr_response).and_return(*examples)
+    InfoController.stub(:get_solr_response).and_return(*examples)
+    Jobs::CreateDataset.stub(:get_solr_response).and_return(*examples)
   end
 end
 

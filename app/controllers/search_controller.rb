@@ -36,6 +36,12 @@ class SearchController < ApplicationController
     @documents = Document.find_all_by_solr_query(solr_query, :offset => offset, :limit => limit)
   end
   
+  # Show the advanced search page
+  #
+  # @api public
+  # @return [undefined]
+  def advanced; end
+  
   # Show or export an individual document
   #
   # This action is content-negotiated: if you request the page for a document

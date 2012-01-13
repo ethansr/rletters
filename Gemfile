@@ -46,12 +46,12 @@ end
 
 group :test, :development do
   gem 'rspec-rails'
+  gem 'webrat'
 end
 
 group :test do
   gem 'ffi-ncurses', :platforms => :jruby
     
-  gem 'mocha'
   gem 'webmock'
   gem 'nokogiri'
 end
