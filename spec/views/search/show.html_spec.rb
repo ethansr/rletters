@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "search/show.html" do
   
-  fixtures :users
+  fixtures :users, :libraries
   
   before(:all) do
     APP_CONFIG['mendeley_key'] = 'asdf'
@@ -53,7 +53,7 @@ describe "search/show.html" do
   
   context 'when logged in' do
     before(:each) do
-      @user = users(:john)
+      assign(:user, users(:john))
       session[:user_id] = users(:john).to_param
       render
     end
