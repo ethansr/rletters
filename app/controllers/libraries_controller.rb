@@ -25,8 +25,7 @@ class LibrariesController < ApplicationController
   # @api public
   # @return [undefined]
   def new
-    @library = Library.new
-    @library.user = @user
+    @library = @user.libraries.build
     render :layout => 'dialog'
   end
 

@@ -57,31 +57,30 @@ module SearchHelper
   # @example Put the current pagination links in a paragraph element
   #   <p><%= render_pagination %></p>
   def render_pagination
-    page, per_page = get_pagination_params
-    num_pages = Document.num_results.to_f / per_page.to_f
+    num_pages = Document.num_results.to_f / @per_page.to_f
     num_pages = Integer(num_pages.ceil)
 
     content_tag :div, :class => 'ui-grid-c' do
       content = ''.html_safe
 
       content << content_tag(:div, :class => 'ui-block-a') do
-        if page != 0
+        if @page != 0
           page_link(I18n.t(:'search.index.first_button'), 0, 'back')
         end
       end
       content << content_tag(:div, :class => 'ui-block-b') do
-        if page != 0
-          page_link(I18n.t(:'search.index.previous_button'), page - 1, 'arrow-l')
+        if @page != 0
+          page_link(I18n.t(:'search.index.previous_button'), @page - 1, 'arrow-l')
         end
       end
 
       content << content_tag(:div, :class => 'ui-block-c') do
-        if page != (num_pages - 1)
-          page_link(I18n.t(:'search.index.next_button'), page + 1, 'arrow-r', true)
+        if @page != (num_pages - 1)
+          page_link(I18n.t(:'search.index.next_button'), @page + 1, 'arrow-r', true)
         end
       end
       content << content_tag(:div, :class => 'ui-block-d') do
-        if page != (num_pages - 1)
+        if @page != (num_pages - 1)
           page_link(I18n.t(:'search.index.last_button'), num_pages - 1, 'forward', true)
         end
       end
