@@ -1,25 +1,25 @@
 # -*- encoding : utf-8 -*-
 RSpec::Matchers.define :be_lucene_query do |expected|
   match do |actual|
-    query_to_array(actual).sort == expected.sort
+    query_to_array(actual).should =~ expected
   end
   
   def query_to_array(str)
-    unless str[0] == '('
-      return [ str[1..-2] ]
+    unless str.scan(/./mu)[0] == '('
+      return [ str.scan(/./mu)[1..-2].join ]
     end
-    str[1..-2].split(' OR ').map { |n| n[1..-2] }
+    str.scan(/./mu)[1..-2].join.split(' OR ').map { |n| n.scan(/./mu)[1..-2].join }
   end
   
   failure_message_for_should do |actual|
-    "expected that #{actual} would be the Lucene query for #{expected.to_s}"
+    "expected that #{actual} (or #{query_to_array(actual).inspect}) would be the Lucene query for #{expected.inspect}"
   end
   
   failure_message_for_should_not do |actual|
-    "expected that #{actual} would not be the Lucene query for #{expected.to_s}"
+    "expected that #{actual} (or #{query_to_array(actual).inspect}) would not be the Lucene query for #{expected.inspect}"
   end
   
   description do
-    "be a Lucene query for the list #{expected.to_s}"
+    "be a Lucene query for the list #{expected.inspect}"
   end
 end

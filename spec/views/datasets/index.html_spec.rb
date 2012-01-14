@@ -13,7 +13,7 @@ describe "datasets/index.html" do
 
   it 'lists the dataset' do
     render
-    rendered.should have_selector('a', :content => "Test Dataset\n10")
+    rendered.should contain("Test Dataset 10")
   end
   
   it 'lists pending analysis tasks' do
