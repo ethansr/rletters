@@ -35,6 +35,14 @@ describe DatasetsController do
     it "doesn't route to #edit" do
       get('/datasets/1/edit').should_not be_routable
     end
+    
+    it 'routes to #start_job' do
+      get('/datasets/1/start_Task').should route_to('datasets#start_job', :id => '1', :job_name => 'start_Task')
+    end
+    
+    it "doesn't route invalid job names" do
+      get('/datasets/1/start_asdf').should_not be_routable
+    end
   end
   
 end

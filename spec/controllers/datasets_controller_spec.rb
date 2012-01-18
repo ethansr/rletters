@@ -120,6 +120,37 @@ describe DatasetsController do
     end
   end
   
+  describe '#start_job' do
+    context 'when an invalid job name is passed' do
+      it 'raises an exception' do
+        expect {
+          get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ThisIsNoClass'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+    
+    context 'when a valid job name is passed' do
+      it 'does not raise an exception' do
+        expect {
+          get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+        }.to_not raise_error
+      end
+      
+      it 'enqueues a job' do
+        expected_job = Jobs::ExportCitations.new(users(:john).to_param,
+          datasets(:one).to_param, 'bibtex')
+        Delayed::Job.should_receive(:enqueue).with(expected_job).once
+        
+        get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+      end
+      
+      it 'redirects to the dataset page' do
+        get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+        response.should redirect_to(dataset_path(datasets(:one)))
+      end
+    end
+  end
+  
   describe '#download' do
     before(:each) do
       # Execute an export job, which should create an AnalysisTask

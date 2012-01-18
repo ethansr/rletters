@@ -13,6 +13,7 @@ RLetters::Application.routes.draw do
     member do
       get 'delete'
       get 'download'
+      get ':job_name' => 'datasets#start_job', :constraints => { :job_name => /start_[A-Z][A-Za-z]*/u }
     end
   end
 

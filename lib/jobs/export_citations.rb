@@ -9,7 +9,7 @@ module Jobs
   # user for download as bibliographic data.
   #
   # @attr [String] user_id The user that created this dataset
-  # @attr [String] dataset_d The dataset to export
+  # @attr [String] dataset_id The dataset to export
   # @attr [Symbol] format The export format (see +Document.serializers+)
   class ExportCitations < Struct.new(:user_id, :dataset_id, :format)
     include Jobs::ErrorHandling
@@ -31,8 +31,9 @@ module Jobs
       raise ArgumentError, 'Dataset ID is not valid' unless dataset
             
       # Check that the format is valid
-      raise ArgumentError, 'Format is not valid' unless Document.serializers.has_key? format
-      serializer = Document.serializers[format]
+      raise ArgumentError, 'Format is not specified' if format.nil?
+      raise ArgumentError, 'Format is not valid' unless Document.serializers.has_key? format.to_sym
+      serializer = Document.serializers[format.to_sym]
       
       # Make a new analysis task
       task = dataset.analysis_tasks.create(:name => "Export as #{format.to_s.upcase}")

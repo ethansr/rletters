@@ -70,6 +70,47 @@ class DatasetsController < ApplicationController
     redirect_to datasets_path
   end
   
+  # Start an analysis task for this dataset
+  #
+  # This method dynamically determines the appropriate analysis job to start
+  # and strts it.  It requires a dataset ID.
+  #
+  # @api public
+  # @return [undefined]
+  def start_job
+    dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless dataset
+    
+    # This shouldn't be possible, but check it anyway
+    job_name = params[:job_name]
+    raise ActiveRecord::RecordNotFound unless job_name
+    
+    # These should be required by regular expression to begin with start_
+    job_class_string = 'Jobs::' + job_name[6..-1]
+    
+    begin
+      job_class = job_class_string.constantize
+      raise ActiveRecord::RecordNotFound unless job_class.is_a?(Class)
+    rescue NameError
+      raise ActiveRecord::RecordNotFound
+    end
+    
+    # Put the job parameters together out of the job hash
+    job = job_class.new
+    job[:user_id] = @user.to_param
+    job[:dataset_id] = dataset.to_param
+    
+    if params[:job_params]
+      params[:job_params].each do |k, v|
+        job[k] = v
+      end
+    end
+    
+    # Enqueue the job
+    Delayed::Job.enqueue job
+    redirect_to dataset_path(dataset)
+  end
+  
   # Download a file from an analysis task
   #
   # This method sends a user a result file from an analysis task.  It requires

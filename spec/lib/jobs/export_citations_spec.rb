@@ -42,6 +42,20 @@ describe Jobs::ExportCitations do
     end
   end
   
+  context "when the format is a string" do
+    it "works anyway" do
+      expect {
+        SolrExamples.stub :precise_one_doc
+        @dataset = users(:alice).datasets.build({ :name => 'Test' })
+        @dataset.entries.build({ :shasum => '00972c5123877961056b21aea4177d0dc69c7318' })
+        @dataset.save.should be_true
+
+        Jobs::ExportCitations.new(users(:alice).to_param,
+          @dataset.to_param, 'bibtex').perform
+      }.to_not raise_error
+    end
+  end
+  
   context "when all parameters are valid" do
     before(:each) do
       SolrExamples.stub :precise_one_doc
