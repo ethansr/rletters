@@ -2,14 +2,14 @@
 require 'spec_helper'
 require 'zip/zip'
 
-describe Jobs::ExportCitations do
+describe Jobs::Analysis::ExportCitations do
   
   fixtures :datasets, :users
   
   context "when the wrong user is specified" do
     it "raises an exception" do
       expect {
-        Jobs::ExportCitations.new(users(:alice).to_param, 
+        Jobs::Analysis::ExportCitations.new(users(:alice).to_param, 
           datasets(:one).to_param, :bibtex).perform
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
@@ -18,7 +18,7 @@ describe Jobs::ExportCitations do
   context "when an invalid user is specified" do
     it "raises an exception" do
       expect {
-        Jobs::ExportCitations.new('123123123123123', 
+        Jobs::Analysis::ExportCitations.new('123123123123123', 
           datasets(:one).to_param, :bibtex).perform
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
@@ -27,7 +27,7 @@ describe Jobs::ExportCitations do
   context "when an invalid dataset is specified" do
     it "raises an exception" do
       expect {
-        Jobs::ExportCitations.new(users(:john).to_param, 
+        Jobs::Analysis::ExportCitations.new(users(:john).to_param, 
           '123123123123', :bibtex).perform
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
@@ -36,7 +36,7 @@ describe Jobs::ExportCitations do
   context "when an invalid format is specified" do
     it "raises an exception" do
       expect {
-        Jobs::ExportCitations.new(users(:john).to_param,
+        Jobs::Analysis::ExportCitations.new(users(:john).to_param,
           datasets(:one).to_param, :notaformat).perform
       }.to raise_error(ArgumentError)
     end
@@ -50,7 +50,7 @@ describe Jobs::ExportCitations do
         @dataset.entries.build({ :shasum => '00972c5123877961056b21aea4177d0dc69c7318' })
         @dataset.save.should be_true
 
-        Jobs::ExportCitations.new(users(:alice).to_param,
+        Jobs::Analysis::ExportCitations.new(users(:alice).to_param,
           @dataset.to_param, 'bibtex').perform
       }.to_not raise_error
     end
@@ -63,7 +63,7 @@ describe Jobs::ExportCitations do
       @dataset.entries.build({ :shasum => '00972c5123877961056b21aea4177d0dc69c7318' })
       @dataset.save.should be_true
       
-      Jobs::ExportCitations.new(users(:alice).to_param,
+      Jobs::Analysis::ExportCitations.new(users(:alice).to_param,
         @dataset.to_param, :bibtex).perform
     end
     

@@ -86,7 +86,7 @@ class DatasetsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless job_name
     
     # These should be required by regular expression to begin with start_
-    job_class_string = 'Jobs::' + job_name[6..-1]
+    job_class_string = 'Jobs::Analysis::' + job_name[6..-1]
     
     begin
       job_class = job_class_string.constantize

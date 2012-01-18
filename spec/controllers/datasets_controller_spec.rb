@@ -137,7 +137,7 @@ describe DatasetsController do
       end
       
       it 'enqueues a job' do
-        expected_job = Jobs::ExportCitations.new(users(:john).to_param,
+        expected_job = Jobs::Analysis::ExportCitations.new(users(:john).to_param,
           datasets(:one).to_param, 'bibtex')
         Delayed::Job.should_receive(:enqueue).with(expected_job).once
         
@@ -155,7 +155,7 @@ describe DatasetsController do
     before(:each) do
       # Execute an export job, which should create an AnalysisTask
       SolrExamples.stub :precise_one_doc
-      Jobs::ExportCitations.new(users(:john).to_param,
+      Jobs::Analysis::ExportCitations.new(users(:john).to_param,
         datasets(:one).to_param, :bibtex).perform
 
       # Double-check that the task is created
