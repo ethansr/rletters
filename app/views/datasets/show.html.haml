@@ -14,4 +14,5 @@
           %h3= t('.task_header', :name => task.name)
           %p= t('.download_task')
         = link_to t('.delete_task'), '#'
+  %li= create_jobs_markup
   %li{ 'data-icon' => 'delete' }= link_to t('.delete'), delete_dataset_path(@dataset), 'data-rel' => 'dialog'

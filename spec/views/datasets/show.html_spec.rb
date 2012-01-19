@@ -36,4 +36,9 @@ describe "datasets/show.html" do
     rendered.should have_selector("h3", :content => "“test” Complete")
   end
   
+  it 'shows the create-task markup' do
+    render
+    rendered.should contain('WE HAVE 1 CLASSES')
+  end
+  
 end
