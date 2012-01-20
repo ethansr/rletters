@@ -6,14 +6,17 @@ module Jobs
   #
   # This job fetches results from the Solr server and spools them into the
   # database, creating a dataset for a user.
-  #
-  # @attr [String] user_id The user that created this dataset
-  # @attr [String] name The name of the dataset to create
-  # @attr [String] q The Solr query for this search
-  # @attr [Array<String>] fq Faceted browsing parameters for this search
-  # @attr [String] qt Query type of this search
-  class CreateDataset < Struct.new(:user_id, :name, :q, :fq, :qt)
-    include Jobs::ErrorHandling
+  class CreateDataset < Jobs::Base    
+    # @return [String] the user that created this dataset
+    attr_accessor :user_id
+    # @return [String] the name of the dataset to create
+    attr_accessor :name
+    # @return [String] the Solr query for this search
+    attr_accessor :q
+    # @return [Array<String>] faceted browsing parameters for this search
+    attr_accessor :fq
+    # @return [String] query type of this search
+    attr_accessor :qt
     
     # We're connecting to Solr, get the connection mechanisms
     extend SolrHelpers
@@ -39,8 +42,12 @@ module Jobs
     # @api public
     # @return [undefined]
     # @example Start a job for creating a dataset
-    #   Delayed::Job.enqueue Jobs::CreateDataset.new(users(:john).to_param, 
-    #     'Test Dataset', '*:*', ['authors_facet:"Shatner"'], 'precise')
+    #   Delayed::Job.enqueue Jobs::CreateDataset.new(
+    #     :user_id => users(:john).to_param, 
+    #     :name => 'Test Dataset', 
+    #     :q => '*:*'
+    #     :fq => ['authors_facet:"Shatner"'],
+    #     :qt => 'precise')
     def perform
       # Fetch the user based on ID
       user = User.find(user_id)

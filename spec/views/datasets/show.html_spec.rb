@@ -38,7 +38,7 @@ describe "datasets/show.html" do
   
   it 'shows the create-task markup' do
     render
-    rendered.should contain('WE HAVE 1 CLASSES')
+    rendered.should contain('Export dataset as citations')
   end
   
 end

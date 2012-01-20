@@ -9,8 +9,8 @@ describe Jobs::Analysis::ExportCitations do
   context "when the wrong user is specified" do
     it "raises an exception" do
       expect {
-        Jobs::Analysis::ExportCitations.new(users(:alice).to_param, 
-          datasets(:one).to_param, :bibtex).perform
+        Jobs::Analysis::ExportCitations.new(:user_id => users(:alice).to_param, 
+          :dataset_id => datasets(:one).to_param, :format => :bibtex).perform
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -18,8 +18,8 @@ describe Jobs::Analysis::ExportCitations do
   context "when an invalid user is specified" do
     it "raises an exception" do
       expect {
-        Jobs::Analysis::ExportCitations.new('123123123123123', 
-          datasets(:one).to_param, :bibtex).perform
+        Jobs::Analysis::ExportCitations.new(:user_id => '123123123123123', 
+          :dataset_id => datasets(:one).to_param, :format => :bibtex).perform
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -27,8 +27,8 @@ describe Jobs::Analysis::ExportCitations do
   context "when an invalid dataset is specified" do
     it "raises an exception" do
       expect {
-        Jobs::Analysis::ExportCitations.new(users(:john).to_param, 
-          '123123123123', :bibtex).perform
+        Jobs::Analysis::ExportCitations.new(:user_id => users(:john).to_param, 
+          :dataset_id => '123123123123', :format => :bibtex).perform
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -36,8 +36,9 @@ describe Jobs::Analysis::ExportCitations do
   context "when an invalid format is specified" do
     it "raises an exception" do
       expect {
-        Jobs::Analysis::ExportCitations.new(users(:john).to_param,
-          datasets(:one).to_param, :notaformat).perform
+        Jobs::Analysis::ExportCitations.new(:user_id => users(:john).to_param,
+          :dataset_id => datasets(:one).to_param,
+          :format => :notaformat).perform
       }.to raise_error(ArgumentError)
     end
   end
@@ -50,8 +51,8 @@ describe Jobs::Analysis::ExportCitations do
         @dataset.entries.build({ :shasum => '00972c5123877961056b21aea4177d0dc69c7318' })
         @dataset.save.should be_true
 
-        Jobs::Analysis::ExportCitations.new(users(:alice).to_param,
-          @dataset.to_param, 'bibtex').perform
+        Jobs::Analysis::ExportCitations.new(:user_id => users(:alice).to_param,
+          :dataset_id => @dataset.to_param, :format => 'bibtex').perform
       }.to_not raise_error
     end
   end
@@ -63,8 +64,8 @@ describe Jobs::Analysis::ExportCitations do
       @dataset.entries.build({ :shasum => '00972c5123877961056b21aea4177d0dc69c7318' })
       @dataset.save.should be_true
       
-      Jobs::Analysis::ExportCitations.new(users(:alice).to_param,
-        @dataset.to_param, :bibtex).perform
+      Jobs::Analysis::ExportCitations.new(:user_id => users(:alice).to_param,
+        :dataset_id => @dataset.to_param, :format => :bibtex).perform
     end
     
     after(:each) do

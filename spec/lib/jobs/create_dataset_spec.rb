@@ -8,8 +8,9 @@ describe Jobs::CreateDataset do
   context "when user is invalid" do
     it "raises an exception" do
       expect {
-        Jobs::CreateDataset.new('123123123123', 'Test Dataset', 
-          '*:*', nil, 'precise').perform
+        Jobs::CreateDataset.new(:user_id => '123123123123', 
+          :name => 'Test Dataset', :q => '*:*', :fq => nil,
+          :qt => 'precise').perform
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -21,8 +22,9 @@ describe Jobs::CreateDataset do
     
     it "raises an exception" do
       expect {
-        Jobs::CreateDataset.new(users(:alice).to_param, 'Test Dataset', 
-          '*:*', nil, 'precise').perform        
+        Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
+          :name => 'Test Dataset', :q => '*:*', :fq => nil,
+          :qt => 'precise').perform
       }.to raise_error
       
       users(:alice).datasets.should have(0).items
@@ -32,8 +34,9 @@ describe Jobs::CreateDataset do
   context "given precise_all Solr results" do
     before(:each) do
       SolrExamples.stub :dataset_precise_all
-      Jobs::CreateDataset.new(users(:alice).to_param, 'Test Dataset', 
-        '*:*', nil, 'precise').perform
+      Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
+        :name => 'Test Dataset', :q => '*:*', :fq => nil,
+        :qt => 'precise').perform
     end
     
     it "creates a dataset" do
@@ -49,8 +52,10 @@ describe Jobs::CreateDataset do
   context "given precise_with_facet_koltz Solr results" do
     before(:each) do
       SolrExamples.stub :dataset_precise_with_facet_koltz
-      Jobs::CreateDataset.new(users(:alice).to_param, 'Test Dataset',
-        '*:*', ['authors_facet:"Amanda M. Koltz"'], 'precise').perform
+      Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
+        :name => 'Test Dataset', :q => '*:*',
+        :fq => ['authors_facet:"Amanda M. Koltz"'], 
+        :qt => 'precise').perform
     end
     
     it "creates a dataset" do
@@ -66,8 +71,9 @@ describe Jobs::CreateDataset do
   context "given search_diversity Solr results" do
     before(:each) do
       SolrExamples.stub :dataset_search_diversity
-      Jobs::CreateDataset.new(users(:alice).to_param, 'Test Dataset',
-        'diversity', nil, 'standard').perform
+      Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
+        :name => 'Test Dataset', :q => 'diversity', :fq => nil,
+        :qt => 'standard').perform
     end
     
     it "creates a dataset" do
@@ -83,8 +89,9 @@ describe Jobs::CreateDataset do
   context "given large Solr dataset" do
     before(:each) do
       SolrExamples.stub [ :long_query_one, :long_query_two, :long_query_three ]
-      Jobs::CreateDataset.new(users(:alice).to_param, 'Long Dataset',
-        '*:*', nil, 'precise').perform
+      Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
+        :name => 'Long Dataset', :q => '*:*', :fq => nil,
+        :qt => 'precise').perform
     end
     
     it "creates a dataset" do

@@ -8,12 +8,9 @@ module Jobs
     #
     # This job fetches the contents of the dataset and offers them to the
     # user for download as bibliographic data.
-    #
-    # @attr [String] user_id The user that created this dataset
-    # @attr [String] dataset_id The dataset to export
-    # @attr [Symbol] format The export format (see +Document.serializers+)
-    class ExportCitations < Struct.new(:user_id, :dataset_id, :format)
-      include Jobs::ErrorHandling
+    class ExportCitations < Jobs::Analysis::Base
+      # @return [Symbol] the export format (see +Document.serializers+)
+      attr_accessor :format
     
       # Export the dataset
       #
@@ -21,9 +18,9 @@ module Jobs
       # @return [undefined]
       # @example Start a job for exporting a datset as JSON
       #   Delayed::Job.enqueue Jobs::Analysis::ExportCitations.new(
-      #     @user.to_param, 
-      #     dataset.to_param,
-      #     :json)
+      #     :user_id => @user.to_param, 
+      #     :dataset_id => dataset.to_param,
+      #     :format => :json)
       def perform
         # Fetch the user based on ID
         user = User.find(user_id)

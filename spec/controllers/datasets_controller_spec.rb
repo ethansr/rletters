@@ -52,8 +52,12 @@ describe DatasetsController do
     it 'creates a delayed job' do
       SolrExamples.stub :dataset_precise_all
 
-      expected_job = Jobs::CreateDataset.new(users(:john).to_param,
-        'Test Dataset', '*:*', nil, 'precise')
+      expected_job = Jobs::CreateDataset.new(
+        :user_id => users(:john).to_param,
+        :name => 'Test Dataset',
+        :q => '*:*',
+        :fq => nil,
+        :qt => 'precise')
       Delayed::Job.should_receive(:enqueue).with(expected_job).once
       
       post :create, { :dataset => { :name => 'Test Dataset' }, 
@@ -94,8 +98,9 @@ describe DatasetsController do
   describe '#destroy' do
     context 'when cancel is not passed' do
       it 'creates a delayed job' do
-        expected_job = Jobs::DestroyDataset.new(users(:john).to_param,
-          datasets(:one).to_param)
+        expected_job = Jobs::DestroyDataset.new(
+          :user_id => users(:john).to_param,
+          :dataset_id => datasets(:one).to_param)
         Delayed::Job.should_receive(:enqueue).with(expected_job).once
 
         delete :destroy, :id => datasets(:one).to_param
@@ -129,6 +134,14 @@ describe DatasetsController do
       end
     end
     
+    context 'when Base is passed' do
+      it 'raises an exception' do
+        expect {
+          get :start_job, :id => datasets(:one).to_param, :job_name => 'start_Base'
+        }.to raise_error(ActiveRecord::RecordNotFound)        
+      end
+    end
+    
     context 'when a valid job name is passed' do
       it 'does not raise an exception' do
         expect {
@@ -137,8 +150,10 @@ describe DatasetsController do
       end
       
       it 'enqueues a job' do
-        expected_job = Jobs::Analysis::ExportCitations.new(users(:john).to_param,
-          datasets(:one).to_param, 'bibtex')
+        expected_job = Jobs::Analysis::ExportCitations.new(
+          :user_id => users(:john).to_param,
+          :dataset_id => datasets(:one).to_param,
+          :format => 'bibtex')
         Delayed::Job.should_receive(:enqueue).with(expected_job).once
         
         get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
@@ -155,8 +170,10 @@ describe DatasetsController do
     before(:each) do
       # Execute an export job, which should create an AnalysisTask
       SolrExamples.stub :precise_one_doc
-      Jobs::Analysis::ExportCitations.new(users(:john).to_param,
-        datasets(:one).to_param, :bibtex).perform
+      Jobs::Analysis::ExportCitations.new(
+        :user_id => users(:john).to_param,
+        :dataset_id => datasets(:one).to_param,
+        :format => :bibtex).perform
 
       # Double-check that the task is created
       datasets(:one).analysis_tasks.should have(1).item

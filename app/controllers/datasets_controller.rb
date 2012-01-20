@@ -51,8 +51,12 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def create
-    Delayed::Job.enqueue Jobs::CreateDataset.new(@user.to_param, 
-      params[:dataset][:name], params[:q], params[:fq], params[:qt])
+    Delayed::Job.enqueue Jobs::CreateDataset.new(
+      :user_id => @user.to_param,
+      :name => params[:dataset][:name],
+      :q => params[:q],
+      :fq => params[:fq],
+      :qt => params[:qt])
     
     redirect_to datasets_path, :notice => I18n.t('datasets.create.building')
   end
@@ -65,7 +69,9 @@ class DatasetsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @dataset
     redirect_to @dataset and return if params[:cancel]
 
-    Delayed::Job.enqueue Jobs::DestroyDataset.new(@user.to_param, params[:id])
+    Delayed::Job.enqueue Jobs::DestroyDataset.new(
+      :user_id => @user.to_param,
+      :dataset_id => params[:id])
 
     redirect_to datasets_path
   end
@@ -87,6 +93,7 @@ class DatasetsController < ApplicationController
     
     # These should be required by regular expression to begin with start_
     job_class_string = 'Jobs::Analysis::' + job_name[6..-1]
+    raise ActiveRecord::RecordNotFound if job_class_string == 'Jobs::Analysis::Base'
     
     begin
       job_class = job_class_string.constantize
@@ -96,18 +103,16 @@ class DatasetsController < ApplicationController
     end
     
     # Put the job parameters together out of the job hash
-    job = job_class.new
-    job[:user_id] = @user.to_param
-    job[:dataset_id] = dataset.to_param
-    
+    job_params = {}
     if params[:job_params]
-      params[:job_params].each do |k, v|
-        job[k] = v
-      end
+      job_params = params[:job_params].to_hash
+      job_params.symbolize_keys!
     end
+    job_params[:user_id] = @user.to_param
+    job_params[:dataset_id] = dataset.to_param
     
     # Enqueue the job
-    Delayed::Job.enqueue job
+    Delayed::Job.enqueue job_class.new(job_params)
     redirect_to dataset_path(dataset)
   end
   

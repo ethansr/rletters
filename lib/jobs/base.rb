@@ -10,12 +10,40 @@
 #   Forgetting to put bounds on queries could result in fetching hundreds of
 #   thousands of records from the database, possibly freezing up the DJ
 #   worker for a period of days.
-# - All of these jobs should +include ErrorHandling+ to enable the reporting
-#   of DJ errors to Airbrake (if enabled by the user).
+# - All of these jobs should derive from +Jobs::Base+ to enable error handling
+#   and easy attribute setting and comparison.
+# - Analysis jobs should derive from +Jobs::AnalysisJob+ to get some common
+#   attributes.
 module Jobs
   
-  # Mixin for job classes to gain Airbrake exception handling
-  module ErrorHandling
+  # Base class for all delayed jobs
+  class Base
+    
+    # Initialize the job from a hash of attributes in a generic way
+    def initialize(args = { })
+      @state_vars = args.keys
+      
+      args.each_pair do |key, value|
+        self.send("#{key}=", value) if self.respond_to?("#{key}=")
+      end
+    end
+    
+    # Get a hash of attributes from the state variables
+    def attributes
+      ret = {}
+      @state_vars.each { |k| ret[k] = instance_variable_get("@#{k.to_s}") }      
+      ret
+    end
+    
+    # Compare objects for equality based on their attributes
+    def <=>(other)
+      attributes <=> other.attributes
+    end
+    
+    # Use the <=> function to implement all the other operators
+    include Comparable
+    
+    
     # Report any exceptions to Airbrake, if it's enabled
     #
     # This method is a callback that is invoked by Delayed::Job.  No tests, as
@@ -32,6 +60,7 @@ module Jobs
       end
     end
     # :nocov:
+    
   end
   
 end
