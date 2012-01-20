@@ -50,6 +50,7 @@ end
 
 group :test do
   gem 'ffi-ncurses', :platforms => :jruby
+  gem 'fuubar'
   
   gem 'shoulda-matchers'
   gem 'webrat'
