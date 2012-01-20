@@ -125,11 +125,11 @@ describe DatasetsController do
     end
   end
   
-  describe '#start_job' do
+  describe '#job_start' do
     context 'when an invalid job name is passed' do
       it 'raises an exception' do
         expect {
-          get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ThisIsNoClass'
+          get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ThisIsNoClass'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -137,7 +137,7 @@ describe DatasetsController do
     context 'when Base is passed' do
       it 'raises an exception' do
         expect {
-          get :start_job, :id => datasets(:one).to_param, :job_name => 'start_Base'
+          get :job_start, :id => datasets(:one).to_param, :job_name => 'start_Base'
         }.to raise_error(ActiveRecord::RecordNotFound)        
       end
     end
@@ -145,7 +145,7 @@ describe DatasetsController do
     context 'when a valid job name is passed' do
       it 'does not raise an exception' do
         expect {
-          get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+          get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
         }.to_not raise_error
       end
       
@@ -156,12 +156,38 @@ describe DatasetsController do
           :format => 'bibtex')
         Delayed::Job.should_receive(:enqueue).with(expected_job).once
         
-        get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+        get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
       end
       
       it 'redirects to the dataset page' do
-        get :start_job, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+        get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
         response.should redirect_to(dataset_path(datasets(:one)))
+      end
+    end
+  end
+  
+  describe '#job_view' do
+    context 'when an invalid job name is passed' do
+      it 'raises an exception' do
+        expect {
+          get :job_view, :id => datasets(:one).to_param, :job_name => 'ThisIsNoClass', :job_view => 'test'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+    
+    context 'when Base is passed' do
+      it 'raises an exception' do
+        expect {
+          get :job_view, :id => datasets(:one).to_param, :job_name => 'Base', :job_view => 'test'
+        }.to raise_error(ActiveRecord::RecordNotFound)        
+      end
+    end
+    
+    context 'when a valid job name is passed' do
+      it 'does not raise an exception' do
+        expect {
+          get :job_view, :id => datasets(:one).to_param, :job_name => 'ExportCitations', :job_view => 'start'
+        }.to_not raise_error
       end
     end
   end

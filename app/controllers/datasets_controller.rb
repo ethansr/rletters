@@ -83,24 +83,12 @@ class DatasetsController < ApplicationController
   #
   # @api public
   # @return [undefined]
-  def start_job
+  def job_start
     dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless dataset
     
-    # This shouldn't be possible, but check it anyway
-    job_name = params[:job_name]
-    raise ActiveRecord::RecordNotFound unless job_name
-    
     # These should be required by regular expression to begin with start_
-    job_class_string = 'Jobs::Analysis::' + job_name[6..-1]
-    raise ActiveRecord::RecordNotFound if job_class_string == 'Jobs::Analysis::Base'
-    
-    begin
-      job_class = job_class_string.constantize
-      raise ActiveRecord::RecordNotFound unless job_class.is_a?(Class)
-    rescue NameError
-      raise ActiveRecord::RecordNotFound
-    end
+    klass = job_class(params[:job_name][6..-1])
     
     # Put the job parameters together out of the job hash
     job_params = {}
@@ -112,8 +100,25 @@ class DatasetsController < ApplicationController
     job_params[:dataset_id] = dataset.to_param
     
     # Enqueue the job
-    Delayed::Job.enqueue job_class.new(job_params)
+    Delayed::Job.enqueue klass.new(job_params)
     redirect_to dataset_path(dataset)
+  end
+  
+  # Show a view from an analysis job
+  #
+  # Analysis jobs are packaged with some of their own views.  This controller
+  # action renders one of those views directly.
+  #
+  # @api public
+  # @return [undefined]
+  def job_view
+    dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless dataset
+    
+    klass = job_class(params[:job_name])
+    raise ActiveRecord::RecordNotFound unless params[:job_view]
+    
+    render :file => klass.job_view_path(params[:job_view])
   end
   
   # Download a file from an analysis task
@@ -132,5 +137,33 @@ class DatasetsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless File.exists?(task.result_file.filename)
     
     task.result_file.send_file(self)
+  end
+  
+  private
+  
+  # Convert a class name (as a string) to a job class
+  #
+  # This function appends the 'Jobs::Analysis' modules and makes sure that
+  # the given class exists.  It will throw an exception on failure.
+  #
+  # @api private
+  # @param [String] class_name the class to look up
+  # @return [Class] the class object
+  # @example Get a job class
+  #   job_class('ExportCitations')
+  #   => Jobs::Analysis::ExportCitations
+  def job_class(class_name)
+    # Never let the 'Base' class match
+    class_name = 'Jobs::Analysis::' + class_name
+    raise ActiveRecord::RecordNotFound if class_name == 'Jobs::Analysis::Base'
+    
+    begin
+      klass = class_name.constantize
+      raise ActiveRecord::RecordNotFound unless klass.is_a?(Class)
+    rescue NameError
+      raise ActiveRecord::RecordNotFound
+    end
+    
+    klass
   end
 end
