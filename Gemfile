@@ -10,8 +10,8 @@ gem 'jruby-openssl', :platforms => :jruby
 gem 'capistrano'
 gem 'delayed_job', '~> 3.0'
 gem 'delayed_job_active_record'
+gem 'daemons', :require => false
 gem 'whenever', :require => false
-gem 'daemons'
 gem 'airbrake'
 
 gem 'rpx_now'
@@ -35,13 +35,15 @@ gem 'jquery_mobile-rails', '1.0'
 
 group :assets do
   gem 'sass-rails'
-  gem 'coffee-rails'
-
   gem 'uglifier'
-  gem 'execjs'
   
-  gem 'therubyracer', :platforms => [ :ruby, :mswin, :mingw ]
-  gem 'therubyrhino', :platforms => :jruby
+  # Uglifier needs an ExecJS runtime, but we don't need to
+  # require it everywhere.
+  gem 'execjs', :require => false
+  gem 'therubyracer', :require => false, 
+    :platforms => [ :ruby, :mswin, :mingw ]
+  gem 'therubyrhino', :require => false, 
+    :platforms => :jruby
 end
 
 group :test, :development do
@@ -56,14 +58,19 @@ group :test do
   gem 'webrat'
   gem 'webmock'
   gem 'nokogiri'
+  
+  gem 'spork', '> 0.9.0rc'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  gem 'growl'
 end
 
 group :development do
   gem 'yard'
   gem 'yard-rails'
-  gem 'yardstick'
+  gem 'yardstick', :require => false
 
-  gem 'magic_encoding'
+  gem 'magic_encoding', :require => false
 
   # SimpleCov requires manual intervention, don't run it in CI. Also,
   # it only runs on Ruby 1.9.

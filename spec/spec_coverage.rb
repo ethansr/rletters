@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'rspec/core/formatters/base_formatter'
 require 'simplecov'
 

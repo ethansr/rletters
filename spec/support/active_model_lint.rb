@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # spec/support/active_model_lint.rb
 # adapted from rspec-rails
 
