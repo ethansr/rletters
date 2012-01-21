@@ -36,13 +36,10 @@ module Jobs
     end
     
     # Compare objects for equality based on their attributes
-    def <=>(other)
-      attributes <=> other.attributes
+    def ==(other)
+      attributes == other.attributes
     end
-    
-    # Use the <=> function to implement all the other operators
-    include Comparable
-    
+    alias :eql? :==
     
     # Report any exceptions to Airbrake, if it's enabled
     #
