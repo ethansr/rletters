@@ -78,7 +78,7 @@ describe Jobs::Analysis::ExportCitations do
     end
     
     it "names the task correctly" do
-      @dataset.analysis_tasks[0].name.should eq("Export as BIBTEX")
+      @dataset.analysis_tasks[0].name.should eq("Export as BibTeX")
     end
     
     it "makes a file for the task" do

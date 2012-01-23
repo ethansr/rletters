@@ -1,4 +1,5 @@
 %li
   Export dataset as citations
   %ul
-    %li Citation formats
+    - Document.serializers.each do |k, v|
+      %li= link_to("Export as #{v[:name]}", :controller => 'datasets', :action => 'job_start', :id => dataset.to_param, :job_name => 'start_ExportCitations', :job_params => { :format => k })

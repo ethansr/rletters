@@ -36,7 +36,7 @@ module Jobs
         serializer = Document.serializers[format.to_sym]
       
         # Make a new analysis task
-        task = dataset.analysis_tasks.create(:name => "Export as #{format.to_s.upcase}")
+        task = dataset.analysis_tasks.create(:name => "Export as #{serializer[:name]}")
       
         # Make a zip file for the output
         # Pack all those files into a ZIP

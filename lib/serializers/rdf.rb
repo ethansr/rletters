@@ -13,10 +13,10 @@ module Serializers
     # Register this serializer in the Document list
     def self.included(base)
       unless RUBY_PLATFORM == "java"
-        base.register_serializer(:rdf, lambda { |doc| doc.to_rdf_xml },
+        base.register_serializer(:rdf, 'RDF/XML', lambda { |doc| doc.to_rdf_xml },
           'http://www.w3.org/TR/rdf-syntax-grammar/')
       end
-      base.register_serializer(:n3, lambda { |doc| doc.to_rdf_n3 },
+      base.register_serializer(:n3, 'RDF/N3', lambda { |doc| doc.to_rdf_n3 },
         'http://www.w3.org/DesignIssues/Notation3.html')
     end
     

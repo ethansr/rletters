@@ -118,7 +118,7 @@ class DatasetsController < ApplicationController
     klass = job_class(params[:job_name])
     raise ActiveRecord::RecordNotFound unless params[:job_view]
     
-    render :file => klass.job_view_path(params[:job_view])
+    render :file => klass.job_view_path(params[:job_view]), :locals => { :dataset => dataset }
   end
   
   # Download a file from an analysis task

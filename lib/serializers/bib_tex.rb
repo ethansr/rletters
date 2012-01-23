@@ -7,7 +7,7 @@ module Serializers
     
     # Register this serializer in the Document list
     def self.included(base)
-      base.register_serializer(:bibtex, lambda { |doc| doc.to_bibtex },
+      base.register_serializer(:bibtex, 'BibTeX', lambda { |doc| doc.to_bibtex },
         'http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxdoc.pdf')
     end
     

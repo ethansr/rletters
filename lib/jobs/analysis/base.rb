@@ -78,9 +78,11 @@ module Jobs
       # @param [String] view the view to render
       # @return [String] the results of rendering this view
       # @example Display the 'start' view from the ExportCitations job
-      #   <%= Jobs::Analysis::ExportCitations.render_job_view 'start' =>
-      def self.render_job_view(controller, view)
-        controller.render_to_string :file => job_view_path(view), :layout => false
+      #   <%= Jobs::Analysis::ExportCitations.render_job_view @controller, 
+      #         @dataset, 'start' =>
+      def self.render_job_view(controller, dataset, view)
+        controller.render_to_string :file => job_view_path(view), 
+          :layout => false, :locals => { :dataset => dataset }
       end
     end
   

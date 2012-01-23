@@ -3,10 +3,10 @@
 # Markup generators for the datasets controller
 module DatasetsHelper
   # Include markup that each analysis task provides for creating jobs
-  def create_jobs_markup
+  def create_jobs_markup(dataset)
     output = ''
     Jobs::Analysis::Base.job_list.each do |c|
-      output << c.render_job_view(controller, 'start')
+      output << c.render_job_view(controller, dataset, 'start')
     end
     
     output.html_safe

@@ -32,14 +32,15 @@ describe Jobs::Analysis::Base do
     
     it 'calls render on the right file' do
       expected_filename = Rails.root.join('lib', 'jobs', 'analysis', 'views', 'mock_job', 'test.html.haml')
+      dataset = Dataset.new
       
       controller = double
-      controller.should_receive(:render_to_string).with(:file => expected_filename, :layout => false)
-      Jobs::Analysis::MockJob.render_job_view(controller, 'test')
+      controller.should_receive(:render_to_string).with(:file => expected_filename, :layout => false, :locals => { :dataset => dataset })
+      Jobs::Analysis::MockJob.render_job_view(controller, dataset, 'test')
     end
     
     it 'properly renders the contents of job views' do
-      Jobs::Analysis::MockJob.render_job_view(DatasetsController.new, 'test').should include('This is a test')
+      Jobs::Analysis::MockJob.render_job_view(DatasetsController.new, Dataset.new, 'test').should include('This is a test')
     end
   end
   

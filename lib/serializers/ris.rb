@@ -7,7 +7,7 @@ module Serializers
     
     # Register this serializer in the Document list
     def self.included(base)
-      base.register_serializer(:ris, lambda { |doc| doc.to_ris },
+      base.register_serializer(:ris, 'RefMan/RIS', lambda { |doc| doc.to_ris },
         'http://www.refman.com/support/risformat_intro.asp')
     end
     

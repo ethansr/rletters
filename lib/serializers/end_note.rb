@@ -7,7 +7,7 @@ module Serializers
     
     # Register this serializer in the Document list
     def self.included(base)
-      base.register_serializer(:endnote, lambda { |doc| doc.to_endnote },
+      base.register_serializer(:endnote, 'EndNote', lambda { |doc| doc.to_endnote },
         'http://auditorymodels.org/jba/bibs/NetBib/Tools/bp-0.2.97/doc/endnote.html')
     end
     

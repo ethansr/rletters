@@ -6,7 +6,7 @@ module Serializers
     
     # Register this serializer in the Document list
     def self.included(base)
-      base.register_serializer(:mods, lambda { |doc|
+      base.register_serializer(:mods, 'MODS', lambda { |doc|
           xml = doc.to_mods
           ret = ''
           xml.write(ret, 2)

@@ -68,10 +68,10 @@ class Document
   #   parameter and returns the serialized document as a String
   # @param [String] docs a URL pointing to documentation for this method
   # @example Register a serializer for JSON
-  #   Document.register_serializer :json, lambda { |doc| doc.to_json },
+  #   Document.register_serializer :json, 'JSON', lambda { |doc| doc.to_json },
   #     'http://www.json.org/'
-  def self.register_serializer(key, method, docs)
-    @@serializers[key] = { :method => method, :docs => docs }
+  def self.register_serializer(key, name, method, docs)
+    @@serializers[key] = { :name => name, :method => method, :docs => docs }
   end
 
   # Serialization methods
