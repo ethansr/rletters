@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120105150524) do
+ActiveRecord::Schema.define(:version => 20120123202818) do
 
   create_table "analysis_tasks", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20120105150524) do
     t.integer  "dataset_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "failed",      :default => false
   end
 
   add_index "analysis_tasks", ["dataset_id"], :name => "index_analysis_tasks_on_dataset_id"

@@ -19,4 +19,4 @@ before_script:
   - "cp config/app_config.yml.travis config/app_config.yml"
   - "mkdir downloads"
   - "mysql -e 'create database rletters_test;'"
-  - "bundle exec rake db:migrate"
+  - "bundle exec rake db:test:load db:test:prepare"

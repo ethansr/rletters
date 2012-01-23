@@ -49,6 +49,18 @@ describe AnalysisTask do
     end
   end
   
+  describe '#failed' do
+    context "when newly created" do
+      before(:each) do
+        @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+      end
+      
+      it "is false" do
+        @task.finished_at.should be_false
+      end
+    end
+  end
+  
   def create_task_with_file
     @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
     @task.result_file = Download.create_file('test.txt') do |file|

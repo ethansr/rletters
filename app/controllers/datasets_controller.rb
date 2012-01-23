@@ -28,6 +28,15 @@ class DatasetsController < ApplicationController
   def show
     @dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @dataset
+    
+    if params[:clear_failed]
+      if @dataset.analysis_tasks.failed.count > 0
+        @dataset.analsysis_tasks.failed.destroy_all
+        flash[:notice] = t('.deleted')
+      else
+        flash[:notice] = t('.no_failed')
+      end
+    end
   end
 
   # Show the form for creating a new dataset

@@ -72,14 +72,37 @@ describe DatasetsController do
   end
   
   describe '#show' do
-    it 'loads successfully' do
-      get :show, :id => datasets(:one).to_param
-      response.should be_success
+    context 'without clear_failed' do
+      it 'loads successfully' do
+        get :show, :id => datasets(:one).to_param
+        response.should be_success
+      end
+    
+      it 'assigns dataset' do
+        get :show, :id => datasets(:one).to_param
+        assigns(:dataset).should eq(datasets(:one))
+      end
     end
     
-    it 'assigns dataset' do
-      get :show, :id => datasets(:one).to_param
-      assigns(:dataset).should eq(datasets(:one))
+    context 'with clear_failed' do
+      before(:each) do
+        datasets(:one).analysis_tasks.create(:name => 'failure', :failed => true)
+      end
+      
+      it 'loads successfully' do
+        get :show, :id => datasets(:one).to_param, :clear_failed => true
+        response.should be_success
+      end
+      
+      it 'deletes the failed task' do
+        get :show, :id => datasets(:one).to_param, :clear_failed => true
+        datasets(:one).analysis_tasks.failed.count.should eq(0)
+      end
+      
+      it 'sets the flash' do
+        get :show, :id => datasets(:one).to_param, :clear_failed => true
+        flash[:notice].should_not be_nil
+      end
     end
   end
   

@@ -23,8 +23,8 @@ class AnalysisTask < ActiveRecord::Base
   
   attr_accessible :name, :dataset
   
-  scope :finished, where('finished_at IS NULL')
-  scope :not_finished, where('finished_at IS NOT NULL')
-  scope :active, not_finished.and(:failed => false)
-  scope :failed, not_finished.and(:failed => true)
+  scope :finished, where('finished_at IS NOT NULL')
+  scope :not_finished, where('finished_at IS NULL')
+  scope :active, not_finished.where(:failed => false)
+  scope :failed, not_finished.where(:failed => true)
 end
