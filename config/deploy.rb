@@ -21,6 +21,7 @@ require 'capistrano_database'
 require 'app_config'
 require 'static_assets'
 require 'static_text'
+require 'downloads_dir'
 
 # Standard configuration options for fetching RLetters from GitHub
 set :scm, :git
