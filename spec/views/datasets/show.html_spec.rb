@@ -36,6 +36,23 @@ describe "datasets/show.html" do
     rendered.should have_selector("h3", :content => "“test” Complete")
   end
   
+  context 'with failed analysis tasks' do
+    before(:each) do
+      task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+      task.failed = true
+      task.save
+      render
+    end
+    
+    it 'shows failed analysis tasks' do
+      rendered.should contain('1 analysis task failed for this dataset!')
+    end
+    
+    it 'shows a link to clear failed analysis tasks' do
+      rendered.should have_selector("a[href='#{dataset_path(datasets(:one), :clear_failed => true)}']")
+    end
+  end
+  
   it 'shows the create-task markup' do
     render
     rendered.should contain('Export dataset as citations')
