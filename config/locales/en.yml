@@ -326,6 +326,7 @@ en:
       task_header: "“%{name}” Complete"
       download_task: "Download the results of this job"
       delete_task: "Delete this task"
+      new_task: "Start a new analysis task"
       delete: "Delete this dataset"
     delete:
       head: "Are you sure?"

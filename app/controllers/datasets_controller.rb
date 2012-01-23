@@ -32,9 +32,9 @@ class DatasetsController < ApplicationController
     if params[:clear_failed]
       if @dataset.analysis_tasks.failed.count > 0
         @dataset.analysis_tasks.failed.destroy_all
-        flash[:notice] = t('.deleted')
+        flash[:notice] = t('datasets.show.deleted')
       else
-        flash[:notice] = t('.no_failed')
+        flash[:notice] = t('datasets.show.no_failed')
       end
     end
   end
