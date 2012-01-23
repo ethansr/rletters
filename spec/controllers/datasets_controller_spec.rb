@@ -86,7 +86,8 @@ describe DatasetsController do
     
     context 'with clear_failed' do
       before(:each) do
-        datasets(:one).analysis_tasks.create(:name => 'failure', :failed => true)
+        task = datasets(:one).analysis_tasks.create(:name => 'failure')
+        task.failed = true
       end
       
       it 'loads successfully' do
