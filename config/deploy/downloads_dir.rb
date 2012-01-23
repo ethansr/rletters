@@ -19,7 +19,7 @@ Capistrano::Configuration.instance.load do
       run "ln -s #{shared_path}/downloads #{release_path}"
     end
     
-    after "deploy:update_code", "rletters:link_downloads"
+    before "deploy:finalize_update", "rletters:link_downloads"
     
   end
   
