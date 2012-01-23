@@ -84,6 +84,15 @@ module Jobs
         controller.render_to_string :file => job_view_path(view), 
           :layout => false, :locals => { :dataset => dataset }
       end
+      
+      # Set the analysis task fail bit on error
+      def error(job, exception)
+        if instance_variable_defined?(:@task)
+          @task.failed = true
+          @task.save!
+        end
+        super
+      end
     end
   
   end

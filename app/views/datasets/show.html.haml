@@ -4,15 +4,20 @@
     %h3= @dataset.name
     %p= t('.num_entries', :count => @dataset.entries.size)
     %p= t('.created_at', :date => @dataset.created_at.to_formatted_s(:long))
-  %li{ 'data-role' => 'list-divider' }= t('.tasks')
-  - if @dataset.analysis_tasks.where(:finished_at => nil).count > 0
-    %li{ 'data-theme' => 'e' }= t('.pending', :count => @dataset.analysis_tasks.where(:finished_at => nil).count)
-  - if @dataset.analysis_tasks.count(:finished_at)
-    - @dataset.analysis_tasks.where('finished_at IS NOT NULL').each do |task|
+  - if @dataset.analysis_tasks.not_finished.count > 0
+    %li{ 'data-role' => 'list-divider' }= t('.active_tasks')
+    - if @dataset.analysis_tasks.active.count > 0
+      %li{ 'data-theme' => 'e' }= t('.pending', :count => @dataset.analysis_tasks.active.count)
+    - if @dataset.analysis_tasks.failed.count > 0
+      -# FIXME: Need a way to clear these out, obviously!
+      %li{ 'data-theme' => 'e' }= t('.failed', :count => @dataset.analysis_tasks.failed.count)
+  - if @dataset.analysis_tasks.finished.count
+    %li{ 'data-role' => 'list-divider' }= t('.finished_tasks')
+    - @dataset.analysis_tasks.finished.each do |task|
       %li
         = link_to download_dataset_path(@dataset, :task_id => task.to_param), 'rel' => 'external' do
           %h3= t('.task_header', :name => task.name)
           %p= t('.download_task')
         = link_to t('.delete_task'), '#'
-  %li= create_jobs_markup(@dataset)
+  = create_jobs_markup(@dataset)
   %li{ 'data-icon' => 'delete' }= link_to t('.delete'), delete_dataset_path(@dataset), 'data-rel' => 'dialog'
