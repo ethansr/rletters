@@ -19,7 +19,7 @@ describe "datasets/show.html" do
   end
   
   it 'shows pending analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'ExportCitations' })
     task.save
     render
     
@@ -28,14 +28,14 @@ describe "datasets/show.html" do
   
   context 'with completed analysis tasks' do
     before(:each) do
-      @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
+      @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'ExportCitations' })
       @task.finished_at = Time.zone.now
       @task.save
       render      
     end
     
     it 'shows the name of the job' do
-      rendered.should have_selector("h3", :content => "“test” Complete")      
+      rendered.should contain("“test” Complete")      
     end
     
     it 'shows a link to download the results' do
@@ -53,7 +53,7 @@ describe "datasets/show.html" do
   
   context 'with failed analysis tasks' do
     before(:each) do
-      task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
+      task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'ExportCitations' })
       task.failed = true
       task.save
       render

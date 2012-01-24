@@ -13,6 +13,27 @@ module Jobs
       # @return [String] the dataset to export
       attr_accessor :dataset_id
       
+      # Does this job produce a download?
+      #
+      # If true (default), then links to results of tasks will produce links to
+      # download the result_file from that task.  If not, then the link to the
+      # task results will point to the 'results' view for this job.  Override
+      # this method to return false if you want to use the 'results' view.
+      #
+      # @api public
+      # @return [Boolean] true if task produces a download, false otherwise
+      # @example Get a link to the results of a task
+      #   if task.job_class.download?
+      #     link_to '', :controller => 'datasets', :action => 'task_download',
+      #       :id => dataset.to_param, :task_id => task.to_param
+      #   else
+      #     link_to '', :controller => 'datasets', :action => 'task_view',
+      #       :id => dataset.to_param, :task_id => task.to_param, 
+      #       :view => 'results'
+      def self.download?
+        true
+      end
+      
       # Get a list of all classes that are analysis jobs
       def self.job_list
         # Get all the classes defined in the Jobs::Analysis module
@@ -31,22 +52,6 @@ module Jobs
         end
         
         classes
-      end
-    
-      # Return markup that lets the user start this job
-      #
-      # This markup will be placed into a <ul> tag.  The way that jQuery
-      # Mobile works (at least currently), you can:
-      # * Return a single <li> that points to an analysis_job_view
-      # * Return more than one <li>
-      # * Return a <li> that contains a <ul> to use jQM's 'nested lists'
-      #
-      # @api public
-      # @return [String] some markup for starting this job
-      # @example Get the start markup for an analysis job
-      #   %ul= Jobs::Analysis::ExportCitations.start_markup
-      def self.start_markup
-        return ''
       end
     
       # Get the path to a job-view template for this job

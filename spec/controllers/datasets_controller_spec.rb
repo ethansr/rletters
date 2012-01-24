@@ -154,7 +154,7 @@ describe DatasetsController do
       it 'raises an exception' do
         expect {
           get :task_start, :id => datasets(:one).to_param, :class => 'ThisIsNoClass'
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        }.to raise_error
       end
     end
     
@@ -162,7 +162,7 @@ describe DatasetsController do
       it 'raises an exception' do
         expect {
           get :task_start, :id => datasets(:one).to_param, :class => 'Base'
-        }.to raise_error(ActiveRecord::RecordNotFound)        
+        }.to raise_error
       end
     end
     

@@ -29,4 +29,36 @@ class AnalysisTask < ActiveRecord::Base
   scope :not_finished, where('finished_at IS NULL')
   scope :active, not_finished.where(:failed => false)
   scope :failed, not_finished.where(:failed => true)
+  
+  # Convert class_name to a class object
+  #
+  # @api public
+  # @param [String] class_name the class name to convert
+  # @return [Class] the job class
+  # @example Call the view_path method for ExportCitations
+  #   AnalysisTask.job_class('ExportCitations').view_path(...)
+  def self.job_class(class_name)
+    # Never let the 'Base' class match
+    class_name = 'Jobs::Analysis::' + class_name
+    raise ArgumentError if class_name == 'Jobs::Analysis::Base'
+    
+    begin
+      klass = class_name.constantize
+      raise ArgumentError unless klass.is_a?(Class)
+    rescue NameError
+      raise ArgumentError
+    end
+    
+    klass
+  end
+  
+  # Convert self.job_type into a class object
+  #
+  # @api public
+  # @return [Class] the job class
+  # @example Call the view_path method for this task
+  #   task.job_class.view_path(...)
+  def job_class
+    self.class.job_class(job_type)
+  end
 end

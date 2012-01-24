@@ -17,10 +17,11 @@
     %li{ 'data-role' => 'list-divider' }= t('.finished_tasks')
     - @dataset.analysis_tasks.finished.each do |task|
       %li
-        = link_to({ :controller => 'datasets', :action => 'task_download', :id => @dataset.to_param, :task_id => task.to_param }, 'rel' => 'external') do
-          %h3= t('.task_header', :name => task.name)
-          %p= t('.download_task')
-        = link_to t('.delete_task'), :controller => 'datasets', :action => 'task_destroy', :id => @dataset.to_param, :task_id => task.to_param
+        - if task.job_class.download?
+          = link_to t('.task_header', :name => task.name), { :controller => 'datasets', :action => 'task_download', :id => @dataset.to_param, :task_id => task.to_param }, 'rel' => 'external'
+        - else
+          = link_to t('.task_header', :name => task.name), { :controller => 'datasets', :action => 'task_view', :id => @dataset.to_param, :task_id => task.to_param, :view => 'results' }
+        = link_to t('.delete_task'), { :controller => 'datasets', :action => 'task_destroy', :id => @dataset.to_param, :task_id => task.to_param }
   %li{ 'data-role' => 'list-divider' }= t('.new_task')
   
   -# Show the markup for starting all the various background jobs

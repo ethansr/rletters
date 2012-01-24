@@ -95,7 +95,7 @@ class DatasetsController < ApplicationController
   def task_start
     dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless dataset
-    klass = job_class(params[:class])
+    klass = AnalysisTask.job_class(params[:class])
     
     # Put the job parameters together out of the job hash
     job_params = {}
@@ -125,7 +125,7 @@ class DatasetsController < ApplicationController
     task = dataset.analysis_tasks.find(params[:task_id])
     raise ActiveRecord::RecordNotFound unless task
     
-    klass = job_class(task.job_type)
+    klass = task.job_class
     
     render :file => klass.view_path(params[:view]), :locals => { :dataset => dataset, :task => task }
   end
@@ -163,33 +163,5 @@ class DatasetsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless File.exists?(task.result_file.filename)
     
     task.result_file.send_file(self)
-  end
-  
-  private
-  
-  # Convert a class name (as a string) to a job class
-  #
-  # This function appends the 'Jobs::Analysis' modules and makes sure that
-  # the given class exists.  It will throw an exception on failure.
-  #
-  # @api private
-  # @param [String] class_name the class to look up
-  # @return [Class] the class object
-  # @example Get a job class
-  #   job_class('ExportCitations')
-  #   => Jobs::Analysis::ExportCitations
-  def job_class(class_name)
-    # Never let the 'Base' class match
-    class_name = 'Jobs::Analysis::' + class_name
-    raise ActiveRecord::RecordNotFound if class_name == 'Jobs::Analysis::Base'
-    
-    begin
-      klass = class_name.constantize
-      raise ActiveRecord::RecordNotFound unless klass.is_a?(Class)
-    rescue NameError
-      raise ActiveRecord::RecordNotFound
-    end
-    
-    klass
   end
 end
