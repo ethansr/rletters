@@ -56,7 +56,7 @@ describe Dataset do
         @dataset.user = users(:john)
         @dataset.save.should be_true
         
-        @task = AnalysisTask.new({ :name => 'test', :dataset => @dataset })
+        @task = AnalysisTask.new({ :name => 'test', :dataset => @dataset, :job_type => 'Base' })
         @task.save.should be_true
       end
       

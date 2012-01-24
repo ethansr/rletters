@@ -15,10 +15,14 @@
     %li{ 'data-role' => 'list-divider' }= t('.finished_tasks')
     - @dataset.analysis_tasks.finished.each do |task|
       %li
-        = link_to download_dataset_path(@dataset, :task_id => task.to_param), 'rel' => 'external' do
+        = link_to({ :controller => 'datasets', :action => 'task_download', :id => @dataset.to_param, :task_id => task.to_param }, 'rel' => 'external') do
           %h3= t('.task_header', :name => task.name)
           %p= t('.download_task')
         = link_to t('.delete_task'), '#'
   %li{ 'data-role' => 'list-divider' }= t('.new_task')
-  = create_jobs_markup(@dataset)
+  
+  -# Show the markup for starting all the various background jobs
+  - Jobs::Analysis::Base.job_list.each do |klass|
+    = render :file => klass.view_path('start'), :locals => { :dataset => @dataset, :task => nil }
+  
   %li{ 'data-icon' => 'delete' }= link_to t('.delete'), delete_dataset_path(@dataset), 'data-rel' => 'dialog'

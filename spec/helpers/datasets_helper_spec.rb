@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe DatasetsHelper do
   
-  #describe '#create_jobs_markup' do
+  #describe '#create_tasks_markup' do
   #end
   
 end

@@ -149,11 +149,11 @@ describe DatasetsController do
     end
   end
   
-  describe '#job_start' do
-    context 'when an invalid job name is passed' do
+  describe '#task_start' do
+    context 'when an invalid class is passed' do
       it 'raises an exception' do
         expect {
-          get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ThisIsNoClass'
+          get :task_start, :id => datasets(:one).to_param, :class => 'ThisIsNoClass'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -161,15 +161,15 @@ describe DatasetsController do
     context 'when Base is passed' do
       it 'raises an exception' do
         expect {
-          get :job_start, :id => datasets(:one).to_param, :job_name => 'start_Base'
+          get :task_start, :id => datasets(:one).to_param, :class => 'Base'
         }.to raise_error(ActiveRecord::RecordNotFound)        
       end
     end
     
-    context 'when a valid job name is passed' do
+    context 'when a valid class is passed' do
       it 'does not raise an exception' do
         expect {
-          get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+          get :task_start, :id => datasets(:one).to_param, :class => 'ExportCitations', :job_params => { :format => 'bibtex' }
         }.to_not raise_error
       end
       
@@ -180,43 +180,39 @@ describe DatasetsController do
           :format => 'bibtex')
         Delayed::Job.should_receive(:enqueue).with(expected_job).once
         
-        get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+        get :task_start, :id => datasets(:one).to_param, :class => 'ExportCitations', :job_params => { :format => 'bibtex' }
       end
       
       it 'redirects to the dataset page' do
-        get :job_start, :id => datasets(:one).to_param, :job_name => 'start_ExportCitations', :job_params => { :format => 'bibtex' }
+        get :task_start, :id => datasets(:one).to_param, :class => 'ExportCitations', :job_params => { :format => 'bibtex' }
         response.should redirect_to(dataset_path(datasets(:one)))
       end
     end
   end
   
-  describe '#job_view' do
-    context 'when an invalid job name is passed' do
+  describe '#task_view' do
+    context 'when an invalid task ID is passed' do
       it 'raises an exception' do
         expect {
-          get :job_view, :id => datasets(:one).to_param, :job_name => 'ThisIsNoClass', :job_view => 'test'
+          get :task_view, :id => datasets(:one).to_param, :task_id => '12312312312312', :view => 'test'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
     
-    context 'when Base is passed' do
-      it 'raises an exception' do
-        expect {
-          get :job_view, :id => datasets(:one).to_param, :job_name => 'Base', :job_view => 'test'
-        }.to raise_error(ActiveRecord::RecordNotFound)        
+    context 'when a valid task ID is passed' do
+      before(:each) do
+        @task = datasets(:one).analysis_tasks.create(:name => 'test', :job_type => 'ExportCitations')
       end
-    end
-    
-    context 'when a valid job name is passed' do
+      
       it 'does not raise an exception' do
         expect {
-          get :job_view, :id => datasets(:one).to_param, :job_name => 'ExportCitations', :job_view => 'start'
+          get :task_view, :id => datasets(:one).to_param, :task_id => @task.to_param, :view => 'start'
         }.to_not raise_error
       end
     end
   end
   
-  describe '#download' do
+  describe '#task_download' do
     before(:each) do
       # Execute an export job, which should create an AnalysisTask
       SolrExamples.stub :precise_one_doc
@@ -237,17 +233,17 @@ describe DatasetsController do
     end
     
     it 'loads successfully' do
-      get :download, :id => datasets(:one).to_param, :task_id => @task.to_param
+      get :task_download, :id => datasets(:one).to_param, :task_id => @task.to_param
       response.should be_success
     end
     
     it 'has the right MIME type' do
-      get :download, :id => datasets(:one).to_param, :task_id => @task.to_param
+      get :task_download, :id => datasets(:one).to_param, :task_id => @task.to_param
       response.content_type.should eq('application/zip')
     end
     
     it 'sends some data' do
-      get :download, :id => datasets(:one).to_param, :task_id => @task.to_param
+      get :task_download, :id => datasets(:one).to_param, :task_id => @task.to_param
       response.body.length.should be > 0
     end
   end

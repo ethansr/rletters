@@ -17,7 +17,7 @@ describe "datasets/index.html" do
   end
   
   it 'lists pending analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
     task.save
     render
     
@@ -25,7 +25,7 @@ describe "datasets/index.html" do
   end
   
   it 'does not list completed analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
     task.finished_at = Time.zone.now
     task.save
     render

@@ -10,6 +10,7 @@
 # @attr [DateTime] created_at The time at which this task was started
 # @attr [DateTime] finished_at The time at which this task was finished
 # @attr [Boolean] failed True if this job has failed
+# @attr [String] job_type The class name of the job this task contains
 # @attr [Dataset] dataset The dataset to which this task
 #   belongs (+belongs_to+)
 # @attr [Download] result_file The results of this analysis task, if
@@ -17,11 +18,12 @@
 class AnalysisTask < ActiveRecord::Base
   validates :name, :presence => true
   validates :dataset_id, :presence => true
+  validates :job_type, :presence => true
 
   belongs_to :dataset
   has_one :result_file, :class_name => 'Download', :dependent => :destroy
   
-  attr_accessible :name, :dataset
+  attr_accessible :name, :dataset, :job_type
   
   scope :finished, where('finished_at IS NOT NULL')
   scope :not_finished, where('finished_at IS NULL')

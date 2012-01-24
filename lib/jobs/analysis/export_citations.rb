@@ -36,7 +36,7 @@ module Jobs
         serializer = Document.serializers[format.to_sym]
       
         # Make a new analysis task
-        task = dataset.analysis_tasks.create(:name => "Export as #{serializer[:name]}")
+        task = dataset.analysis_tasks.create(:name => "Export as #{serializer[:name]}", :job_type => 'ExportCitations')
       
         # Make a zip file for the output
         # Pack all those files into a ZIP

@@ -59,30 +59,13 @@ module Jobs
       # @param [String] view the view to fetch the path to
       # @return [String] the path to the template
       # @example Get the path to the ExportCitations 'start' view
-      #   Jobs::Analysis::ExportCitations.job_view_path 'start'
+      #   Jobs::Analysis::ExportCitations.view_path 'start'
       #   => 'RAILS_ROOT/lib/jobs/analysis/views/export_citations/start.html.haml'
-      def self.job_view_path(view)
+      def self.view_path(view)
         # This will return something like 'jobs/analysis/export_citations', so we
         # need to add '/views' in there
         class_path = self.name.underscore.sub('/analysis/', '/analysis/views/')
         Rails.root.join('lib', class_path, "#{view}.html.haml")
-      end
-    
-      # Get the results of rendering a job view template as a string
-      #
-      # Render the template specified by +self.job_view_path+ and return the
-      # results as a string.
-      #
-      # @api public
-      # @param [ActionController] controller the controller to do the rendering
-      # @param [String] view the view to render
-      # @return [String] the results of rendering this view
-      # @example Display the 'start' view from the ExportCitations job
-      #   <%= Jobs::Analysis::ExportCitations.render_job_view @controller, 
-      #         @dataset, 'start' =>
-      def self.render_job_view(controller, dataset, view)
-        controller.render_to_string :file => job_view_path(view), 
-          :layout => false, :locals => { :dataset => dataset }
       end
       
       # Set the analysis task fail bit on error

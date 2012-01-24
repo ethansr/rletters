@@ -5,7 +5,7 @@
 # This controller is responsible for the handling of the datasets which
 # belong to a given user.  It displays the user's list of datasets, and
 # handles the starting and management of the user's background analysis
-# jobs.
+# tasks.
 #
 # @see Dataset
 class DatasetsController < ApplicationController
@@ -87,17 +87,15 @@ class DatasetsController < ApplicationController
   
   # Start an analysis task for this dataset
   #
-  # This method dynamically determines the appropriate analysis job to start
-  # and strts it.  It requires a dataset ID.
+  # This method dynamically determines the appropriate background job to start
+  # and starts it.  It requires a dataset ID.
   #
   # @api public
   # @return [undefined]
-  def job_start
+  def task_start
     dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless dataset
-    
-    # These should be required by regular expression to begin with start_
-    klass = job_class(params[:job_name][6..-1])
+    klass = job_class(params[:class])
     
     # Put the job parameters together out of the job hash
     job_params = {}
@@ -113,21 +111,40 @@ class DatasetsController < ApplicationController
     redirect_to dataset_path(dataset)
   end
   
-  # Show a view from an analysis job
+  # Show a view from an analysis task
   #
-  # Analysis jobs are packaged with some of their own views.  This controller
+  # Background jobs are packaged with some of their own views.  This controller
   # action renders one of those views directly.
   #
   # @api public
   # @return [undefined]
-  def job_view
+  def task_view
     dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless dataset
     
-    klass = job_class(params[:job_name])
-    raise ActiveRecord::RecordNotFound unless params[:job_view]
+    task = dataset.analysis_tasks.find(params[:task_id])
+    raise ActiveRecord::RecordNotFound unless task
     
-    render :file => klass.job_view_path(params[:job_view]), :locals => { :dataset => dataset }
+    klass = job_class(task.job_type)
+    
+    render :file => klass.view_path(params[:view]), :locals => { :dataset => dataset, :task => task }
+  end
+  
+  # Delete an analysis task
+  #
+  # This action deletes a given analysis task and its associated files.
+  #
+  # @api public
+  # @return [undefined]
+  def task_destroy    
+    dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless dataset
+    redirect_to dataset and return if params[:cancel]
+    
+    task = @dataset.analysis_tasks.find(params[:task_id])
+    raise ActiveRecord::RecordNotFound unless task
+    
+    task.destroy
   end
   
   # Download a file from an analysis task
@@ -137,7 +154,7 @@ class DatasetsController < ApplicationController
   #
   # @api public
   # @return [undefined]
-  def download
+  def task_download
     dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless dataset
     task = dataset.analysis_tasks.find(params[:task_id])

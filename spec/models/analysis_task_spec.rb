@@ -8,7 +8,7 @@ describe AnalysisTask do
   describe "#valid?" do
     context "when no name is specified" do
       before(:each) do
-        @task = AnalysisTask.new({ :dataset => datasets(:one) })
+        @task = AnalysisTask.new({ :dataset => datasets(:one), :job_type => 'Base' })
       end
       
       it "isn't valid" do
@@ -18,7 +18,7 @@ describe AnalysisTask do
     
     context "when no dataset is specified" do
       before(:each) do
-        @task = AnalysisTask.new({ :name => 'test' })
+        @task = AnalysisTask.new({ :name => 'test', :job_type => 'Base' })
       end
       
       it "isn't valid" do
@@ -26,9 +26,19 @@ describe AnalysisTask do
       end
     end
     
-    context "when dataset and name are specified" do
+    context "when no type is specified" do
       before(:each) do
         @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+      end
+      
+      it "isn't valid" do
+        @task.should_not be_valid
+      end
+    end
+    
+    context "when dataset, type, and name are specified" do
+      before(:each) do
+        @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
       end
       
       it "is valid" do
@@ -40,7 +50,7 @@ describe AnalysisTask do
   describe '#finished_at' do
     context "when newly created" do
       before(:each) do
-        @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+        @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
       end
       
       it "isn't set" do
@@ -52,7 +62,7 @@ describe AnalysisTask do
   describe '#failed' do
     context "when newly created" do
       before(:each) do
-        @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+        @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
       end
       
       it "is false" do
@@ -62,7 +72,7 @@ describe AnalysisTask do
   end
   
   def create_task_with_file
-    @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
     @task.result_file = Download.create_file('test.txt') do |file|
       file.write 'test'
     end

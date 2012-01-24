@@ -19,7 +19,7 @@ describe "datasets/show.html" do
   end
   
   it 'shows pending analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
     task.save
     render
     
@@ -27,18 +27,21 @@ describe "datasets/show.html" do
   end
   
   it 'shows completed analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
     task.finished_at = Time.zone.now
     task.save
     render
     
-    rendered.should have_selector("a[href='#{download_dataset_path(datasets(:one), :task_id => task.to_param)}']")
+    expected = url_for(:controller => 'datasets', :action => 'task_download', 
+      :id => datasets(:one).to_param, :task_id => task.to_param)
+    
+    rendered.should have_selector("a[href='#{expected}']")
     rendered.should have_selector("h3", :content => "“test” Complete")
   end
   
   context 'with failed analysis tasks' do
     before(:each) do
-      task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one) })
+      task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
       task.failed = true
       task.save
       render
