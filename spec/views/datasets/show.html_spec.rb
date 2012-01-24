@@ -26,17 +26,29 @@ describe "datasets/show.html" do
     rendered.should have_selector("li[data-theme=e]", :content => '1 analysis task pending for this dataset...')
   end
   
-  it 'shows completed analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
-    task.finished_at = Time.zone.now
-    task.save
-    render
+  context 'with completed analysis tasks' do
+    before(:each) do
+      @task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
+      @task.finished_at = Time.zone.now
+      @task.save
+      render      
+    end
     
-    expected = url_for(:controller => 'datasets', :action => 'task_download', 
-      :id => datasets(:one).to_param, :task_id => task.to_param)
+    it 'shows the name of the job' do
+      rendered.should have_selector("h3", :content => "“test” Complete")      
+    end
     
-    rendered.should have_selector("a[href='#{expected}']")
-    rendered.should have_selector("h3", :content => "“test” Complete")
+    it 'shows a link to download the results' do
+      expected = url_for(:controller => 'datasets', :action => 'task_download', 
+        :id => datasets(:one).to_param, :task_id => @task.to_param)    
+      rendered.should have_selector("a[href='#{expected}']")      
+    end
+    
+    it 'shows a link to delete the task' do
+      expected = url_for(:controller => 'datasets', :action => 'task_destroy', 
+        :id => datasets(:one).to_param, :task_id => @task.to_param)    
+      rendered.should have_selector("a[href='#{expected}']")            
+    end
   end
   
   context 'with failed analysis tasks' do

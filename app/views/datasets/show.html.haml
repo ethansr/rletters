@@ -11,6 +11,8 @@
     - if @dataset.analysis_tasks.failed.count > 0
       %li{ 'data-theme' => 'e' }= t('.failed', :count => @dataset.analysis_tasks.failed.count)
       %li{ 'data-theme' => 'e' }= link_to t('.clear_failed'), dataset_path(@dataset, :clear_failed => true)
+  
+  -# Finished analysis tasks: link to download results and to delete
   - if @dataset.analysis_tasks.finished.count > 0
     %li{ 'data-role' => 'list-divider' }= t('.finished_tasks')
     - @dataset.analysis_tasks.finished.each do |task|
@@ -18,7 +20,7 @@
         = link_to({ :controller => 'datasets', :action => 'task_download', :id => @dataset.to_param, :task_id => task.to_param }, 'rel' => 'external') do
           %h3= t('.task_header', :name => task.name)
           %p= t('.download_task')
-        = link_to t('.delete_task'), '#'
+        = link_to t('.delete_task'), :controller => 'datasets', :action => 'task_destroy', :id => @dataset.to_param, :task_id => task.to_param
   %li{ 'data-role' => 'list-divider' }= t('.new_task')
   
   -# Show the markup for starting all the various background jobs
