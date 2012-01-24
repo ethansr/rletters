@@ -8,7 +8,7 @@ gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
 gem 'jruby-openssl', :platforms => :jruby
 
 gem 'capistrano'
-gem 'delayed_job', '~> 3.0'
+gem 'delayed_job', '~> 3.0', '>= 3.0.1'
 gem 'delayed_job_active_record'
 gem 'daemons', :require => false
 gem 'whenever', :require => false
@@ -51,8 +51,6 @@ group :test, :development do
 end
 
 group :test do
-  gem 'ffi-ncurses', :platforms => :jruby
-  
   gem 'shoulda-matchers'
   gem 'webrat'
   gem 'webmock'

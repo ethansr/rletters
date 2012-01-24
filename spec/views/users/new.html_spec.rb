@@ -31,7 +31,7 @@ describe "users/new.html" do
     
     it "selects the user's language on the form" do
       rendered.should have_selector('select[id=user_language]') do |items|
-        items[0].should have_selector('option[value=es-MX][selected=selected]')
+        items[0].should have_selector('option[value=es-MX][selected]')
       end
     end
   end
@@ -47,7 +47,7 @@ describe "users/new.html" do
     
     it "selects the user's language on the form" do
       rendered.should have_selector('select[id=user_language]') do |items|
-        items[0].should have_selector('option[value=es][selected=selected]')
+        items[0].should have_selector('option[value=es][selected]')
       end
     end
   end
