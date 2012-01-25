@@ -5,7 +5,7 @@ module Jobs
   # Destroy a user's datset
   #
   # This job destroys a given dataset.  This SQL call can be quite expensive,
-  # so we perform it in the background
+  # so we perform it in the background.
   class DestroyDataset < Jobs::Base
     # @return [String] the user that owns this dataset
     attr_accessor :user_id

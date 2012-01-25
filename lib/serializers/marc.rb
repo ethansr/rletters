@@ -197,10 +197,11 @@ class Array
   # Convert this array (of Document objects) to a MARC-JSON collection
   #
   # Only will work on arrays that consist entirely of Document objects, will
-  # raise an ArgumentError otherwise.  No tests for this method, as it's a
-  # very unofficial extension to the MARC-in-JSON standard.
+  # raise an ArgumentError otherwise.
   #
   # @api public
+  # @note No tests for this method, as it's a very unofficial extension to 
+  #   the MARC-in-JSON standard.
   # @return [String] array of documents as MARC-JSON collection
   # @example Save an array of documents in MARC-JSON format to stdout
   #   doc_array = Document.find_all_by_solr_query(...)

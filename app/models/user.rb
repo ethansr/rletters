@@ -11,8 +11,7 @@
 # @attr [Integer] per_page Number of search results to display per page
 # @attr [String] language Locale code of user's preferred language
 # @attr [String] timezone User's timezone, in Rails' format
-# @attr [String] csl_style User's preferred citation style, blank 
-#   for default
+# @attr [String] csl_style User's preferred citation style, blank for default
 #
 # @attr [Array<Dataset>] datasets All datasets created by the user (+has_many+)
 # @attr [Array<Library>] libraries All library links added by the user (+has_many+)

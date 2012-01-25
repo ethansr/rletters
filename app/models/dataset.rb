@@ -7,10 +7,8 @@
 #
 # @attr [String] name The name of this dataset
 # @attr [User] user The user that owns this dataset
-# @attr [Array<DatasetEntry>] entries The documents contained in this
-#   dataset (+has_many+)
-# @attr [Array<AnalysisTask>] analysis_tasks The analysis tasks run on this
-#   dataset (+has_many+)
+# @attr [Array<DatasetEntry>] entries The documents contained in this dataset (+has_many+)
+# @attr [Array<AnalysisTask>] analysis_tasks The analysis tasks run on this dataset (+has_many+)
 class Dataset < ActiveRecord::Base
   validates :name, :presence => true
   validates :user_id, :presence => true

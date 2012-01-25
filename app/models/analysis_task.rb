@@ -11,10 +11,8 @@
 # @attr [DateTime] finished_at The time at which this task was finished
 # @attr [Boolean] failed True if this job has failed
 # @attr [String] job_type The class name of the job this task contains
-# @attr [Dataset] dataset The dataset to which this task
-#   belongs (+belongs_to+)
-# @attr [Download] result_file The results of this analysis task, if
-#   completed and returned as a file download
+# @attr [Dataset] dataset The dataset to which this task belongs (+belongs_to+)
+# @attr [Download] result_file The results of this analysis task, if available
 class AnalysisTask < ActiveRecord::Base
   validates :name, :presence => true
   validates :dataset_id, :presence => true
@@ -52,7 +50,7 @@ class AnalysisTask < ActiveRecord::Base
     klass
   end
   
-  # Convert self.job_type into a class object
+  # Convert #job_type into a class object
   #
   # @api public
   # @return [Class] the job class

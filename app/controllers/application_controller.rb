@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   # Set the timezone if the user is logged in
   #
   # This function is called as a +before_filter+ in all controllers, you do
-  # not need to call it yourself.  Do not disable it, or the locale system
+  # not need to call it yourself.  Do not disable it, or the timezone system
   # will go haywire.
   #
   # @api private

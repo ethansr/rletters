@@ -22,7 +22,7 @@ module Serializers
     # @example Get the CSL entry for a given document
     #   doc = Document.new(...)
     #   doc.to_csl
-    #   # { 'type' => 'article-journal', 'author' => ... }
+    #   # => { 'type' => 'article-journal', 'author' => ... }
     def to_csl
       ret = {}
       ret['type'] = 'article-journal'
@@ -51,27 +51,27 @@ module Serializers
       ret
     end
 
-    if RUBY_VERSION >= "1.9.0"
+    # Convert the document to CSL, and format it with the given style
+    #
+    # Takes a document and converts it to a bibliographic entry in the
+    # specified style using CSL.  This method will return an empty string
+    # unless we are on Ruby 1.9 or greater, as the 
+    # CiteProc[https://github.com/inukshuk/citeproc-ruby] gem requires
+    # Ruby 1.9's Unicode support.
+    #
+    # @api public
+    # @param [String] style CSL style to use (see +vendor/csl+)
+    # @return [String] bibliographic entry in the given style
+    # @example Convert a given document to Chicago author-date format
+    #   doc.to_csl_entry('chicago-author-date.csl')
+    #   # => "Doe, John. 2000. ..."
+    def to_csl_entry(style = '')
+      return ''.html_safe if RUBY_VERSION < "1.9.0"
+        
+      style = 'chicago-author-date.csl' if style.blank?
+      style = Rails.root.join('vendor', 'csl', style) unless style.match(/\Ahttps?:/)
 
-      # Convert the document to CSL, and format it with the given style
-      #
-      # Takes a document and converts it to a bibliographic entry in the
-      # specified style using CSL.  This method is only present on Ruby 1.9 or
-      # greater.
-      #
-      # @api public
-      # @param [String] style CSL style to use (see +vendor/csl+)
-      # @return [String] bibliographic entry in the given style
-      # @example Convert a given document to Chicago author-date format
-      #   doc.to_csl_entry('chicago-author-date.csl')
-      #   # "Doe, John. 2000. ..."
-      def to_csl_entry(style = '')
-        style = 'chicago-author-date.csl' if style.blank?
-        style = Rails.root.join('vendor', 'csl', style) unless style.match(/\Ahttps?:/)
-
-        CiteProc.process(to_csl, :format => :html, :style => style).strip.html_safe
-      end
-      
+      CiteProc.process(to_csl, :format => :html, :style => style).strip.html_safe
     end
   end
 end

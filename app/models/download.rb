@@ -97,6 +97,7 @@ class Download < ActiveRecord::Base
   #
   # @api public
   # @param [ActionController] controller The controller to use
+  # @return [undefined]
   # @example Send this file to the user from controller method
   #   f = @user.downloads.find_by_id('1')
   #   f.send_file(self)
@@ -115,7 +116,7 @@ class Download < ActiveRecord::Base
   
   # Delete the file when the database record is destroyed
   #
-  # @api public
+  # @api private
   # @return [undefined]
   def delete_file
     File::delete(filename)

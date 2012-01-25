@@ -20,6 +20,20 @@ module Jobs
   class Base
     
     # Initialize the job from a hash of attributes in a generic way
+    #
+    # This constructor will simply set all of the passed +args+ as attribute
+    # values, if the job has the given attribute.
+    #
+    # @api public
+    # @param [Hash] args the instance variables to set
+    # @return [undefined]
+    # @example Setting attributes in a job class
+    #   class TestJob < Jobs::Base
+    #     attr_accessor :name
+    #   end
+    #   job = TestJob.new(:name => 'Testing')
+    #   job.name
+    #   # => 'Testing'
     def initialize(args = { })
       @state_vars = args.keys
       
@@ -29,6 +43,19 @@ module Jobs
     end
     
     # Get a hash of attributes from the state variables
+    #
+    # @api semipublic
+    # @return [Hash] hash of all attributes set on construction
+    # @example Get the attributes of a job class
+    #   class TestJob < Jobs::Base
+    #     attr_accessor :name, :test
+    #   end
+    #   job = TestJob.new(:name => 'Testing')
+    #   job.test = 'woo'
+    #   job.attributes
+    #   # => { :name => 'Testing' }
+    #   # Note: does NOT include :test, as this was not set on
+    #   # construction
     def attributes
       ret = {}
       @state_vars.each { |k| ret[k] = instance_variable_get("@#{k.to_s}") }      
@@ -36,6 +63,9 @@ module Jobs
     end
     
     # Compare objects for equality based on their attributes
+    #
+    # @api public
+    # @return [Boolean] true if +self+ is equal to +other+
     def ==(other)
       attributes == other.attributes
     end
@@ -46,9 +76,9 @@ module Jobs
     # This method is a callback that is invoked by Delayed::Job.  No tests, as
     # it's merely a wrapper on the Airbrake gem.
     #
+    # @api private
     # @param [Delayed::Job] job The job currently being run
     # @param [StandardError] exception The exception raised to cause the error
-    # @api private
     # @return [undefined]
     # :nocov:
     def error(job, exception)

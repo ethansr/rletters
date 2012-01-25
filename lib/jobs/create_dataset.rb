@@ -29,6 +29,7 @@ module Jobs
     # @return [undefined]
     # @example Check that we have a good Solr response
     #   solr_response = SolrHandlers.get_solr_response(...)
+    #   check_solr_response solr_response
     #   # Will have thrown if the response is not valid
     def check_solr_response(solr_response)
       raise StandardError, 'Unknown error in Solr response' unless solr_response["response"]
