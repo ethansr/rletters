@@ -64,6 +64,7 @@ class Document
   # @return [undefined]
   # @param [Symbol] key the MIME type key for this serializer, as defined
   #   in config/initializers/mime_types.rb
+  # @param [String] name the human-readable name of this serializer format
   # @param [Proc] method a method which accepts a Document object as a 
   #   parameter and returns the serialized document as a String
   # @param [String] docs a URL pointing to documentation for this method
@@ -125,23 +126,25 @@ class Document
   #
   # @api public
   # @param [Hash] params Solr query parameters
-  #   This is a hash that can have (at least) the following keys:
-  #   - +params[:q]+: a Solr query string, typically of the format "field:val 
-  #     field:val ..."
-  #   - +params[:qt]+: the Solr query type.  In the default Solr configuration
-  #     provided with RLetters, valid values here are +standard+ (for stemmed,
-  #     Google-like searching), +precise+ (full Solr query syntax, returning
-  #     bibliographic data only), and +fulltext (full Solr query syntax,
-  #     returning both bibliographic data and full document text).
-  #   - +params[:start]+: alternate way to set +options[:offset]+.
-  #   - +params[:rows]+: alternate way to set +options[:limit]+.
   # @param [Hash] options subset of the options usually passed to
   #   +ActiveRecord::find+
+  #
+  # @option params [String] q a Solr query string, typically of the format
+  #   "field:val field:val ..."
+  # @option params [String] qt the Solr query type.  In the default Solr
+  #   configuration provided with RLetters, valid values here are +standard+
+  #   (for stemmed, Google-like searching), +precise+ (full Solr query syntax,
+  #   returning bibliographic data only), and +fulltext (full Solr query syntax,
+  #   returning both bibliographic data and full document text).
+  # @option params [Integer] start alternate way to set +:offset+ in +options+
+  # @option params [Integer] rows alternate way to set +:limit+ in +options+
+  #
   # @option options [Integer] offset offset within the result set at which to
   #   begin returning documents
   # @option options [Integer] limit maximum number of results to return
-  # @return [Array] set of documents matching query.  An empty set will be
-  #   returned if no documents match.
+  #
+  # @return [Array<Document>] set of documents matching query.  An empty 
+  #   array will be returned if no documents match.
   #
   # @example Return all documents in the collection (bad idea!)
   #  collection = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
@@ -211,9 +214,10 @@ class Document
   attr_reader :doi
   # @return [String] the document's authors, in a comma-delimited list
   attr_reader :authors
-  # @return [Array] the document's authors, in an array
+  # @return [Array<String>] the document's authors, in an array
   attr_reader :author_list
-  # @return [Array] the document's authors, split into name parts, in an array
+  # @return [Array<Hash>] the document's authors, split into name parts, 
+  #   in an array
   # @see NameHelpers.author_name_parts
   attr_reader :formatted_author_list
   # @return [String] the title of this document
@@ -274,7 +278,7 @@ class Document
   # - +:positions+, term positions: the position of this word (in
   #   _number of words_) within +fulltext+.  Note that these positions
   #   rely on the precise way in which Solr splits words, which is specified
-  #   by Unicode UAX 29.
+  #   by {Unicode UAX #29.}[http://unicode.org/reports/tr29/]
   # - +:df+, document frequency: the number of documents in the collection
   #   that contain this word
   # - +:tfidf+, term frequency-inverse document frequency: equal to (term
@@ -284,7 +288,7 @@ class Document
   #   that occur frequently in a given document but do _not_ occur in other
   #   documents.
   #
-  # @note This function may return +nil+, if the query type requested from
+  # @note This attribute may be +nil+, if the query type requested from
   #   the Solr server does not return term vectors.
   #
   # @api public
@@ -292,10 +296,10 @@ class Document
   #   keys:
   #     term_vectors["word"]
   #     term_vectors["word"][:tf] = Integer
-  #     term_vectors["word"][:offsets] = Array
+  #     term_vectors["word"][:offsets] = Array<Range>
   #     term_vectors["word"][:offsets][0] = Range
   #     # ...
-  #     term_vectors["word"][:positions] = Array
+  #     term_vectors["word"][:positions] = Array<Integer>
   #     term_vectors["word"][:positions][0] = Integer
   #     # ...
   #     term_vectors["word"][:df] = Float
@@ -315,15 +319,15 @@ class Document
   # @api public
   # @return [Hash] facets returned by the last search, +nil+ if none.
   #   The hash contains the following keys:
-  #     Document.facets[:author] = Array
-  #       Document.facets[:author][0] = ["Particular Author", Integer]
-  #     Document.facets[:journal] = Array
-  #       Document.facets[:journal][0] = ["Particular Journal", Integer]
+  #     Document.facets[:authors_facet] = Array<Array>
+  #       Document.facets[:authors_facet][0] = ["Particular Author", Integer]
+  #     Document.facets[:journal_facet] = Array<Array>
+  #       Document.facets[:journal_facet][0] = ["Particular Journal", Integer]
   #     Document.facets[:year]
   #       Document.facets[:year][0] = ["1940–1949", Integer]
   #
   # @example Get the number of documents in the last search published by W. Shatner
-  #   shatner_docs = Document.facets[:author].assoc("W. Shatner")[1]
+  #   shatner_docs = Document.facets[:authors_facet].assoc("W. Shatner")[1]
   cattr_reader :facets
 
   # Number of documents returned by the last search
@@ -333,14 +337,10 @@ class Document
   # this variable returns the full number of documents that were returned by
   # the last search.
   #
-  # A method for pretty-printing this variable is available as
-  # +SearchHelper#num_results_string+.
-  #
   # @api public
   # @return [Integer] number of documents in the last search
   # @example Returns true if there are more hits than documents returned
   #   @documents.count > Document.num_results
-  # @see SearchHelper#num_results_string
   cattr_reader :num_results
 
   # The shasum attribute is the only required one
@@ -348,9 +348,16 @@ class Document
   validates :shasum, :length => { :is => 40 }
   validates :shasum, :format => { :with => /\A[a-fA-F\d]+\z/u }
 
+  # Set all attributes and create author lists
+  #
+  # This constructor copies in all attributes, as well as splitting the
+  # +authors+ value into +author_list+ and +formatted_author_list+.
+  #
+  # @api public
+  # @param [Hash] attributes attributes for this document
   def initialize(attributes = {})
     attributes.each do |name, value|
-      instance_variable_set("@#{name}".to_sym, value)
+      instance_variable_set(:"@#{name}", value)
     end
 
     # Split out the author list and format it

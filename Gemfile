@@ -15,6 +15,7 @@ gem 'whenever', :require => false
 gem 'airbrake'
 
 gem 'rpx_now'
+gem 'email_validator'
 
 gem 'rubyzip'
 gem 'rsolr'

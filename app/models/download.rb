@@ -6,9 +6,10 @@
 # back to the user.  We keep track of them in the database so that they can
 # be expired and deleted when necessary.
 #
-# All files are stored in +RAILS_ROOT/downloads+, *not* in the +public+ tree.
-# This folder is expected to be symlinked over from +shared+ during a
-# Capistrano deployment.
+# All files are stored in +RAILS_ROOT/downloads+, *not* in the +public+ tree,
+# so that it is impossible to get the web server to serve the download files
+# without passing through the RLetters's authentication. This folder is
+# expected to be symlinked over from +shared+ during a Capistrano deployment.
 #
 # @attr [String] filename The filename of this download
 class Download < ActiveRecord::Base
@@ -19,7 +20,7 @@ class Download < ActiveRecord::Base
   
   before_destroy :delete_file
   
-  # Get the path to a download file that is known not to exist
+  # Get the path to a new download file
   #
   # This function will fetch a path for the file +basename+ in the downloads
   # folder (do not put a path of any sort on +basename+).  A unique 
@@ -64,11 +65,12 @@ class Download < ActiveRecord::Base
   # then be passed to the provided block.  Finally, the function creates a
   # +Download+ model, saves it in the database, and returns it.
   #
-  # Closing the file within the block is optional, but recommended.
+  # Closing the file within the block is optional; it will be closed when
+  # the block terminates if it hasn't been already.
   #
   # @api public
   # @param basename [String] the base name of the file to create
-  # @yield [f] Yields a File object, opened for writing
+  # @yield [f] a File object, opened for writing
   # @yieldparam [File] f the file object created
   # @return [Download] a new +Download+ object
   #
@@ -115,8 +117,6 @@ class Download < ActiveRecord::Base
   private
   
   # Delete the file when the database record is destroyed
-  #
-  # @api private
   # @return [undefined]
   def delete_file
     File::delete(filename)
