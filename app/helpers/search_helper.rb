@@ -179,7 +179,7 @@ module SearchHelper
   #
   # This function queries both the active facets on the current search and the
   # available facets for authors, journals, and years.  It returns a set of
-  # +<li>+ elements (_not_ a +<ul>+), including list dividers.
+  # <li> elements (_not_ a <ul>), including list dividers.
   #
   # @api public
   # @return [String] set of list items for faceted browsing

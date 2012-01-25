@@ -117,6 +117,7 @@ class Download < ActiveRecord::Base
   private
   
   # Delete the file when the database record is destroyed
+  # @api private
   # @return [undefined]
   def delete_file
     File::delete(filename)

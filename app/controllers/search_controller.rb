@@ -115,13 +115,15 @@ class SearchController < ApplicationController
     end
   end
 
+  private
+
   # Convert from search parameters to Solr query parameters
   #
   # This function takes the GET parameters passed in to the search and
   # handles converting them to the query format expected by Solr.  Primarily,
   # it is intended to support the advanced search page.
   #
-  # @api public
+  # @api private
   # @param [Hash] params the Rails params object
   # @return [Hash] Solr-format query parameters
   # @example Convert an advanced search to Solr format
@@ -205,8 +207,6 @@ class SearchController < ApplicationController
     
     query_params
   end
-
-  private
 
   # Send the given string content to the browser as a file download
   #

@@ -97,9 +97,9 @@ module SolrHelpers
   # Our internal format for facet parsing is a 3-tuple, <tt>[:symbol, value,
   # count]</tt>.  Solr facets (as found in +params+) are an array of strings
   # of the format +field:query+, and are more complicated than that
-  # (+year:[start TO end]+) for the +:year+ facet.  This function takes a Solr
-  # query parameter and returns a three-tuple value.  Notably, Solr query
-  # parameters lack the +count+ value, so it will be set to zero.
+  # (<tt>year:[start TO end]</tt>) for the +:year+ facet.  This function 
+  # takes a Solr query parameter and returns a three-tuple value.  Notably,
+  # Solr query parameters lack the +count+ value, so it will be set to zero.
   #
   # This function is used to parse the current facet query parameters and 
   # return the active facets in a format which we can use.
@@ -150,7 +150,7 @@ module SolrHelpers
   # Our internal format for facet parsing is a 3-tuple, <tt>[:symbol, value,
   # count]</tt>.  Solr facets (as found in +params+) are an array of strings
   # of the format +field:query+, and are more complicated than that
-  # (+year:[start TO end]+) for the +:year+ facet.  This function takes a
+  # (<tt>year:[start TO end]</tt>) for the +:year+ facet.  This function takes a
   # three-tuple and returns a Solr facet query string.
   #
   # This function is used to generate the links for adding new facets to

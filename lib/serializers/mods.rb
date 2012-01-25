@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 module Serializers
   
-  # Convert a document to a MARC record
+  # Convert a document to a MODS XML document
   module MODS
     
     # Register this serializer in the Document list

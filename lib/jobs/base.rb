@@ -2,7 +2,7 @@
 
 # Code that runs as delayed jobs
 #
-# This namespace contains classes for all code that runs as a delayed job.
+# This module contains classes for all code that runs as a delayed job.
 #
 # Some guidelines for RLetters delayed jobs:
 # - These jobs should, except in rare cases (like +DestroyDataset+) only

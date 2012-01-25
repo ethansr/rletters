@@ -9,10 +9,14 @@ class UnapiController < ApplicationController
   
   # Implement all of unAPI
   #
-  # If +params[:id]+ is set, return either a list of formats customized for a
-  # particular document.  If +params[:id]+ and +params[:format]+ are both set,
-  # return the actual document (or a 406 error).  If +params[:id]+ is not set,
+  # If an id is set, return either a list of formats customized for a
+  # particular document.  If an id and a format are both set,
+  # return the actual document (or a 406 error).  If an id is not set,
   # then show the list of all possible export formats.
+  #
+  # The best way to understand how this API works is to check out the
+  # RSpec tests for this controller, which implement a full unAPI validation
+  # suite.
   #
   # @api public
   # @return [undefined]

@@ -24,7 +24,7 @@ module Serializers
     #
     # Support for individual-article MARC records is spotty at best -- this is
     # a use case for which the MARC format was not intended.  To generate
-    # these records, we primarily follow the adbice as presented in
+    # these records, we primarily follow the advice as presented in
     # {PROPOSAL 2003-03}[http://www.loc.gov/marc/marbi/2003/2003-03.html],
     # "Definition of Data Elements for Article Level Descsription."  We also
     # adhere to the prior standard of providing a "free-form" citation entry
@@ -33,7 +33,8 @@ module Serializers
     #
     # In cases where significant parts of a document record are missing (i.e.,
     # no author, no title, no year), it is possible that the MARC generated
-    # by this method will be invalid.
+    # by this method will be invalid.  We're currently not going out of our 
+    # way to patch up records for these edge cases.
     #
     # @api public
     # @return [MARC::Record] document as a MARC record

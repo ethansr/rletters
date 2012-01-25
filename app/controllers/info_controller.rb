@@ -10,7 +10,7 @@ class InfoController < ApplicationController
   
   # Query some Solr parameters for the index page
   #
-  # This controller will query the Solr database to get some nice statistics
+  # This action will query the Solr database to get some nice statistics
   # for our index page.
   #
   # @api public
