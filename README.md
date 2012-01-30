@@ -49,66 +49,27 @@ RLetters doesn't leave your developers out in the cold, either.  We've got suppo
 -   Baked-in support for error reporting using [Airbrake](http://airbrake.io/) (account registration required)
 
 
-## Installation ##
+## Installation / Deployment ##
 
-### Install and configure Solr ###
+See our detailed [installation and deployment](https://github.com/cpence/rletters/wiki/Installation-and-Deployment) guide for instructions.  For the extremely impatient:
 
-You will need to install and set up Solr yourself before you begin.  RLetters provides snippets from both `schema.xml` and `solrconfig.xml` in the `contrib/solr` directory, which define the document schema and the request handlers that are used by RLetters.  Of course, you are welcome to add, edit, or change these as necessary.
-
-### Install infrastructure ###
-
-We'll assume for these instructions that you know how to [install Ruby on Rails](http://guides.rubyonrails.org/getting_started.html) and get a Rails application up and running on your local web server.  You'll need, at the very least, to have installations of (i) some web server or other, (ii) Ruby, and (iii) MySQL.  Since deployments are best handled through Capistrano (and this README will assume you're using it), you should also have git on this server.
-
-Copy the file `config/deploy/deploy_config.rb.dist` to `config/deploy/deploy_config.rb` and edit the variables found within it to match your server configuration.
-
-Begin the deployment and configuration process by executing `cap deploy:setup`.  The deployment setup will ask you a host of questions about your setup, including your database passwords, the name of your application, and your IDs and keys for various third-party services.  Read on to see what all those are about.  If you need to edit the files created by the `deploy:setup` task, they may be found on your server at `DEPLOY_PATH/shared/config/app_config.yml` and `DEPLOY_PATH/shared/config/database.yml`.
-
-Alternatively (and especially if you wish to set up multiple servers) you can skip these two steps by executing either `cap deploy:setup -S "skip_config_setup=true"` or `cap deploy:setup -S "skip_db_setup=true"`.  You can then set up the files in `DEPLOY_PATH/shared/config` manually.
-
-### The configuration prompts ###
-
--   MySQL database root password: The root password to your MySQL database.  (FIXME: Eventually we will have support for users other than root.)
--   Friendly application name: The user-friendly name of your application.
--   Developer e-mail: The e-mail address to which bug reports and such should be sent.
--   Application domain: The domain name at which your application is published.
--   Janrain settings: User login for RLetters uses the external [Janrain Engage](http://www.janrain.com/products/engage) service, which allows users to log in through Google, Facebook, LinkedIn, and a number of other third-party services.  For user login to work properly, you will need to create a Janrain Engage account at their website (free for less than 2,500 users per year, which should be more than enough for an academic resource like RLetters).  Once you've created an account, click "Sign-In for Websites" on the right-hand side, and configure your login widget.  Under "Application Settings," make sure to add your deployment URL to the Domain Whitelist.  Add a link to your privacy policy ((YOUR URL)/info/privacy), and your favicon.
-    -   Janrain application name: The subdomain under "Application Domain" in your Engage settings (e.g., for rletters.rpxnow.com, the application name is `rletters`).
-    -   Janrain application ID: The "App ID" in your Engage settings.
-    -   Janrain secret: The "API Key (Secret)" in your Engage settings.
--   Mendeley key: If you would like your users to be able to search for document results on [Mendeley](http://www.mendeley.com), you will need to visit the [Mendeley Developers Portal](http://dev.mendeley.com) and register your application.  This setting is the value of your "Consumer Key".
--   Airbrake key: If you have an [Airbrake](http://airbrake.io/) account, this is your Airbrake API key (available under "Edit this Project" in the Airbrake main window).
--   Solr server path: The http path to the Solr server (from the deployment server, e.g. `http://localhost:8080/solr`).
-
-### Finish deployment ###
-
-All right, you now have the configuration set up for your new RLetters server.  Check things over by executing `cap deploy:check`.  If all goes well, push the code to the server with `cap deploy:update`.  If you have not yet created a production database, SSH over to the server, change into the `DEPLOY_PATH/current` directory and execute `rake RAILS_ENV=production db:schema:load`.  **DO NOT DO THIS** if you already have a database, as it **WILL WIPE YOUR PRODUCTION DATA.**  (In particular, you don't need to do this if you're upgrading.)
-
-Finally, execute `cap deploy:start` and fire up your new RLetters installation in a browser.  If all is good, you're ready to move on to the final customization steps.
-
-### Customize some static content ###
-
-The only thing remaining is to customize some static content -- images and text -- that is shipped with RLetters.  All of the following content is placed in the `DEPLOY_PATH/shared` directory.  The first time you deploy to a new server, sample data for all the following images and text is installed; replace this data with customized versions for your site.
-
--   `static_text/_privacy_short.markdown` and `static_text/_privacy_long.markdown`:  We've filled this in with a pretty good default privacy policy for the default settings of RLetters.  If you change the way that you interact with your users, you should update this privacy policy.
--   `static_text/_about.markdown`:  A general "about this application" page for your application.
--   `static_text/_faq.markdown`:  A page of frequently asked questions for your application.  This file ships with a few default questions that users are likely to ask about the framework in general.
--   `static_text/_tutorial.markdown`:  A tutorial that introduces your application to users.  A nice tutorial would show users how the search and datasets pages work, and then provide a few examples of searches and analyses that provide interesting results.
-
-A handful of images, then, are stored in the `static_assets` directory:
-
--   `static_assets/error-watermark.png`: This is an image shown in the bottom-left corner of the site's error pages.  Something like 500x300 pixels is a good size for this image.
--   Now, the iOS splash images and icons:
-    -   `static_assets/h/apple-touch-icon.png`: 114x114 pixel iOS application icon.  This is used on Retina Display-capable iPhones.
-    -   `static_assets/m/apple-touch-icon.png`: 72x72 pixel iOS application icon.  This is used on the iPad.
-    -   `static_assets/l/apple-touch-icon.png` and `l/apple-touch-icon-precomposed.png`: 57x57 pixel iOS application icon.  This is used on low-resolution iPhone and iPod Touch devices.
-    -   `static_assets/h/splash.png`: 768x1004 splash screen, displayed while loading the app on retina-display iPhone devices.
-    -   `static_assets/l/splash.png`: 320x460 splash screen, displayed while loading the app on low-resolution iPhone and iPod Touch devices.
--   Finally, `static_assets/favicon.ico`, the standard favorite icon.
-
-These static assets will be automatically connected when you deploy.  To make sure they are active, you should perform another `cap deploy` now.
-
-That's it!  You've successfully configured a new RLetters installation, and even personalized it a bit to make it your own.
-
+    # Install Solr, Ruby, Apache, Passenger
+    git clone git://github.com/cpence/rletters.git
+    cd rletters
+    cp config/deploy/deploy_config.rb.dist config/deploy/deploy_config.rb
+    $EDITOR config/deploy/deploy_config.rb
+    # Set server URLs, deployment path
+    cap deploy:setup
+    # Answer all the questions
+    cap deploy:check
+    cap deploy:update
+    ssh SERVER_URL
+        cd DEPLOYMENT_PATH
+        rake RAILS_ENV=production db:schema:load
+        $EDITOR /etc/apache2/apache2.conf
+        # Add appropriate stanza for DEPLOYMENT_PATH
+        exit
+    cap deploy:start
 
 ## Contributors ##
 
