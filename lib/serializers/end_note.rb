@@ -21,9 +21,9 @@ module Serializers
       ret  = "%0 Journal Article\n"
       if formatted_author_list && formatted_author_list.count
         formatted_author_list.each do |a|
-          ret << "%A #{a[:last]}, #{a[:first]}"
-          ret << " #{a[:von]}" unless a[:von].blank?
-          ret << ", #{a[:suffix]}" unless a[:suffix].blank?
+          ret << "%A #{a.last}, #{a.first}"
+          ret << " #{a.von}" unless a.von.blank?
+          ret << ", #{a.suffix}" unless a.suffix.blank?
           ret << "\n"
         end
       end

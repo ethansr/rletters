@@ -218,7 +218,6 @@ class Document
   attr_reader :author_list
   # @return [Array<Hash>] the document's authors, split into name parts, 
   #   in an array
-  # @see NameHelpers.author_name_parts
   attr_reader :formatted_author_list
   # @return [String] the title of this document
   attr_reader :title
@@ -362,6 +361,6 @@ class Document
 
     # Split out the author list and format it
     @author_list = @authors.split(',').map { |a| a.strip } unless @authors.nil?
-    @formatted_author_list = @author_list.map { |a| NameHelpers.name_parts(a) } unless @author_list.nil?
+    @formatted_author_list = @author_list.map { |a| BibTeX::Names.parse(a)[0] } unless @author_list.nil?
   end
 end

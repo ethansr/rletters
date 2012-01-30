@@ -43,10 +43,10 @@ module Serializers
       unless formatted_author_list.nil?
         formatted_author_list.each do |a|
           name = ''
-          name << "#{a[:von]} " unless a[:von].blank?
-          name << "#{a[:last]}"
-          name << " #{a[:suffix]}" unless a[:suffix].blank?
-          name << ", #{a[:first]}"
+          name << "#{a.von} " unless a.von.blank?
+          name << "#{a.last}"
+          name << " #{a.suffix}" unless a.suffix.blank?
+          name << ", #{a.first}"
           graph << [doc, ::RDF::DC.creator, name]
         end
       end

@@ -339,17 +339,12 @@ describe Document do
         @doc.formatted_author_list.should have(5).items
       end
       
-      it "includes the right hash keys" do
-        @doc.formatted_author_list[1].should include(:first)
-        @doc.formatted_author_list[4].should include(:last)
-      end
-      
       it "gets the right second author, first name" do
-        @doc.formatted_author_list[1][:first].should eq("Andrew E.")
+        @doc.formatted_author_list[1].first.should eq("Andrew E.")
       end
       
       it "gets the right fifth author, last name" do
-        @doc.formatted_author_list[4][:last].should eq("Vehrencamp")
+        @doc.formatted_author_list[4].last.should eq("Vehrencamp")
       end
     end
   end

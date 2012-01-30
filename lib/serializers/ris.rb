@@ -22,9 +22,9 @@ module Serializers
       unless formatted_author_list.nil?
         formatted_author_list.each do |a|
           ret << "AU  - "
-          ret << "#{a[:von]} " unless a[:von].blank?
-          ret << "#{a[:last]},#{a[:first]}"
-          ret << ",#{a[:suffix]}" unless a[:suffix].blank?
+          ret << "#{a.von} " unless a.von.blank?
+          ret << "#{a.last},#{a.first}"
+          ret << ",#{a.suffix}" unless a.suffix.blank?
           ret << "\n"
         end
       end

@@ -185,10 +185,10 @@ module Serializers
     # @return [String] author formatted as MARC expects it
     def author_to_marc(a)
       author = ''
-      author << a[:von] + ' ' unless a[:von].blank?
-      author << a[:last]
-      author << ' ' + a[:suffix] unless a[:suffix].blank?
-      author << ', ' + a[:first]
+      author << a.von + ' ' unless a.von.blank?
+      author << a.last
+      author << ' ' + a.suffix unless a.suffix.blank?
+      author << ', ' + a.first
       author
     end
   end

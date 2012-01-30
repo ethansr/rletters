@@ -28,17 +28,7 @@ module Serializers
       ret['type'] = 'article-journal'
 
       if formatted_author_list && formatted_author_list.count
-        ret['author'] = []
-     
-        formatted_author_list.each do |a|
-          h = {}
-          h['given'] = a[:first]
-          h['family'] = a[:last]
-          h['suffix'] = a[:suffix]
-          h['non-dropping-particle'] = a[:von]
-
-          ret['author'] << h
-        end
+        ret['author'] = formatted_author_list.map { |a| a.to_citeproc }
       end
       
       ret['title'] = title unless title.blank?

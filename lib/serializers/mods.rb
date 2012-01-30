@@ -52,13 +52,13 @@ module Serializers
           name.attributes['type'] = 'personal'
           
           first_name_elt = name.add_element 'namePart'
-          first_name_elt.text = a[:first]
+          first_name_elt.text = a.first
           first_name_elt.attributes['type'] = 'given'
           
           last_name = ''
-          last_name << " #{a[:von]}" unless a[:von].blank?
-          last_name << a[:last]
-          last_name << ", #{a[:suffix]}" unless a[:suffix].blank?
+          last_name << " #{a.von}" unless a.von.blank?
+          last_name << a.last
+          last_name << ", #{a.suffix}" unless a.suffix.blank?
           last_name_elt = name.add_element 'namePart'
           last_name_elt.text = last_name
           last_name_elt.attributes['type'] = 'family'
