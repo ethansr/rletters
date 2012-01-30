@@ -63,13 +63,10 @@ describe LibrariesController do
   describe '#update' do
     context 'when library is valid' do
       it 'edits the library' do
-        attrs = @harvard.attributes
-        attrs[:name] = 'Woo'
+        put :update, :id => @harvard.to_param, :library => { :user => users(:john).to_param,
+          :name => 'Woo', :url => 'http://sfx.hul.harvard.edu/sfx_local?' }
         
-        put :update, :id => @harvard.to_param, :library => attrs
-        
-        users(:john).libraries(true)
-        users(:john).libraries[0].name.should eq('Woo')
+        Library.find(@harvard.to_param).name.should eq('Woo')
       end
       
       it 'redirects to the user page' do
