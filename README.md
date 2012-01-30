@@ -53,7 +53,9 @@ RLetters doesn't leave your developers out in the cold, either.  We've got suppo
 
 See our detailed [installation and deployment](https://github.com/cpence/rletters/wiki/Installation-and-Deployment) guide for instructions.  For the extremely impatient:
 
-    # Install Solr, Ruby, Apache, Passenger
+    ssh SERVER_URL
+        # Install Solr, Ruby, Apache, Passenger
+        exit
     git clone git://github.com/cpence/rletters.git
     cd rletters
     cp config/deploy/deploy_config.rb.dist config/deploy/deploy_config.rb
