@@ -37,7 +37,7 @@ module NameHelpers
     first_names.map! do |n|
       if n == n.upcase
         # All uppercase, so assume it's initials
-        n.split(//)
+        n.scan(/./mu)
       else
         n
       end

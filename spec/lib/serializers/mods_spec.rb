@@ -45,7 +45,7 @@ describe Serializers::MODS do
       doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
       # Create a deep copy with a different unique ID
-      doc2 = Marshal.load(Marshal.dump(doc))
+      doc2 = YAML.load(doc.to_yaml)
       doc2.instance_variable_set(:@shasum, 'wut')
 
       @docs = [doc, doc2]
