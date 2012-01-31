@@ -15,8 +15,8 @@ module SolrHelpers
   #:nocov:
   def get_solr_response(query)
     begin
-      solr = RSolr.connect :url => APP_CONFIG['solr_server_url']
-      ret = solr.get('select', :params => query)
+      solr = RSolr::Ext.connect :url => APP_CONFIG['solr_server_url']
+      ret = solr.find query
     rescue Exception
       ret = {}
     end

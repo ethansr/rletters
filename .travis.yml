@@ -6,12 +6,7 @@ rvm:
   - 1.9.2
   - 1.9.3
   - ree
-
-# Not until the following pull request is taken up by the
-# latex-decode gem, otherwise it uses a binary C
-# extension which won't load on Travis:
-# https://github.com/inukshuk/latex-decode/pull/3
-#  - jruby
+  - jruby
 
 # Not until the RDF gem is upgraded, else we'll take up
 # years of build time on the poor Travis servers.

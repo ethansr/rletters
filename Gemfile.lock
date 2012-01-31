@@ -97,8 +97,7 @@ GEM
     json (1.6.4-java)
     json_pure (1.6.4)
     kramdown (0.13.4)
-    latex-decode (0.0.10)
-      unicode (~> 0.4)
+    latex-decode (0.0.11)
     libv8 (3.3.10.4)
     little-plugger (1.1.3)
     logging (1.6.1)
@@ -162,6 +161,8 @@ GEM
       json_pure
     rsolr (1.0.6)
       builder (>= 2.1.2)
+    rsolr-ext (1.0.3)
+      rsolr (>= 1.0.2)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -204,7 +205,6 @@ GEM
     uglifier (1.2.1)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
-    unicode (0.4.0)
     unicode_utils (1.2.2)
     webmock (1.7.10)
       addressable (~> 2.2, > 2.2.5)
@@ -246,6 +246,7 @@ DEPENDENCIES
   jquery_mobile-rails (= 1.0.1)
   jruby-openssl
   kramdown
+  latex-decode (>= 0.0.11)
   magic_encoding
   marc
   mysql2
@@ -257,6 +258,7 @@ DEPENDENCIES
   rdf-rdfxml
   rpx_now
   rsolr
+  rsolr-ext
   rspec-rails
   rubyzip
   sass-rails
