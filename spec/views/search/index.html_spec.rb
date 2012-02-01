@@ -83,7 +83,7 @@ describe "search/index.html" do
         render
       end
       
-      it 'uses CSL styles when needed', :ruby19 => true do
+      it 'uses CSL styles when needed' do
         rendered.should contain("Botero, Carlos A., Andrew E. Mudge, Amanda M. Koltz, Wesley M. Hochachka, and Sandra L. Vehrencamp. 2008. “How Reliable are the Methods for Estimating Repertoire Size?”. Ethology 114 (6): 1227-1238.")
       end
       

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-require 'citeproc' if RUBY_VERSION >= "1.9.0"
+require 'citeproc'
 
 # Serialization code for +Document+ objects
 #
@@ -44,10 +44,7 @@ module Serializers
     # Convert the document to CSL, and format it with the given style
     #
     # Takes a document and converts it to a bibliographic entry in the
-    # specified style using CSL.  This method will return an empty string
-    # unless we are on Ruby 1.9 or greater, as the 
-    # CiteProc[https://github.com/inukshuk/citeproc-ruby] gem requires
-    # Ruby 1.9's Unicode support.
+    # specified style using CSL.
     #
     # @api public
     # @param [String] style CSL style to use (see +vendor/csl+)
@@ -56,8 +53,6 @@ module Serializers
     #   doc.to_csl_entry('chicago-author-date.csl')
     #   # => "Doe, John. 2000. ..."
     def to_csl_entry(style = '')
-      return ''.html_safe if RUBY_VERSION < "1.9.0"
-        
       style = 'chicago-author-date.csl' if style.blank?
       style = Rails.root.join('vendor', 'csl', style) unless style.match(/\Ahttps?:/)
 

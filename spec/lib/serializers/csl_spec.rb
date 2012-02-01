@@ -26,7 +26,7 @@ describe Serializers::CSL do
     end
   end
   
-  context "when formatting CSL citations", :ruby19 => true do
+  context "when formatting CSL citations" do
     it "creates good CSL citations" do
       @doc.to_csl_entry.to_s.should eq("Botero, Carlos A., Andrew E. Mudge, Amanda M. Koltz, Wesley M. Hochachka, and Sandra L. Vehrencamp. 2008. “How Reliable are the Methods for Estimating Repertoire Size?”. <i>Ethology</i> 114: 1227-1238.")
     end

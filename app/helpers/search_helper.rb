@@ -228,10 +228,6 @@ module SearchHelper
   # partial with an H3 and some P's.  The user can set, however, to format the
   # bibliographic entries using their favorite CSL style.
   #
-  # For Ruby < 1.9, this function will always return the default, regardless
-  # of the user's preferred setting.  (This is not a bug: the CiteProc gem
-  # for Ruby only works on Rubies >= 1.9.  Upgrade!)
-  #
   # @api public
   # @param [Document] doc document for which bibliographic entry is desired
   # @return [String] bibliographic entry for document
@@ -239,7 +235,7 @@ module SearchHelper
   #   document_bibliography_entry(Document.new(:authors => 'W. Johnson', :year => '2000'))
   #   # "Johnson, W. 2000. ..."
   def document_bibliography_entry(doc)
-    if RUBY_VERSION <= "1.9.0" || @user.nil? || @user.csl_style == ''
+    if @user.nil? || @user.csl_style == ''
       render :partial => 'document', :locals => { :document => doc }
     else
       doc.to_csl_entry(@user.csl_style)

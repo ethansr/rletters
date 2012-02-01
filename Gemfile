@@ -25,10 +25,9 @@ gem 'rdf'
 gem 'rdf-rdfxml', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'rdf-n3'
 
-# citeproc-ruby relies on unicode_utils, which is Ruby 1.9-only
-gem 'citeproc-ruby', :platforms => [ :ruby_19, :mingw_19 ]
 gem 'latex-decode', '>= 0.0.11'
 gem 'bibtex-ruby', '~> 1.3', :require => 'bibtex'
+gem 'citeproc-ruby', '>= 0.0.4'
 
 gem 'haml'
 gem 'haml-rails'

@@ -26,10 +26,6 @@ Spork.prefork do
       DeferredGarbageCollection.reconsider
     end
   
-    # Skip some tests on Ruby 1.9
-    if RUBY_VERSION < "1.9.0"
-      config.filter_run_excluding :ruby19 => true
-    end
     # Skip some tests on JRuby
     if RUBY_PLATFORM == "java"
       config.filter_run_excluding :jruby => false
