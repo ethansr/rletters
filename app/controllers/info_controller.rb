@@ -22,7 +22,7 @@ class InfoController < ApplicationController
     solr_query[:rows] = 5
     solr_query[:start] = 0
     
-    solr_response = InfoController.get_solr_response(solr_query)
+    solr_response = Solr::Connection.find solr_query
     
     if (solr_response["response"] && solr_response["response"]["numFound"])
       @database_size = solr_response["response"]["numFound"]

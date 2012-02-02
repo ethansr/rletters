@@ -5,7 +5,7 @@ describe Serializers::RIS do
   
   context "when serializing a single document" do
     before(:each) do
-      SolrExamples.stub(:precise_one_doc)
+      Examples.stub(:precise_one_doc)
       @doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
       @str = @doc.to_ris
     end
@@ -29,7 +29,7 @@ describe Serializers::RIS do
   
   context "when serializing an array of documents" do
     before(:each) do
-      SolrExamples.stub(:precise_one_doc)
+      Examples.stub(:precise_one_doc)
       doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
       @docs = [doc, doc]
       @str = @docs.to_ris

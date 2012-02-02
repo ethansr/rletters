@@ -28,7 +28,7 @@ module Jobs
     # @api private
     # @return [undefined]
     # @example Check that we have a good Solr response
-    #   solr_response = SolrHandlers.get_solr_response(...)
+    #   solr_response = Solr::Connection.find ...
     #   check_solr_response solr_response
     #   # Will have thrown if the response is not valid
     def check_solr_response(solr_response)
@@ -76,7 +76,7 @@ module Jobs
       # up and delete any and all fledgling dataset parts
       begin
         # Get the first Solr response
-        solr_response = CreateDataset.get_solr_response(solr_query)
+        solr_response = Solr::Connection.find solr_query
         check_solr_response solr_response
         
         # Get our parameters
@@ -108,7 +108,7 @@ module Jobs
           docs_to_fetch = docs_to_fetch - docs_fetched
           if docs_to_fetch > 0
             solr_query[:start] = solr_query[:start] + docs_fetched
-            solr_response = CreateDataset.get_solr_response(solr_query)
+            solr_response = Solr::Connection.find solr_query
             check_solr_response solr_response
           end
         end

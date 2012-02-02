@@ -129,19 +129,19 @@ class Document
   # @param [Hash] options subset of the options usually passed to
   #   +ActiveRecord::find+
   #
-  # @option params [String] q a Solr query string, typically of the format
+  # @option params [String] :q a Solr query string, typically of the format
   #   "field:val field:val ..."
-  # @option params [String] qt the Solr query type.  In the default Solr
+  # @option params [String] :qt the Solr query type.  In the default Solr
   #   configuration provided with RLetters, valid values here are +standard+
   #   (for stemmed, Google-like searching), +precise+ (full Solr query syntax,
   #   returning bibliographic data only), and +fulltext (full Solr query syntax,
   #   returning both bibliographic data and full document text).
-  # @option params [Integer] start alternate way to set +:offset+ in +options+
-  # @option params [Integer] rows alternate way to set +:limit+ in +options+
+  # @option params [Integer] :start alternate way to set +:offset+ in +options+
+  # @option params [Integer] :rows alternate way to set +:limit+ in +options+
   #
-  # @option options [Integer] offset offset within the result set at which to
+  # @option options [Integer] :offset offset within the result set at which to
   #   begin returning documents
-  # @option options [Integer] limit maximum number of results to return
+  # @option options [Integer] :limit maximum number of results to return
   #
   # @return [Array<Document>] set of documents matching query.  An empty 
   #   array will be returned if no documents match.
@@ -158,18 +158,15 @@ class Document
     params[:rows] = options[:limit] if options[:limit]
 
     # Do the Solr query
-    solr_response = get_solr_response(params)
+    solr_response = Solr::Connection.find params
 
     # Set the num_results count (before possibly bailing!)
     @@num_results = 0
-    if solr_response["response"] && solr_response["response"]["numFound"]
-      @@num_results = Integer(solr_response["response"]["numFound"])
-    end
+    @@num_results = solr_response.total if solr_response.ok?
 
-    raise ActiveRecord::StatementInvalid unless solr_response["response"]
-    raise ActiveRecord::StatementInvalid unless solr_response["response"]["numFound"]
-    return [] if solr_response["response"]["numFound"] == 0
-    raise ActiveRecord::StatementInvalid unless solr_response["response"]["docs"]
+    raise ActiveRecord::StatementInvalid unless solr_response.ok?
+    return [] if solr_response.total == 0
+    raise ActiveRecord::StatementInvalid unless solr_response.docs && solr_response.docs.count
     
     # Grab all of the document-attributes that Solr returned, forcing
     # everything into UTF-8 encoding, which is how all Solr's data
@@ -200,8 +197,8 @@ class Document
 
     # See if the facets are available, and set the class variable if so
     @@facets = nil
-    if solr_response["facet_counts"]
-      @@facets = parse_facet_counts(solr_response["facet_counts"])
+    if solr_response.facets || solr_response.facet_queries
+      @@facets = Solr::Facets.new(solr_response.facets, solr_response.facet_queries)
     end
 
     # Initialize all the documents and get out of here

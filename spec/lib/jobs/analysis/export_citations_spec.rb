@@ -46,7 +46,7 @@ describe Jobs::Analysis::ExportCitations do
   context "when the format is a string" do
     it "works anyway" do
       expect {
-        SolrExamples.stub :precise_one_doc
+        Examples.stub :precise_one_doc
         @dataset = users(:alice).datasets.build({ :name => 'Test' })
         @dataset.entries.build({ :shasum => '00972c5123877961056b21aea4177d0dc69c7318' })
         @dataset.save.should be_true
@@ -59,7 +59,7 @@ describe Jobs::Analysis::ExportCitations do
   
   context "when all parameters are valid" do
     before(:each) do
-      SolrExamples.stub :precise_one_doc
+      Examples.stub :precise_one_doc
       @dataset = users(:alice).datasets.build({ :name => 'Test' })
       @dataset.entries.build({ :shasum => '00972c5123877961056b21aea4177d0dc69c7318' })
       @dataset.save.should be_true

@@ -47,17 +47,17 @@ describe Document do
   end
   
   def precise_one_doc
-    SolrExamples.stub(:precise_one_doc)
+    Examples.stub(:precise_one_doc)
     @doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
   end
   
   def fulltext_one_doc
-    SolrExamples.stub(:fulltext_one_doc)
+    Examples.stub(:fulltext_one_doc)
     @doc = Document.find_with_fulltext('00972c5123877961056b21aea4177d0dc69c7318')
   end
   
   def precise_all_docs
-    SolrExamples.stub(:precise_all_docs)
+    Examples.stub(:precise_all_docs)
     @docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
   end
   
@@ -74,7 +74,7 @@ describe Document do
     
     context "when Solr fails" do
       before(:each) do
-        SolrExamples.stub(:error)
+        Examples.stub(:error)
       end
       
       it "raises an exception" do
@@ -84,7 +84,7 @@ describe Document do
     
     context "when no documents are returned" do
       before(:each) do
-        SolrExamples.stub(:standard_empty_search)
+        Examples.stub(:standard_empty_search)
       end
       
       it "raises an exception" do
@@ -106,7 +106,7 @@ describe Document do
     
     context "when Solr fails" do
       before(:each) do
-        SolrExamples.stub(:error)
+        Examples.stub(:error)
       end
       
       it "raises an exception" do
@@ -116,7 +116,7 @@ describe Document do
     
     context "when no documents are returned" do
       before(:each) do
-        SolrExamples.stub(:standard_empty_search)
+        Examples.stub(:standard_empty_search)
       end
       
       it "raises an exception" do
@@ -138,7 +138,7 @@ describe Document do
     
     context "when Solr fails" do
       before(:each) do
-        SolrExamples.stub(:error)
+        Examples.stub(:error)
       end
       
       it "raises an exception" do
@@ -148,7 +148,7 @@ describe Document do
     
     context "when no documents are returned" do
       before(:each) do
-        SolrExamples.stub(:standard_empty_search)
+        Examples.stub(:standard_empty_search)
       end
       
       it "returns an empty array" do
@@ -186,7 +186,7 @@ describe Document do
       end
       
       it "doesn't load facets if there aren't any" do
-        Document.facets.should be_nil
+        Document.facets.all.should have(0).facets
       end
     end
     
@@ -196,37 +196,47 @@ describe Document do
       end
       
       it "sets the facets" do
-        Document.facets.should be
+        Document.facets.all.should have_at_least(1).facet
       end
       
       it "has the right facet hash keys" do
-        Document.facets.should include(:authors_facet)
-        Document.facets.should include(:journal_facet)
-        Document.facets.should include(:year)
+        Document.facets.for_field(:authors_facet).should have_at_least(1).facet
+        Document.facets.for_field(:journal_facet).should have_at_least(1).facet
+        Document.facets.for_field(:year).should have_at_least(1).facet
       end
       
       it "parses authors_facet correctly" do
-        Document.facets[:authors_facet].assoc('Jennifer L. Snekser')[1].should eq(1)
+        f = Document.facets.for_field(:authors_facet).detect { |f| f.value == 'Jennifer L. Snekser' }
+        f.should be
+        f.hits.should eq(1)
       end
       
       it "does not include authors_facet entries for authors not present" do
-        Document.facets[:authors_facet].assoc('W. Shatner').should_not be
+        f = Document.facets.for_field(:authors_facet).detect { |f| f.value == 'W. Shatner' }
+        f.should_not be
       end
       
       it "parses journal_facet correctly" do
-        Document.facets[:journal_facet].assoc('Ethology')[1].should eq(10)
+        f = Document.facets.for_field(:journal_facet).detect { |f| f.value == 'Ethology' }
+        f.should be
+        f.hits.should eq(10)
       end
       
       it "does not include journal_facet entries for journals not present" do
-        Document.facets[:journal_facet].assoc('Journal of Nothing').should_not be
+        f = Document.facets.for_field(:journal_facet).detect { |f| f.value == 'Journal of Nothing' }
+        f.should_not be
       end
       
       it "parses year facet queries correctly" do
-        Document.facets[:year].assoc('2000–2009')[1].should eq(7)
+        f = Document.facets.for_field(:year).detect { |f| f.value == '[2000 TO 2009]' }
+        f.should be
+        f.hits.should eq(7)
       end
       
       it "sets year facet queries for non-present years to zero" do
-        Document.facets[:year].assoc('1940–1949')[1].should eq(0)
+        f = Document.facets.for_field(:year).detect { |f| f.value == '[1940 TO 1949]' }
+        f.should be
+        f.hits.should eq(0)
       end
     end
   end

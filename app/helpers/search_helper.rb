@@ -92,25 +92,21 @@ module SearchHelper
 
   # Create a link to the given set of facets
   #
-  # This function converts an array of our three-tuple facet values to a link
-  # (generated via +link_to+) to the search page for that filtered query.  All
+  # This function converts an array of facets to a link (generated via
+  # +link_to+) to the search page for that filtered query.  All
   # parameters other than +:fq+ are simply duplicated (including the search
   # query itself, +:q+).
   #
-  # For the format of the three-tuple facet values, see 
-  # +SolrHelpers#fq_to_facet+.
-  #
   # @api public
   # @param [String] text body of the link
-  # @param [Array] facets array of 3-tuple facet values, possibly empty
+  # @param [Array<Solr::Facet>] facets array of facets, possibly empty
   # @return [String] link to search for the given set of facets
   # @example Get a "remove all facets" link
   #   facet_link("Remove all facets", [])
   #   # == link_to "Remove all facets", search_path
   # @example Get a link to a given set of facets
-  #   facet_link("Some facets", [[:title_facet, 'Evolution', 6], [:authors_facet, 'Johnson', 1]])
-  #   # == link_to "Some facets", search_path({ :fq => [ 'title_facet:(Evolution)', 'authors_facet:(Johnson)' ] })
-  # @see SolrHelpers#fq_to_facet
+  #   facet_link("Some facets", [...])
+  #   # == link_to "Some facets", search_path({ :fq => [ ... ] })
   def facet_link(text, facets)
     new_params = params.dup
 
@@ -120,54 +116,41 @@ module SearchHelper
     end
 
     new_params[:fq] = []
-    facets.each { |f| new_params[:fq] << facet_to_fq(f) }
+    facets.each { |f| new_params[:fq] << f.query }
     link_to text, search_path(new_params), 'data-transition' => 'none'
   end
 
-  # Get the list of facet links for one particular facet
+  # Get the list of facet links for one particular field
   #
   # This function takes the facets from the +Document+ class, checks them
   # against +active_facets+, and creates a set of list items.  It is used
   # by +facet_link_list+.
   #
   # @api public
-  # @param [Symbol] sym symbol for facet (e.g., +:authors_facet+)
+  # @param [Symbol] field field we're faceting on
   # @param [String] header content of list item header
-  # @param [Array] active_facets array of 3-tuples for all active facets
+  # @param [Array<Solr::Facet>] active_facets array of active facets
   # @return [String] list items for links for the given facet
   # @example Get the links for the authors facet
   #   list_links_for_facet(:authors_facet, "Authors", [...])
   #   # "<li><a href='...'>Johnson <span class='ui-li-count'>2</a></li>..."
-  def list_links_for_facet(sym, header, active_facets)
+  def list_links_for_facet(field, header, active_facets)
     return ''.html_safe unless Document.facets
-
-    # Get the hash of facet counts from the Document model
-    array = []
-
-    Document.facets[sym].each do |f|
-      k = f[0]
-      v = f[1]
-      
-      # Skip this if it's present in the active facets, or empty
-      next unless active_facets.find_index([sym, k, 0]).nil?
-      next if v == 0
-
-      # Add to the array
-      array << [sym, k, v]
-      break if array.count == 5
-    end
+    
+    # Get the facets for this field
+    facets = Document.facets.sorted_for_field(field).reject { |f| active_facets.include? f }.take(5)
 
     # Bail if there's no facets
     ret = ''.html_safe
-    return ret if array.empty?
+    return ret if facets.empty?
 
     # Build the return value
     ret << content_tag(:li, header, 'data-role' => 'list-divider')
-    array.each do |a|
+    facets.each do |f|
       ret << content_tag(:li) do
         # Link to whatever the current facets are, plus the new one
-        link = facet_link a[1], active_facets + [a]
-        count = content_tag :span, a[2], :class => 'ui-li-count'
+        link = facet_link f.label, active_facets + [f]
+        count = content_tag :span, f.hits.to_s, :class => 'ui-li-count'
         link + count
       end
     end
@@ -187,32 +170,29 @@ module SearchHelper
   #   facet_link_list
   #   # "<li>Active Filters</li>...<li>Authors</li><li><a href='...'>Johnson</a></li>..."
   def facet_link_list
-    # Convert the active facet parameters to 3-tuples
+    # Convert the active facet queries to facets
     active_facets = []
-    params[:fq].each { |fq| active_facets << fq_to_facet(fq) } if params[:fq]
+    if params[:fq]
+      params[:fq].each do |query|
+        active_facets << Document.facets.for_query(query)
+      end
+    end
 
     # Start with the active facets
     ret = ''.html_safe
     unless active_facets.empty?
-      facet_map = { :authors_facet => I18n.t('search.index.authors_facet_short'),
-        :journal_facet => I18n.t('search.index.journal_facet_short'),
-        :year => I18n.t('search.index.year_facet_short') }
-
       ret << content_tag(:li, I18n.t('search.index.active_filters'), 'data-role' => 'list-divider')
       ret << content_tag(:li, 'data-icon' => 'delete') do
         facet_link I18n.t('search.index.remove_all'), []
       end
-      active_facets.each do |a|
+      active_facets.each do |f|
         ret << content_tag(:li, 'data-icon' => 'delete') do
-          new_facets = active_facets.dup
-          new_facets.delete(a)
-
-          facet_link "#{facet_map[a[0]]}: #{a[1]}", new_facets
+          facet_link "#{f.field_label}: #{f.label}", active_facets.reject { |x| x == f }
         end
       end
     end
 
-    # Run the facet-getting code for all three facet types
+    # Run the facet-list code for all three facet fields
     ret << list_links_for_facet(:authors_facet, I18n.t('search.index.authors_facet'), active_facets)
     ret << list_links_for_facet(:journal_facet, I18n.t('search.index.journal_facet'), active_facets)
     ret << list_links_for_facet(:year, I18n.t('search.index.year_facet'), active_facets)
