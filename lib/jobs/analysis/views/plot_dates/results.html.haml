@@ -1,5 +1,5 @@
 - dates = YAML.load_file(task.result_file.filename)
-- x_coords = dates.map { |d| Integer(d[0]) }
+- x_coords = dates.map { |d| d[0] }
 - y_coords = dates.map { |d| d[1] }
 
 %div.graph_container#date_plot
@@ -25,5 +25,5 @@
   %tbody
     - dates.each do |year|
       %tr
-        %td= year[0]
+        %td= year[0].to_s
         %td= year[1].to_s

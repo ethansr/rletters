@@ -32,22 +32,20 @@ module Jobs
         # Write out the dates to an array
         dates = []
         dataset.entries.find_each do |e|
+          # FIXME: Replace Document.find with something thinner that retrieves
+          # only the year?
           begin
-            # FIXME: Replace Document.find with something thinner that retrieves
-            # only the year?
             doc = Document.find e.shasum
-            next unless doc.year
-            
-            year_array = dates.assoc(doc.year)
-            if year_array
-              year_array[1] = year_array[1] + 1
-            else
-              dates << [ doc.year, 1 ]
-            end
-          rescue ActiveRecord::RecordNotFound
-            # FIXME: Would like to have a way to report a warning if 
-            # this isn't found!  Should be rare, but still.
+            year = Integer(doc.year)
+          rescue
             next
+          end
+            
+          year_array = dates.assoc(year)
+          if year_array
+            year_array[1] = year_array[1] + 1
+          else
+            dates << [ year, 1 ]
           end
         end
         
