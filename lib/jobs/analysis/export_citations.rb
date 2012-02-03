@@ -22,6 +22,9 @@ module Jobs
       #     :dataset_id => dataset.to_param,
       #     :format => :json)
       def perform
+        # Make a new analysis task (early, to catch errors)
+        @task = dataset.analysis_tasks.create(:name => "Export", :job_type => 'ExportCitations')
+        
         # Fetch the user based on ID
         user = User.find(user_id)
         raise ArgumentError, 'User ID is not valid' unless user
@@ -34,13 +37,14 @@ module Jobs
         raise ArgumentError, 'Format is not specified' if format.nil?
         raise ArgumentError, 'Format is not valid' unless Document.serializers.has_key? format.to_sym
         serializer = Document.serializers[format.to_sym]
-      
-        # Make a new analysis task
-        task = dataset.analysis_tasks.create(:name => "Export as #{serializer[:name]}", :job_type => 'ExportCitations')
+        
+        # Update the task name
+        @task.name = "Export as #{serializer[:name]}"
+        @task.save
       
         # Make a zip file for the output
         # Pack all those files into a ZIP
-        task.result_file = Download.create_file('export.zip') do |file|
+        @task.result_file = Download.create_file('export.zip') do |file|
           begin
             Zip::ZipOutputStream.open(file.path) do |zos|
               # find_each will take care of batching logic for us
@@ -63,8 +67,8 @@ module Jobs
         end
       
         # Make sure the task is saved, setting 'finished_at'
-        task.finished_at = DateTime.current
-        task.save
+        @task.finished_at = DateTime.current
+        @task.save
       end
     end
 
