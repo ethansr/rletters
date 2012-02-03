@@ -5,12 +5,15 @@
 %div.graph_container#date_plot
 :javascript
   var width = $('#date_plot').width();
-  var height;
+  if (width > 600) {
+    width = 600;
+  }
   
-  if (width > 400) {
-    height = 400
+  var height;
+  if (width > 480) {
+    height = 480;
   } else {
-    height = width
+    height = width;
   }
   
   var r = Raphael("date_plot", width, height);
