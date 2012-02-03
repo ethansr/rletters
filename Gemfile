@@ -24,7 +24,7 @@ gem 'marc'
 gem 'rdf'
 gem 'rdf-rdfxml', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'rdf-n3'
-gem 'fastercsv', :platforms => [ :ruby_18, :mingw_18 ]
+gem 'fastercsv', :platforms => [ :ruby_18, :mingw_18, :jruby ]
 
 gem 'latex-decode', '>= 0.0.11'
 gem 'bibtex-ruby', '~> 1.3', :require => 'bibtex'
