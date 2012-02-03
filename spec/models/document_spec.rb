@@ -47,17 +47,17 @@ describe Document do
   end
   
   def precise_one_doc
-    Examples.stub(:precise_one_doc)
+    Examples.stub_with(/localhost/, :precise_one_doc)
     @doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
   end
   
   def fulltext_one_doc
-    Examples.stub(:fulltext_one_doc)
+    Examples.stub_with(/localhost/, :fulltext_one_doc)
     @doc = Document.find_with_fulltext('00972c5123877961056b21aea4177d0dc69c7318')
   end
   
   def precise_all_docs
-    Examples.stub(:precise_all_docs)
+    Examples.stub_with(/localhost/, :precise_all_docs)
     @docs = Document.find_all_by_solr_query({ :q => "*:*", :qt => "precise" })
   end
   
@@ -74,7 +74,7 @@ describe Document do
     
     context "when Solr fails" do
       before(:each) do
-        Examples.stub(:error)
+        Examples.stub_with(/localhost/, :error)
       end
       
       it "raises an exception" do
@@ -84,7 +84,7 @@ describe Document do
     
     context "when no documents are returned" do
       before(:each) do
-        Examples.stub(:standard_empty_search)
+        Examples.stub_with(/localhost/, :standard_empty_search)
       end
       
       it "raises an exception" do
@@ -106,7 +106,7 @@ describe Document do
     
     context "when Solr fails" do
       before(:each) do
-        Examples.stub(:error)
+        Examples.stub_with(/localhost/, :error)
       end
       
       it "raises an exception" do
@@ -116,7 +116,7 @@ describe Document do
     
     context "when no documents are returned" do
       before(:each) do
-        Examples.stub(:standard_empty_search)
+        Examples.stub_with(/localhost/, :standard_empty_search)
       end
       
       it "raises an exception" do
@@ -138,7 +138,7 @@ describe Document do
     
     context "when Solr fails" do
       before(:each) do
-        Examples.stub(:error)
+        Examples.stub_with(/localhost/, :error)
       end
       
       it "raises an exception" do
@@ -148,7 +148,7 @@ describe Document do
     
     context "when no documents are returned" do
       before(:each) do
-        Examples.stub(:standard_empty_search)
+        Examples.stub_with(/localhost/, :standard_empty_search)
       end
       
       it "returns an empty array" do

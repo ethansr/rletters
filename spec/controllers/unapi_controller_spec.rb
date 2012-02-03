@@ -9,7 +9,7 @@ describe UnapiController do
   
   def get_unapi(with_id = false, format = nil)
     if with_id
-      Examples.stub :precise_one_doc
+      Examples.stub_with(/localhost/, :precise_one_doc)
       get :index, { :id => '00972c5123877961056b21aea4177d0dc69c7318', :format => format }
     else
       get :index

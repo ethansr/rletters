@@ -130,7 +130,7 @@ describe LibrariesController do
   describe '#query' do
     context 'when no libraries are returned' do
       it 'assigns no libraries' do
-        stub_request(:get, /worldcatlibraries.org\/registry\/lookup.*/).to_return(Examples.load(:worldcat_response_empty))
+        Examples.stub_with(/worldcatlibraries.org\/registry\/lookup.*/, :worldcat_response_empty)
         get :query
         assigns(:libraries).should have(0).items
       end
@@ -138,7 +138,7 @@ describe LibrariesController do
     
     context 'when libraries are returned' do
       it 'assigns the libraries' do
-        stub_request(:get, /worldcatlibraries.org\/registry\/lookup.*/).to_return(Examples.load(:worldcat_response_nd))
+        Examples.stub_with(/worldcatlibraries.org\/registry\/lookup.*/, :worldcat_response_nd)
         get :query
         assigns(:libraries).should have(1).item
       end
@@ -146,7 +146,7 @@ describe LibrariesController do
     
     context 'when WorldCat times out' do
       it 'assigns no libraries' do
-        stub_request(:get, /worldcatlibraries.org\/registry\/lookup.*/).to_timeout
+        stub_request(:any, /worldcatlibraries.org\/registry\/lookup.*/).to_timeout
         get :query
         assigns(:libraries).should have(0).items
       end

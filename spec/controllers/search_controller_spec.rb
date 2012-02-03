@@ -8,7 +8,7 @@ describe SearchController do
   describe '#index' do
     context 'with empty search results' do
       before(:each) do
-        Examples.stub :standard_empty_search
+        Examples.stub_with(/localhost/, :standard_empty_search)
       end
 
       it 'loads successfully' do
@@ -19,7 +19,7 @@ describe SearchController do
 
     context 'with precise search results' do
       before(:each) do
-        Examples.stub :precise_all_docs
+        Examples.stub_with(/localhost/, :precise_all_docs)
       end
 
       it 'assigns the documents variable' do
@@ -50,7 +50,7 @@ describe SearchController do
 
     context 'with faceted search results' do
       before(:each) do
-        Examples.stub :precise_facet_author_and_journal
+        Examples.stub_with(/localhost/, :precise_facet_author_and_journal)
       end
 
       it 'assigns solr_fq' do
@@ -76,7 +76,7 @@ describe SearchController do
   
   describe '#show' do
     before(:each) do
-      Examples.stub :precise_one_doc
+      Examples.stub_with(/localhost/, :precise_one_doc)
     end
     
     context 'when displaying as HTML' do
@@ -155,8 +155,8 @@ describe SearchController do
       end
       
       before(:each) do
-        stub_request(:get, /api\.mendeley\.com\/oapi\/documents\/search\/title.*/).to_return(Examples.load(:mendeley_response_p1d))
-        Examples.stub :precise_one_doc
+        Examples.stub_with(/api\.mendeley\.com\/oapi\/documents\/search\/title.*/, :mendeley_response_p1d)
+        Examples.stub_with(/localhost/, :precise_one_doc)
       end
             
       it 'redirects to Mendeley' do
@@ -175,8 +175,8 @@ describe SearchController do
       end
       
       before(:each) do
-        stub_request(:get, /api\.mendeley\.com\/oapi\/documents\/search\/title.*/).to_timeout
-        Examples.stub :precise_one_doc
+        stub_request(:any, /api\.mendeley\.com\/oapi\/documents\/search\/title.*/).to_timeout
+        Examples.stub_with(/localhost/, :precise_one_doc)
       end
       
       it 'raises an exception' do
@@ -190,8 +190,8 @@ describe SearchController do
   describe '#to_citeulike' do
     context 'when request succeeds' do
       before(:each) do
-        stub_request(:get, /www\.citeulike\.org\/json\/search\/all\?.*/).to_return(Examples.load(:citeulike_response_p1d))
-        Examples.stub :precise_one_doc
+        Examples.stub_with(/www\.citeulike\.org\/json\/search\/all\?.*/, :citeulike_response_p1d)
+        Examples.stub_with(/localhost/, :precise_one_doc)
       end
       
       it 'redirects to citeulike' do
@@ -202,8 +202,8 @@ describe SearchController do
     
     context 'when request times out' do
       before(:each) do
-        stub_request(:get, /www\.citeulike\.org\/json\/search\/all\?.*/).to_timeout
-        Examples.stub :precise_one_doc
+        stub_request(:any, /www\.citeulike\.org\/json\/search\/all\?.*/).to_timeout
+        Examples.stub_with(/localhost/, :precise_one_doc)
       end
       
       it 'raises an exception' do

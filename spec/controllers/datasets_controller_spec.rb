@@ -50,7 +50,7 @@ describe DatasetsController do
   
   describe '#create' do
     it 'creates a delayed job' do
-      Examples.stub :dataset_precise_all
+      Examples.stub_with(/localhost/, :dataset_precise_all)
 
       expected_job = Jobs::CreateDataset.new(
         :user_id => users(:john).to_param,
@@ -215,7 +215,7 @@ describe DatasetsController do
   describe '#task_download' do
     before(:each) do
       # Execute an export job, which should create an AnalysisTask
-      Examples.stub :precise_one_doc
+      Examples.stub_with(/localhost/, :precise_one_doc)
       Jobs::Analysis::ExportCitations.new(
         :user_id => users(:john).to_param,
         :dataset_id => datasets(:one).to_param,

@@ -16,7 +16,7 @@ describe "search/show.html" do
   before(:each) do
     params[:id] = '00972c5123877961056b21aea4177d0dc69c7318'
     
-    Examples.stub :precise_one_doc
+    Examples.stub_with(/localhost/, :precise_one_doc)
     assign(:document, Document.find(params[:id]))
   end
   

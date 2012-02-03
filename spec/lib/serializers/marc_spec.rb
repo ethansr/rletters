@@ -5,7 +5,7 @@ describe Serializers::MARC do
   
   context "when serializing a single document" do
     before(:each) do
-      Examples.stub(:precise_one_doc)
+      Examples.stub_with(/localhost/, :precise_one_doc)
       @doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
       @record = @doc.to_marc
     end
@@ -87,7 +87,7 @@ describe Serializers::MARC do
   
   context "when serializing a document with no year" do
     before(:each) do
-      Examples.stub(:precise_one_doc)
+      Examples.stub_with(/localhost/, :precise_one_doc)
       @doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
       @doc.instance_variable_set(:@year, nil)
 
@@ -101,7 +101,7 @@ describe Serializers::MARC do
   
   context "when serializing an array of documents" do
     before(:each) do
-      Examples.stub(:precise_one_doc)
+      Examples.stub_with(/localhost/, :precise_one_doc)
       doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')    
       @docs = [doc, doc]
     end
