@@ -1,6 +1,17 @@
 - dates = YAML.load_file(task.result_file.filename)
 - x_coords = dates.map { |d| d[0] }
 - y_coords = dates.map { |d| d[1] }
+- y_sorted = y_coords.sort
+- x_step = ((x_coords[-1] - x_coords[0]) / 10.0).floor
+- if x_step < 1
+  - x_step = 1.0
+- else
+  - x_step /= Float(x_coords[-1] - x_coords[0])
+- y_step = ((y_sorted[-1] - y_sorted[0]) / 10.0).floor
+- if y_step < 1
+  - y_step = 1.0
+- else
+  - y_step /= Float(y_sorted[-1] - y_sorted[0])
 
 %h1== #{dataset.name}
 %h2== Documents, plotted by year
@@ -23,9 +34,9 @@
       } else {
         height = width;
       }
-  
+      
       var r = Raphael("date_plot", width, height);
-      r.linechart(20, 20, width - 40, height - 40, #{x_coords.to_s}, #{y_coords.to_s}, { axis: "0 0 1 1" });
+      r.linechart(20, 20, width - 40, height - 40, #{x_coords.to_s}, #{y_coords.to_s}, { axis: "0 0 1 1", gutter: 20, axisxstep: (width - 80) * #{x_step.to_s}, axisystep: (height - 80) * #{y_step.to_s} });
   
   .verticalpad
   
