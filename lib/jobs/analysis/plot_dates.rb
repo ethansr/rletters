@@ -52,7 +52,7 @@ module Jobs
         end
         
         # Sort by date
-        dates.sort_by! { |y| y[0] }
+        dates = dates.sort_by { |y| y[0] }
         
         # Serialize out to YAML
         task.result_file = Download.create_file('dates.yml') do |file|
