@@ -176,6 +176,7 @@ module SearchHelper
       params[:fq].each do |query|
         active_facets << Document.facets.for_query(query)
       end
+      active_facets.compact!
     end
 
     # Start with the active facets
