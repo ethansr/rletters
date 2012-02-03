@@ -1,6 +1,4 @@
 - dates = YAML.load_file(task.result_file.filename)
-- x_coords = dates.map { |d| d[0] }
-- y_coords = dates.map { |d| d[1] }
 
 %h1== #{dataset.name}
 %h2== Documents, plotted by year
@@ -12,6 +10,14 @@
 
   - content_for :page_javascript do
     :javascript
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+      
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'Year');
+      data.addColumn('number', 'Documents');
+      data.addRows(#{dates.to_s});
+      
       var width = $(window).width();
       if (width > 750) {
         width = 750;
@@ -23,9 +29,11 @@
       } else {
         height = width;
       }
+
+      var options = { 'width':width, 'height':height }
       
-      var r = Raphael("date_plot", width, height);
-      r.linechart(20, 20, width - 40, height - 40, #{x_coords.to_s}, #{y_coords.to_s}, { axis: "0 0 1 1", gutter: 20, axisxstep: 10, axisystep: 10 });
+      var chart = new google.visualization.LineChart($('#date_plot'));
+      chart.draw(data, options);
   
   .verticalpad
   
