@@ -35,7 +35,7 @@ describe Jobs::Analysis::PlotDates do
     
     it 'fills in the right values' do
       arr = YAML.load_file(@dataset.analysis_tasks[0].result_file.filename)
-      arr[0][0].should eq('2008')
+      arr[0][0].should eq(2008)
       arr[0][1].should eq(1)
     end
   end
