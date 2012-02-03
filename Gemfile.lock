@@ -65,6 +65,7 @@ GEM
     erubis (2.7.0)
     execjs (1.2.13)
       multi_json (~> 1.0)
+    fastercsv (1.5.4)
     ffi (1.0.11)
     ffi (1.0.11-java)
     growl (1.0.3)
@@ -235,6 +236,7 @@ DEPENDENCIES
   delayed_job_active_record
   email_validator
   execjs
+  fastercsv
   growl
   guard-rspec
   guard-spork

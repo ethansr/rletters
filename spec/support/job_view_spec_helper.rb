@@ -1,8 +1,10 @@
 # -*- encoding : utf-8 -*-
 
 module JobViewSpecHelper
-  def init_job_view_spec(job, view)
+  def init_job_view_spec(job, view, task = nil)
     @dataset = mock_model(Dataset)
+    @task = task
+    @task ||= mock_model(AnalysisTask)
     
     controller.controller_path = 'datasets'
     controller.request.path_parameters[:controller] = 'datasets'
@@ -14,6 +16,6 @@ module JobViewSpecHelper
   
   def render_job_view(job, view)
     render :file => "lib/jobs/analysis/views/#{job.underscore}/#{view}.html.haml",
-      :locals => { :dataset => @dataset }
+      :locals => { :dataset => @dataset, :task => @task }
   end
 end

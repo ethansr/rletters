@@ -1,0 +1,29 @@
+- dates = YAML.load_file(task.result_file.filename)
+- x_coords = dates.map { |d| Integer(d[0]) }
+- y_coords = dates.map { |d| d[1] }
+
+%div.graph_container#date_plot
+:javascript
+  var width = $('#date_plot').width();
+  var height;
+  
+  if (width > 400) {
+    height = 400
+  } else {
+    height = width
+  }
+  
+  var r = Raphael("date_plot", width, height);
+  r.linechart(width / 2, height / 2, width, height, [#{x_coords.to_s},#{y_coords.to_s}], { axis: "0 0 1 1" });
+
+%table
+  %caption Dataset by publication date
+  %thead
+    %tr
+      %th{ :scope => 'col' } Year
+      %th{ :scope => 'col' } Number of Documents
+  %tbody
+    - dates.each do |year|
+      %tr
+        %td= year[0]
+        %td= year[1].to_s
