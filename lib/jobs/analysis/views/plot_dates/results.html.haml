@@ -2,33 +2,40 @@
 - x_coords = dates.map { |d| d[0] }
 - y_coords = dates.map { |d| d[1] }
 
-%div.graph_container#date_plot &nbsp;
+%h1== #{dataset.name}
+%h2== Documents, plotted by year
 
-- content_for :page_javascript do
-  :javascript
-    var width = $(window).width();
-    if (width > 600) {
-      width = 600;
-    }
-  
-    var height;
-    if (width > 480) {
-      height = 480;
-    } else {
-      height = width;
-    }
-  
-    var r = Raphael("date_plot", width, height);
-    r.linechart(0, 0, width, height, [#{x_coords.to_s},#{y_coords.to_s}], { axis: "0 0 1 1" });
+.verticalpad
 
-%table
-  %caption Dataset by publication date
-  %thead
-    %tr
-      %th{ :scope => 'col' } Year
-      %th{ :scope => 'col' } Number of Documents
-  %tbody
-    - dates.each do |year|
+%div{ 'text-align' => 'center' }
+  %div.graph_container#date_plot &nbsp;
+
+  - content_for :page_javascript do
+    :javascript
+      var width = $(window).width();
+      if (width > 750) {
+        width = 750;
+      }
+  
+      var height;
+      if (width > 480) {
+        height = 480;
+      } else {
+        height = width;
+      }
+  
+      var r = Raphael("date_plot", width, height);
+      r.linechart(20, 20, width - 40, height - 40, #{x_coords.to_s}, #{y_coords.to_s}, { axis: "0 0 1 1" });
+  
+  .verticalpad
+  
+  %table
+    %thead
       %tr
-        %td= year[0].to_s
-        %td= year[1].to_s
+        %th{ :scope => 'col' } Year
+        %th{ :scope => 'col' } Number of Documents
+    %tbody
+      - dates.each do |year|
+        %tr
+          %td= year[0].to_s
+          %td= year[1].to_s
