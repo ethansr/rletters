@@ -6,7 +6,7 @@
 .verticalpad
 
 %div.center
-  %div.graph_container#date_plot &nbsp;
+  %div{ :id => "date_plot_#{dataset.to_param}_#{task.to_param}" } &nbsp;
 
   - content_for :page_javascript do
     :javascript
@@ -31,7 +31,7 @@
                       legend: { position: 'none' },
                       hAxis: { format: '####', }, pointSize: 3 };
       
-      var chart = new google.visualization.LineChart($('#date_plot')[0]);
+      var chart = new google.visualization.LineChart($('#date_plot_#{dataset.to_param}_#{task.to_param}')[0]);
       chart.draw(data, options);
   
   .verticalpad
