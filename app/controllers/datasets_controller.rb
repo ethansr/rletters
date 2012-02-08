@@ -125,9 +125,14 @@ class DatasetsController < ApplicationController
     task = dataset.analysis_tasks.find(params[:task_id])
     raise ActiveRecord::RecordNotFound unless task
     
+    raise ActiveRecord::RecordNotFound unless params[:view]
+    params[:format] ||= 'html'
+    
     klass = task.job_class
     
-    render :file => klass.view_path(params[:view]), :locals => { :dataset => dataset, :task => task }
+    respond_to do |format|
+      format.all { render :file => klass.view_path(params[:view], params[:format]), :locals => { :dataset => dataset, :task => task } }
+    end
   end
   
   # Delete an analysis task

@@ -15,6 +15,11 @@ describe Jobs::Analysis::Base do
       expected = Rails.root.join('lib', 'jobs', 'analysis', 'views', 'mock_job', 'test.html.haml')
       Jobs::Analysis::MockJob.view_path('test').should eq(expected)
     end
+    
+    it "works with formats" do
+      expected = Rails.root.join('lib', 'jobs', 'analysis', 'views', 'mock_job', 'test.csv.haml')
+      Jobs::Analysis::MockJob.view_path('test', 'csv').should eq(expected)
+    end
   end
   
 end

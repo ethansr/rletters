@@ -101,11 +101,11 @@ module Jobs
       # @example Get the path to the ExportCitations 'start' view
       #   Jobs::Analysis::ExportCitations.view_path 'start'
       #   # => 'RAILS_ROOT/lib/jobs/analysis/views/export_citations/start.html.haml'
-      def self.view_path(view)
+      def self.view_path(view, format = 'html')
         # This will return something like 'jobs/analysis/export_citations', so we
         # need to add '/views' in there
         class_path = self.name.underscore.sub('/analysis/', '/analysis/views/')
-        Rails.root.join('lib', class_path, "#{view}.html.haml")
+        Rails.root.join('lib', class_path, "#{view}.#{format}.haml")
       end
       
       # Set the analysis task fail bit on error
