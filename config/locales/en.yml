@@ -77,6 +77,7 @@ en:
         download:
           filename:
             blank: "Download must have a filename specified (internal error)"
+            invalid: "Download filename contains invalid characters (internal error)"
         library:
           name:
             blank: "You must specify a name for this library entry"

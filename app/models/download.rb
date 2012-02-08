@@ -10,52 +10,17 @@
 # so that it is impossible to get the web server to serve the download files
 # without passing through the RLetters's authentication. This folder is
 # expected to be symlinked over from +shared+ during a Capistrano deployment.
-#
-# @attr [String] filename The filename of this download
 class Download < ActiveRecord::Base
   validates :filename, :presence => true
+  # :filename_before_type_cast gives you the value of the filename attribute
+  # without passing it through our custom accessor, which turns the relative
+  # database path into an absolute filesystem path.
+  validates :filename_before_type_cast, :format => { :with => /\A[A-Za-z0-9.\-]+\z/ }
   
   belongs_to :analysis_task
   attr_accessible :filename
   
   before_destroy :delete_file
-  
-  # Get the path to a new download file
-  #
-  # This function will fetch a path for the file +basename+ in the downloads
-  # folder (do not put a path of any sort on +basename+).  A unique 
-  # timestamp will be appended to the filename.
-  #
-  # @api public
-  # @param basename [String] the base name of the file to create
-  # @return [String] the name of the file
-  #
-  # @example Get a download file name, then make a zip
-  #   filename = Download.file_name('test.zip')
-  #   Zip::ZipOutputStream.open(filename) do |zos| ... end
-  def self.file_name(basename)
-    dir = Rails.root.join('downloads')
-    
-    ext = File.extname(basename)
-    base = File.basename(basename, ext)
-    
-    # Add a timestamp to the basename
-    timestamp = Time.now.utc.strftime('-%Y%m%d%H%M%S')
-    filename = File.join(dir, base + timestamp + ext)
-    
-    i = 0
-    while File.exists? filename
-      i = i + 1
-      filename = File.join(dir, base + timestamp + i.to_s + ext)
-      
-      # Runaway loop counter (DoS?)
-      if i == 100
-        raise StandardError, "Cannot find a filename for download"
-      end
-    end
-    
-    filename
-  end
   
   # Creates a download object and file, then passes the file to the block
   #
@@ -80,16 +45,36 @@ class Download < ActiveRecord::Base
   #     f.close
   #   end
   def self.create_file(basename)
-    filename = Download.file_name basename
+    fn = unique_filename basename
         
     # Yield out to the block
-    f = File.new(filename, "w")
+    f = File.new(filename_to_path(fn), "w")
     yield f
     
     f.close unless f.closed?
     
     # Build a Download object and return it
-    Download.create({ :filename => filename })
+    Download.create({ :filename => fn })
+  end
+  
+  # Get the filename for this download
+  #
+  # We save filenames in the database as relative paths, since the absolute
+  # paths may change over time across Capistrano deployments.  This function
+  # wraps the query of the filename variable and converts it to an absolute
+  # path.
+  #
+  # @api public
+  # @return [String] this download's filename
+  # @example Open this file for reading
+  #   dl = Download.find(...)
+  #   File.open(dl.filename) do |f|
+  #     ...
+  #     f.close
+  #   end
+  def filename
+    return nil unless filename?
+    Download.filename_to_path(read_attribute(:filename))
   end
   
   # Send this download to the user
@@ -115,6 +100,47 @@ class Download < ActiveRecord::Base
   end
   
   private
+  
+  # Get the path to a new download file
+  #
+  # This function will fetch a path for the file +basename+ in the downloads
+  # folder (do not put a path of any sort on +basename+).  A unique 
+  # timestamp will be appended to the filename.
+  #
+  # @api private
+  # @param basename [String] the base name of the file to create
+  # @return [String] the name of the file
+  def self.unique_filename(basename)
+    ext = File.extname(basename)
+    base = File.basename(basename, ext)
+    
+    # Add a timestamp to the basename
+    timestamp = Time.now.utc.strftime('-%Y%m%d%H%M%S')
+    ret = base + timestamp + ext
+    fn = filename_to_path(ret)
+    
+    i = 0
+    while File.exists? fn
+      i = i + 1
+      ret = base + timestamp + i.to_s + ext
+      fn = filename_to_path(ret)
+      
+      # Runaway loop counter (DoS?)
+      if i == 100
+        raise StandardError, "Cannot find a filename for download"
+      end
+    end
+    
+    ret
+  end
+  
+  # Convert a filename to an absolute path
+  # @api private
+  # @param [String] fn relative filename
+  # @return [String] absolute file path
+  def self.filename_to_path(fn)
+    Rails.root.join('downloads', fn)
+  end
   
   # Delete the file when the database record is destroyed
   # @api private

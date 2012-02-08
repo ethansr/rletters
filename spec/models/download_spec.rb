@@ -14,6 +14,16 @@ describe Download do
       end
     end
     
+    context "when filename with path specified" do
+      before(:each) do
+        @dl = Download.new({ :filename => '../../../hax/lol.wut' })
+      end
+      
+      it "isn't valid" do
+        @dl.should_not be_valid
+      end
+    end
+    
     context 'when filename specified' do
       before(:each) do
         @dl = Download.new({ :filename => 'wut' })
