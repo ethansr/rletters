@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "libraries/new.html" do
+describe "libraries/new" do
   
   fixtures :users
   

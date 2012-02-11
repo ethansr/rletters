@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "datasets/show.html" do
+describe "datasets/show" do
   
   fixtures :users, :datasets, :dataset_entries
   

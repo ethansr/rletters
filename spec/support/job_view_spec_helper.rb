@@ -15,7 +15,7 @@ module JobViewSpecHelper
   end
   
   def render_job_view(job, view, format = 'html')
-    render :file => "lib/jobs/analysis/views/#{job.underscore}/#{view}.#{format}.haml",
-      :locals => { :dataset => @dataset, :task => @task }
+    render :file => "lib/jobs/analysis/views/#{job.underscore}/#{view}",
+      :formats => [ format.to_s ], :locals => { :dataset => @dataset, :task => @task }
   end
 end

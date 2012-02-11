@@ -92,7 +92,7 @@ module Jobs
       # Get the path to a job-view template for this job
       #
       # We let analysis jobs ship their own job view templates in
-      # +lib/jobs/analysis/views/(job)/*.html.haml+.  This function takes 
+      # +lib/jobs/analysis/views/(job)/+.  This function takes 
       # a view name and returns its template's full disk path.
       #
       # @api public
@@ -100,12 +100,12 @@ module Jobs
       # @return [String] the path to the template
       # @example Get the path to the ExportCitations 'start' view
       #   Jobs::Analysis::ExportCitations.view_path 'start'
-      #   # => 'RAILS_ROOT/lib/jobs/analysis/views/export_citations/start.html.haml'
-      def self.view_path(view, format = 'html')
+      #   # => 'RAILS_ROOT/lib/jobs/analysis/views/export_citations/start'
+      def self.view_path(view)
         # This will return something like 'jobs/analysis/export_citations', so we
         # need to add '/views' in there
         class_path = self.name.underscore.sub('/analysis/', '/analysis/views/')
-        Rails.root.join('lib', class_path, "#{view}.#{format}.haml")
+        Rails.root.join('lib', class_path, "#{view}")
       end
       
       # Set the analysis task fail bit on error

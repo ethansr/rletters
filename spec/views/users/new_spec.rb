@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "users/new.html" do
+describe "users/new" do
   
   context 'when new user is invalid' do
     before(:each) do

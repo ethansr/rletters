@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "libraries/edit.html" do
+describe "libraries/edit" do
   
   fixtures :users, :libraries
   

@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "datasets/index.html" do
+describe "datasets/index" do
   
   fixtures :datasets, :users, :dataset_entries
   

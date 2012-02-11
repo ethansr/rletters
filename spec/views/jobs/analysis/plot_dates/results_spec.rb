@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "plot_dates/results.html" do
+describe "plot_dates/results" do
   
   include JobViewSpecHelper
   

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 SimpleCov.command_name 'spec:views' if ENV["COVERAGE"] && RUBY_VERSION >= "1.9.0"
 
-describe "search/index.html" do
+describe "search/index" do
   
   fixtures :users
   

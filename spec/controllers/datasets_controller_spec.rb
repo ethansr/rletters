@@ -214,24 +214,6 @@ describe DatasetsController do
         }.to_not raise_error
       end
     end
-    
-    context 'when a format is passed' do
-      before(:each) do
-        @task = datasets(:one).analysis_tasks.create(:name => 'test', :job_type => 'PlotDates')
-      end
-      
-      after(:each) do
-        @task.destroy
-      end
-      
-      it "renders the right view" do
-        Jobs::Analysis::PlotDates.should_receive(:view_path).with('test', 'csv')
-        expect {
-          # This will raise an error, because we don't have that view available
-          get :task_view, :id => datasets(:one).to_param, :task_id => @task.to_param, :view => 'test', :format => 'csv'
-        }.to raise_error
-      end
-    end
   end
   
   describe '#task_download' do

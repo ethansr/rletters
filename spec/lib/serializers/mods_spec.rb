@@ -44,8 +44,8 @@ describe Serializers::MODS do
       Examples.stub_with(/localhost\/solr\/.*/, :precise_one_doc)
       doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
-      # Create a deep copy with a different unique ID
-      doc2 = YAML.load(doc.to_yaml)
+      # Create a copy with a different unique ID
+      doc2 = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
       doc2.instance_variable_set(:@shasum, 'wut')
 
       @docs = [doc, doc2]

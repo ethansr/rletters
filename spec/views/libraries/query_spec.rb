@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "libraries/query.html" do
+describe "libraries/query" do
   
   fixtures :users
   

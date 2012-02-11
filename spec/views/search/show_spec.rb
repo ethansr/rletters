@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "search/show.html" do
+describe "search/show" do
   
   fixtures :users, :libraries
   

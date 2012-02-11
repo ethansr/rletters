@@ -30,10 +30,12 @@ class UnapiController < ApplicationController
           render :file => Rails.root.join('public', '404.html'), :layout => false, :status => 406
         end
       else
-        render :template => 'unapi/formats.xml.builder', :layout => false, :status => 300
+        render :template => 'unapi/formats', :formats => [ :xml ], 
+          :handlers => [ :builder ], :layout => false, :status => 300
       end
     else
-      render :template => 'unapi/formats.xml.builder', :layout => false
+      render :template => 'unapi/formats', :formats => [ :xml ], 
+        :handlers => [ :builder ], :layout => false
     end
   end
 end

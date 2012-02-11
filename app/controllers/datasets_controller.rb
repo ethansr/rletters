@@ -131,7 +131,9 @@ class DatasetsController < ApplicationController
     klass = task.job_class
     
     respond_to do |format|
-      format.all { render :file => klass.view_path(params[:view], params[:format]), :locals => { :dataset => dataset, :task => task } }
+      format.all { render :file => klass.view_path(params[:view]),
+        :formats => [ params[:format].to_sym ],
+        :locals => { :dataset => dataset, :task => task } }
     end
   end
   

@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "export_citations/start.html" do
+describe "export_citations/start" do
   
   include JobViewSpecHelper
   

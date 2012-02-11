@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '~> 3.0'
-gem 'rails-i18n', '= 0.3.0'
+gem 'rails-i18n', '= 0.4.0'
 
 gem 'mysql2', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
@@ -27,7 +27,7 @@ gem 'rdf-n3'
 gem 'fastercsv', :platforms => [ :ruby_18, :mingw_18, :jruby ]
 
 gem 'latex-decode', '>= 0.0.11'
-gem 'bibtex-ruby', '~> 1.3', :require => 'bibtex'
+gem 'bibtex-ruby', '~> 2.0', :require => 'bibtex'
 gem 'citeproc-ruby', '>= 0.0.4'
 
 gem 'haml'
