@@ -7,15 +7,12 @@ rvm:
   - 1.9.3
   - ree
   - jruby-18mode
+  - rbx-18mode
+  - rbx-19mode
 
 # No clue.  Fails on my box with REXML errors, fails on
 # Travis with stack overflows.  Maybe someday.
 #  - jruby-19mode
-
-# Not until the RDF gem is upgraded, else we'll take up
-# years of build time on the poor Travis servers.
-#  - rbx-18mode
-#  - rbx-19mode
 
 before_script:
   - "cp config/database.yml.travis config/database.yml"

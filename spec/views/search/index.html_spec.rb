@@ -26,7 +26,7 @@ describe "search/index.html" do
   
   context 'when no search is performed' do
     before(:each) do
-      Examples.stub_with(/localhost/, :precise_all_docs)
+      Examples.stub_with(/localhost\/solr\/.*/, :precise_all_docs)
       do_solr_query
     end
     
@@ -96,7 +96,7 @@ describe "search/index.html" do
   
   context 'when a search with no results is performed' do
     before(:each) do
-      Examples.stub_with(/localhost/, :standard_empty_search)
+      Examples.stub_with(/localhost\/solr\/.*/, :standard_empty_search)
       do_solr_query('shatner')
       render      
     end
@@ -112,7 +112,7 @@ describe "search/index.html" do
   
   context 'when an advanced search is performed' do
     before(:each) do
-      Examples.stub_with(/localhost/, :precise_year_2009)
+      Examples.stub_with(/localhost\/solr\/.*/, :precise_year_2009)
       do_solr_query(nil, nil, true, :year => 2009)
       render
     end
@@ -125,7 +125,7 @@ describe "search/index.html" do
   describe 'year facet parsing' do
     context 'when parsing 2010-*' do
       before(:each) do
-        Examples.stub_with(/localhost/, :precise_all_docs)
+        Examples.stub_with(/localhost\/solr\/.*/, :precise_all_docs)
         do_solr_query
         render
       end
@@ -140,7 +140,7 @@ describe "search/index.html" do
     
     context 'when parsing *-1790' do
       before(:each) do
-        Examples.stub_with(/localhost/, :precise_old_docs)
+        Examples.stub_with(/localhost\/solr\/.*/, :precise_old_docs)
         do_solr_query
         render
       end
@@ -156,7 +156,7 @@ describe "search/index.html" do
   
   context 'when displaying facets' do
     before(:each) do
-      Examples.stub_with(/localhost/, :precise_facet_author_and_journal)
+      Examples.stub_with(/localhost\/solr\/.*/, :precise_facet_author_and_journal)
       do_solr_query(nil, [ 'authors_facet:"Amanda M. Koltz"', 'journal_facet:"Ethology"' ])
       render
     end

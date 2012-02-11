@@ -6,7 +6,7 @@ describe InfoController do
   describe '#index' do
     context 'given Solr results' do
       before(:each) do
-        Examples.stub_with(/localhost/, :precise_one_doc)
+        Examples.stub_with(/localhost\/solr\/.*/, :precise_one_doc)
       end
       
       it 'loads successfully' do
@@ -17,7 +17,7 @@ describe InfoController do
     
     context 'when Solr fails' do
       before(:each) do
-        Examples.stub_with(/localhost/, :error)
+        Examples.stub_with(/localhost\/solr\/.*/, :error)
       end
       
       it 'loads successfully' do

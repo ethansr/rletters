@@ -84,7 +84,7 @@ module Serializers
       #   controller.send_data doc.to_rdf_xml, :filename => 'export.xml', :disposition => 'attachment'
       # :nocov:
       def to_rdf_xml
-        ::RDF::Writer.for(:rdf).buffer do |writer|
+        ::RDF::Writer.for(:rdfxml).buffer do |writer|
           writer << to_rdf
         end
       end

@@ -14,18 +14,11 @@ module Solr
     # @return [RSolr::Ext.response] Solr search result
     def self.find(params)
       begin
-        solr = RSolr::Ext.connect(driver_class, { :url => APP_CONFIG['solr_server_url'] })
+        solr = RSolr::Ext.connect :url => APP_CONFIG['solr_server_url']
         ret = solr.find params
       rescue Exception => e
         RSolr::Ext::Response::Base.new({ 'response' => { 'docs' => [] } }, 'select', params)
       end
-    end
-    
-    # Override this to connect with a different connection class
-    #
-    # @return [Class] the RSolr driver to use
-    def self.driver_class
-      RSolr::Connection
     end
     
   end

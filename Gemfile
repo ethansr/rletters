@@ -21,7 +21,7 @@ gem 'rubyzip'
 gem 'rsolr'
 gem 'rsolr-ext'
 gem 'marc'
-gem 'rdf'
+gem 'rdf', '>= 0.3.5'
 gem 'rdf-rdfxml', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'rdf-n3'
 gem 'fastercsv', :platforms => [ :ruby_18, :mingw_18, :jruby ]
@@ -57,7 +57,7 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'webrat'
-  gem 'webmock'
+  gem 'webmock', :require => false
   gem 'nokogiri'
   
   gem 'spork', '> 0.9.0rc'

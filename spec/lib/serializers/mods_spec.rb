@@ -5,7 +5,7 @@ describe Serializers::MODS do
   
   context "when serializing a single document" do
     before(:each) do
-      Examples.stub_with(/localhost/, :precise_one_doc)
+      Examples.stub_with(/localhost\/solr\/.*/, :precise_one_doc)
       @doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
       @doc.instance_variable_set(:@number, '12')
       @xml = @doc.to_mods
@@ -41,7 +41,7 @@ describe Serializers::MODS do
   
   context "when serializing an array of documents" do
     before(:each) do
-      Examples.stub_with(/localhost/, :precise_one_doc)
+      Examples.stub_with(/localhost\/solr\/.*/, :precise_one_doc)
       doc = Document.find('00972c5123877961056b21aea4177d0dc69c7318')
 
       # Create a deep copy with a different unique ID

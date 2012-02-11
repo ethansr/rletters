@@ -17,7 +17,7 @@ describe Jobs::CreateDataset do
   
   context "when Solr fails" do
     before(:each) do
-      Examples.stub_with(/localhost/, :error)
+      Examples.stub_with(/localhost\/solr\/.*/, :error)
     end
     
     it "raises an exception" do
@@ -33,7 +33,7 @@ describe Jobs::CreateDataset do
   
   context "given precise_all Solr results" do
     before(:each) do
-      Examples.stub_with(/localhost/, :dataset_precise_all)
+      Examples.stub_with(/localhost\/solr\/.*/, :dataset_precise_all)
       Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
         :name => 'Test Dataset', :q => '*:*', :fq => nil,
         :qt => 'precise').perform
@@ -51,7 +51,7 @@ describe Jobs::CreateDataset do
   
   context "given precise_with_facet_koltz Solr results" do
     before(:each) do
-      Examples.stub_with(/localhost/, :dataset_precise_with_facet_koltz)
+      Examples.stub_with(/localhost\/solr\/.*/, :dataset_precise_with_facet_koltz)
       Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
         :name => 'Test Dataset', :q => '*:*',
         :fq => ['authors_facet:"Amanda M. Koltz"'], 
@@ -70,7 +70,7 @@ describe Jobs::CreateDataset do
   
   context "given search_diversity Solr results" do
     before(:each) do
-      Examples.stub_with(/localhost/, :dataset_search_diversity)
+      Examples.stub_with(/localhost\/solr\/.*/, :dataset_search_diversity)
       Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
         :name => 'Test Dataset', :q => 'diversity', :fq => nil,
         :qt => 'standard').perform
@@ -88,7 +88,7 @@ describe Jobs::CreateDataset do
   
   context "given large Solr dataset" do
     before(:each) do
-      Examples.stub_with(/localhost/, [ :long_query_one, :long_query_two, :long_query_three ])
+      Examples.stub_with(/localhost\/solr\/.*/, [ :long_query_one, :long_query_two, :long_query_three ])
       Jobs::CreateDataset.new(:user_id => users(:alice).to_param,
         :name => 'Long Dataset', :q => '*:*', :fq => nil,
         :qt => 'precise').perform

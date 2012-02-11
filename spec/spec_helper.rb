@@ -18,8 +18,12 @@ Spork.prefork do
     config.use_transactional_fixtures = true
     config.infer_base_class_for_anonymous_controllers = true
     
-    # Speed up testing by deferring garbage collection
     config.before(:all) do
+      # Disable net connections outbound
+      WebMock.enable!
+      WebMock.disable_net_connect!
+      
+      # Speed up testing by deferring garbage collection
       DeferredGarbageCollection.start
     end
     config.after(:all) do

@@ -6,5 +6,7 @@
 require 'csv'
 
 if CSV.const_defined? :Reader
-  CSV = FasterCSV
+  silence_warnings do
+    CSV = FasterCSV
+  end
 end

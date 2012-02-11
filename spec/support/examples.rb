@@ -16,6 +16,6 @@ module Examples
     end
     
     # Load the example files
-    examples.map { |e| File.new(Rails.root.join('spec', 'support', 'examples', e.to_s + '.txt')) }
+    examples.map { |e| IO.read(Rails.root.join('spec', 'support', 'examples', e.to_s + '.txt')) }
   end
 end
