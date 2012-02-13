@@ -156,9 +156,21 @@ class DatasetsController < ApplicationController
     klass = task.job_class
     
     respond_to do |format|
-      format.all { render :file => klass.view_path(params[:view]),
-        :formats => [ params[:format].to_sym ],
-        :locals => { :dataset => dataset, :task => task } }
+      format.all do
+        # Look up the appropriate MIME type, since it doesn't seem to be
+        # getting set automatically
+        mime_type = Mime::Type.lookup_by_extension(params[:format])
+        content_type = mime_type.to_s unless mime_type.nil?
+        content_type ||= 'text/plain'
+        
+        # Render the layout if it's HTML
+        layout = (params[:format] == 'html')
+        
+        render :file => klass.view_path(params[:view]),
+          :layout => layout, :content_type => content_type,
+          :formats => [ params[:format].to_sym ],
+          :locals => { :dataset => dataset, :task => task }
+      end
     end
   end
   
