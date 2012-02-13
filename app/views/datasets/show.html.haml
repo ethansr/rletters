@@ -7,7 +7,7 @@
   
 %div.verticalpad
 
--# Load the task list via AJAX every 2 seconds
+-# Load the task list via AJAX every 4 seconds
 %div{ :id => "task_list_#{@dataset.to_param}" }
 
 - content_for :page_javascript do
@@ -15,7 +15,8 @@
     function update_task_list_#{@dataset.to_param}() {
       $('#task_list_#{@dataset.to_param}').load('#{task_list_dataset_path(@dataset)}',
         function() {
-          window.setTimeout(update_task_list_#{@dataset.to_param}, 2000);
+          window.setTimeout(update_task_list_#{@dataset.to_param}, 4000);
+          $('#task_list_#{@dataset.to_param}').find('ul').listview();
         });
     }
     update_task_list_#{@dataset.to_param}();
