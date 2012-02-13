@@ -1,6 +1,6 @@
-- term_vectors = YAML.load_file(task.result_file.filename)
+- term_vectors = YAML.load_file(@task.result_file.filename)
 
-%h1== #{dataset.name}
+%h1== #{@dataset.name}
 %h2== Term frequency information
 
 .verticalpad
@@ -21,4 +21,4 @@
           %td= v[:df]
           %td= v[:tfidf]
       %tr
-        %td{ :colspan => '4' }= link_to 'Download this data as CSV', { :controller => 'datasets', :action => 'task_view', :id => dataset.to_param, :task_id => task.to_param, :view => 'download', :format => 'csv' }, :rel => 'external'
+        %td{ :colspan => '4' }= link_to 'Download this data as CSV', { :controller => 'datasets', :action => 'task_view', :id => @dataset.to_param, :task_id => @task.to_param, :view => 'download', :format => 'csv' }, :rel => 'external'

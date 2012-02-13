@@ -68,7 +68,7 @@ module Jobs
       # @return [Array<Class>] array of class objects
       # @example Render the 'start' view for all jobs
       #   Jobs::Analysis::Base.job_list.each do |klass|
-      #     render :file => klass.view_path('start'), ...
+      #     render :template => klass.view_path('start'), ...
       #   end
       def self.job_list
         # Get all the classes defined in the Jobs::Analysis module
@@ -91,21 +91,22 @@ module Jobs
     
       # Get the path to a job-view template for this job
       #
-      # We let analysis jobs ship their own job view templates in
-      # +lib/jobs/analysis/views/(job)/+.  This function takes 
-      # a view name and returns its template's full disk path.
+      # We let analysis jobs ship their own job view templates. This
+      # function takes a view name and returns its template path.
       #
       # @api public
       # @param [String] view the view to fetch the path to
       # @return [String] the path to the template
       # @example Get the path to the ExportCitations 'start' view
       #   Jobs::Analysis::ExportCitations.view_path 'start'
-      #   # => 'RAILS_ROOT/lib/jobs/analysis/views/export_citations/start'
+      #   # => 'jobs/export_citations/start'
       def self.view_path(view)
-        # This will return something like 'jobs/analysis/export_citations', so we
-        # need to add '/views' in there
-        class_path = self.name.underscore.sub('/analysis/', '/analysis/views/')
-        Rails.root.join('lib', class_path, "#{view}")
+        # This will return something like 'jobs/analysis/export_citations',
+        # so we need to remove 'analysis'
+        str = File::SEPARATOR + 'analysis' + File::SEPARATOR
+        rep = File::SEPARATOR
+        class_path = self.name.underscore.sub(str, rep)
+        File.join(class_path, view)
       end
       
       # Set the analysis task fail bit on error

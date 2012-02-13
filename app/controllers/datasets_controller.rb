@@ -144,38 +144,16 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def task_view
-    dataset = @user.datasets.find(params[:id])
-    raise ActiveRecord::RecordNotFound unless dataset
+    @dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @dataset
     
-    task = dataset.analysis_tasks.find(params[:task_id])
-    raise ActiveRecord::RecordNotFound unless task
+    @task = @dataset.analysis_tasks.find(params[:task_id])
+    raise ActiveRecord::RecordNotFound unless @task
     
     raise ActiveRecord::RecordNotFound unless params[:view]
-    params[:format] ||= 'html'
     
-    klass = task.job_class
-    
-    respond_to do |format|
-      format.all do
-        # Look up the appropriate MIME type, since it doesn't seem to be
-        # getting set automatically
-        mime_type = Mime::Type.lookup_by_extension(params[:format])
-        content_type = mime_type.to_s unless mime_type.nil?
-        content_type ||= 'text/plain'
-        
-        # Render the layout if it's HTML
-        if params[:format] == 'html'
-          layout = 'layouts/application'
-        else
-          layout = false
-        end
-        
-        render :file => klass.view_path(params[:view]),
-          :layout => layout, :content_type => content_type,
-          :formats => [ params[:format].to_sym ],
-          :locals => { :dataset => dataset, :task => task }
-      end
-    end
+    klass = @task.job_class
+    render :template => klass.view_path(params[:view])
   end
   
   # Delete an analysis task
