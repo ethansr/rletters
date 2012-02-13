@@ -2,7 +2,7 @@
 // Graph support for the PlotDates results page
 
 function createPlotDatesGraph() {
-  var graphContainer = $('div.ui-page-active').find('div.plot_dates_graph');
+  var graphContainer = $.mobile.activePage.find('div.plot_dates_graph');
   if (graphContainer.length == 0)
     return;
   

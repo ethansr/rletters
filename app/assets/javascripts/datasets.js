@@ -2,7 +2,7 @@
 // AJAX support for datasets#index and #show
 
 function updateDatasetList() {
-  var datasetList = $('div.ui-page-active').find('div.dataset_list');
+  var datasetList = $.mobile.activePage.find('div.dataset_list');
   if (datasetList.length == 0)
     return;
   
@@ -16,7 +16,7 @@ function updateDatasetList() {
 }
 
 function updateTaskList() {
-  var taskList = $('div.ui-page-active').find('div.dataset_task_list');
+  var taskList = $.mobile.activePage.find('div.dataset_task_list');
   if (taskList.length == 0)
     return;
   

@@ -2,16 +2,16 @@
 // Collapsible list for facets, <= 768px
 
 function createCollapsibleList() {
-  var leftColumn = $('div.ui-page-active').find('div.leftcolumn');
-  var toolsList = $('div.ui-page-active').find('ul.toolslist')
-  var facetList = $('div.ui-page-active').find('ul.facetlist');
+  var leftColumn = $.mobile.activePage.find('div.leftcolumn');
+  var toolsList = $.mobile.activePage.find('ul.toolslist')
+  var facetList = $.mobile.activePage.find('ul.facetlist');
   
   if (leftColumn.length == 0) {
     return;
   }
   
   if (toolsList.length) {
-    var toolsButtonText = $('div.ui-page-active').find('li.toolsheader').text();
+    var toolsButtonText = $.mobile.activePage.find('li.toolsheader').text();
     var toolsCollapse = $(document.createElement('div')).attr('class', 'toolscollapse').append($(document.createElement('h3')).text(toolsButtonText));
     toolsList.clone().appendTo(toolsCollapse);
     toolsCollapse.appendTo(leftColumn);
@@ -19,7 +19,7 @@ function createCollapsibleList() {
   }
   
   if (facetList.length) {
-    var facetButtonText = $('div.ui-page-active').find('li.filterheader').text();
+    var facetButtonText = $.mobile.activePage.find('li.filterheader').text();
     var facetCollapse = $(document.createElement('div')).attr('class', 'facetcollapse').append($(document.createElement('h3')).text(facetButtonText));
     facetList.clone().appendTo(facetCollapse);
     facetCollapse.appendTo(leftColumn);
@@ -27,8 +27,8 @@ function createCollapsibleList() {
   }
 }
 function destroyCollapsibleList() {
-  var toolsCollapse = $('div.ui-page-active').find('div.toolscollapse');
-  var facetCollapse = $('div.ui-page-active').find('div.facetcollapse');
+  var toolsCollapse = $.mobile.activePage.find('div.toolscollapse');
+  var facetCollapse = $.mobile.activePage.find('div.facetcollapse');
   
   if (toolsCollapse.length) {
     var parent = toolsCollapse.parent();
@@ -44,8 +44,8 @@ function destroyCollapsibleList() {
 
 function checkCollapsibleList() {
   var width = $(window).width();
-  var toolsCollapse = $('div.ui-page-active').find('div.toolscollapse');
-  var facetCollapse = $('div.ui-page-active').find('div.facetcollapse');
+  var toolsCollapse = $.mobile.activePage.find('div.toolscollapse');
+  var facetCollapse = $.mobile.activePage.find('div.facetcollapse');
   
   if (width <= 768 && (facetCollapse.length == 0 && toolsCollapse.length == 0))
     createCollapsibleList();
