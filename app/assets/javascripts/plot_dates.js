@@ -9,7 +9,7 @@ function createPlotDatesGraph() {
   var data = new google.visualization.DataTable();
   data.addColumn('number', 'Year');
   data.addColumn('number', 'Documents');
-  data.addRows(graphContainer.html());
+  data.addRows($.parseJSON(graphContainer.html()));
       
   var w = $(window).width();
   if (w > 750) {
