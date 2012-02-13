@@ -15,7 +15,7 @@
     function update_task_list_#{@dataset.to_param}() {
       $('#task_list_#{@dataset.to_param}').load('#{task_list_dataset_path(@dataset)}',
         function() {
-          window.setTimeout(callIfDefined('update_task_list_#{@dataset.to_param}'), 4000);
+          window.setTimeout("callIfDefined('update_task_list_#{@dataset.to_param}')", 4000);
           $('#task_list_#{@dataset.to_param}').find('ul').listview();
         });
     }
