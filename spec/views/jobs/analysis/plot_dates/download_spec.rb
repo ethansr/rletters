@@ -1,9 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "plot_dates/download" do
-  
-  include JobViewSpecHelper
+describe "jobs/plot_dates/download" do
   
   before(:each) do
     @dataset = mock_model(Dataset)
@@ -15,8 +13,6 @@ describe "plot_dates/download" do
       file.close
     end
     @task.save
-    
-    init_job_view_spec('PlotDates', 'download', 'csv')
   end
   
   after(:each) do
@@ -24,12 +20,12 @@ describe "plot_dates/download" do
   end
   
   it "shows a header column" do
-    render_job_view('PlotDates', 'download', 'csv')
+    render
     rendered.should contain("Year,Number of Documents")
   end
   
   it 'shows the year and count in a CSV row' do
-    render_job_view('PlotDates', 'download', 'csv')
+    render
     rendered.should contain("2003,13")
   end
 end

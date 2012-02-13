@@ -1,9 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "single_term_vectors/results" do
-  
-  include JobViewSpecHelper
+describe "jobs/single_term_vectors/results" do
   
   before(:each) do
     @dataset = mock_model(Dataset)
@@ -15,8 +13,6 @@ describe "single_term_vectors/results" do
       file.close
     end
     @task.save
-    
-    init_job_view_spec('SingleTermVectors', 'results')
   end
   
   after(:each) do
@@ -24,7 +20,7 @@ describe "single_term_vectors/results" do
   end
   
   it 'shows the term and values in a table row' do
-    render_job_view('SingleTermVectors', 'results')
+    render
     
     rendered.should have_selector('tbody tr') do |row|
       row.should have_selector('td', :content => 'test')
@@ -35,7 +31,7 @@ describe "single_term_vectors/results" do
   end
   
   it "has a link to download the results as CSV" do
-    render_job_view('SingleTermVectors', 'results')
+    render
     
     expected = url_for(:controller => 'datasets', :action => 'task_view', 
       :id => @dataset.to_param, :task_id => @task.to_param, 

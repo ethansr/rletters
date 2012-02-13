@@ -1,9 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "plot_dates/results" do
-  
-  include JobViewSpecHelper
+describe "jobs/plot_dates/results" do
   
   before(:each) do
     @dataset = mock_model(Dataset)
@@ -15,8 +13,6 @@ describe "plot_dates/results" do
       file.close
     end
     @task.save
-    
-    init_job_view_spec('PlotDates', 'results')
   end
   
   after(:each) do
@@ -24,7 +20,7 @@ describe "plot_dates/results" do
   end
   
   it 'shows the year and count in a table row' do
-    render_job_view('PlotDates', 'results')
+    render
     
     rendered.should have_selector('tbody tr') do |row|
       row.should have_selector('td', :content => '2003')
@@ -33,7 +29,7 @@ describe "plot_dates/results" do
   end
   
   it "has a link to download the results as CSV" do
-    render_job_view('PlotDates', 'results')
+    render
     
     expected = url_for(:controller => 'datasets', :action => 'task_view', 
       :id => @dataset.to_param, :task_id => @task.to_param, 

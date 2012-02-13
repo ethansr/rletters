@@ -1,19 +1,17 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "plot_dates/start" do
-  
-  include JobViewSpecHelper
+describe "jobs/plot_dates/start" do
   
   before(:each) do
-    init_job_view_spec('PlotDates', 'start')
+    @dataset = mock_model(Dataset)
   end
   
   it 'has a link to start the task' do
-    render_job_view('PlotDates', 'start')
+    render
     
     link = url_for(:controller => 'datasets', :action => 'task_start', 
-      :class => 'PlotDates')
+      :class => 'PlotDates', :id => @dataset.to_param)
       
     rendered.should have_selector("a[href='#{link}']")
   end

@@ -1,9 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
-describe "single_term_vectors/download" do
-  
-  include JobViewSpecHelper
+describe "jobs/single_term_vectors/download" do
   
   before(:each) do
     @dataset = mock_model(Dataset)
@@ -15,8 +13,6 @@ describe "single_term_vectors/download" do
       file.close
     end
     @task.save
-    
-    init_job_view_spec('SingleTermVectors', 'download', 'csv')
   end
   
   after(:each) do
@@ -24,12 +20,12 @@ describe "single_term_vectors/download" do
   end
   
   it "shows a header column" do
-    render_job_view('SingleTermVectors', 'download', 'csv')
+    render
     rendered.should contain("Term,tf,df,tf*idf")
   end
   
   it 'shows the data in a CSV row' do
-    render_job_view('SingleTermVectors', 'download', 'csv')
+    render
     rendered.should contain("test,3,1,2.5")
   end
 end
