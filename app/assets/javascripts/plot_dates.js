@@ -31,4 +31,4 @@ function createPlotDatesGraph() {
   chart.draw(data, options);
 }
 
-$('div[data-role=page]').live('pageinit', function (event, ui) { createPlotDatesGraph(); });
+$('div[data-role=page]').live('pageshow', function (event, data) { createPlotDatesGraph(); });
