@@ -28,9 +28,18 @@ describe DatasetsController do
         get :index
         response.should be_success
       end
+    end
+  end
+  
+  describe '#dataset_list' do
+    context "when logged in" do
+      it "loads successfully" do
+        get :dataset_list
+        response.should be_success
+      end
       
       it "assigns the list of datsets" do
-        get :index
+        get :dataset_list
         assigns(:datasets).should eq(users(:john).datasets)
       end
     end

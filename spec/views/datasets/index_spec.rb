@@ -3,34 +3,10 @@ require 'spec_helper'
 
 describe "datasets/index" do
   
-  fixtures :datasets, :users, :dataset_entries
-  
-  before(:each) do
-    @user = users(:john)
-    session[:user_id] = users(:john).to_param
-    assign(:datasets, users(:john).datasets)
-  end
-
-  it 'lists the dataset' do
-    render
-    rendered.should contain("Test Dataset 10")
-  end
-  
-  it 'lists pending analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
-    task.save
-    render
-    
-    rendered.should have_selector("li[data-theme=e]", :content => 'You have one analysis task pending...')
-  end
-  
-  it 'does not list completed analysis tasks' do
-    task = AnalysisTask.new({ :name => 'test', :dataset => datasets(:one), :job_type => 'Base' })
-    task.finished_at = Time.zone.now
-    task.save
-    render
-    
-    rendered.should_not have_selector("li[data-theme=e]")
+  it "has a reference somewhere to the task list" do
+    # Need to render the layout in order to get the page-JS
+    render :template => 'datasets/index', :layout => 'layouts/application'
+    rendered.should include(dataset_list_datasets_path)
   end
   
 end
