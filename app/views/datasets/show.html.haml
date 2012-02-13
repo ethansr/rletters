@@ -6,7 +6,20 @@
     %p= t('.created_at', :date => @dataset.created_at.to_formatted_s(:long))
   
 %div.verticalpad
-= render :partial => 'task_list', :locals => { :dataset => @dataset }
+
+-# Load the task list via AJAX every 2 seconds
+%div{ :id => "task_list_#{@dataset.to_param}" }
+
+- content_for :page_javascript do
+  :javascript
+    function update_task_list_#{@dataset.to_param}() {
+      $('#task_list_#{@dataset.to_param}').load(#{task_list_dataset_path(@dataset)},
+        function() {
+          window.setTimeout(update_task_list_#{@dataset.to_param}, 2000);
+        });
+    }
+    update_task_list_#{@dataset.to_param}();
+
 %div.verticalpad
 
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b', 'data-split-icon' => 'delete', 'data-split-theme' => 'a' }

@@ -11,6 +11,7 @@ RLetters::Application.routes.draw do
   # Datasets (per-user)
   resources :datasets, :except => [ :edit, :update ] do
     member do
+      get 'task_list'
       get 'delete'
       get 'task/:class/start' => 'datasets#task_start', :constraints => { :class => /[A-Z][A-Za-z]+/u }
       get 'task/:task_id/view/:view' => 'datasets#task_view', :constraints => { :task_id => /[0-9]+/u }

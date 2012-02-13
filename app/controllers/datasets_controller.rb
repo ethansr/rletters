@@ -85,6 +85,20 @@ class DatasetsController < ApplicationController
     redirect_to datasets_path
   end
   
+  # Show the list of analysis tasks for this dataset
+  #
+  # This list needs to be updated live, as the tasks are running in the
+  # background, so we split this off to a small AJAX action.
+  #
+  # @api public
+  # @return [undefined]
+  def task_list
+    @dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @dataset
+    
+    render :layout => false
+  end
+  
   # Start an analysis task for this dataset
   #
   # This method dynamically determines the appropriate background job to start
