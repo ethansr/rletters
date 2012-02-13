@@ -313,6 +313,11 @@ en:
       head: "Information for dataset"
       num_entries: "Number of documents: %{count}"
       created_at: "Created at: %{date}"
+      deleted: "Cleared all failed analysis tasks."
+      no_failed: "No failed tasks available to clear!"
+      new_task: "Start a new analysis task"
+      delete: "Delete this dataset"
+    task_list:
       active_tasks: "Active analysis tasks for dataset"
       pending:
         one: "1 analysis task pending for this dataset..."
@@ -321,14 +326,10 @@ en:
         one: "1 analysis task failed for this dataset!"
         other: "%{count} analysis tasks failed for this dataset!"
       clear_failed: "Clear failed analysis tasks..."
-      deleted: "Cleared all failed analysis tasks."
-      no_failed: "No failed tasks available to clear!"
       finished_tasks: "Completed analysis tasks for dataset"
       task_header: "“%{name}” Complete"
       download_task: "Download the results of this job"
       delete_task: "Delete this task"
-      new_task: "Start a new analysis task"
-      delete: "Delete this dataset"
     delete:
       head: "Are you sure?"
       "yes": "Yes"

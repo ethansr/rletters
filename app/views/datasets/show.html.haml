@@ -4,27 +4,15 @@
     %h3= @dataset.name
     %p= t('.num_entries', :count => @dataset.entries.size)
     %p= t('.created_at', :date => @dataset.created_at.to_formatted_s(:long))
-  - if @dataset.analysis_tasks.not_finished.count > 0
-    %li{ 'data-role' => 'list-divider' }= t('.active_tasks')
-    - if @dataset.analysis_tasks.active.count > 0
-      %li{ 'data-theme' => 'e' }= t('.pending', :count => @dataset.analysis_tasks.active.count)
-    - if @dataset.analysis_tasks.failed.count > 0
-      %li{ 'data-theme' => 'e' }= t('.failed', :count => @dataset.analysis_tasks.failed.count)
-      %li{ 'data-theme' => 'e' }= link_to t('.clear_failed'), dataset_path(@dataset, :clear_failed => true)
   
-  -# Finished analysis tasks: link to download results and to delete
-  - if @dataset.analysis_tasks.finished.count > 0
-    %li{ 'data-role' => 'list-divider' }= t('.finished_tasks')
-    - @dataset.analysis_tasks.finished.each do |task|
-      %li
-        - if task.job_class.download?
-          = link_to t('.task_header', :name => task.name), { :controller => 'datasets', :action => 'task_download', :id => @dataset.to_param, :task_id => task.to_param }, 'rel' => 'external'
-        - else
-          = link_to t('.task_header', :name => task.name), { :controller => 'datasets', :action => 'task_view', :id => @dataset.to_param, :task_id => task.to_param, :view => 'results' }
-        = link_to t('.delete_task'), { :controller => 'datasets', :action => 'task_destroy', :id => @dataset.to_param, :task_id => task.to_param }
-  %li{ 'data-role' => 'list-divider' }= t('.new_task')
+%div.verticalpad
+= render :partial => 'task_list', :locals => { :dataset => @dataset }
+%div.verticalpad
+
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b', 'data-split-icon' => 'delete', 'data-split-theme' => 'a' }
   
   -# Show the markup for starting all the various background jobs
+  %li{ 'data-role' => 'list-divider' }= t('.new_task')
   - Jobs::Analysis::Base.job_list.each do |klass|
     = render :file => klass.view_path('start'), :locals => { :dataset => @dataset, :task => nil }
   
