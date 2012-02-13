@@ -11,7 +11,7 @@ describe "single_term_vectors/download" do
     @task = AnalysisTask.new(:name => "Term frequency information", :job_type => 'SingleTermVectors')
     @task.dataset = @dataset
     @task.result_file = Download.create_file('temp.yml') do |file|
-      file.write({ "test" => { tf: 3, df: 1, tfidf: 2.5 }}.to_yaml)
+      file.write({ "test" => { :tf => 3, :df => 1, :tfidf => 2.5 }}.to_yaml)
       file.close
     end
     @task.save
