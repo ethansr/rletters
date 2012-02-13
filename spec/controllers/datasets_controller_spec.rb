@@ -261,4 +261,52 @@ describe DatasetsController do
     end
   end
   
+  describe "#task_destroy" do
+    context 'when an invalid task ID is passed' do
+      it 'raises an exception' do
+        expect {
+          get :task_destroy, :id => datasets(:one).to_param, :task_id => '12312312312312'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+    
+    context 'when cancel is pressed' do
+      before(:each) do
+        @task = datasets(:one).analysis_tasks.create(:name => 'test', :job_type => 'ExportCitations')
+      end
+      
+      after(:each) do
+        @task.destroy
+      end
+      
+      it "doesn't delete the task" do
+        expect {
+          get :task_destroy, :id => datasets(:one).to_param, :task_id => @task.to_param, :cancel => true
+        }.to_not change{datasets(:one).analysis_tasks.count}
+      end
+      
+      it 'redirects to the dataset page' do
+        get :task_destroy, :id => datasets(:one).to_param, :task_id => @task.to_param, :cancel => true
+        response.should redirect_to(dataset_path(datasets(:one)))
+      end
+    end
+    
+    context "when cancel is not pressed" do
+      before(:each) do
+        @task = datasets(:one).analysis_tasks.create(:name => 'test', :job_type => 'ExportCitations')
+      end
+      
+      it "deletes the task" do
+        expect {
+          get :task_destroy, :id => datasets(:one).to_param, :task_id => @task.to_param
+        }.to change{datasets(:one).analysis_tasks.count}.by(-1)
+      end
+      
+      it 'redirects to the dataset page' do
+        get :task_destroy, :id => datasets(:one).to_param, :task_id => @task.to_param
+        response.should redirect_to(dataset_path(datasets(:one)))
+      end
+    end
+  end
+  
 end

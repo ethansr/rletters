@@ -173,10 +173,11 @@ class DatasetsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless dataset
     redirect_to dataset and return if params[:cancel]
     
-    task = @dataset.analysis_tasks.find(params[:task_id])
+    task = dataset.analysis_tasks.find(params[:task_id])
     raise ActiveRecord::RecordNotFound unless task
     
     task.destroy
+    redirect_to dataset_path
   end
   
   # Download a file from an analysis task
