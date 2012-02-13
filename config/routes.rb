@@ -10,6 +10,10 @@ RLetters::Application.routes.draw do
 
   # Datasets (per-user)
   resources :datasets, :except => [ :edit, :update ] do
+    collection do
+      get 'dataset_list'
+    end
+    
     member do
       get 'task_list'
       get 'delete'

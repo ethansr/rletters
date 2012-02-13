@@ -290,7 +290,7 @@ en:
     faq:
       head: "Frequently Asked Questions"
   datasets:
-    index:
+    dataset_list:
       num_datasets_found:
         zero: "no datasets found"
         one: "1 dataset found"

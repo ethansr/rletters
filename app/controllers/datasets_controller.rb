@@ -15,7 +15,18 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def index
+  end
+  
+  # Show the list of datasets for this user
+  #
+  # This list needs to be updated live, as the datasets are being created
+  # in the background.  This action is to be called via AJAX.
+  #
+  # @api public
+  # @return [undefined]
+  def dataset_list
     @datasets = @user.datasets
+    render :layout => false
   end
 
   # Show information about the requested dataset
