@@ -49,6 +49,10 @@ describe "search/show" do
     it 'sets the unAPI ID' do
       rendered.should have_selector(".unapi-id")
     end
+    
+    it "doesn't have a link to create a dataset" do
+      rendered.should_not contain("Create a dataset from only this document")
+    end
   end
   
   context 'when logged in' do
@@ -56,6 +60,11 @@ describe "search/show" do
       assign(:user, users(:john))
       session[:user_id] = users(:john).to_param
       render
+    end
+    
+    it "has a link to create a dataset from this document" do
+      expected = new_dataset_path(:q => "shasum:00972c5123877961056b21aea4177d0dc69c7318", :qt => 'precise', :fq => nil)
+      rendered.should have_selector("a[href='#{expected}']")
     end
     
     it "has a link to the user's local library" do

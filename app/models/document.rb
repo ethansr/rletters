@@ -97,7 +97,7 @@ class Document
   # @example Look up the document with ID "1234567890abcdef1234"
   #   doc = Document.find("1234567890abcdef1234")
   def self.find(shasum, options = {})
-    set = find_all_by_solr_query({ :q => "shasum: #{shasum}", :qt => "precise" }, options)
+    set = find_all_by_solr_query({ :q => "shasum:#{shasum}", :qt => "precise" }, options)
     raise ActiveRecord::RecordNotFound if set.empty?
     set[0]
   end
@@ -114,7 +114,7 @@ class Document
   # @example Get the full tet of the document with ID "1234567890abcdef1234"
   #   text = Document.find_with_fulltext("1234567890abcdef1234").fulltext
   def self.find_with_fulltext(shasum, options = {})
-    set = find_all_by_solr_query({ :q => "shasum: #{shasum}", :qt => "fulltext" }, options)
+    set = find_all_by_solr_query({ :q => "shasum:#{shasum}", :qt => "fulltext" }, options)
     raise ActiveRecord::RecordNotFound if set.empty?
     set[0]
   end
