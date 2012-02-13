@@ -164,7 +164,11 @@ class DatasetsController < ApplicationController
         content_type ||= 'text/plain'
         
         # Render the layout if it's HTML
-        layout = (params[:format] == 'html')
+        if params[:format] == 'html'
+          layout = 'layouts/application'
+        else
+          layout = false
+        end
         
         render :file => klass.view_path(params[:view]),
           :layout => layout, :content_type => content_type,
