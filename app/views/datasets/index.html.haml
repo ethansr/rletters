@@ -1,12 +1,1 @@
-%div#dataset_list
-
-- content_for :page_javascript do
-  :javascript
-    function update_dataset_list() {
-      $('#dataset_list').load('#{dataset_list_datasets_path}',
-        function() {
-          window.setTimeout(update_dataset_list, 4000);
-          $('#dataset_list').find('ul').listview();
-        });
-    }
-    update_dataset_list();
+%div.dataset_list{ :'data-fetch-url' => dataset_list_datasets_path }

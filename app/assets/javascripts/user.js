@@ -6,12 +6,13 @@ function checkLibraryList() {
   
   // If there's a library list at all, we want to refresh its contents (e.g.,
   // after the user closes the "add new library" dialog box)
-  if (libraryList.length == 0) {
+  if (libraryList.length == 0)
     return;
-  }
+  
+  var ajax_url = libraryList.attr('data-fetch-url');
   
   $.ajax({
-    url: '/user/libraries',
+    url: ajax_url,
     type: 'get',
     dataType: 'html',
     cache: false,

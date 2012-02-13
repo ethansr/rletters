@@ -1,38 +1,11 @@
-- dates = YAML.load_file(task.result_file.filename)
-
 %h1== #{dataset.name}
 %h2== Documents, plotted by year
 
 .verticalpad
 
 %div.center
-  %div{ :id => "date_plot_#{dataset.to_param}_#{task.to_param}" } &nbsp;
-
-  - content_for :page_javascript do
-    :javascript
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'Year');
-      data.addColumn('number', 'Documents');
-      data.addRows(#{dates.to_s});
-      
-      var w = $(window).width();
-      if (w > 750) {
-        w = 750;
-      }
-  
-      var h;
-      if (w > 480) {
-        h = 480;
-      } else {
-        h = w;
-      }
-
-      var options = { width: w, height: h,
-                      legend: { position: 'none' },
-                      hAxis: { format: '####', }, pointSize: 3 };
-      
-      var chart = new google.visualization.LineChart($('#date_plot_#{dataset.to_param}_#{task.to_param}')[0]);
-      chart.draw(data, options);
+  - dates = YAML.load_file(task.result_file.filename)
+  %div.plot_dates_graph= dates.to_s
   
   .verticalpad
   
