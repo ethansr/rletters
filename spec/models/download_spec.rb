@@ -33,6 +33,16 @@ describe Download do
         @dl.should be_valid
       end
     end
+    
+    context "when filename has dashes and underscores" do
+      before(:each) do
+        @dl = Download.new({ :filename => 'a-b_c.wut'})
+      end
+      
+      it "is valid" do
+        @dl.should be_valid
+      end
+    end
   end
   
   describe '.create_file' do

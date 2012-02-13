@@ -15,7 +15,7 @@ class Download < ActiveRecord::Base
   # :filename_before_type_cast gives you the value of the filename attribute
   # without passing it through our custom accessor, which turns the relative
   # database path into an absolute filesystem path.
-  validates :filename_before_type_cast, :format => { :with => /\A[A-Za-z0-9.\-]+\z/ }
+  validates :filename_before_type_cast, :format => { :with => /\A[A-Za-z0-9.\-_]+\z/ }
   
   belongs_to :analysis_task
   attr_accessible :filename
