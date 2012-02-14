@@ -38,7 +38,7 @@ module Jobs
             doc = Document.find e.shasum
             
             # Support Y-M-D or Y/M/D dates
-            parts = doc.year.split(/-\//)
+            parts = doc.year.split(/[-\/]/)
             if parts.count == 3 || parts.count == 1
               year = Integer(parts[0])
             else
