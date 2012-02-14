@@ -36,11 +36,18 @@ module Jobs
           # only the year?
           begin
             doc = Document.find e.shasum
-            year = Integer(doc.year)
+            
+            # Support Y-M-D or Y/M/D dates
+            parts = doc.year.split(/-\//)
+            if parts.count == 3 || parts.count == 1
+              year = Integer(parts[0])
+            else
+              next
+            end
           rescue
             next
           end
-            
+          
           year_array = dates.assoc(year)
           if year_array
             year_array[1] = year_array[1] + 1
