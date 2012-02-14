@@ -137,35 +137,37 @@ class SearchController < ApplicationController
     # Initialize by copying over the faceted-browsing query
     query_params = {}
     query_params[:fq] = params[:fq] unless params[:fq].nil?
-    
+        
     if params.has_key? :precise
+      q_array = []
+      
       # Advanced search, step through the fields
       query_params[:qt] = 'precise'
-      query_params[:q] = "#{params[:q]}"
+      q_array << "#{params[:q]}" unless params[:q].blank?
       
       # Verbatim search fields
       %W(volume number pages).each do |f|
-        query_params[:q] += " #{f}:(#{params[f.to_sym]})" if params[f.to_sym]
+        q_array << "#{f}:(#{params[f.to_sym]})" unless params[f.to_sym].blank?
       end
 
       # Verbatim or fuzzy search fields
       %W(title journal fulltext).each do |f|
         field = f
         field += "_search" if params[(f + "_type").to_sym] and params[(f + "_type").to_sym] == "fuzzy"
-        query_params[:q] += " #{field}:(#{params[f.to_sym]})" if params[f.to_sym]
+        q_array << "#{field}:(#{params[f.to_sym]})" unless params[f.to_sym].blank?
       end
       
       # Handle the authors separately, for splitting support (authors search
       # is an AND search, not an OR search)
-      if params[:authors]
+      unless params[:authors].blank?
         authors = params[:authors].split(',').map { |a| "#{NameHelpers.name_to_lucene(a.strip)}" }
         authors_str = authors.join(" AND ")
         
-        query_params[:q] += " authors:(#{authors_str})"
+        q_array << "authors:(#{authors_str})"
       end
 
       # Handle the year separately, for range support
-      if params[:year_ranges]
+      unless params[:year_ranges].blank?
         # Strip whitespace, split on commas
         ranges = params[:year_ranges].gsub(/\s/u, '').split(',')
         year_queries = []
@@ -186,14 +188,15 @@ class SearchController < ApplicationController
         end
         
         unless year_queries.empty?
-          query_params[:q] += " year:(#{year_queries.join(" OR ")})"
+          q_array << "year:(#{year_queries.join(" OR ")})"
         end
       end
 
       # If there's no query after that, add the all-documents operator
-      query_params[:q].strip!
-      if query_params[:q].empty?
+      if q_array.empty?
         query_params[:q] = "*:*"
+      else
+        query_params[:q] = q_array.join(" AND ")
       end
     else
       # Simple search

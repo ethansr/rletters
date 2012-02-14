@@ -30,6 +30,12 @@ describe SearchController do
       ret = controller.send(:search_params_to_solr_query, params)
       ret[:q].should eq('test')
     end
+    
+    it "combines the search terms with AND" do
+      params = { :precise => 'true', :volume => '30', :number => '5' }
+      ret = controller.send(:search_params_to_solr_query, params)
+      ret[:q].should eq('volume:(30) AND number:(5)')
+    end
 
     it "mixes in verbatim search parameters correctly" do
       params = { :precise => 'true', :authors => 'W. Shatner', 
