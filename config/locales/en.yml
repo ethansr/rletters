@@ -259,10 +259,18 @@ en:
         Welcome to %{app_name}.  To get started, click here to view our
         tutorial.
       search: "Search or browse the database"
-      login: "Create an account or log in to analyze results"
+      search_text: >
+        Get started here by browsing through the article database.
+      login: "Create an account or log in"
+      login_text: >
+        In order to create datasets and analyze them, log into your account
+        or create a new one.
       datasets:
         one: "You have one dataset"
         other: "You have %{count} datasets"
+      datasets_text: >
+        Click here to view the list of your datasets, start new analysis tasks,
+        or view the results of previous analyses.
       dbinfo: "Database information"
       dbsize:
         one: "The database contains one document"

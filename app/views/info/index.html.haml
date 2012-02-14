@@ -1,39 +1,32 @@
 %ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
   %li{ 'data-role' => 'list-divider' }= t('.head', :app_name => APP_CONFIG['app_name'])
-  - if params.has_key? :first_time
-    %li
-      = link_to info_tutorial_path do
-        %h3= t('.tutorial_header')
-        %p= t('.tutorial_text', :app_name => APP_CONFIG['app_name'])
-  - elsif @user.nil?
-    %li= link_to t('.search'), search_path
-    %li= link_to t('.login'), user_path
+  - if @user.nil?
+    %li= link_to info_tutorial_path do
+      %h3= t('.tutorial_header')
+      %p= t('.tutorial_text', :app_name => APP_CONFIG['app_name'])
+    %li{ 'data-theme' => 'e' }=link_to user_path do
+      %h3= t('.login')
+      %h3= t('.login_text')
+    %li= link_to search_path do
+      %h3= t('.search')
+      %p= t('.search_text')
   - else
-    %li= link_to t('.search'), search_path
-    %li= link_to t('.datasets', :count => @user.datasets.count), datasets_path
-    %li
-      = link_to user_path do
-        %h3= t('.account_header')
-        %p= t('.account_text', :app_name => APP_CONFIG['app_name'])
+    %li= link_to search_path do
+      %h3= t('.search')
+      %p= t('.search_text')
+    %li= link_to datasets_path do
+      %h3= t('.datasets', :count => @user.datasets.count)
+      %p= t('.datasets_text')
+    %li= link_to user_path do
+      %h3= t('.account_header')
+      %p= t('.account_text', :app_name => APP_CONFIG['app_name'])
     %li{ 'data-role' => 'list-divider' }= t('.dbinfo')
     %li= t('.dbsize', :count => @database_size)
     %li= t('.all_datasets', :count => Dataset.count)
-
-%div.doublepad
-
-%div{ 'data-role' => 'collapsible', 'data-content-theme' => 'c' }
-  %h3= t('.help')
-  %ul{ 'data-role' => 'listview', 'data-inset' => 'true' }
-    - unless params.has_key? :first_time
-      %li
-        = link_to info_tutorial_path do
-          %h3= t('.tutorial_header')
-          %p= t('.tutorial_text', :app_name => APP_CONFIG['app_name'])
-    %li
-      = link_to info_faq_path do
-        %h3= t('.faq_header')
-        %p= t('.faq_text', :app_name => APP_CONFIG['app_name'])
-    %li
-      = link_to info_privacy_path do
-        %h3= t('.privacy_header')
-        %p= t('.privacy_text', :app_name => APP_CONFIG['app_name'])
+    %li{ 'data-role' => 'list-divider' }= t('.help')
+    %li= link_to info_tutorial_path do
+      %h3= t('.tutorial_header')
+      %p= t('.tutorial_text', :app_name => APP_CONFIG['app_name'])
+    %li= link_to info_faq_path do
+      %h3= t('.faq_header')
+      %p= t('.faq_text', :app_name => APP_CONFIG['app_name'])
