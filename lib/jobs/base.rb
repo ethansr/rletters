@@ -88,6 +88,19 @@ module Jobs
     end
     # :nocov:
     
+    # Don't restart jobs on error
+    #
+    # Restarting isn't going to help resolve any errors that are presented, so
+    # don't try it.
+    #
+    # @api private
+    # @return [Integer] returns 1
+    # :nocov:
+    def max_attempts
+      1
+    end
+    # :nocov:
+    
   end
   
 end
