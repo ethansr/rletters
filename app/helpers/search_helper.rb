@@ -170,6 +170,9 @@ module SearchHelper
   #   facet_link_list
   #   # "<li>Active Filters</li>...<li>Authors</li><li><a href='...'>Johnson</a></li>..."
   def facet_link_list
+    # Make sure there are facets
+    return ''.html_safe unless Document.facets
+    
     # Convert the active facet queries to facets
     active_facets = []
     if params[:fq]
