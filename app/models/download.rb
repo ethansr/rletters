@@ -146,6 +146,10 @@ class Download < ActiveRecord::Base
   # @api private
   # @return [undefined]
   def delete_file
-    File::delete(filename)
+    begin
+      File::delete(filename)
+    rescue
+      # FIXME: Odd.  Print a warning?
+    end
   end
 end
