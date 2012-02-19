@@ -24,10 +24,13 @@ class SearchController < ApplicationController
     # Treat 'page' and 'per_page' separately
     @page = 0
     @page = Integer(params[:page]) if params.has_key? :page
+    @page = 0 if @page < 0
 
     @per_page = 10
     @per_page = @user.per_page if @user
     @per_page = Integer(params[:per_page]) if params.has_key? :per_page
+    @per_page = 0 if @per_page < 0
+    @per_page = 100 if @per_page > 100
     
     offset = @page * @per_page
     limit = @per_page
