@@ -15,7 +15,7 @@ function createCollapsibleList() {
     var toolsCollapse = $(document.createElement('div')).attr('class', 'toolscollapse').append($(document.createElement('h3')).text(toolsButtonText));
     toolsList.clone().appendTo(toolsCollapse);
     toolsCollapse.appendTo(leftColumn);
-    toolsCollapse.collapsible({theme:'c',refresh:true,collapsed:false});
+    toolsCollapse.collapsible({theme:'c',refresh:true,collapsed:false}).trigger('updatelayout');
   }
   
   if (facetList.length) {
@@ -23,7 +23,7 @@ function createCollapsibleList() {
     var facetCollapse = $(document.createElement('div')).attr('class', 'facetcollapse').append($(document.createElement('h3')).text(facetButtonText));
     facetList.clone().appendTo(facetCollapse);
     facetCollapse.appendTo(leftColumn);
-    facetCollapse.collapsible({theme:'c',refresh:true,collapsed:true});
+    facetCollapse.collapsible({theme:'c',refresh:true,collapsed:true}).trigger('updatelayout');
   }
 }
 function destroyCollapsibleList() {

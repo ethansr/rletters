@@ -19,7 +19,7 @@ function checkLibraryList() {
     success: function(data) {
       var libraryList = $.mobile.activePage.find('div.librarylist')
       libraryList.html(data);
-      libraryList.find('ul').listview();
+      libraryList.find('ul').listview().trigger('updatelayout');
     }
   });
 }

@@ -22,7 +22,7 @@ function updateDatasetList() {
   datasetList.load(ajax_url,
     function() {
       $(this).data('timeout', window.setTimeout(updateDatasetList, 4000));
-      $(this).find('ul').listview();
+      $(this).find('ul').listview().trigger('updatelayout');
     });
 }
 
@@ -47,7 +47,7 @@ function updateTaskList() {
   taskList.load(ajax_url,
     function() {
       window.setTimeout(updateTaskList, 4000);
-      $(this).find('ul').listview();
+      $(this).find('ul').listview().trigger('updatelayout');
     });
 }
 

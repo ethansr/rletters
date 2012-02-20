@@ -29,6 +29,8 @@ function createPlotDatesGraph() {
       
   var chart = new google.visualization.LineChart(graphContainer[0]);
   chart.draw(data, options);
+  
+  graphContainer.trigger('updatelayout');
 }
 
 $('div[data-role=page]').live('pageshow', function (event, data) { createPlotDatesGraph(); });
