@@ -101,8 +101,8 @@ class ApplicationController < ActionController::Base
   def trailing_slash?
     # If fullpath isn't defined (e.g., in testing), then just return true
     # so we don't do unnecessary redirects.
-    return true if request.fullpath.blank?
+    return true if request.env['REQUEST_URI'].blank?
     
-    request.fullpath.match(/[^\?]+/).to_s.last == '/'
+    request.env['REQUEST_URI'].match(/[^\?]+/).to_s.last == '/'
   end
 end
