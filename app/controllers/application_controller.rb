@@ -95,10 +95,14 @@ class ApplicationController < ActionController::Base
     redirect_to url_for(params.merge(:trailing_slash => true)), :status => 301 unless trailing_slash?
   end
 
-  # Does the REQUEST_URI end with a trailing slash?
+  # Does the URL end with a trailing slash?
   # @api private
-  # @return [Boolean] true if request URI ends with /
+  # @return [Boolean] true if request URL ends with /
   def trailing_slash?
-    request.env['REQUEST_URI'].match(/[^\?]+/).to_s.last == '/'
+    # If fullpath isn't defined (e.g., in testing), then just return true
+    # so we don't do unnecessary redirects.
+    return true if request.fullpath.blank?
+    
+    request.fullpath.match(/[^\?]+/).to_s.last == '/'
   end
 end
