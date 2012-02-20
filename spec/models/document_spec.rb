@@ -233,10 +233,9 @@ describe Document do
         f.hits.should eq(7)
       end
       
-      it "sets year facet queries for non-present years to zero" do
+      it "does not include year facet queries for non-present years" do
         f = Document.facets.for_field(:year).detect { |f| f.value == '[1940 TO 1949]' }
-        f.should be
-        f.hits.should eq(0)
+        f.should_not be
       end
     end
   end

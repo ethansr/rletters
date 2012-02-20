@@ -51,6 +51,7 @@ module Solr
       if facets
         facets.each do |f|
           f.items.each do |it|
+            next if Integer(it.hits) == 0
             @all << Facet.new(:name => f.name, :value => it.value, :hits => it.hits)
           end
         end
@@ -59,6 +60,7 @@ module Solr
       # Step through the facet queries
       if facet_queries
         facet_queries.each do |k, v|
+          next if Integer(v) == 0
           @all << Facet.new(:query => k, :hits => v)
         end
       end
