@@ -192,6 +192,7 @@ en:
       submit_label: "Save user options"
       default_style: "Default citation style"
       library_links: "Look up documents using your local library"
+      loading_libraries: "Loading libraries..."
     new:
       head: "Welcome!"
       intro: >
@@ -298,6 +299,8 @@ en:
     faq:
       head: "Frequently Asked Questions"
   datasets:
+    index:
+      loading_datasets: "Loading datasets..."
     dataset_list:
       num_datasets_found:
         zero: "no datasets found"
@@ -323,6 +326,7 @@ en:
       created_at: "Created at: %{date}"
       deleted: "Cleared all failed analysis tasks."
       no_failed: "No failed tasks available to clear!"
+      loading_tasks: "Loading analysis tasks..."
       new_task: "Start a new analysis task"
       delete: "Delete this dataset"
     task_list:

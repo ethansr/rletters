@@ -6,6 +6,8 @@ function createPlotDatesGraph() {
   if (graphContainer.length == 0)
     return;
   
+  graphContainer.show();
+  
   var data = new google.visualization.DataTable();
   data.addColumn('number', 'Year');
   data.addColumn('number', 'Documents');
