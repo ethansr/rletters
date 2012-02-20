@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   private
   
-  before_filter :get_user, :set_locale, :set_timezone
+  before_filter :get_user, :set_locale, :set_timezone, :ensure_trailing_slash
   
   # Get the user if one is currently logged in
   #
@@ -80,5 +80,25 @@ class ApplicationController < ActionController::Base
     if @user.nil?
       redirect_to user_path, :rel => :external, :notice => I18n.t('all.login_warning')
     end
+  end
+  
+  # Make sure there's a trailing slash on the URL
+  #
+  # jQuery Mobile really wants us always to have a trailing slash on our
+  # URLs, since we often are redirecting to subdirectory pages (e.g., from
+  # /datasets/ to /datasets/2/ to /datasets/2/task/3/results/, etc.).  This
+  # helper makes sure we've always got a trailing slash.  Don't disable it!
+  #
+  # @api private
+  # @return [undefined]
+  def ensure_trailing_slash
+    redirect_to url_for(params.merge(:trailing_slash => true)), :status => 301 unless trailing_slash?
+  end
+
+  # Does the REQUEST_URI end with a trailing slash?
+  # @api private
+  # @return [Boolean] true if request URI ends with /
+  def trailing_slash?
+    request.env['REQUEST_URI'].match(/[^\?]+/).to_s.last == '/'
   end
 end

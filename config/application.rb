@@ -33,15 +33,14 @@ module RLetters
     # Require attributes to be whitelisted to be available for mass assignment
     config.active_record.whitelist_attributes = true
     
+    # Generate all URLs with trailing slashes
+    config.action_controller.default_url_options = { :trailing_slash => true }
+    
     # Default to no tests generated
     config.generators do |g|
       g.test_framework nil
     end
     
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
-
     # Add vendor locales (for CLDR files)
     config.i18n.load_path += Dir[Rails.root.join('vendor', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :'en-US'
