@@ -18,8 +18,17 @@ describe SearchHelper do
   #describe '#list_links_for_facet' do
   #end
   
-  #describe '#facet_link_list' do
-  #end
+  describe '#facet_link_list' do
+    context 'when no facets present' do
+      before(:each) do
+        Document.stub(:facets).and_return(nil)
+      end
+      
+      it "returns an empty string" do
+        helper.facet_link_list.should eq('')
+      end
+    end
+  end
   
   #describe '#document_bibliography_entry' do
   #end
