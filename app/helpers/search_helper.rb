@@ -59,11 +59,10 @@ module SearchHelper
   def render_pagination
     num_pages = Document.num_results.to_f / @per_page.to_f
     num_pages = Integer(num_pages.ceil)
+    return '' if num_pages == 0
 
     content_tag :div, :class => 'ui-grid-c' do
-      content = ''.html_safe
-
-      content << content_tag(:div, :class => 'ui-block-a') do
+      content = content_tag(:div, :class => 'ui-block-a') do
         if @page != 0
           page_link(I18n.t(:'search.index.first_button'), 0, 'back')
         end

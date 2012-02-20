@@ -108,6 +108,10 @@ describe "search/index" do
     it 'puts the search text in the search box' do
       rendered.should have_selector('input[value=shatner]')
     end
+    
+    it "doesn't have any pagination links" do
+      rendered.should_not have_selector('p.pagination a')
+    end
   end
   
   context 'when an advanced search is performed' do
