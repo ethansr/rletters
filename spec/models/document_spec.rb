@@ -216,6 +216,11 @@ describe Document do
         f.should_not be
       end
       
+      it "does not include authors_facet entries for authors with no hits" do
+        f = Document.facets.for_field(:authors_facet).detect { |f| f.value == 'No Hits' }
+        f.should_not be
+      end
+      
       it "parses journal_facet correctly" do
         f = Document.facets.for_field(:journal_facet).detect { |f| f.value == 'Ethology' }
         f.should be

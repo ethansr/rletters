@@ -50,7 +50,7 @@ Server: Jetty(6.1.3)
 	{
 	 'shasum'=>'008896a5c58241b65088d931e02f3bea02fc3bf0',
 	 'doi'=>'10.1111/j.1439-0310.2009.01716.x',
-	 'authors'=>'Juan Moreno, Juan-Gabriel MartÃ­nez, Judith Morales, Elisa Lobato, Santiago Merino, Gustavo TomÃ¡s, Rodrigo A. VÃ¡squez, Erich MÃ¶stl, JosÃ© L. Osorno',
+	 'authors'=>'Juan Moreno, Juan-Gabriel Martínez, Judith Morales, Elisa Lobato, Santiago Merino, Gustavo Tomás, Rodrigo A. Vásquez, Erich Möstl, José L. Osorno',
 	 'title'=>'Paternity Loss in Relation to Male Age, Territorial Behaviour and Stress in the Pied Flycatcher',
 	 'journal'=>'Ethology',
 	 'year'=>'2010',
@@ -144,11 +144,12 @@ Server: Jetty(6.1.3)
 	 'Caleb E. Murphy',1,
 	 'Carlos A. Botero',1,
 	 'Elisa Lobato',1,
-	 'Erich MÃ¶stl',1,
+	 'Erich Möstl',1,
 	 'Ethan D. Clotfelter',1,
 	 'Gabriele Gerlach',1,
-	 'Gustavo TomÃ¡s',1,
-	 'Jennifer L. Snekser',1],
+	 'Gustavo Tomás',1,
+	 'Jennifer L. Snekser',1,
+	 'No Hits',0],
 	'journal_facet'=>[
 	 'Ethology',10]},
   'facet_dates'=>{}}}
