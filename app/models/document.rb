@@ -138,10 +138,12 @@ class Document
   #   returning both bibliographic data and full document text).
   # @option params [Integer] :start alternate way to set +:offset+ in +options+
   # @option params [Integer] :rows alternate way to set +:limit+ in +options+
+  # @option params [String] :sort alternate way to set +:sort+ in +options+
   #
   # @option options [Integer] :offset offset within the result set at which to
   #   begin returning documents
   # @option options [Integer] :limit maximum number of results to return
+  # @option options [String] :sort sorting string ('method direction')
   #
   # @return [Array<Document>] set of documents matching query.  An empty 
   #   array will be returned if no documents match.
@@ -156,6 +158,7 @@ class Document
     # Map from common Rails options to Solr options
     params[:start] = options[:offset] if options[:offset]
     params[:rows] = options[:limit] if options[:limit]
+    params[:sort] = options[:sort] if options[:sort]
 
     # Do the Solr query
     solr_response = Solr::Connection.find params

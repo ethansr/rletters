@@ -39,7 +39,7 @@ class SearchController < ApplicationController
     if params[:precise] or params[:q]
       @sort = 'score desc'
     else
-      @sort = 'title_sort asc'
+      @sort = 'year_sort desc'
     end
     @sort = params[:sort] if params.has_key? :sort
 
@@ -50,7 +50,8 @@ class SearchController < ApplicationController
     @solr_fq = solr_query[:fq]
 
     # Get the documents
-    @documents = Document.find_all_by_solr_query(solr_query, :offset => offset, :limit => limit)
+    @documents = Document.find_all_by_solr_query(solr_query,
+      :sort => @sort, :offset => offset, :limit => limit)
   end
   
   # Show the advanced search page
@@ -145,10 +146,9 @@ class SearchController < ApplicationController
     # example)
     params.delete_if { |k, v| v.blank? }
 
-    # Initialize by copying over the faceted-browsing query and sort
+    # Initialize by copying over the faceted-browsing query
     query_params = {}
     query_params[:fq] = params[:fq] unless params[:fq].nil?
-    query_params[:sort] = params[:sort] unless params[:sort].blank?
         
     if params.has_key? :precise
       q_array = []
