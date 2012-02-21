@@ -134,11 +134,11 @@ module SearchHelper
       I18n.t('search.index.sort_score')
     when 'title_sort'
       "#{Document.human_attribute_name('title')} #{dir}"
-    when 'author_sort'
+    when 'authors_sort'
       "#{Document.human_attribute_name('authors')} #{dir}"
     when 'journal_sort'
       "#{Document.human_attribute_name('journal')} #{dir}"
-    when 'year'
+    when 'year_sort'
       "#{Document.human_attribute_name('year')} #{dir}"
     end
     
