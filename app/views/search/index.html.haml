@@ -20,6 +20,11 @@
     %li.toolsheader{ 'data-role' => 'list-divider' }= t('.tools')
   %div.verticalpad
   %ul.toolslist{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
+    %li{ 'data-icon' => 'forward' }
+      = sort_to_string(@sort)
+      %ul
+        - sort_methods.each do |s|
+          %li= link_to sort_to_string(s), search_path(params.merge({ :sort => s })), 'data-transition' => 'none'
     - if @user.nil?
       %li{ 'data-theme' => 'e' }= link_to t('.login_prompt'), user_path
     - else

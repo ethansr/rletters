@@ -110,6 +110,12 @@
         journals aren't tokenized whatsoever) -->
    <field name="authors_facet" type="text_commaDelimited" indexed="true" stored="false" omitNorms="true" />
    <field name="journal_facet" type="text_noTokens" indexed="true" stored="false" omitNorms="true" />
+   
+   <!-- Sorting requires fields that aren't tokenized at all -->
+   <field name="authors_sort" type="text_noTokens" indexed="true" stored="false" omitNorms="true" />
+   <field name="title_sort" type="text_noTokens" indexed="true" stored="false" omitNorms="true" />
+   <field name="journal_sort" type="text_noTokens" indexed="true" stored="false" omitNorms="true" />
+   <field name="year_sort" type="text_noTokens" indexed="true" stored="false" omitNorms="true" />
  </fields>
 
  <!-- Field to use to determine and enforce document uniqueness. 
@@ -125,5 +131,11 @@
  <!-- Copy our facet fields -->
  <copyField source="authors" dest="authors_facet"/>
  <copyField source="journal" dest="journal_facet"/>
+
+ <!-- Copy our sort fields -->
+ <copyField source="authors" dest="authors_sort"/>
+ <copyField source="title" dest="title_sort"/>
+ <copyField source="journal" dest="journal_sort"/>
+ <copyField source="year" dest="year_sort"/>
 
 </schema>

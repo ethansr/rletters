@@ -34,6 +34,14 @@ class SearchController < ApplicationController
     
     offset = @page * @per_page
     limit = @per_page
+    
+    # Default sort to relevance if there's a search, otherwise title
+    if params[:precise] or params[:q]
+      @sort = 'score desc'
+    else
+      @sort = 'title_sort asc'
+    end
+    @sort = params[:sort] if params.has_key? :sort
 
     # Expose the precise Solr search so we can use it to create datasets
     solr_query = search_params_to_solr_query(params)
@@ -137,9 +145,10 @@ class SearchController < ApplicationController
     # example)
     params.delete_if { |k, v| v.blank? }
 
-    # Initialize by copying over the faceted-browsing query
+    # Initialize by copying over the faceted-browsing query and sort
     query_params = {}
     query_params[:fq] = params[:fq] unless params[:fq].nil?
+    query_params[:sort] = params[:sort] unless params[:sort].blank?
         
     if params.has_key? :precise
       q_array = []

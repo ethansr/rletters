@@ -87,6 +87,63 @@ module SearchHelper
       content
     end
   end
+  
+  
+  # Return an array of all sort methods
+  #
+  # @api public
+  # @return [Array<String>] all possible sorting strings
+  # @example Create links to all the sort methods
+  #   <%= sort_methods.each do |s| %>
+  #     <%= link_to ... %>
+  def sort_methods
+    [
+      'score desc',
+      'authors_sort asc',
+      'authors_sort desc',
+      'title_sort asc',
+      'title_sort desc',
+      'journal_sort asc',
+      'journal_sort desc',
+      'year_sort asc',
+      'year_sort desc'
+    ]
+  end
+  
+  # Get the given sort method as a string
+  #
+  # This function converts a sort method ('relevance', 'title', 'author',
+  # 'journal', 'year') and sort direction ('asc' or 'desc') into a
+  # user-friendly string.
+  #
+  # @api public
+  # @param [String] sort sorting string
+  # @return [String] user-friendly representation of sort method
+  # @example Get the user-friendly version of 'score desc'
+  #   sort_to_string 'score desc'
+  #   # => 'Relevance'
+  def sort_to_string(sort)
+    parts = sort.split(' ')
+    return I18n.t('search.index.sort_unknown') unless parts.count == 2
+    
+    method = parts[0]    
+    dir = I18n.t("search.index.sort_#{parts[1]}")
+    
+    method_spec = case method
+    when 'score'
+      I18n.t('search.index.sort_score')
+    when 'title_sort'
+      "#{Document.human_attribute_name('title')} #{dir}"
+    when 'author_sort'
+      "#{Document.human_attribute_name('authors')} #{dir}"
+    when 'journal_sort'
+      "#{Document.human_attribute_name('journal')} #{dir}"
+    when 'year'
+      "#{Document.human_attribute_name('year')} #{dir}"
+    end
+    
+    "#{I18n.t('search.index.sort_prefix')} #{method_spec}"
+  end
 
 
   # Create a link to the given set of facets
@@ -102,10 +159,10 @@ module SearchHelper
   # @return [String] link to search for the given set of facets
   # @example Get a "remove all facets" link
   #   facet_link("Remove all facets", [])
-  #   # == link_to "Remove all facets", search_path
+  #   # => link_to "Remove all facets", search_path
   # @example Get a link to a given set of facets
   #   facet_link("Some facets", [...])
-  #   # == link_to "Some facets", search_path({ :fq => [ ... ] })
+  #   # => link_to "Some facets", search_path({ :fq => [ ... ] })
   def facet_link(text, facets)
     new_params = params.dup
 

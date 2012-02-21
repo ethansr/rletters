@@ -20,6 +20,8 @@ describe "search/index" do
     assign(:solr_q, solr_query[:q])
     assign(:solr_qt, solr_query[:qt])
     assign(:solr_fq, solr_query[:fq])
+    
+    assign(:sort, params[:sort] || 'score desc')
         
     assign(:documents, Document.find_all_by_solr_query(solr_query))
   end
@@ -47,6 +49,16 @@ describe "search/index" do
       
       it 'shows the login prompt' do
         rendered.should have_selector('li[data-theme=e]', :content => 'Log in to analyze results!')
+      end
+      
+      it "shows a link to sort by score" do
+        expected = url_for(params.merge({ :sort => 'score desc' }))
+        rendered.should have_selector("a[href='#{expected}']")
+      end
+      
+      it "shows a link to sort ascending by journal" do
+        expected = url_for(params.merge({ :sort => 'journal_sort asc' }))
+        rendered.should have_selector("a[href='#{expected}']")
       end
       
       it 'shows the advanced search link' do
