@@ -62,7 +62,7 @@ describe SearchController do
     context 'with offset and limit parameters' do
       before(:each) do
         default_sq = { :q => "*:*", :qt => "precise" }
-        options = { :offset => 20, :limit => 20 }
+        options = { :sort => "year_sort desc", :offset => 20, :limit => 20 }
         Document.should_receive(:find_all_by_solr_query).with(default_sq, options).and_return([])
 
         get :index, { :page => "1", :per_page => "20" }
