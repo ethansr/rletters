@@ -32,13 +32,24 @@ module Jobs
         # Write out the dates to an array
         dates = []
         dataset.entries.find_each do |e|
-          # FIXME: Replace Document.find with something thinner that retrieves
-          # only the year?
           begin
-            doc = Document.find e.shasum
+            # Build a Solr query to fetch only the year for this document
+            solr_query = {}
+            solr_query[:rows] = 1
+            solr_query[:q] = "shasum:#{e.shasum}"
+            solr_query[:qt] = 'precise'
+            solr_query[:fl] = 'year'
+            solr_query[:facet] = false
+
+            solr_response = Solr::Connection.find solr_query
+            next unless solr_response.ok?
+            next unless solr_response["response"]["docs"].count == 1
+
+            year = solr_response["response"]["docs"][0]["year"]
+            year.force_encoding("UTF-8") if RUBY_VERSION >= "1.9.0"
             
             # Support Y-M-D or Y/M/D dates
-            parts = doc.year.split(/[-\/]/)
+            parts = year.split(/[-\/]/)
             if parts.count == 3 || parts.count == 1
               year = Integer(parts[0])
             else

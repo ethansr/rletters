@@ -21,23 +21,6 @@ module Jobs
     # We're connecting to Solr, get the connection mechanisms
     extend SolrHelpers
     
-    # Check the response from Solr for a host of common errors
-    #
-    # This method will throw if the Solr response is not valid.
-    #
-    # @api private
-    # @return [undefined]
-    # @example Check that we have a good Solr response
-    #   solr_response = Solr::Connection.find ...
-    #   check_solr_response solr_response
-    #   # Will have thrown if the response is not valid
-    def check_solr_response(solr_response)
-      raise StandardError, 'Unknown error in Solr response' unless solr_response["response"]
-      raise StandardError, 'Unknown error in Solr response' unless solr_response["response"]["numFound"]
-      raise StandardError, 'Attempted to save empty query' unless solr_response["response"]["numFound"] > 0
-      raise StandardError, 'Unknown error in Solr response' unless solr_response["response"]["docs"]
-    end
-    
     # Create a dataset for the user
     #
     # @api public
@@ -76,7 +59,9 @@ module Jobs
       begin
         # Get the first Solr response
         solr_response = Solr::Connection.find solr_query
-        check_solr_response solr_response
+
+        raise StandardError, 'Unknown error in Solr response' unless solr_response.ok?
+        raise StandardError, 'Attempted to save empty query' unless solr_response["response"]["numFound"] > 0
         
         # Get our parameters
         docs_to_fetch = solr_response["response"]["numFound"]
@@ -108,7 +93,9 @@ module Jobs
           if docs_to_fetch > 0
             solr_query[:start] = solr_query[:start] + docs_fetched
             solr_response = Solr::Connection.find solr_query
-            check_solr_response solr_response
+
+            raise StandardError, 'Unknown error in Solr response' unless solr_response.ok?
+            raise StandardError, 'Attempted to save empty query' unless solr_response["response"]["numFound"] > 0
           end
         end
       rescue StandardError => e
