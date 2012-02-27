@@ -32,43 +32,37 @@ module Jobs
         # Write out the dates to an array
         dates = []
         dataset.entries.find_in_batches do |group|
-          begin
-            # Build a Solr query to fetch only the year for this group
-            solr_query = {}
-            solr_query[:rows] = group.count
-            query_str = group.map { |e| e.shasum }.join(' OR ')
-            solr_query[:q] = "shasum:(#{query_str})"
-            solr_query[:qt] = 'precise'
-            solr_query[:fl] = 'year'
-            solr_query[:facet] = false
+          # Build a Solr query to fetch only the year for this group
+          solr_query = {}
+          solr_query[:rows] = group.count
+          query_str = group.map { |e| e.shasum }.join(' OR ')
+          solr_query[:q] = "shasum:(#{query_str})"
+          solr_query[:qt] = 'precise'
+          solr_query[:fl] = 'year'
+          solr_query[:facet] = false
 
-            solr_response = Solr::Connection.find solr_query
-            raise StandardError, "Unknown error in Solr response" unless solr_response.ok?
-            raise StandardError, "Failed to get batch of results in PlotDates" unless solr_response["response"]["docs"].count == group.count
+          solr_response = Solr::Connection.find solr_query
+          raise StandardError, "Unknown error in Solr response" unless solr_response.ok?
+          raise StandardError, "Failed to get batch of results in PlotDates" unless solr_response["response"]["docs"].count == group.count
 
-            solr_response['response']['docs'].each do |doc|
-              year = doc["year"]
-              year.force_encoding("UTF-8") if RUBY_VERSION >= "1.9.0"
+          solr_response['response']['docs'].each do |doc|
+            year = doc["year"]
+            year.force_encoding("UTF-8") if RUBY_VERSION >= "1.9.0"
 
-              # Support Y-M-D or Y/M/D dates
-              parts = year.split(/[-\/]/)
-              if parts.count == 3 || parts.count == 1
-                year = Integer(parts[0])
-              else
-                next
-              end
-
-              year_array = dates.assoc(year)
-              if year_array
-                year_array[1] = year_array[1] + 1
-              else
-                dates << [ year, 1 ]
-              end
+            # Support Y-M-D or Y/M/D dates
+            parts = year.split(/[-\/]/)
+            if parts.count == 3 || parts.count == 1
+              year = Integer(parts[0])
+            else
+              next
             end
-          rescue
-            # This means that a whole batch of results failed, we want to raise
-            # an error in that case
-            raise StandardError, "Failed to get batch of results in PlotDates"
+
+            year_array = dates.assoc(year)
+            if year_array
+              year_array[1] = year_array[1] + 1
+            else
+              dates << [ year, 1 ]
+            end
           end
         end
         
