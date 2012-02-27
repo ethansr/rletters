@@ -46,8 +46,8 @@ module Jobs
             raise StandardError, "Unknown error in Solr response" unless solr_response.ok?
             raise StandardError, "Failed to get batch of results in PlotDates" unless solr_response["response"]["docs"].count == group.count
 
-            solr_response['response']['docs'].each do |d|
-              year = solr_response["response"]["docs"][0]["year"]
+            solr_response['response']['docs'].each do |doc|
+              year = doc["year"]
               year.force_encoding("UTF-8") if RUBY_VERSION >= "1.9.0"
 
               # Support Y-M-D or Y/M/D dates
