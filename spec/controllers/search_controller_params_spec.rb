@@ -129,6 +129,7 @@ describe SearchController do
       params = { :q => 'test' }
       ret = controller.send(:search_params_to_solr_query, params)
       ret[:q].should eq('test')
+      ret[:qt].should eq('standard')
     end
   end
   

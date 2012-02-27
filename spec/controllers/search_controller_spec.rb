@@ -9,10 +9,10 @@ describe SearchController do
     context 'with empty search results' do
       before(:each) do
         Examples.stub_with(/localhost\/solr\/.*/, :standard_empty_search)
+        get :index
       end
 
       it 'loads successfully' do
-        get :index
         response.should be_success
       end
     end
@@ -20,42 +20,69 @@ describe SearchController do
     context 'with precise search results' do
       before(:each) do
         Examples.stub_with(/localhost\/solr\/.*/, :precise_all_docs)
+        get :index
       end
 
       it 'assigns the documents variable' do
-        get :index
         assigns(:documents).should be
       end
 
       it 'assigns the right number of documents' do
-        get :index
         assigns(:documents).should have(10).items
       end
 
       it 'assigns solr_q' do
-        get :index
         assigns(:solr_q).should eq('*:*')
       end
 
       it 'assigns solr_qt' do
-        get :index
         assigns(:solr_qt).should eq('precise')
       end
 
       it 'does not assign solr_fq' do
-        get :index
         assigns(:solr_fq).should be_nil
+      end
+
+      it 'sorts by year, descending' do
+        assigns(:sort).should eq('year_sort desc')
       end
     end
 
     context 'with faceted search results' do
       before(:each) do
         Examples.stub_with(/localhost\/solr\/.*/, :precise_facet_author_and_journal)
+        get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"', 'journal_facet:"Ethology"' ] }
       end
 
       it 'assigns solr_fq' do
-        get :index, { :fq => [ 'authors_facet:"Amanda M. Koltz"', 'journal_facet:"Ethology"' ] }
         assigns(:solr_fq).should be
+      end
+
+      it 'sorts by year, descending' do
+        assigns(:sort).should eq('year_sort desc')
+      end
+    end
+
+    context 'with a dismax search' do
+      before(:each) do
+        Examples.stub_with(/localhost\/solr\/.*/, :standard_search_diversity)
+        get :index, { :q => 'diversity' }
+      end
+
+      it 'assigns solr_q' do
+        assigns(:solr_q).should eq('diversity')
+      end
+
+      it 'assigns solr_qt' do
+        assigns(:solr_qt).should eq('standard')
+      end
+
+      it 'does not assign solr_fq' do
+        assigns(:solr_fq).should be_nil
+      end
+
+      it 'sorts by score, descending' do
+        assigns(:sort).should eq('score desc')
       end
     end
 

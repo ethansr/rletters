@@ -212,11 +212,12 @@ class SearchController < ApplicationController
       end
     else
       # Simple search
-      if not params.has_key? :q
+      unless params.has_key? :q
         query_params[:q] = "*:*"
         query_params[:qt] = "precise"
       else
         query_params[:q] = params[:q]
+        query_params[:qt] = "standard"
       end
     end
     
