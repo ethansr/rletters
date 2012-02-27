@@ -65,12 +65,11 @@ module Jobs
       solr_query[:rows] = 1000
       solr_query[:q] = q
       solr_query[:fq] = fq
-      
-      if qt == 'precise'
-        solr_query[:qt] = 'dataset_precise'
-      else
-        solr_query[:qt] = 'dataset'
-      end
+      solr_query[:qt] = qt
+
+      # Only get shasum, no facets
+      solr_query[:fl] = 'shasum'
+      solr_query[:facet] = false
       
       # We trap all of this so that if we get exceptions we can clean them
       # up and delete any and all fledgling dataset parts
