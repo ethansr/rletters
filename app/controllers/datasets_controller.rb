@@ -95,6 +95,20 @@ class DatasetsController < ApplicationController
 
     redirect_to datasets_path
   end
+
+  # Add a single document to a dataset
+  # @api public
+  # @return [undefined]
+  def add
+    @dataset = @user.datasets.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @dataset
+    @document = Document.find(params[:shasum])
+    raise ActiveRecord::RecordNotFound unless @document
+
+    # No reason for this to be a delayed job, just do the create
+    @dataset.entries.create({ :shasum => params[:shasum] })
+    redirect_to dataset_path(@dataset)
+  end
   
   # Show the list of analysis tasks for this dataset
   #

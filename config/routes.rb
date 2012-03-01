@@ -5,6 +5,7 @@ RLetters::Application.routes.draw do
   match 'search' => 'search#index', :via => :get
   match 'search/advanced' => 'search#advanced', :via => :get
   match 'search/document/:id' => 'search#show', :via => :get, :as => 'search_show'
+  match 'search/document/:id/add' => 'search#add', :via => :get, :as => 'search_add'
   match 'search/document/:id/mendeley' => 'search#to_mendeley', :via => :get, :as => 'mendeley_redirect'
   match 'search/document/:id/citeulike' => 'search#to_citeulike', :via => :get, :as => 'citeulike_redirect'
 
@@ -15,6 +16,7 @@ RLetters::Application.routes.draw do
     end
     
     member do
+      get 'add'
       get 'task_list'
       get 'delete'
       get 'task/:class/start' => 'datasets#task_start', :constraints => { :class => /[A-Z][A-Za-z]+/u }

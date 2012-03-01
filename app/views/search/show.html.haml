@@ -13,6 +13,7 @@
 %ul{ 'data-role' => 'listview', 'data-inset' => 'true', 'data-theme' => 'd', 'data-divider-theme' => 'c' }
   - if @user
     %li= link_to t('.single_dataset'), new_dataset_path(:q => "shasum:#{@document.shasum}", :qt => 'precise', :fq => nil), 'data-rel' => 'dialog'
+    %li= link_to t('.add_to_dataset'), search_add_path(:id => @document.shasum), 'data-rel' => 'dialog'
   %li{ 'data-role' => 'list-divider' }= t('.get')
   - unless @document.doi.blank?
     %li= link_to t('.publisher', :doi => @document.doi), "http://dx.doi.org/#{@document.doi}"

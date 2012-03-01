@@ -81,6 +81,18 @@ class SearchController < ApplicationController
       format.any { render(:file => Rails.root.join('public', '404.html'), :layout => false, :status => 406) and return }
     end
   end
+
+  # Add a single document to an existing dataset
+  # @api public
+  # @return [undefined]
+  def add
+    raise ActiveRecord::RecordNotFound unless @user
+    
+    @document = Document.find(params[:id])
+    @datasets = @user.datasets
+
+    render :layout => 'dialog'
+  end
   
   # Redirect to the Mendeley page for a document
   # @api public

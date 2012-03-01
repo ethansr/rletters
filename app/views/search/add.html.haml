@@ -1,0 +1,11 @@
+- content_for :title do
+  = t('.title')
+
+%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
+  - unless @datasets.count
+    %li{ 'data-theme' => 'e' }= t('.no_datasets')
+  - else
+    - @datasets.each do |dataset|
+      %li= link_to dataset.name, add_dataset_path(:id => @dataset.to_param, :shasum => @document.shasum)
+
+= link_to t('.cancel'), search_show_path(@document), 'data-rel' => 'back'

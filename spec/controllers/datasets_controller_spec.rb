@@ -157,6 +157,35 @@ describe DatasetsController do
       end
     end
   end
+
+  describe '#add' do
+    context 'when an invalid document is passed' do
+      it 'raises an exception' do
+        Examples.stub_with(/localhost\/solr\/.*/, :standard_empty_search)
+        
+        expect {
+          get :add, :id => datasets(:one).to_param, :shasum => 'fail'
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when all parameters are valid' do
+      before(:each) do
+        Examples.stub_with(/localhost\/solr\/.*/, :precise_one_doc)
+      end
+      
+      it 'adds to the dataset' do
+        expect {
+          get :add, :id => datasets(:one).to_param, :shasum => '00972c5123877961056b21aea4177d0dc69c7318'
+        }.to change{datasets(:one).entries.count}.by(1)
+      end
+
+      it 'redirects to the dataset page' do
+        get :add, :id => datasets(:one).to_param, :shasum => '00972c5123877961056b21aea4177d0dc69c7318'
+        response.should redirect_to(dataset_path(datasets(:one)))
+      end
+    end
+  end
   
   describe '#task_start' do
     context 'when an invalid class is passed' do

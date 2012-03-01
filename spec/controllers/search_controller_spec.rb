@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe SearchController do
 
-  fixtures :users
+  fixtures :users, :datasets, :dataset_entries
   
   describe '#index' do
     context 'with empty search results' do
@@ -168,6 +168,20 @@ describe SearchController do
         get :show, { :id => '00972c5123877961056b21aea4177d0dc69c7318', :format => 'csv' }
         controller.should respond_with(406)
       end
+    end
+  end
+
+  describe '#add' do
+    before(:each) do
+      Examples.stub_with(/localhost\/solr\/.*/, :precise_one_doc)
+      
+      @user = users(:john)
+      session[:user_id] = @user.to_param
+    end
+
+    it 'loads successfully' do
+      get :add, { :id => datasets(:one).to_param, :shasum => '00972c5123877961056b21aea4177d0dc69c7318' }
+      response.should be_success
     end
   end
   
