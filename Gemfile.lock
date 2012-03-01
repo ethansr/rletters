@@ -88,10 +88,10 @@ GEM
     i18n (0.6.0)
     jdbc-mysql (5.1.13)
     journey (1.0.1)
-    jquery-rails (1.0.15)
+    jquery-rails (1.0.18)
       railties (~> 3.0)
       thor (~> 0.14)
-    jquery_mobile-rails (1.0.1)
+    jquery_mobile-rails (1.1.0.rc1)
     jruby-openssl (0.7.5)
       bouncy-castle-java (>= 1.5.0146.1)
     json (1.6.5)
@@ -243,8 +243,8 @@ DEPENDENCIES
   guard-spork
   haml
   haml-rails
-  jquery-rails (= 1.0.15)
-  jquery_mobile-rails (= 1.0.1)
+  jquery-rails (= 1.0.18)
+  jquery_mobile-rails (= 1.1.0.rc1)
   jruby-openssl
   kramdown
   latex-decode (>= 0.0.11)

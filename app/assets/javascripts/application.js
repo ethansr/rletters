@@ -7,10 +7,5 @@
 //$(document).bind("mobileinit", function(){
 //});
 
-// Don't hide the toolbars on a tap
-$('div[data-role=page]').live('pageinit', function (event){ 
-  $.mobile.fixedToolbars.setTouchToggleEnabled(false);
-});
-
 // Load up the Google Visualization API
 google.load('visualization', '1.0', {'packages':['corechart']});

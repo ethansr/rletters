@@ -34,8 +34,8 @@ gem 'haml'
 gem 'haml-rails'
 gem 'kramdown'
 
-gem 'jquery-rails', '= 1.0.15'
-gem 'jquery_mobile-rails', '1.0.1'
+gem 'jquery-rails', '= 1.0.18'
+gem 'jquery_mobile-rails', '= 1.1.0.rc1'
 
 group :assets do
   gem 'sass-rails'
