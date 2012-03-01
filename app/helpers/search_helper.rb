@@ -2,7 +2,6 @@
 
 # Markup generators for the search controller
 module SearchHelper
-  include SolrHelpers
 
   # Return a formatted version of the number of documents in the last search
   #

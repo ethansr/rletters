@@ -18,9 +18,6 @@ module Jobs
     # @return [String] query type of this search
     attr_accessor :qt
     
-    # We're connecting to Solr, get the connection mechanisms
-    extend SolrHelpers
-    
     # Create a dataset for the user
     #
     # @api public

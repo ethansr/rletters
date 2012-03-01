@@ -5,8 +5,6 @@
 # This controller displays static information, such as the RLetters help, FAQ,
 # and privacy policy.
 class InfoController < ApplicationController
-  # We run a Solr query to get information to put on the index page
-  extend SolrHelpers
   
   # Query some Solr parameters for the index page
   #
