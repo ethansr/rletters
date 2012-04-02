@@ -100,7 +100,9 @@ class DatasetsController < ApplicationController
   # @api public
   # @return [undefined]
   def add
-    @dataset = @user.datasets.find(params[:id])
+    # This isn't a member action, so that it can be called easily from
+    # a form.  Get the id from :dataset_id, not :id.
+    @dataset = @user.datasets.find(params[:dataset_id])
     raise ActiveRecord::RecordNotFound unless @dataset
     @document = Document.find(params[:shasum])
     raise ActiveRecord::RecordNotFound unless @document

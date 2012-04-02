@@ -13,10 +13,10 @@ RLetters::Application.routes.draw do
   resources :datasets, :except => [ :edit, :update ] do
     collection do
       get 'dataset_list'
+      get 'add/:dataset_id/:shasum' => 'datasets#add', :as => 'add_to'
     end
     
     member do
-      get 'add'
       get 'task_list'
       get 'delete'
       get 'task/:class/start' => 'datasets#task_start', :constraints => { :class => /[A-Z][A-Za-z]+/u }
