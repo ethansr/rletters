@@ -189,6 +189,7 @@ en:
     add:
       title: "Add document to dataset"
       no_datasets: "No datasets available"
+      submit: "Add"
       cancel: "Cancel"
   users:
     show:

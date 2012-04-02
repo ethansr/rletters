@@ -1,11 +1,13 @@
 - content_for :title do
   = t('.title')
 
-%ul{ 'data-role' => 'listview', 'data-theme' => 'd', 'data-divider-theme' => 'b' }
-  - unless @datasets.count
+- unless @datasets.count
+  %ul{ 'data-role' => 'listview' }
     %li{ 'data-theme' => 'e' }= t('.no_datasets')
-  - else
-    - @datasets.each do |dataset|
-      %li= link_to dataset.name, add_dataset_path(:id => @dataset.to_param, :shasum => @document.shasum)
+- else
+  = form_tag add_dataset_path, :method => :get do
+    = hidden_field_tag :shasum, @document.shasum
+    = select_tag :id, options_from_collection_for_select(@datasets, 'to_param', 'name')
+    = submit_tag t('.submit')
 
 = link_to t('.cancel'), search_show_path(@document), 'data-rel' => 'back'
