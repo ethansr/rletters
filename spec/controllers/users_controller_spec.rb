@@ -15,14 +15,6 @@ describe UsersController do
       get :show
       response.should redirect_to(login_user_path)
     end
-    
-    it 'cannot be spoofed' do
-      session[:user_id] = '31337'
-      get :show
-      
-      assigns(:user).should_not be
-      session.should_not include(:user_id)
-    end
   end
   
   describe '#login' do
