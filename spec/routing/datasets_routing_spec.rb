@@ -27,6 +27,10 @@ describe DatasetsController do
     it 'routes to #destroy' do
       delete('/datasets/1').should route_to('datasets#destroy', :id => '1')
     end
+
+    it 'routes to #add' do
+      get('/datasets/add').should route_to('datasets#add')
+    end
     
     it "doesn't route to #update" do
       put('/datasets/1').should_not be_routable

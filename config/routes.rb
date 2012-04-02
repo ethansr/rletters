@@ -13,7 +13,7 @@ RLetters::Application.routes.draw do
   resources :datasets, :except => [ :edit, :update ] do
     collection do
       get 'dataset_list'
-      get 'add/:dataset_id/:shasum' => 'datasets#add', :as => 'add_to'
+      get 'add' => 'datasets#add', :as => 'add_to'
     end
     
     member do
