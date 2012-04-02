@@ -164,7 +164,7 @@ describe DatasetsController do
         Examples.stub_with(/localhost\/solr\/.*/, :standard_empty_search)
         
         expect {
-          get :add, :id => datasets(:one).to_param, :shasum => 'fail'
+          get :add, :dataset_id => datasets(:one).to_param, :shasum => 'fail'
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -176,12 +176,12 @@ describe DatasetsController do
       
       it 'adds to the dataset' do
         expect {
-          get :add, :id => datasets(:one).to_param, :shasum => '00972c5123877961056b21aea4177d0dc69c7318'
+          get :add, :dataset_id => datasets(:one).to_param, :shasum => '00972c5123877961056b21aea4177d0dc69c7318'
         }.to change{datasets(:one).entries.count}.by(1)
       end
 
       it 'redirects to the dataset page' do
-        get :add, :id => datasets(:one).to_param, :shasum => '00972c5123877961056b21aea4177d0dc69c7318'
+        get :add, :dataset_id => datasets(:one).to_param, :shasum => '00972c5123877961056b21aea4177d0dc69c7318'
         response.should redirect_to(dataset_path(datasets(:one)))
       end
     end
