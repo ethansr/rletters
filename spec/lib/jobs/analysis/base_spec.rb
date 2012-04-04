@@ -8,12 +8,55 @@ module Jobs
   end
 end
 
+module Jobs
+  module Analysis
+    class FailingJob < Jobs::Analysis::Base
+      def perform
+        user = User.find(user_id)
+        dataset = user.datasets.find(dataset_id)
+        @task = dataset.analysis_tasks.create(:name => "This job always fails", :job_type => 'FailingJob')
+        
+        raise ArgumentError
+      end
+    end
+  end
+end
+
 describe Jobs::Analysis::Base do
+
+  fixtures :users, :datasets, :dataset_entries
   
   describe '.view_path' do
     it 'returns the right value' do
       expected = File.join('jobs', 'mock_job', 'test')
       Jobs::Analysis::MockJob.view_path('test').should eq(expected)
+    end
+  end
+
+  describe '.error' do
+    before(:each) do
+      Delayed::Worker.delay_jobs = false
+
+      @job = Jobs::Analysis::FailingJob.new(:user_id => users(:john).to_param,
+                                            :dataset_id => datasets(:one).to_param)
+
+      # Yes, I know this raises an error, that is indeed
+      # the point
+      begin
+        Delayed::Job.enqueue @job
+      rescue ArgumentError; end
+    end
+
+    after(:each) do
+      Delayed::Worker.delay_jobs = true
+    end
+
+    it 'creates an analysis task' do
+      datasets(:one).analysis_tasks[0].should be
+    end
+
+    it 'sets the failed bit on the task' do
+      datasets(:one).analysis_tasks[0].failed.should be_true
     end
   end
   
