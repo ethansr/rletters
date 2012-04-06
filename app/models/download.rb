@@ -126,9 +126,7 @@ class Download < ActiveRecord::Base
       fn = filename_to_path(ret)
       
       # Runaway loop counter (DoS?)
-      if i == 100
-        raise StandardError, "Cannot find a filename for download"
-      end
+      raise StandardError, "Cannot find a filename for download" if i == 100
     end
     
     ret
@@ -143,13 +141,13 @@ class Download < ActiveRecord::Base
   end
   
   # Delete the file when the database record is destroyed
+  #
+  # Just ignore if the file delete fails and raises an error.  We'll have to
+  # manually clean the downloads directory in that case.
+  #
   # @api private
   # @return [undefined]
   def delete_file
-    begin
-      File::delete(filename)
-    rescue
-      # FIXME: Odd.  Print a warning?
-    end
+    File::delete(filename) rescue nil
   end
 end

@@ -78,6 +78,20 @@ describe Download do
         File.exists?(filename).should be_false
       end
     end
+
+    context 'when many are created simultaneously' do
+      it "successfully creates unique filenames" do
+        files = (1..25).map do
+          Download.create_file 'test.txt' do |f|
+            f.write("asdf")
+          end
+        end
+        filenames = files.map { |f| f.filename }
+        filenames.uniq!.should be_nil
+
+        files.each { |f| f.destroy }
+      end
+    end
   end
 
 end
