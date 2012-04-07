@@ -120,7 +120,7 @@ module SearchHelper
   # @return [String] user-friendly representation of sort method
   # @example Get the user-friendly version of 'score desc'
   #   sort_to_string 'score desc'
-  #   # => 'Relevance'
+  #   # => 'Sort: Relevance'
   def sort_to_string(sort)
     parts = sort.split(' ')
     return I18n.t('search.index.sort_unknown') unless parts.count == 2
