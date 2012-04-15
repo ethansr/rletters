@@ -79,7 +79,7 @@ describe DatasetsController do
         get :show, :id => datasets(:one).to_param
         response.should be_success
       end
-    
+
       it 'assigns dataset' do
         get :show, :id => datasets(:one).to_param
         assigns(:dataset).should eq(datasets(:one))
@@ -88,22 +88,22 @@ describe DatasetsController do
     
     context 'with clear_failed' do
       before(:each) do
-        task = datasets(:one).analysis_tasks.create(:name => 'failure')
+        task = datasets(:one).analysis_tasks.create(:name => 'failure', :job_type => 'FakeJob')
         task.failed = true
-      end
-      
-      it 'loads successfully' do
+        task.save.should be_true
+
         get :show, :id => datasets(:one).to_param, :clear_failed => true
+      end
+
+      it 'loads successfully' do
         response.should be_success
       end
       
       it 'deletes the failed task' do
-        get :show, :id => datasets(:one).to_param, :clear_failed => true
         datasets(:one).analysis_tasks.failed.count.should eq(0)
       end
       
       it 'sets the flash' do
-        get :show, :id => datasets(:one).to_param, :clear_failed => true
         flash[:notice].should_not be_nil
       end
     end

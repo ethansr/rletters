@@ -40,13 +40,9 @@ class DatasetsController < ApplicationController
     @dataset = @user.datasets.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @dataset
     
-    if params[:clear_failed]
-      if @dataset.analysis_tasks.failed.count > 0
-        @dataset.analysis_tasks.failed.destroy_all
-        flash[:notice] = t('datasets.show.deleted')
-      else
-        flash[:notice] = t('datasets.show.no_failed')
-      end
+    if params[:clear_failed] && @dataset.analysis_tasks.failed.count > 0
+      @dataset.analysis_tasks.failed.destroy_all
+      flash[:notice] = t('datasets.show.deleted')
     end
   end
 
