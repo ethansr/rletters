@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 set :output, {:standard => nil}
-env :MAILTO, "#{YAML.load_file(File.expand_path('../app_config.yml', __FILE__))['all_environments']['ruby_path']}:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+env :PATH, "#{YAML.load_file(File.expand_path('../app_config.yml', __FILE__))['all_environments']['ruby_path']}:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 env :MAILTO, "#{YAML.load_file(File.expand_path('../app_config.yml', __FILE__))['all_environments']['app_email']}"
 
 
