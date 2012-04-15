@@ -81,9 +81,7 @@ module Jobs
       end
       
       # We don't want users to download the YAML file
-      def self.download?
-        false
-      end
+      def self.download?; false; end
     end
     
   end

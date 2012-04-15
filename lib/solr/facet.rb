@@ -58,14 +58,11 @@ module Solr
           @value = value_chars[1..-2].join
         end
                 
-        # Format the label according to the field type
-        case @field
-        when :year
-          format_year_label
-        else
-          raise ArgumentError
-        end
-        
+        # Format the label according to the field type -- for now, the only
+        # argument type is year, so raise an error otherwise
+        raise ArgumentError unless @field == :year
+        format_year_label
+
         return
       end
       

@@ -187,6 +187,7 @@ describe Document do
       
       it "doesn't load facets if there aren't any" do
         Document.facets.all.should have(0).facets
+        Document.facets.empty?.should be_true
       end
     end
     
@@ -197,6 +198,7 @@ describe Document do
       
       it "sets the facets" do
         Document.facets.all.should have_at_least(1).facet
+        Document.facets.empty?.should be_false
       end
       
       it "has the right facet hash keys" do
