@@ -4,10 +4,9 @@ require 'spec_helper'
 describe "datasets/new" do
   
   fixtures :users
+  login_user(:john)
   
   before(:each) do
-    @user = users(:john)
-    session[:user_id] = users(:john).to_param
     assign(:dataset, users(:john).datasets.build)
   end
   

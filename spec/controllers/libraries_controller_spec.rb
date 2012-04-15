@@ -4,10 +4,9 @@ require 'spec_helper'
 describe LibrariesController do
   
   fixtures :libraries, :users
+  login_user(:john)
   
   before(:each) do
-    @user = users(:john)
-    session[:user_id] = users(:john).to_param
     @harvard = users(:john).libraries[0]
   end
   

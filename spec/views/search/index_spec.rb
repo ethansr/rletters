@@ -89,9 +89,9 @@ describe "search/index" do
     end
     
     context 'when logged in' do
+      login_user(:john)
+      
       before(:each) do
-        @user = users(:john)
-        session[:user_id] = users(:john).to_param
         render
       end
       

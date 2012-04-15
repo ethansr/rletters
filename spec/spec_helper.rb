@@ -29,6 +29,15 @@ Spork.prefork do
     config.after(:all) do
       DeferredGarbageCollection.reconsider
     end
+
+    # Reset the locale and timezone to defaults on each new test
+    config.before(:each) do
+      I18n.locale = I18n.default_locale
+      Time.zone = 'Eastern Time (US & Canada)'
+    end
+
+    # Add a helper for logging in (and out!) a user
+    config.extend UserLoginHelper
   
     # Skip some tests on JRuby
     if RUBY_PLATFORM == "java"

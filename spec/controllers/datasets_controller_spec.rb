@@ -4,18 +4,11 @@ require 'spec_helper'
 describe DatasetsController do
   
   fixtures :datasets, :dataset_entries, :users
-  
-  before(:each) do
-    @user = users(:john)
-    session[:user_id] = @user.to_param
-  end
+  login_user(:john)
   
   describe '#index' do
     context "when not logged in" do
-      before(:each) do
-        @user = nil
-        session[:user_id] = nil
-      end
+      logout_user
 
       it "redirects to the users page" do
         get :index

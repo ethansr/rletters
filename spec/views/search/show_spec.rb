@@ -56,9 +56,10 @@ describe "search/show" do
   end
   
   context 'when logged in' do
+    login_user(:john)
+    
     before(:each) do
-      assign(:user, users(:john))
-      session[:user_id] = users(:john).to_param
+      assign(:user, @user)
       render
     end
     

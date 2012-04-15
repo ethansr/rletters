@@ -172,11 +172,10 @@ describe SearchController do
   end
 
   describe '#add' do
+    login_user(:john)
+    
     before(:each) do
       Examples.stub_with(/localhost\/solr\/.*/, :precise_one_doc)
-      
-      @user = users(:john)
-      session[:user_id] = @user.to_param
     end
 
     it 'loads successfully' do

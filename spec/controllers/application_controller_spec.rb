@@ -13,8 +13,9 @@ describe ApplicationController do
     end
 
     context 'without a user ID' do
+      logout_user
+      
       before(:each) do
-        session[:user_id] = nil
         get :index
       end
 
@@ -28,6 +29,8 @@ describe ApplicationController do
     end
 
     context 'with a spoofed user ID' do
+      logout_user
+      
       before(:each) do
         session[:user_id] = 31337
         get :index
@@ -43,8 +46,9 @@ describe ApplicationController do
     end
 
     context 'with a good user ID' do
+      login_user(:john)
+      
       before(:each) do
-        session[:user_id] = users(:john).to_param
         get :index
       end
 
@@ -66,8 +70,9 @@ describe ApplicationController do
     end
 
     context 'with no user' do
+      logout_user
+      
       before(:each) do
-        session[:user_id] = nil
         get :index
       end
 
@@ -77,8 +82,9 @@ describe ApplicationController do
     end
 
     context 'with a user' do
+      login_user(:alice)
+      
       before(:each) do
-        session[:user_id] = users(:alice).to_param
         get :index
       end
 
@@ -96,8 +102,9 @@ describe ApplicationController do
     end
 
     context 'with no user' do
+      logout_user
+      
       before(:each) do
-        session[:user_id] = nil
         get :index
       end
 
@@ -107,8 +114,9 @@ describe ApplicationController do
     end
 
     context 'with a user' do
+      login_user(:alice)
+      
       before(:each) do
-        session[:user_id] = users(:alice).to_param
         get :index
       end
 
@@ -128,10 +136,7 @@ describe ApplicationController do
     end
 
     context 'without a user specified' do
-      before(:each) do
-        @user = nil
-        session[:user_id] = nil
-      end
+      logout_user
 
       it 'redirects to user_path' do
         get :index
@@ -145,10 +150,7 @@ describe ApplicationController do
     end
 
     context 'with a user specified' do
-      before(:each) do
-        @user = users(:john)
-        session[:user_id] = @user.to_param
-      end
+      login_user(:john)
 
       it 'does not redirect' do
         get :index

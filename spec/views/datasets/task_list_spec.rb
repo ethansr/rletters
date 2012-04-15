@@ -4,12 +4,10 @@ require 'spec_helper'
 describe "datasets/task_list" do
   
   fixtures :users, :datasets, :dataset_entries
+  login_user(:john)
   
   before(:each) do
-    @user = users(:john)
-    session[:user_id] = users(:john).to_param
-    assign(:dataset, datasets(:one))
-    
+    assign(:dataset, datasets(:one))    
     params[:id] = datasets(:one).to_param
   end
   

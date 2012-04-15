@@ -223,10 +223,7 @@ describe SearchHelper do
     end
     
     context 'when no user is logged in' do
-      before(:each) do
-        session[:user_id] = nil
-        @user = nil
-      end
+      logout_user
 
       it "renders the default template" do
         helper.should_receive(:render).with({ :partial => 'document', :locals => { :document => @doc } })
@@ -235,10 +232,7 @@ describe SearchHelper do
     end
     
     context 'when the user has no CSL style set' do
-      before(:each) do
-        session[:user_id] = users(:alice).to_param
-        @user = users(:alice)
-      end
+      login_user(:alice)
 
       it "renders the default template" do
         helper.should_receive(:render).with({ :partial => 'document', :locals => { :document => @doc } })
@@ -247,10 +241,7 @@ describe SearchHelper do
     end
 
     context 'when the user has a CSL style set' do
-      before(:each) do
-        session[:user_id] = users(:john).to_param
-        @user = users(:john)
-      end
+      login_user(:john)
 
       it "renders a CSL style" do
         @doc.should_receive(:to_csl_entry).with(users(:john).csl_style)

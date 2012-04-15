@@ -4,11 +4,7 @@ require 'spec_helper'
 describe "libraries/query" do
   
   fixtures :users
-  
-  before(:each) do
-    @user = users(:john)
-    session[:user_id] = users(:john).to_param
-  end
+  login_user(:john)
   
   context 'when libraries are assigned' do
     before(:each) do

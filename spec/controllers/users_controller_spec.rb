@@ -4,11 +4,7 @@ require 'spec_helper'
 describe UsersController do
   
   fixtures :users
-  
-  before(:each) do
-    @user = nil
-    session[:user_id] = nil
-  end
+  logout_user
   
   describe '#show' do
     it 'redirects to login' do
@@ -71,10 +67,7 @@ describe UsersController do
     end
     
     context 'when logged in' do
-      before(:each) do
-        @user = users(:john)
-        session[:user_id] = users(:john).to_param
-      end
+      login_user(:john)
 
       context 'when parameters are valid' do
         it 'updates the user without errors' do
@@ -117,10 +110,7 @@ describe UsersController do
     end
     
     context 'when logged in' do
-      before(:each) do
-        @user = users(:john)
-        session[:user_id] = users(:john).to_param
-      end
+      login_user(:john)
       
       it 'clears the user variable' do
         get :logout

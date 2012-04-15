@@ -4,12 +4,10 @@ require 'spec_helper'
 describe "libraries/index" do
   
   fixtures :users, :libraries
+  login_user(:john)
   
   before(:each) do
-    @user = users(:john)
-    session[:user_id] = users(:john).to_param
-    assign(:libraries, users(:john).libraries)
-    
+    assign(:libraries, users(:john).libraries)    
     render
   end
   
