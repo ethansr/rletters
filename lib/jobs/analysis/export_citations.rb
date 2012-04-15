@@ -49,14 +49,10 @@ module Jobs
             Zip::ZipOutputStream.open(file.path) do |zos|
               # find_each will take care of batching logic for us
               dataset.entries.find_each do |e|
-                begin
-                  doc = Document.find e.shasum
+                doc = Document.find e.shasum rescue nil
+                if doc
                   zos.put_next_entry "#{doc.shasum}.#{format.to_s}"
                   zos.print serializer[:method].call(doc)
-                rescue ActiveRecord::RecordNotFound
-                  # FIXME: Would like to have a way to report a warning if 
-                  # this isn't found!  Should be rare, but still.
-                  next
                 end
               end
             
