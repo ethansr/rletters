@@ -4,6 +4,8 @@ all_environments: &all_environments
   app_email: charles@charlespence.net
   app_domain: not.a.web.site.com
   
+  ruby_path: /usr/bin
+  
   janrain_appname: rletters
   janrain_appid: asdfasdf
   janrain_secret: 12341234
