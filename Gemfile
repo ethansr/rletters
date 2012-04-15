@@ -6,6 +6,7 @@ gem 'rails-i18n', '= 0.4.0'
 gem 'mysql2', :platforms => [ :ruby, :mswin, :mingw ]
 gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
 gem 'jruby-openssl', :platforms => :jruby
+gem 'activerecord-import'
 
 gem 'capistrano'
 gem 'delayed_job', '~> 3.0', '>= 3.0.1'

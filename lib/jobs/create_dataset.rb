@@ -62,28 +62,18 @@ module Jobs
         
         # Get our parameters
         docs_to_fetch = solr_response["response"]["numFound"]
-      
-        now = DateTime.current.to_formatted_s(:db)
         dataset_id = dataset.to_param
-        sql_tail = "'#{dataset_id}', '#{now}', '#{now}'"
       
         while docs_to_fetch > 0
           # What did we get this time?
           docs_fetched = solr_response["response"]["docs"].count
-        
-          # Formulate a SQL query for all these results
-          sql = 'INSERT INTO dataset_entries (`shasum`, `dataset_id`, `created_at`, `updated_at`) VALUES '
-          solr_response["response"]["docs"].each do |doc|
-            # We need to force this into UTF-8 on Ruby 1.9, or we may well
-            # get concatenation errors and suchlike
-            str = doc["shasum"]
-            str.force_encoding("UTF-8") if RUBY_VERSION >= "1.9.0"
-            
-            sql << "('#{str}', #{sql_tail}),"
-          end
-        
-          # Send it (deleting the trailing comma)
-          ActiveRecord::Base.connection.execute(sql.chop!())
+
+          # Send them all in with activerecord-import
+          DatasetEntry.import([ :shasum, :dataset_id ],
+                              solr_response["response"]["docs"].map { |d|
+                                [ d["shasum"], dataset_id ]
+                              },
+                              :validate => false)
         
           # Update counters and execute another query if required
           docs_to_fetch = docs_to_fetch - docs_fetched

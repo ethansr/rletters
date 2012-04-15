@@ -22,6 +22,9 @@ GEM
       activesupport (= 3.2.1)
       arel (~> 3.0.0)
       tzinfo (~> 0.3.29)
+    activerecord-import (0.2.9)
+      activerecord (~> 3.0)
+      activerecord (~> 3.0)
     activerecord-jdbc-adapter (1.2.2)
     activerecord-jdbcmysql-adapter (1.2.2)
       activerecord-jdbc-adapter (~> 1.2.2)
@@ -227,6 +230,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-import
   activerecord-jdbcmysql-adapter
   airbrake
   bibtex-ruby (~> 2.0)
