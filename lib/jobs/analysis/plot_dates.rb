@@ -51,11 +51,7 @@ module Jobs
 
             # Support Y-M-D or Y/M/D dates
             parts = year.split(/[-\/]/)
-            if parts.count == 3 || parts.count == 1
-              year = Integer(parts[0])
-            else
-              next
-            end
+            year = Integer(parts[0])
 
             year_array = dates.assoc(year)
             if year_array
